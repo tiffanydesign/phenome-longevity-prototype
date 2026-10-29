@@ -16,6 +16,7 @@ so that design changes can be made on a faithful baseline.
 npm install
 npm run dev      # http://localhost:5173/phenome-longevity-prototype/
 npm run build    # type-check + production build into dist/
+npm run deploy   # build and publish dist/ to the gh-pages branch (GitHub Pages)
 ```
 
 ## Project structure
