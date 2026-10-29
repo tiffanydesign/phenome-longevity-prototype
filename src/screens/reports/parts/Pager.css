@@ -1,0 +1,34 @@
+/* capture: genetic_report/top dots at y 829 (active 24×6.5, idle 7 Ø, 9 px gap) */
+.rp-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  height: 7px;
+}
+.rp-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--r-pill);
+  background: #c5cbe0;
+  transition: width 200ms var(--ease-out), background 200ms;
+}
+.rp-dot[data-on] {
+  width: 24px;
+  background: var(--c-navy);
+}
+
+/* horizontal snap pager */
+.rp-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.rp-track::-webkit-scrollbar {
+  display: none;
+}
+.rp-track > * {
+  scroll-snap-align: center;
+  flex-shrink: 0;
+}

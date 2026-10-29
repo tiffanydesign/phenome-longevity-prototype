@@ -1,0 +1,254 @@
+/* chevron-header title: 17px regular here (capture booking/top), NavHeader default is 20px */
+.bk-hdr .nh-title {
+  font-size: 17.2px;
+}
+
+/* capture: booking/* — body starts at y 95 (chevron header 51). All y from XML ÷ 3.25. */
+.bk {
+  padding: 6px var(--gutter) 40px;
+}
+
+/* 4-segment progress (y 101–106) */
+.bk-progress {
+  display: flex;
+  gap: 6px;
+  padding: 0 2px;
+}
+.bk-progress span {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: #eeeeee; /* capture: booking/top */
+}
+.bk-progress span[data-on] {
+  background: var(--g-device);
+}
+
+/* section titles: 60-px row (y 110–170) */
+.bk-h {
+  height: 60px;
+  padding-top: 13px;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.bk-h-sub {
+  margin-top: 0;
+}
+
+/* option cards: 354 wide, 68 tall + 12 gap (types), 72 (duration), 91+ (clinics) */
+.bk-opt {
+  width: 100%;
+  min-height: 68px;
+  margin-bottom: 12px;
+  padding: 0 14px;
+  border-radius: 16px;
+  background: var(--c-bg);
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-align: left;
+  color: var(--c-text);
+}
+.bk-opt[data-on] {
+  background: #eff4f8;
+  border: 1.5px solid #4172ad;
+}
+.bk-opt-tall {
+  min-height: 72px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.bk-opt-dur {
+  min-height: 72px;
+}
+.bk-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e5e5e5;
+  color: #707070;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.bk-opt[data-on] .bk-icon,
+.bk-icon-on {
+  background: #dde7f1;
+  color: #4172ad;
+}
+.bk-opt-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.bk-opt-title {
+  font-size: 15px;
+  font-weight: var(--fw-bold);
+  line-height: 20px;
+}
+.bk-opt-sub {
+  font-size: 13.4px;
+  line-height: 19.5px;
+  color: var(--c-text-2);
+}
+.bk-radio {
+  color: #4172ad;
+  display: grid;
+  margin-left: -4px;
+  margin-right: 2px;
+}
+
+/* Continue / Confirm booking: 354×54, 24 below the last card */
+.bk-continue {
+  width: 100%;
+  height: 54px;
+  margin-top: 12px;
+  border-radius: 16px;
+  background: var(--g-device);
+  color: #fff;
+  font-size: 17px;
+  font-weight: var(--fw-bold);
+}
+.bk-continue:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ---------- date & time ---------- */
+.bk-tz {
+  height: 19px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--c-text-2);
+}
+.bk-tz svg {
+  color: #707070;
+}
+.bk-days {
+  margin: 16px calc(-1 * var(--gutter)) 0;
+  padding: 0 var(--gutter);
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.bk-day {
+  flex: 0 0 64px;
+  height: 89px;
+  border-radius: 16px;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--c-text-2);
+}
+.bk-day b {
+  font-size: 22px;
+  line-height: 26px;
+  color: var(--c-text);
+}
+.bk-day[data-on] {
+  background: #4172ad;
+  border-color: #4172ad;
+  color: #fff;
+}
+.bk-day[data-on] b {
+  color: #fff;
+}
+.bk-slots {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 114px);
+  gap: 8px;
+}
+.bk-slot {
+  height: 44px;
+  border-radius: var(--r-pill);
+  border: 1px solid #f0f0f0;
+  font-size: 14.5px;
+  color: var(--c-text);
+}
+.bk-slot[data-on] {
+  background: #4172ad;
+  border-color: #4172ad;
+  color: #fff;
+  font-weight: var(--fw-medium);
+}
+.bk-noslots {
+  grid-column: 1 / -1;
+  color: var(--c-text-3);
+  font-size: 14px;
+}
+
+/* ---------- review (card 20,170 354×244) ---------- */
+.bk-review {
+  border-radius: 18px;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 20px 20px 22px;
+}
+.bk-review-head {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #ececec;
+  font-size: 17.5px;
+}
+.bk-review-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 0 18px;
+  border-bottom: 1px solid #ececec;
+  font-size: 15.5px;
+  color: var(--c-text);
+}
+.bk-review-rows span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bk-review-rows svg {
+  color: #8a8a8a;
+}
+.bk-review-tz {
+  font-size: 13.5px;
+  color: var(--c-text-2);
+}
+.bk-review-price {
+  margin-top: 20px;
+  text-align: right;
+  font-size: 22px;
+  font-weight: var(--fw-bold);
+  color: #4172ad;
+}
+.bk-review + .bk-continue {
+  margin-top: 24px;
+}
+
+.bk-toast {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 48px;
+  z-index: 70;
+  padding: 14px 18px;
+  border-radius: var(--r-md);
+  background: #222;
+  color: #fff;
+  font-size: 15px;
+  animation: rise-in 240ms var(--ease-out);
+}

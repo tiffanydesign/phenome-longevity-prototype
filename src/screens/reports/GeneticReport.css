@@ -1,0 +1,319 @@
+/* All y-values: XML bounds / 3.25 (capture/screens/genetic_report/*.xml). Body starts at y = 116. */
+.gr {
+  padding: 24px 0 24px;
+}
+.gr-intro {
+  margin: 0 16px;
+  padding: 15px 16px 16px;
+  min-height: 98px;
+  border-radius: var(--r-lg);
+  background: var(--c-intro-blue);
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--c-text-2);
+}
+
+/* pager y 250–810: 354-wide pages, 20 px peeks */
+.gr-pager {
+  margin-top: 12px;
+  padding: 0 20px;
+  scroll-padding: 0 20px;
+}
+.gr-page {
+  width: 354px;
+  height: 560px;
+  padding: 0 6px;
+  display: flex;
+  flex-direction: column;
+}
+.gr-head {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 16px;
+  border-bottom: 1px solid #e3edf6;
+}
+.gr-head-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--c-chip-navy-bg);
+  color: var(--c-navy);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.gr-head-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 200px;
+}
+.gr-head-text h2 {
+  font-size: 16px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+  line-height: 22px;
+}
+.gr-head-text span {
+  font-size: 12.6px;
+  line-height: 17px;
+  color: var(--c-text-2);
+}
+
+.gr-stats {
+  display: grid;
+  padding: 15px 8px 13px;
+  border-bottom: 1px solid #e3edf6;
+}
+.gr-stats[data-cols="3"] {
+  grid-template-columns: repeat(3, 1fr);
+}
+.gr-stats[data-cols="4"] {
+  grid-template-columns: repeat(4, 1fr);
+}
+.gr-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+}
+.gr-stat b {
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: var(--fw-bold);
+  color: var(--c-navy);
+}
+.gr-stat span {
+  margin-top: 8px;
+  font-size: 12.6px;
+  line-height: 17px;
+  color: var(--c-text-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 17px;
+  padding: 0 2px;
+}
+
+.gr-panels-title {
+  margin: 14px 0 0 8px;
+  font-size: 15.5px;
+  line-height: 22px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.gr-panels {
+  margin-top: 6px;
+  flex: 1;
+}
+.gr-row {
+  width: 100%;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 2px 0 16px;
+  text-align: left;
+  border-bottom: 1px solid #e3edf6;
+}
+.gr-row:last-child {
+  border-bottom: 0;
+}
+.gr-row-icon {
+  width: 26px;
+  display: grid;
+  place-items: center;
+  color: var(--c-navy);
+  flex-shrink: 0;
+}
+.gr-row-text {
+  flex: 1;
+  min-width: 0;
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.gr-row-text b {
+  font-size: 14.8px;
+  line-height: 20px;
+  font-weight: var(--fw-regular);
+  color: var(--c-text);
+}
+.gr-row-text span {
+  font-size: 11.6px;
+  line-height: 17px;
+  color: var(--c-text-2);
+}
+.gr-badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 9.5px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.gr-badge[data-tone="orange"] {
+  background: #f4b54a;
+}
+.gr-badge[data-tone="red"] {
+  background: #cf5150;
+}
+.gr-badge[data-tone="navy"] {
+  background: #3d4f8f;
+  font-size: 9px;
+}
+.gr-row-chev {
+  margin-left: 14px;
+  color: #6c6c6c;
+  display: grid;
+}
+
+.gr-viewall {
+  height: 45px;
+  border-radius: 0 0 var(--r-xl) var(--r-xl);
+  background: var(--c-surface-blue);
+  color: var(--c-navy);
+  font-size: 15.5px;
+  font-weight: var(--fw-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.gr .rp-dots {
+  margin-top: 16px;
+}
+
+/* ---------- newborn screening summary (capture: genome_report/top) ---------- */
+.ns {
+  padding: 16px 16px 24px;
+  display: flex;
+  flex-direction: column;
+}
+.ns-intro,
+.ns-search,
+.ns-summary {
+  border-radius: var(--r-lg);
+  background: var(--c-bg);
+  box-shadow: 0 2px 12px rgba(30, 40, 80, 0.06);
+}
+.ns-intro {
+  height: 86px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 16px 0;
+}
+.ns-intro-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--c-chip-navy-bg);
+  color: var(--c-navy);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.ns-intro p {
+  margin-top: -3px;
+  font-size: 13.5px;
+  line-height: 18px;
+  color: var(--c-text-2);
+}
+.ns-search {
+  margin-top: 16px;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  gap: 21px;
+  padding: 0 12px;
+  color: var(--c-text-2);
+}
+.ns-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 16px;
+}
+.ns-search input::placeholder {
+  color: var(--c-text-2);
+}
+.ns-chips {
+  margin-top: 16px;
+  display: flex;
+}
+.ns-chip {
+  height: 36px;
+  padding: 0 13px 0 13px;
+  border-radius: var(--r-pill);
+  background: var(--c-navy);
+  color: #fff;
+  font-size: 14.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.ns-chip i {
+  font-style: normal;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  display: grid;
+  place-items: center;
+}
+.ns-summary {
+  margin-top: 16px;
+  height: 112px;
+  padding: 16px 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ns-summary h3 {
+  align-self: flex-start;
+  font-size: 15px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.ns-summary b {
+  margin-top: 13px;
+  font-size: 22px;
+  line-height: 26px;
+  color: var(--c-navy);
+}
+.ns-summary span {
+  margin-top: 5px;
+  font-size: 10px;
+  color: var(--c-text-2);
+}
+.ns-clear {
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: var(--c-text-2);
+}
+.ns-clear h3 {
+  margin-top: 18px;
+  font-size: 16.5px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.ns-clear p {
+  margin-top: 9px;
+  padding: 0 32px;
+  font-size: 14px;
+  line-height: 20px;
+}

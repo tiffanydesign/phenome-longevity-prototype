@@ -1,0 +1,160 @@
+/* capture: genetic_report/modal_language (card x 40–354, y 188–691) */
+.pdf-pill {
+  height: 33px;
+  margin-right: 10px;
+  padding: 0 13px 0 13px;
+  border-radius: var(--r-pill);
+  background: var(--c-chip-navy-bg);
+  color: var(--c-navy);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: var(--fw-regular);
+  white-space: nowrap;
+}
+
+.pdf-lang {
+  display: flex;
+  flex-direction: column;
+}
+.pdf-lang-head {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 0 20px;
+  border-bottom: 1px solid #e3edf6;
+}
+.pdf-lang-head h2 {
+  font-size: 19px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.pdf-lang-x {
+  width: 48px;
+  height: 48px;
+  margin-right: -8px;
+  display: grid;
+  place-items: center;
+  color: #555;
+}
+.pdf-lang-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 20px 0 21px;
+  font-size: 14px;
+  color: var(--c-text-2);
+  height: 37px;
+}
+.pdf-lang-list {
+  height: 300px;
+  position: relative;
+}
+.pdf-lang-list::after {
+  /* thin rule at the list's bottom edge (capture: x 80–314) */
+  content: "";
+  display: block;
+  position: sticky;
+  bottom: 0;
+  margin: 0 40px;
+  height: 1px;
+  background: #e3edf6;
+}
+.pdf-lang-row {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  text-align: left;
+}
+.pdf-lang-row:first-child {
+  height: 40px;
+}
+.pdf-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.6px solid #6f6f6f;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.pdf-lang-row[data-on] .pdf-radio {
+  background: var(--c-navy);
+  border-color: var(--c-navy);
+}
+.pdf-lang-name {
+  flex: 1;
+  margin-left: 12px;
+  font-size: 16px;
+  color: var(--c-text);
+}
+.pdf-lang-row[data-on] .pdf-lang-name {
+  font-weight: var(--fw-medium);
+}
+.pdf-lang-code {
+  font-size: 13px;
+  color: var(--c-text-2);
+}
+.pdf-lang-actions {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 17px 0 24px;
+}
+.pdf-cancel {
+  width: 78px;
+  height: 40px;
+  font-size: 16px;
+  color: var(--c-text-2);
+}
+.pdf-generate {
+  width: 92px;
+  height: 40px;
+  border-radius: 7px;
+  background: var(--c-navy);
+  color: #fff;
+  font-size: 16px;
+}
+.pdf-generate:disabled {
+  background: #929ec4;
+  cursor: default;
+}
+.pdf-generate[data-busy] {
+  /* TODO(fidelity): video frame t=0.9 s shows the button unchanged */
+  background: var(--c-navy);
+}
+
+/* capture: genetic_report/modal_pdf_ready (card y 336–544) */
+.pdf-sent {
+  padding: 26px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.pdf-sent-title {
+  font-size: 16.5px;
+  line-height: 22.5px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+  padding: 0 20px;
+}
+.pdf-sent-body {
+  margin-top: 14px;
+  font-size: 13.8px;
+  line-height: 21px;
+  color: var(--c-text-2);
+}
+.pdf-sent-close {
+  margin-top: 18px;
+  width: 92px;
+  height: 40px;
+  border-radius: var(--r-pill);
+  background: var(--c-navy);
+  color: #fff;
+  font-size: 13px;
+}

@@ -1,0 +1,11 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [13, 165, 169, 321] ''
+-- [366, 334, 914, 435] 'Genetic Insights'
+-S [52, 435, 1228, 1475] ''
+C- [1085, 896, 1202, 1013] ''
+-- [169, 1696, 257, 1761] 'Visit'
+-- [1085, 1696, 1111, 1761] '1'
+-- [117, 1883, 253, 1948] 'Status'
+-- [1000, 1888, 1121, 1943] 'Ready'
+-- [172, 2073, 1108, 2135] 'Your results are ready to view.'
+C- [361, 2333, 919, 2499] 'View Report'

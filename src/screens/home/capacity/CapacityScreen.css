@@ -1,0 +1,268 @@
+/* Capacity detail. All y-values: XML bounds / 3.25 (capture/screens/capacity/*.xml); body starts at y = 95. */
+.capd-theme {
+  display: contents;
+  --cap-green: #65c466; /* capture: capacity/top "-- ms" */
+  --cap-blue: #5aaeca; /* capture: capacity/top "-- %" */
+  --capd-skel: #dfdfdf; /* capture: capacity/loading */
+}
+/* capture: dark_capacity/top — the app's dark surface is lighter than the shared dark token. */
+:root[data-theme="dark"] .capd-theme {
+  --c-bg: #2a2a2c;
+  --c-track: #464647;
+  --c-surface-2: #363538;
+  --capd-skel: #3a3a3c;
+}
+
+/* nav title: capture ink ≈ 17.4 px (shared chevron header uses 20 px) */
+.capd-theme .nh-title {
+  font-size: 17.5px;
+}
+
+.capd {
+  padding: 0 20px 81px;
+  display: flex;
+  flex-direction: column;
+}
+.capd-in {
+  animation: fade-in 100ms linear;
+}
+
+/* gauge: outer arc 37..357 x, top y 145 */
+.capd-gauge {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+.capd-score {
+  font-size: 50px;
+  font-weight: var(--fw-regular);
+  line-height: 1;
+  color: var(--c-text);
+  margin-bottom: 38px;
+}
+
+.capd-desc {
+  margin: 30px 16px 0;
+  font-size: 14.8px;
+  line-height: 21px;
+  color: var(--c-text-2);
+  letter-spacing: 0.15px;
+}
+
+/* tiles y 476, h 125 */
+.capd-tiles {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10.5px;
+}
+.capd-tile {
+  height: 125.5px;
+  border-radius: 12px;
+  background: var(--c-surface-2);
+  padding: 15px 14px 0 16px;
+  display: flex;
+  flex-direction: column;
+}
+.capd-tile-icon {
+  color: #868686;
+}
+.capd-tile-label {
+  margin-top: 10px;
+  font-size: 14.2px;
+  font-weight: var(--fw-medium);
+  line-height: 19px;
+  color: var(--c-text);
+  height: 38px;
+}
+.capd-val {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 15.5px;
+}
+.capd-val b {
+  font-size: 30px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 1px;
+  line-height: 40px;
+}
+.capd-val-sm {
+  margin-top: 6px;
+  font-size: 14.5px;
+}
+.capd-val-sm b {
+  font-size: 20px;
+  line-height: 22px;
+}
+
+/* grey cards */
+.capd-card {
+  background: var(--c-surface-2);
+  border-radius: 17px;
+}
+.capd-tvy {
+  margin-top: 37px;
+  height: 246px;
+  padding: 18px 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+.capd-card-title {
+  font-size: 16.4px;
+  font-weight: var(--fw-bold);
+  line-height: 23px;
+  color: var(--c-text);
+}
+.capd-pair {
+  display: grid;
+  grid-template-columns: 156.9px 1fr;
+}
+.capd-pair > div {
+  display: flex;
+  flex-direction: column;
+}
+.capd-tvy .capd-pair {
+  margin-top: 16px;
+}
+.capd-lbl {
+  font-size: 12.8px;
+  line-height: 19px;
+  color: #707070;
+}
+.capd-big {
+  display: inline-flex;
+  align-items: center;
+  height: 51px;
+  margin-top: 4px;
+  font-size: 35.5px;
+  font-weight: var(--fw-bold);
+  color: var(--c-danger);
+}
+.capd-bar-lbl {
+  margin-top: 20px;
+  line-height: 17px;
+}
+.capd-bar-lbl-2 {
+  margin-top: 19px;
+}
+.capd-bar {
+  margin-top: 6px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--c-track);
+  overflow: hidden;
+}
+.capd-bar > div {
+  height: 100%;
+  border-radius: 4px;
+}
+
+/* Longevity Analysis y 920, h 112 */
+.capd-analysis {
+  margin-top: 36.6px;
+  height: 112px;
+  border-radius: 17px;
+  background: #fcecea; /* capture: capacity/scroll_1 */
+  padding: 18px 16px 0;
+}
+:root[data-theme="dark"] .capd-analysis {
+  background: #4a2e2c; /* TODO(fidelity): dark analysis card not captured */
+}
+.capd-analysis h2 {
+  font-size: 14.5px;
+  font-weight: var(--fw-bold);
+  line-height: 18px;
+  color: var(--c-text);
+}
+.capd-analysis p {
+  margin-top: 6px;
+  font-size: 14.4px;
+  line-height: 18px;
+  color: var(--c-text-2);
+}
+.capd-analysis b {
+  color: var(--c-danger);
+  font-weight: var(--fw-bold);
+}
+
+.capd-h2 {
+  margin-top: 44px;
+  font-size: 16.3px;
+  font-weight: var(--fw-bold);
+  line-height: 23px;
+  color: var(--c-text);
+}
+.capd-comp {
+  height: 154px;
+  padding-top: 13.8px;
+}
+.capd-comp h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15.5px;
+  font-weight: var(--fw-bold);
+  line-height: 21px;
+  color: var(--c-text);
+}
+.capd-comp .capd-pair {
+  margin-top: 12px;
+}
+.capd-comp .capd-lbl {
+  line-height: 19px;
+}
+.capd-comp .capd-val {
+  margin-top: 2px;
+}
+
+/* legend card y 1530, h 86 */
+.capd-legend {
+  margin-top: -8px;
+  height: 86.5px;
+  padding: 15px 16px 0;
+}
+.capd-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--c-text);
+}
+.capd-legend-gap {
+  flex: 1;
+}
+.capd-swatch {
+  width: 26px;
+  height: 15px;
+  border-radius: 4px;
+}
+.capd-swatch-y {
+  background: #cfaed9;
+  border: 1px solid #b093b8;
+}
+.capd-legend-track {
+  margin-top: 23px;
+  height: 11px;
+  border-radius: 3px;
+  background: #e5e5e5;
+}
+
+/* capture: offline/capacity */
+.capd-empty {
+  position: absolute;
+  top: 358.8px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 14.5px;
+  line-height: 20px;
+  color: var(--c-text-2);
+}
+
+/* capture: capacity/loading */
+.capd-skel {
+  padding: 24px 20px 0;
+  display: flex;
+  flex-direction: column;
+}

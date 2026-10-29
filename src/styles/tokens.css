@@ -1,0 +1,137 @@
+/*
+ * Design tokens — measured from device screenshots (1280×2772 @ 3.25 DPR → 394×853 CSS px).
+ * Every value here is the single source of truth; components must not hard-code colours.
+ * Dark values come from capture/screens/dark_* samples.
+ */
+:root {
+  /* ---------- colour: neutrals ---------- */
+  --c-bg: #ffffff;
+  --c-surface: #f5f5f5;          /* date pill track, grey tiles */
+  --c-surface-2: #f4f4f4;        /* capacity metric tiles */
+  --c-surface-blue: #f3f6fb;     /* finding / info cards (gut, genetic intro) */
+  --c-intro-blue: #e8f0f9;       /* "Your DNA reveals…" banner */
+  --c-track: #e5e5e6;            /* ring / gauge track */
+  --c-divider: #e8e9ee;
+  --c-text: #222222;
+  --c-text-strong: #000000;
+  --c-text-2: #757575;           /* body copy */
+  --c-text-3: #989898;           /* muted, inactive dates */
+  --c-text-inverse: #ffffff;
+  --c-scrim: rgba(0, 0, 0, 0.55); /* measured 0.54–0.6 across sheet/modal captures */
+
+  /* ---------- colour: brand ---------- */
+  --c-navy: #263980;             /* primary buttons, numbers, icons */
+  --c-navy-ink: #213478;
+  --c-blue: #4f96d1;             /* TODAY, links */
+  --c-teal-start: #5aaeca;       /* "Add a PhenomeTech Device" gradient */
+  --c-teal-end: #4374af;
+  --c-chip-navy-bg: #e3e6f1;     /* Generate PDF pill, tags */
+
+  /* ---------- colour: metrics ---------- */
+  --c-sleep: #af5edc;
+  --c-calories: #f09343;
+  --c-steps: #65c668;
+  --c-capacity: #e8c547;
+  --c-danger: #eb4e3d;
+  --c-warning: #f2b544;
+  --c-success: #4cb963;
+  --c-success-bg: #eef8f0;
+  --c-success-border: #bfe6c7;
+
+  /* ---------- gradients (mesh approximations, see TODO in Card.tsx) ---------- */
+  --g-device: linear-gradient(90deg, var(--c-teal-start), var(--c-teal-end));
+  --g-capacity:
+    radial-gradient(120% 140% at 85% 0%, #ecd25e 0%, rgba(236, 210, 94, 0) 60%),
+    radial-gradient(90% 120% at 0% 100%, #a6b0d1 0%, rgba(166, 176, 209, 0) 70%),
+    linear-gradient(100deg, #a3adcd 0%, #d1c27c 55%, #e3cd6c 100%);
+  --g-activity:
+    radial-gradient(80% 120% at 95% 0%, #e2737c 0%, rgba(226, 115, 124, 0) 65%),
+    linear-gradient(100deg, #aab4d5 0%, #c49aae 60%, #d77b84 100%);
+  --g-diet:
+    radial-gradient(90% 120% at 90% 0%, #e8a86a 0%, rgba(232, 168, 106, 0) 65%),
+    linear-gradient(110deg, #b6aec0 0%, #d7aa8b 55%, #e5a771 100%);
+  --g-habits:
+    radial-gradient(90% 120% at 95% 0%, #6cc6e6 0%, rgba(108, 198, 230, 0) 65%),
+    linear-gradient(110deg, #a5b5dc 0%, #8cc0e0 60%, #6cc4e6 100%);
+  --g-pdf: linear-gradient(90deg, #5aaeca, #4374af);
+  --g-meal:
+    radial-gradient(80% 140% at 70% 0%, #e7ad78 0%, rgba(231, 173, 120, 0) 70%),
+    linear-gradient(100deg, #a9b3d6 0%, #d4ad97 60%, #cdb0aa 100%);
+  --g-cart-row: linear-gradient(90deg, #ffffff 0%, #e4e6ec 60%, #e3e6f1 100%);
+
+  /* ---------- glass ---------- */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-blur: 18px;
+
+  /* ---------- typography ---------- */
+  --font: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  --fs-display: 32px;   /* gauge numbers */
+  --fs-h1: 27px;        /* "Your Health Data", product titles */
+  --fs-h2: 16px;        /* section titles: Health Journal, Discover */
+  --fs-title: 17px;     /* nav-bar titles */
+  --fs-body-lg: 17px;
+  --fs-body: 15px;
+  --fs-small: 13px;
+  --fs-caption: 11px;
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  /* ---------- spacing (4px grid; 20 = page gutter, 12 = card gap) ---------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --gutter: 20px;
+
+  /* ---------- radii ---------- */
+  --r-sm: 8px;
+  --r-md: 12px;     /* banner, inputs */
+  --r-lg: 15px;     /* large cards */
+  --r-xl: 20px;     /* sheets */
+  --r-pill: 999px;
+
+  /* ---------- elevation ---------- */
+  --shadow-card: 0 2px 10px rgba(30, 40, 80, 0.06);
+  --shadow-nav: 0 4px 18px rgba(20, 30, 60, 0.07); /* barely visible on white in captures */
+  --shadow-sheet: 0 -6px 30px rgba(0, 0, 0, 0.12);
+
+  /* ---------- device chrome ---------- */
+  --status-h: 44px;
+  --home-ind-h: 20px;
+  --nav-h: 67px;
+  --nav-bottom: 28px;
+  --header-h: 56px;
+
+  /* ---------- motion ---------- */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-modal: 330ms;
+}
+
+/* Dark theme — Appearance → Dark Mode (capture/screens/dark_*). */
+:root[data-theme="dark"] {
+  /* measured: dark_home / dark_tab_* / dark_capacity backgrounds #262528–#272628, tiles #363538 */
+  --c-bg: #272628;
+  --c-surface: #373739;
+  --c-surface-2: #363538;
+  --c-surface-blue: #26282e;
+  --c-intro-blue: #262a33;
+  --c-track: #464647;
+  --c-divider: #333338;
+  --c-text: #f2f2f2;
+  --c-text-strong: #ffffff;
+  --c-text-2: #c7c7cc;
+  --c-text-3: #8e8e93;
+  --c-chip-navy-bg: #2f3442;
+  --glass-bg: rgba(60, 60, 64, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --g-capacity: linear-gradient(110deg, #4a4a42 0%, #6b6234 60%, #8a7a35 100%);
+  --g-activity: linear-gradient(110deg, #47383d 0%, #7a3a3c 100%);
+  --g-cart-row: linear-gradient(90deg, #2a2a2d, #33353d);
+}

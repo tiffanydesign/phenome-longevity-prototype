@@ -1,0 +1,12 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [26, 152, 182, 334] ''
+-- [442, 206, 838, 280] 'Health History'
+C- [1124, 165, 1280, 321] ''
+-- [78, 412, 383, 467] 'Smoking Status'
+-- [78, 701, 494, 757] 'Alcohol Consumption'
+-- [78, 991, 417, 1046] 'Chronic Diseases'
+-- [130, 1117, 1150, 1182] '—'
+-- [78, 1280, 598, 1335] 'Significant Medical History'
+-- [130, 1407, 1150, 1472] '—'
+-- [78, 1569, 620, 1624] 'Regularly Used Medications'
+-- [130, 1696, 1150, 1761] '—'

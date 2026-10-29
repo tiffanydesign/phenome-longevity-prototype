@@ -1,0 +1,229 @@
+/*
+ * Profile module. All y-values: XML bounds ÷ 3.25 (capture/screens/profile_* and tab_profile).
+ * Sub-pages: header 44–103, body starts at y = 103.
+ * Colours sampled from the captures; module-scoped vars so dark mode can follow
+ * capture/screens/dark_tab_profile + profile_appearance/dark_selected.
+ */
+.scr:has(.prf-root) {
+  --prf-card: #e7e9f1;        /* tab_profile row cards, FAQ cards */
+  --prf-field: #f5f7fa;       /* value boxes, chips */
+  --prf-label: var(--c-navy); /* field labels */
+  --prf-ink: #212121;         /* field values */
+  --prf-row: var(--c-navy);   /* tab row text + icons */
+  --prf-section: #abb5d6;     /* "Personal Information" */
+  --prf-tile: #e9ebf2;        /* option icon tile */
+  --prf-tile-ink: var(--c-navy);
+  --prf-option: #ffffff;      /* Appearance / Language cards */
+  --prf-muted: #757575;
+  --prf-danger: #dd5e56;
+  --prf-hd-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --prf-globe-line: #e9ebf2;
+}
+
+/* dark: capture dark_tab_profile/top (bg #2a2b2d, cards #1e1e1e) — darker/greyer than the shared token */
+:root[data-theme="dark"] .scr:has(.prf-root) {
+  --c-bg: #2a2b2d;
+  --prf-card: #1e1e1e;
+  --prf-field: #1e1e1e;
+  --prf-label: #abb5d6;
+  --prf-ink: #ffffff;
+  --prf-row: #ffffff;
+  --prf-tile: #33353a;
+  --prf-tile-ink: #abb5d6;
+  --prf-option: #1e1e1e;
+  --prf-muted: #a4a4a8;
+  --prf-hd-shadow: 0 1px 0 #3a3a3d;
+  --prf-globe-line: #33353a;
+}
+
+/* ---------- sub-page header (44–103) ---------- */
+.prf-hd {
+  position: relative;
+  height: 59px;
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 8px;
+  box-shadow: var(--prf-hd-shadow);
+}
+.prf-hd-back {
+  width: 48px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  color: var(--prf-label);
+  z-index: 1;
+}
+.prf-hd-title {
+  position: absolute;
+  left: 60px;
+  right: 60px;
+  text-align: center;
+  font-size: 18.5px;
+  font-weight: var(--fw-bold);
+  color: var(--prf-label);
+  white-space: nowrap;
+  letter-spacing: 0.1px;
+}
+:root[data-theme="dark"] .prf-hd-title,
+:root[data-theme="dark"] .prf-hd-back {
+  color: #ffffff;
+}
+.prf-hd-right {
+  margin-left: auto;
+  z-index: 1;
+}
+.prf-hd-action {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: var(--prf-label);
+}
+
+/* ---------- read-only / edit fields ---------- */
+.prf-form {
+  padding: 24px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+.prf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.prf-field-label {
+  font-size: 12.4px;
+  line-height: 17px;
+  font-weight: var(--fw-bold);
+  color: var(--prf-label);
+  letter-spacing: 0.15px;
+}
+.prf-field-box {
+  height: 47px;
+  border-radius: 13px;
+  background: var(--prf-field);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  font-size: 15.5px;
+  color: var(--prf-ink);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.prf-field[data-tall] .prf-field-box {
+  height: 50px;
+  font-size: 16px;
+}
+.prf-field-edit input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: inherit;
+  color: inherit;
+}
+.prf-row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ---------- empty states (orders / past tests) ---------- */
+.prf-empty {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 313px; /* circle top 416 - body 103 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.prf-empty-icon {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  background: #edeff4;
+  color: var(--c-navy);
+  display: grid;
+  place-items: center;
+}
+.prf-empty-text {
+  margin-top: 18px;
+  font-size: 15px;
+  color: var(--prf-muted);
+}
+
+/* ---------- option cards (Appearance, Language) ---------- */
+.prf-opt {
+  width: 100%;
+  height: 80px;
+  border-radius: 16px;
+  background: var(--prf-option);
+  box-shadow: 0 2px 10px rgba(30, 40, 80, 0.05);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 16px;
+  text-align: left;
+  border: 0 solid var(--c-navy);
+}
+.prf-opt[data-on] {
+  height: 84px;
+  border-width: 2px;
+  padding: 0 16px;
+}
+.prf-opt-tile {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--prf-tile);
+  color: var(--prf-tile-ink);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.prf-opt-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.prf-opt-title {
+  font-size: 16.5px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.prf-opt-sub {
+  font-size: 13.5px;
+  color: var(--prf-muted);
+}
+.prf-opt-radio {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.6px solid #a8a8a8;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}
+.prf-opt[data-on] .prf-opt-radio {
+  border: 0;
+  background: var(--c-navy);
+}
+.prf-hd-action {
+  position: relative;
+}
+.prf-hd-action-label {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: transparent;
+  font-size: 1px;
+}

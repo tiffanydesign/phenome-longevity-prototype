@@ -1,0 +1,165 @@
+/* All y-values: XML bounds / 3.25 (capture/screens/tab_insights/*.xml). Body starts at y = 103. */
+.ins-logo {
+  height: 59px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4px;
+  color: var(--c-navy);
+}
+
+.ins {
+  padding: 13px 16px 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* "Your Health Data" box y 118.8–155.7 */
+.ins-h1 {
+  margin: 0 4px;
+  font-size: 26.4px;
+  line-height: 37px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+
+/* y 163.7–223.7, 3 lines × 20 */
+.ins-lead {
+  margin: 10px 4px 0;
+  font-size: 15.4px;
+  line-height: 20px;
+  color: var(--c-text-2);
+  letter-spacing: 0.05px;
+}
+
+/* ---------- PDF reports banner (y 239.7, h 56) ---------- */
+.ins-pdf {
+  margin-top: 17px;
+  height: 56px;
+  border-radius: 20px;
+  background: var(--g-pdf);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 20px 0 21px;
+  text-align: left;
+}
+.ins-pdf-label {
+  font-size: 15.3px;
+  letter-spacing: 0.15px;
+}
+.ins-badge {
+  margin-left: 10px;
+  width: 18.5px;
+  height: 18.5px;
+  border-radius: 50%;
+  background: #e15241; /* capture: tab_insights/top badge */
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: var(--fw-bold);
+  display: grid;
+  place-items: center;
+}
+.ins-pdf svg {
+  margin-left: auto;
+}
+
+/* ---------- portfolio cards (h 78, title box +16, sub box +43) ---------- */
+.ins-card {
+  position: relative;
+  height: 78px;
+  border-radius: 20px;
+  padding: 16px 17px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  color: #fff;
+  overflow: hidden;
+}
+.ins-card-clinical {
+  margin-top: 20px;
+  background:
+    radial-gradient(70% 140% at 85% 0%, #b9c2de 0%, rgba(185, 194, 222, 0) 70%),
+    linear-gradient(90deg, #aab4d5 0%, #b0b9d8 100%);
+}
+.ins-card-title {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: var(--fw-regular);
+  letter-spacing: 0.2px;
+}
+.ins-card-sub {
+  margin-top: 2px;
+  font-size: 13.1px;
+  line-height: 19px;
+  letter-spacing: 0.25px;
+  font-weight: var(--fw-regular);
+}
+.ins-card-chev {
+  position: absolute;
+  right: 17px;
+  top: 28px;
+}
+
+/* mesh: periwinkle left, green glow upper-right, grey-teal lower-right (samples tab_insights/top) */
+.ins-card-omics {
+  background:
+    radial-gradient(55% 130% at 76% 0%, #87b988 0%, rgba(135, 185, 136, 0) 100%),
+    radial-gradient(40% 90% at 100% 100%, #9ab4b6 0%, rgba(154, 180, 182, 0) 100%),
+    linear-gradient(95deg, #aab4d6 0%, #a7b5d0 28%, #95b9a2 62%, #92b8a4 100%);
+}
+/* Precision Oncology / Infectious Diseases: peach glow (tab_insights/scroll_2, de-saturated by the disabled fade) */
+.ins-card-results {
+  background:
+    radial-gradient(55% 130% at 62% 0%, #e2b062 0%, rgba(226, 176, 98, 0) 100%),
+    linear-gradient(95deg, #aab4d6 0%, #c9b5a2 55%, #c8b096 100%);
+}
+.ins-card-off {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.ins-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* "Omics Portfolio" y 413.8–439.7 */
+.ins-h2 {
+  margin: 19px 4px 9px;
+  font-size: 18.4px;
+  line-height: 26px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.ins-h2-results {
+  margin-top: 20px;
+}
+
+/* ---------- dark theme (capture dark_tab_insights/top) ---------- */
+:root[data-theme="dark"] .ins-logo {
+  color: #ffffff;
+}
+:root[data-theme="dark"] .ins-card-clinical {
+  background: linear-gradient(100deg, #323234 0%, #45464b 60%, #4b4c51 100%);
+}
+:root[data-theme="dark"] .ins-card-clinical .ins-card-title {
+  color: #aab4d5;
+}
+:root[data-theme="dark"] .ins-card-omics,
+:root[data-theme="dark"] .ins-card-results {
+  background:
+    radial-gradient(60% 130% at 75% 0%, #485a47 0%, rgba(72, 90, 71, 0) 100%),
+    linear-gradient(100deg, #343336 0%, #3d433e 55%, #3f4340 100%);
+}
+:root[data-theme="dark"] .ins-card-omics .ins-card-title {
+  color: #6fae5f;
+}
+:root[data-theme="dark"] .ins-card-results .ins-card-title {
+  color: #d9a85e;
+}
+:root[data-theme="dark"] .ins-card-sub {
+  color: #e6e6e6;
+}

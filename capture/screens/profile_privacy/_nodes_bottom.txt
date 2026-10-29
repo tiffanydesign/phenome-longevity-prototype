@@ -1,0 +1,5 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+-- [0, 139, 1280, 2772] 'How do we handle your data?'
+C- [1059, 256, 1215, 412] ''
+-S [0, 454, 1280, 2772] ''
+C- [0, 0, 1280, 139] 'Scrim'

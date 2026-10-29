@@ -1,0 +1,214 @@
+Clinical Insights
+Upload Lab Report (AI)
+Personal / Anthropometric
+9 fields
+Height | -
+Weight | -
+Hip Circumference | -
+Lean Body Mass | -
+BMI
+Waist Circumference
+Waist-to-Hip Ratio
+Body Fat Percentage
+Visceral Fat Rating
+Vitals
+Blood Pressure (Systolic)
+Blood Pressure (Diastolic)
+Resting Heart Rate
+Heart Rate Variability
+Respiratory Rate
+Oxygen Saturation (SpO2)
+Body Temperature
+VO2 Max
+Grip Strength
+Complete Blood Count
+27 fields
+Hemoglobin
+Hematocrit
+RBC Count
+WBC Count
+Platelets
+MCV
+MCH
+MCHC
+RDW
+MPV
+Neutrophils
+Lymphocytes
+Monocytes
+Eosinophils
+Basophils
+Neutrophil/Lymphocyte Ratio
+Neutrophils (Absolute)
+Lymphocytes (Absolute)
+Monocytes (Absolute)
+Eosinophils (Absolute)
+Basophils (Absolute)
+Immature Granulocytes %
+Immature Granulocytes (Absolute)
+RDW-SD
+PDW
+PCT (Plateletcrit)
+P-LCR
+Lipid Panel
+12 fields
+Total Cholesterol
+HDL Cholesterol
+LDL Cholesterol
+VLDL Cholesterol
+Triglycerides
+Non-HDL Cholesterol
+ApoB
+ApoA-I
+Lp(a)
+LDL Particle Number
+LDL Particle Size
+Oxidized LDL
+Metabolic / Glucose
+10 fields
+Fasting Glucose
+HbA1c
+Fasting Insulin
+HOMA-IR
+C-Peptide
+OGTT 2-Hour Glucose
+Fructosamine
+HOMA-S
+HOMA-Beta
+QUICKI
+Liver Function
+ALT (SGPT)
+AST (SGOT)
+GGT
+Alkaline Phosphatase
+Bilirubin (Total)
+Bilirubin (Direct)
+Albumin
+Total Protein
+Globulin
+Kidney Function
+16 fields
+Creatinine
+BUN
+BUN/Creatinine Ratio
+eGFR
+Cystatin C
+Uric Acid
+Microalbumin (Urine)
+Albumin/Creatinine Ratio
+Urea
+Urine Creatinine
+Urine Specific Gravity
+Urine pH
+Urine Glucose
+Urine RBC (Microscopy)
+Urine WBC (Microscopy)
+Urine Bacteria
+Thyroid
+7 fields
+TSH
+Free T4
+Free T3
+Reverse T3
+T3/rT3 Ratio
+TPO Antibodies
+Thyroglobulin Antibodies
+Inflammation
+hs-CRP
+ESR
+Homocysteine
+Fibrinogen
+Interleukin-6
+TNF-alpha
+Omega-3 Index
+Omega-6/Omega-3 Ratio
+AA/EPA Ratio
+C-Reactive Protein
+Hormones
+18 fields
+Testosterone (Total)
+Testosterone (Free)
+SHBG
+Estradiol
+DHEA-S
+Cortisol (Morning)
+Cortisol (Evening)
+IGF-1
+Growth Hormone
+Free Testosterone Index
+Prolactin
+Bioavailable Testosterone
+FSH
+IGF-BP3
+LH
+Pregnenolone
+Progesterone
+Melatonin (PM)
+Vitamins &amp; Minerals
+26 fields
+Vitamin D (25-OH)
+Vitamin B12
+Folate
+Vitamin B6
+Vitamin A
+Vitamin E
+Vitamin C
+Vitamin K
+Iron
+Ferritin
+TIBC
+Transferrin Saturation
+Magnesium
+RBC Magnesium
+Zinc
+Copper
+Zinc/Copper Ratio
+Selenium
+Iodine (Urine)
+Calcium
+Phosphorus
+Potassium
+Sodium
+Chloride
+CO2 (Bicarbonate)
+Biotin
+Cardiovascular Advanced
+8 fields
+Coronary Calcium Score | -
+NT-proBNP
+Troponin (hs)
+Lp-PLA2
+Myeloperoxidase
+Carotid IMT
+Pulse Wave Velocity
+Ankle-Brachial Index
+Longevity / Aging Markers
+11 fields
+Telomere Length
+Biological Age
+Pace of Aging
+GrimAge
+PhenoAge
+Intrinsic Epigenetic Age
+Klotho
+NAD+
+Glutathione
+CoQ10
+p16INK4a
+Other / Specialty
+PSA
+Free PSA Ratio
+Ammonia
+Lactate
+CPK (Creatine Kinase)
+LDH
+Cortisol/DHEA Ratio
+NSE
+S100B
+Lipase
+Amylase (Total)
+Amylase (Pancreatic)
+CK-MB
+Anion Gap
+Alpha Fetoprotein
+PSA Free

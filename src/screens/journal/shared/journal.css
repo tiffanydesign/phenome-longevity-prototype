@@ -1,0 +1,383 @@
+/* Health Journal shared parts. y-values = XML bounds ÷ 3.25 (capture/screens/journal_*). */
+
+/* ---------- header ---------- */
+.jr-nh {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+.jr-nh-tracker {
+  height: 58px; /* chevron box y 58.8–86.8 → centre 72.9 */
+}
+.jr-nh-meal {
+  height: 54.8px; /* meal screens: scroll view starts at y 98.8 */
+}
+.jr-nh-meal .jr-nh-title {
+  padding-top: 2px;
+}
+.jr-nh-activity {
+  height: 61.6px; /* 48 px button y 50.8–98.8 */
+  padding: 0 4px;
+}
+.jr-nh-back {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  color: var(--c-text);
+  z-index: 1;
+}
+.jr-nh-activity .jr-nh-back {
+  width: 48px;
+  height: 48px;
+}
+.jr-nh-title {
+  position: absolute;
+  left: 60px;
+  right: 60px;
+  text-align: center;
+  font-size: 17.5px;
+  font-weight: var(--fw-regular);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.jr-nh-activity .jr-nh-title {
+  font-size: 18px;
+}
+.jr-nh-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+.jr-icon-btn {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: var(--c-text-strong);
+}
+
+/* ---------- period switcher + date row ---------- */
+.jr-period {
+  padding: 0 var(--gutter);
+}
+.jr-period-tracker {
+  margin-top: -3px; /* track y 99–141.5 */
+}
+.jr-period-activity {
+  margin-top: 5.2px; /* track y 110.8–153.4 */
+}
+.jr-seg {
+  background: var(--c-surface);
+  border-radius: var(--r-pill);
+  padding: 3.8px 4px;
+}
+.jr-seg .seg-item {
+  font-size: 15px;
+  font-weight: var(--fw-medium);
+  color: #6f6f6f;
+}
+.jr-seg .seg-item[data-active] {
+  background: #d7e6e8; /* capture: journal_activity/top */
+  color: var(--c-blue);
+  font-weight: var(--fw-bold);
+}
+.jr-dates {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.jr-period-tracker .jr-dates {
+  height: 30px;
+  margin-top: 14.2px;
+  gap: 16px;
+}
+.jr-period-activity .jr-dates {
+  height: 26px;
+  margin-top: 16.4px;
+  gap: 20px;
+}
+.jr-dates-arrow {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: #6a6a6a;
+}
+.jr-period-activity .jr-dates-arrow {
+  width: 26px;
+  height: 26px;
+  color: var(--c-text);
+}
+.jr-dates-arrow:disabled {
+  color: #c4c4c4;
+  cursor: default;
+}
+.jr-dates-label {
+  font-size: 14.2px;
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+  white-space: nowrap;
+}
+
+/* ---------- tracker body (scroll area y 195.7–832.9) ---------- */
+.jr-tracker-body {
+  margin-top: 9.9px;
+  margin-bottom: 20px; /* scroll view stops 20 px above the screen edge */
+  padding: 0 var(--gutter) 40px;
+  overflow-x: hidden;
+}
+
+/* ---------- goal block ---------- */
+.jr-goal {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.jr-goal-eyebrow {
+  font-size: 12.4px;
+  font-weight: var(--fw-bold);
+  color: #6f6f6f;
+  letter-spacing: 0.2px;
+  line-height: 17px;
+}
+.jr-goal-row {
+  display: flex;
+  align-items: baseline;
+  height: 60px;
+  margin-top: 8px;
+  line-height: 60px;
+}
+.jr-goal-val {
+  font-size: 56px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+  letter-spacing: -1px;
+}
+.jr-goal-of {
+  position: relative;
+  top: -8px; /* capture: goal text ink top 266.8 vs count 252.3 */
+  font-size: 19.6px;
+  font-weight: var(--fw-regular);
+}
+.jr-goal-edit {
+  margin-left: 8px;
+  color: #555;
+  align-self: center;
+  margin-top: 4px;
+  display: grid;
+}
+.jr-bar {
+  height: 16px;
+  border-radius: 4px;
+  background: var(--c-track);
+  overflow: hidden;
+}
+.jr-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 400ms var(--ease-out);
+}
+.jr-goal-bar {
+  margin-top: 10px;
+}
+.jr-pill {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 18px;
+  padding: 0 14.2px;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 6px;
+  background: #f3f4f5;
+  font-size: 13.1px;
+  color: var(--c-text);
+  white-space: nowrap;
+}
+.jr-intro {
+  margin-top: 18.8px;
+  font-size: 13.5px;
+  line-height: 19px;
+  color: #747474;
+}
+
+/* ---------- macro tiles ---------- */
+.jr-macros {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.jr-macro {
+  height: 62.6px;
+  border-radius: 13px;
+  padding: 12.8px 16px 0;
+  display: flex;
+  flex-direction: column;
+}
+.jr-macro-label {
+  font-size: 13.8px;
+  line-height: 20px;
+}
+.jr-macro-val {
+  margin-top: 1.5px;
+  font-size: 11.9px;
+  line-height: 17px;
+  color: var(--c-text);
+}
+.jr-macro-protein {
+  background: #dff5fb;
+  color: #56bde4;
+}
+.jr-macro-fat {
+  background: #fae2e2;
+  color: #eb4c46;
+}
+.jr-macro-carbs {
+  background: #fef7dc;
+  color: #f7ce46;
+}
+.jr-macro-fiber {
+  background: #e5f6e7;
+  color: #65c466;
+}
+
+/* ---------- nutrient bars card ---------- */
+.jr-nutr {
+  background: var(--c-surface);
+  border-radius: 16px;
+  padding: 16.5px 16px 32px;
+}
+.jr-nutr-title {
+  font-size: 16.5px;
+  font-weight: var(--fw-bold);
+  line-height: 23px;
+  margin-bottom: 14px;
+}
+.jr-nutr-row + .jr-nutr-row {
+  margin-top: 18px;
+}
+.jr-nutr-head {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+.jr-nutr-label {
+  flex: 1;
+  font-size: 14.4px;
+  font-weight: var(--fw-bold);
+}
+.jr-nutr-pct,
+.jr-nutr-amt {
+  font-size: 12.9px;
+  color: #6f6f6f;
+}
+.jr-nutr-amt {
+  margin-left: 12px;
+}
+.jr-nutr-bar {
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 4px;
+}
+.jr-nutr-bar > span {
+  background: var(--c-calories);
+}
+
+/* ---------- section headings / week strip ---------- */
+.jr-h3 {
+  font-size: 16.4px;
+  font-weight: var(--fw-bold);
+  line-height: 23px;
+  color: var(--c-text);
+}
+.jr-week {
+  display: flex;
+  flex-direction: column;
+}
+.jr-week-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 19px 0 0;
+  padding: 0 11.6px 0 11.6px;
+}
+.jr-week-day {
+  width: 50.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: -11px;
+}
+.jr-week-day:last-child {
+  margin-right: -11px;
+}
+.jr-week-dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ececec;
+  margin-bottom: 7px;
+}
+.jr-week-w,
+.jr-week-n {
+  font-size: 11.1px;
+  font-weight: var(--fw-bold);
+  line-height: 16px;
+  color: #6a6a6a;
+}
+.jr-week-pill {
+  align-self: center;
+  margin-top: 23px;
+  font-size: 14px;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 15.5px;
+  border-radius: 4px;
+}
+.jr-week-pill b {
+  font-weight: var(--fw-bold);
+}
+
+/* ---------- copy ---------- */
+.jr-copy + .jr-copy {
+  margin-top: 20px;
+}
+.jr-copy-body {
+  margin-top: 8px;
+  font-size: 13.7px;
+  line-height: 20px;
+  color: #747474;
+}
+
+/* ---------- soft keyboard ---------- */
+.jr-kb {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 303px; /* keyboard top y 549.8 */
+  z-index: 70;
+  box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.03);
+}
+.jr-kb img {
+  width: 100%;
+  height: 100%;
+}
+.jr-kb-sugg {
+  position: absolute;
+  top: 0;
+  left: 40px;
+  right: 44px;
+  height: 42.6px; /* words centred at y 571 */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+}
+.jr-kb-sugg span {
+  text-align: center;
+  font-family: Roboto, "Google Sans", Arial, sans-serif;
+  font-size: 18.5px;
+  color: #3b3426;
+}

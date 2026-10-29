@@ -1,0 +1,185 @@
+/* Habits. Content y = capture y + scroll offset (scroll_1 343). */
+
+.hb-addrow {
+  margin-top: 24px; /* "Add New Habit" y 497.8 */
+  height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hb-new {
+  height: 29px;
+  width: 128.9px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, #58aac7, #4277b1);
+  color: #fff;
+  font-size: 13.3px;
+  font-weight: var(--fw-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.hb-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.hb-row {
+  height: 55px;
+  border-radius: 20px;
+  /* capture: journal_habits/top row samples #abb5d6 → #84c3e1 → #a2b8d9 */
+  background:
+    radial-gradient(70% 140% at 62% 0%, rgba(126, 198, 228, 0.9) 0%, rgba(126, 198, 228, 0) 70%),
+    linear-gradient(100deg, #aab4d6 0%, #94bfdf 38%, #84c3e1 60%, #a3b7d9 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 16px 0 16px;
+  text-align: left;
+}
+.hb-row-name {
+  flex: 1;
+  margin-left: 18.5px;
+  font-size: 15.3px;
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.1px;
+}
+.hb-week {
+  margin-top: 24.8px;
+}
+.hb-tvy {
+  margin-top: 28.5px;
+}
+.hb-tvy-row {
+  margin-top: 13.8px;
+  display: grid;
+  grid-template-columns: 176.9px auto;
+}
+.hb-tvy-col {
+  display: flex;
+  flex-direction: column;
+}
+.hb-tvy-label {
+  font-size: 12.8px;
+  line-height: 19px;
+  color: #757575;
+}
+.hb-tvy-val {
+  margin-top: 1.8px;
+  font-size: 26px;
+  line-height: 40px;
+  font-weight: var(--fw-bold);
+  color: #5f5f5f;
+  white-space: nowrap;
+}
+.hb-tvy-val i {
+  font-style: normal;
+  margin-left: 3px;
+}
+.hb-legend {
+  margin-top: 15.7px;
+  height: 86.5px;
+  border-radius: 16px;
+  background: var(--c-surface);
+  padding: 17.5px 16px 0;
+}
+.hb-legend-keys {
+  display: flex;
+  align-items: center;
+  font-size: 14.6px;
+  color: var(--c-text);
+}
+.hb-key {
+  width: 26px;
+  height: 15.6px;
+  border-radius: 4px;
+  margin-right: 8.5px;
+}
+.hb-key-today {
+  background: #56bde4;
+}
+.hb-key-yday {
+  margin-left: auto;
+  background: #d5b1dd;
+  outline: 1px dashed #9a9a9a;
+  outline-offset: -1px;
+}
+.hb-legend-bar {
+  margin-top: 21px;
+  height: 11px;
+  border-radius: 3px;
+  background: #e6e6e6;
+}
+
+/* ---------- detail ---------- */
+.hb-edit {
+  width: 24px;
+  height: 24px;
+  margin-right: -2px;
+  display: grid;
+  place-items: center;
+  color: var(--c-text);
+}
+.hb-detail-title {
+  margin-top: 8.8px;
+  text-align: center;
+  font-size: 19.5px;
+  font-weight: var(--fw-regular);
+  line-height: 26px;
+}
+.hb-cta {
+  height: 52px;
+  border-radius: 14px;
+  font-size: 15.8px;
+  margin-bottom: 8px; /* button y 760.9–812.9 */
+}
+.hb-cta-off,
+.hb-cta-off:disabled {
+  background: #ebebeb;
+  color: #a4a4a4;
+}
+
+/* ---------- add habit ---------- */
+.ah {
+  padding: 8.8px 20.9px 0;
+  display: flex;
+  flex-direction: column;
+}
+.ah-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 3.1px;
+  height: 20px;
+}
+.ah-top-notes {
+  margin-top: 20.9px;
+}
+.ah-label {
+  font-size: 15px;
+  font-weight: var(--fw-bold);
+}
+.ah-count {
+  font-size: 13px;
+  color: #8a8a8a;
+}
+.ah-input {
+  margin-top: 8.9px;
+  height: 55.1px;
+  border-radius: 16px;
+  border: 1px solid #e2e4ea;
+  background: #eef0f5;
+  padding: 0 16px;
+  font-size: 16px;
+  color: var(--c-text);
+  outline: 0;
+  caret-color: var(--c-navy);
+}
+.ah-notes {
+  height: 124px;
+  padding: 16px;
+  resize: none;
+  line-height: 22px;
+}

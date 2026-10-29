@@ -1,0 +1,218 @@
+/* capture: insights_genome/top etc. (XML bounds / 3.25). Body starts y = 103. */
+.kit-head {
+  height: 59px;
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+}
+.kit-back {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: var(--c-navy);
+}
+
+.kit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+/* title box y 102.8–133.8 */
+.kit-title {
+  margin: -2px 0 2px;
+  height: 31px;
+  font-size: 21.7px;
+  line-height: 31px;
+  font-weight: var(--fw-bold);
+  color: var(--c-navy);
+  white-space: nowrap;
+}
+
+/* carousel viewport y 133.8–453.8 */
+.kit-carousel {
+  position: relative;
+  align-self: stretch;
+  height: 320px;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+.kit-track {
+  display: flex;
+  height: 100%;
+  transition: transform 350ms var(--ease-out);
+}
+.kit-slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+}
+
+/* cropped at device px (300, 630)–(1180, 1380) → css (92.3, 193.8), 270.8 × 230.8 */
+.kit-box {
+  position: absolute;
+  left: 92.3px;
+  top: 60px;
+  width: 270.8px;
+  height: 230.8px;
+  user-select: none;
+  /* subtle 3D tilt loop (recordings/anim_kit_box_oral.mp4) */
+  animation: kit-tilt 6s ease-in-out infinite;
+  transform-origin: 40% 40%;
+}
+@keyframes kit-tilt {
+  0%,
+  100% {
+    transform: perspective(700px) rotateY(0deg) rotateX(0deg) translateY(0);
+  }
+  25% {
+    transform: perspective(700px) rotateY(4deg) rotateX(-1.5deg) translateY(-2px);
+  }
+  75% {
+    transform: perspective(700px) rotateY(-4deg) rotateX(1.5deg) translateY(2px);
+  }
+}
+
+.kit-placeholder {
+  position: absolute;
+  left: 67px;
+  top: 29.2px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  color: #bdbdbd;
+  display: grid;
+  place-items: center;
+}
+
+/* chevrons 36 × 36 at y 275.7, x 24 / 333.8 */
+.kit-chev {
+  position: absolute;
+  top: 141.9px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--c-navy);
+}
+.kit-chev-l {
+  left: 24px;
+}
+.kit-chev-r {
+  left: 333.8px;
+}
+
+/* dots centre y 464.7: active pill 24.5 × 8, dots 8, pitch 16.5 */
+.kit-dots {
+  margin-top: 1px;
+  height: 8px;
+  display: flex;
+  gap: 8.5px;
+}
+.kit-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: #d9d9d9;
+  transition: width 250ms var(--ease-out);
+}
+.kit-dot[data-on] {
+  width: 24.5px;
+  background: var(--c-navy);
+}
+
+/* status card y 485–692.5 (oral/gut/transcriptome 477) */
+.kit-card {
+  align-self: stretch;
+  margin: 23.2px 16px 0;
+  border-radius: 22px;
+  background: var(--c-bg);
+  box-shadow: 0 4px 20px rgba(30, 40, 80, 0.06);
+  padding: 20.8px 20px 20.5px;
+  display: flex;
+  flex-direction: column;
+}
+.kit-card[data-dots] {
+  margin-top: 22.2px;
+}
+.kit-visit {
+  height: 51px;
+  border-radius: 14px;
+  background: #f5f7fa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-size: 14.1px;
+  color: var(--c-text-2);
+}
+.kit-visit b {
+  font-size: 14.4px;
+  color: var(--c-text-strong);
+}
+.kit-status {
+  margin-top: 17.5px;
+  height: 29.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13.9px;
+  color: var(--c-text-2);
+}
+.kit-pill {
+  height: 29.5px;
+  width: 62px;
+  border-radius: var(--r-pill);
+  background: #eaf6ec;
+  border: 1px solid #bfe6c7;
+  color: #5ec269;
+  font-size: 12.2px;
+  font-weight: var(--fw-bold);
+  display: grid;
+  place-items: center;
+}
+.kit-msg {
+  margin-top: 17.5px;
+  height: 51px;
+  border-radius: 14px;
+  background: #f6fcf7;
+  border: 1px solid #cdebd3;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 13.1px;
+  color: var(--c-text);
+  letter-spacing: 0.15px;
+}
+
+/* View Report 171.7 × 51 at y 717.8 */
+.kit-cta {
+  margin-top: 25.3px;
+  width: 171.7px;
+  height: 51px;
+  border-radius: 14px;
+  background: var(--c-navy);
+  color: #fff;
+  font-size: 16px;
+  font-weight: var(--fw-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  letter-spacing: 0.2px;
+}
+
+:root[data-theme="dark"] .kit-visit {
+  background: var(--c-surface);
+}
+:root[data-theme="dark"] .kit-msg {
+  background: #23302a;
+  border-color: #2f4a37;
+}
+:root[data-theme="dark"] .kit-pill {
+  background: #23302a;
+  border-color: #2f4a37;
+}

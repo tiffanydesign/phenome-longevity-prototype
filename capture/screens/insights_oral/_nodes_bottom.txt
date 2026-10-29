@@ -1,0 +1,9 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [13, 165, 169, 321] ''
+-- [280, 334, 1000, 435] 'Oral Microbiome Test'
+-- [169, 1670, 257, 1735] 'Visit'
+-- [1085, 1670, 1111, 1735] '1'
+-- [117, 1857, 253, 1922] 'Status'
+-- [1000, 1862, 1121, 1917] 'Ready'
+-- [172, 2047, 1108, 2109] 'Your results are ready to view.'
+C- [361, 2307, 919, 2473] 'View Report'

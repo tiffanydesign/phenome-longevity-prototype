@@ -1,0 +1,349 @@
+/* All y-values: XML bounds / 3.25 (capture/screens/home/*.xml). Body starts at y = 103. */
+.home-logo {
+  height: 59px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4px;
+}
+
+.home {
+  padding: 16px var(--gutter) 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- device banner (y 119, h 56) ---------- */
+.home-device {
+  height: 56px;
+  border-radius: var(--r-md);
+  background: var(--g-device);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  font-size: 15.5px;
+  font-weight: var(--fw-light);
+  letter-spacing: 0.1px;
+}
+.home-device b {
+  font-weight: var(--fw-bold);
+}
+
+/* ---------- date strip (y 195, h 43) ---------- */
+.home-dates {
+  margin-top: 20px;
+  height: 43px;
+  border-radius: var(--r-pill);
+  background: var(--c-surface);
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+}
+.home-dates-arrow {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--c-text);
+}
+.home-dates-arrow:disabled {
+  color: #b9b9b9;
+  cursor: default;
+}
+.home-date {
+  flex: 1;
+  height: 32px;
+  border-radius: var(--r-pill);
+  font-size: 14px;
+  color: var(--c-text-3);
+  display: grid;
+  place-items: center;
+}
+.home-date:disabled {
+  cursor: default;
+}
+.home-date-on {
+  flex: 0 0 58px;
+  min-width: 58px;
+  padding: 0 11px;
+  font-size: 14.2px;
+  background: var(--c-bg);
+  color: var(--c-blue);
+  font-weight: var(--fw-bold);
+}
+
+/* ---------- rings (y 263, tiles 118 wide) ---------- */
+.home-rings {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+.home-ring {
+  width: 118px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.home-ring-val {
+  font-size: 23px;
+  font-weight: var(--fw-regular);
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.home-ring-val[data-unit] {
+  font-size: 16px;
+  gap: 2px;
+}
+.home-ring-val small {
+  font-size: 16px;
+}
+.home-ring-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 15px;
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+}
+
+/* ---------- capacity card (y 401, h 145) ---------- */
+.home-capacity {
+  margin-top: 20px;
+  height: 145px;
+  border-radius: var(--r-lg);
+  background: var(--g-capacity);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 20px 0 9px;
+  gap: 12px;
+  text-align: left;
+}
+.home-capacity .home-capacity-num {
+  font-size: 23px;
+  color: var(--c-capacity);
+}
+.home-capacity-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: -10px;
+}
+.home-capacity-title {
+  font-size: 19px;
+  font-weight: var(--fw-light);
+}
+.home-capacity-sub {
+  font-size: 12px;
+  font-weight: var(--fw-regular);
+}
+
+/* ---------- section titles ---------- */
+.home-h2 {
+  margin: 28px 0 14px;
+  font-size: 16.4px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+
+/* ---------- health journal ---------- */
+.home-journal {
+  position: relative;
+  border-radius: var(--r-lg);
+  color: #fff;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px;
+  gap: 8px;
+}
+.home-journal-title {
+  font-size: 19.5px;
+  font-weight: var(--fw-light);
+}
+.home-journal-sub {
+  font-size: 15.5px;
+  font-weight: var(--fw-light);
+  line-height: 22px;
+}
+.home-journal-activity {
+  height: 112px;
+  background: var(--g-activity);
+  padding-right: 72px;
+}
+.home-journal-plus {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  margin-top: -16px;
+}
+.home-journal-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.home-journal-grid .home-journal {
+  height: 102px;
+  padding: 14px 16px;
+}
+.home-journal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.home-journal-diet {
+  background: var(--g-diet);
+}
+.home-journal-habits {
+  background: var(--g-habits);
+}
+.home-journal-wide {
+  margin-top: 12px;
+  height: 100px;
+  justify-content: center;
+}
+.home-journal-wide svg {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  margin-top: -11px;
+}
+
+/* ---------- health monitor rows (h 61, gap 8) ---------- */
+.home-monitor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.home-mon {
+  height: 61px;
+  border-radius: var(--r-lg);
+  background: var(--g-cart-row);
+  display: flex;
+  align-items: center;
+  padding: 0 12px 0 10px;
+  text-align: left;
+  gap: 14px;
+}
+.home-mon-icon {
+  color: #a8afcf;
+}
+.home-mon-label {
+  flex: 1;
+  font-size: 15px;
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+}
+.home-mon-val {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 15.5px;
+  line-height: 22px;
+  color: var(--c-text);
+}
+.home-mon-val b {
+  font-weight: var(--fw-bold);
+}
+.home-mon-unit {
+  color: var(--c-text-3);
+  font-weight: var(--fw-bold);
+}
+.home-mon-val[data-goal] .home-mon-unit {
+  color: var(--c-text);
+}
+.home-mon-goal {
+  font-size: 15px;
+  color: var(--c-text-3);
+}
+.home-mon-tri {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid var(--c-danger);
+  margin: 0 4px 0 6px;
+}
+.home-mon-tri-up {
+  border-top: 0;
+  border-bottom: 7px solid var(--c-success);
+}
+
+/* ---------- discover ---------- */
+.home-discover {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 26px; /* capture home/scroll_4: 137px from last card to screen bottom */
+}
+.home-disc {
+  position: relative;
+  border-radius: var(--r-lg);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  color: #fff;
+}
+.home-disc-title {
+  font-size: 18.5px;
+  font-weight: var(--fw-light);
+}
+.home-disc-sub {
+  font-size: 14.5px;
+  font-weight: var(--fw-light);
+  line-height: 21px;
+}
+.home-disc-consult {
+  min-height: 112px;
+  background: #97a3cc;
+  padding-right: 150px;
+  cursor: pointer;
+}
+.home-book {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  margin-top: -19px;
+  height: 38px;
+  padding: 0 20px 0 14px;
+  border-radius: var(--r-pill);
+  background: var(--g-device);
+  color: #fff;
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.home-disc-games {
+  min-height: 91px;
+  justify-content: center;
+  background: linear-gradient(100deg, #a9b3d8 0%, #b77ad8 60%, #b88ad3 100%);
+}
+.home-disc-games > svg {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  margin-top: -13px;
+}
+.home-disc-off {
+  min-height: 82px;
+  background: #f6f7f7;
+  color: #c9cbcd;
+}
+.home-disc-off .home-disc-title {
+  font-size: 18px;
+  color: #b9bcbf;
+}
+.home-disc-off .home-disc-sub {
+  color: #cfd2d4;
+}

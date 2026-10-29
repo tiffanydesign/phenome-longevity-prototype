@@ -1,0 +1,11 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [13, 165, 169, 321] ''
+-- [234, 206, 456, 280] 'Reports'
+C- [1124, 165, 1280, 321] ''
+-- [364, 451, 942, 536] 'Your Health Reports'
+-- [364, 549, 1163, 679] 'Access and view your personalized health reports'
+-- [52, 822, 578, 896] 'Available Reports (4)'
+C- [52, 948, 1228, 1364] 'Whole Genome | TR · Health Report PDF | 1 October 2026, 03:23 PM'
+C- [52, 1364, 1228, 1780] 'Transcriptome | EN · Health Report PDF | 27 September 2026, 11:23 PM'
+C- [52, 1780, 1228, 2196] 'Whole Genome | EN · Health Report PDF | 26 September 2026, 12:22 AM'
+C- [52, 2196, 1228, 2612] 'Transcriptome | EN · Health Report PDF | 24 September 2026, 06:04 PM'

@@ -1,0 +1,494 @@
+/* Health Monitor detail. y-values: XML bounds / 3.25 (capture/screens/steps|calories|sleep|monitor_blood_pressure). Body starts at y = 95. */
+.mon-theme {
+  display: contents;
+}
+/* nav title: capture ink ≈ 17 px (shared chevron header uses 20 px) */
+.mon-theme .nh-title {
+  font-size: 17.5px;
+}
+.mon {
+  --mon-band-a: #ffffff;
+  --mon-band-b: #edeff5; /* capture: steps/top chart bands fade to this on the right */
+  --mon-grid: #e3e3e8;
+  padding: 0 16px 60px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+:root[data-theme="dark"] .mon {
+  --mon-band-a: var(--c-bg);
+  --mon-band-b: #2c2e36;
+  --mon-grid: #3a3a40;
+}
+
+/* ---------- metric selector (y 110.8, h 48) ---------- */
+.mon-picker {
+  margin-top: 15.8px;
+  position: relative;
+  z-index: 5;
+  height: 48px;
+}
+.mon-select {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 48px;
+  border-radius: 17px;
+  background: linear-gradient(90deg, #f2f4f9 0%, #e0e3ef 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 18px 0 17px;
+  color: var(--c-text-strong);
+}
+.mon-select-icon {
+  color: #222;
+}
+.mon-select-label {
+  margin-left: 13px;
+  flex: 1;
+  text-align: left;
+  font-size: 16.5px;
+  font-weight: var(--fw-bold);
+  color: #1f2021;
+}
+.mon-picker[data-open] .mon-select {
+  border-radius: 17px 17px 0 0;
+  background: linear-gradient(90deg, #edeff6 0%, #e4e7f2 100%);
+}
+:root[data-theme="dark"] .mon-select,
+:root[data-theme="dark"] .mon-list {
+  background: var(--c-surface);
+  color: var(--c-text);
+}
+:root[data-theme="dark"] .mon-select-label,
+:root[data-theme="dark"] .mon-select-icon {
+  color: var(--c-text);
+}
+
+/* dropdown panel: y 158.8 … 812 (capture: steps/metric_dropdown) */
+.mon-list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 48px;
+  height: 653px;
+  background: #f8f9fc;
+  border-radius: 0 0 17px 17px;
+  padding: 18px 8px 0 8px;
+  animation: fade-in 160ms linear;
+}
+.mon-list-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 16px;
+  margin: 0 0 4px 12px;
+  font-size: 11.5px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.4px;
+  color: #212122;
+}
+.mon-list-head i {
+  flex: 1;
+  height: 0.6px;
+  background: #c6c7ca;
+}
+.mon-list > div + div {
+  margin-top: 10px;
+}
+.mon-list-item {
+  width: 100%;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-left: 12px;
+  color: #abb5d6;
+  font-size: 15.5px;
+  font-weight: var(--fw-medium);
+}
+
+/* ---------- period segmented (y 175, h 43) ---------- */
+.mon-seg {
+  margin-top: 16.2px;
+  height: 43px;
+  border-radius: var(--r-pill);
+  background: #f5f5f5;
+  padding: 3.8px 4px;
+}
+.mon-seg .seg {
+  height: 35px;
+  background: transparent;
+}
+.mon-seg .seg-item {
+  font-size: 13px;
+  font-weight: var(--fw-medium);
+  color: #707070;
+}
+.mon-seg .seg-item[data-active] {
+  background: #d7e5e6; /* capture: steps/top */
+  color: #4f8fc9;
+  font-weight: var(--fw-bold);
+}
+:root[data-theme="dark"] .mon-seg {
+  background: var(--c-surface);
+}
+
+/* ---------- date row (y 233.8) ---------- */
+.mon-date {
+  margin-top: 15.8px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.mon-date button {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  color: #8c8c8c;
+}
+.mon-date span {
+  font-size: 14px;
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+}
+
+/* ---------- headline ---------- */
+.mon-eyebrow {
+  margin-top: 20px;
+  height: 17px;
+  font-size: 12.3px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text-2);
+  letter-spacing: 0.2px;
+}
+.mon-headline {
+  margin-top: 4px;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mon-headline b {
+  font-size: 32px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+  letter-spacing: 0.5px;
+}
+.mon-goal {
+  font-size: 21px;
+  color: var(--c-text-2);
+  margin-top: 4px;
+}
+.mon-goal-unit {
+  font-size: 18.5px;
+  margin-top: 4px;
+}
+.mon-edit {
+  margin: 4px 0 0 6px;
+  color: var(--c-text-2);
+}
+
+.mon-desc {
+  margin-top: 12px;
+  font-size: 14.1px;
+  line-height: 19px;
+  color: var(--c-text-2);
+}
+
+/* ---------- chart (y 466) ---------- */
+.mon-chart {
+  margin: 26.3px -16px 0;
+  display: block;
+  overflow: visible;
+}
+.mon-chart-tick,
+.mon-chart-x {
+  font-size: 9.2px;
+  fill: #7f7f7f;
+  font-family: var(--font);
+}
+
+/* ---------- comparison ---------- */
+.mon-h2 {
+  font-size: 15.9px;
+  font-weight: var(--fw-bold);
+  line-height: 23px;
+  color: var(--c-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mon-compare-title {
+  margin-top: 10.2px;
+}
+.mon-compare-title[data-period="W"] {
+  margin-top: 34.2px; /* capture: steps/period_W — title sits 24 px lower than on D */
+}
+.mon-pair {
+  display: grid;
+  grid-template-columns: 180.9px 1fr;
+  row-gap: 4px;
+}
+.mon-pair-std {
+  margin-top: 12px;
+}
+.mon-lbl {
+  font-size: 12.5px;
+  line-height: 17px;
+  color: var(--c-text-2);
+}
+.mon-cmp {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 27px;
+  font-weight: var(--fw-bold);
+}
+.mon-cmp small {
+  margin-left: 5px;
+  font-size: 14px;
+  font-weight: var(--fw-regular);
+  color: var(--c-text-2);
+}
+
+.mon-daycard {
+  margin-top: 17.2px;
+  height: 180px;
+  border-radius: 17px;
+  background: #efefef;
+  overflow: hidden;
+}
+:root[data-theme="dark"] .mon-daycard,
+:root[data-theme="dark"] .mon-tile,
+:root[data-theme="dark"] .mon-note,
+:root[data-theme="dark"] .mon-bp-tile,
+:root[data-theme="dark"] .mon-factor {
+  background: var(--c-surface);
+}
+
+.mon-about-title {
+  margin-top: 23px;
+}
+.mon-about {
+  margin-top: 9.9px;
+  font-size: 14.1px;
+  line-height: 20px;
+  color: var(--c-text-2);
+}
+
+/* ---------- sleep (capture: sleep/top) ---------- */
+.mon-gauge {
+  margin-top: 21px;
+  display: flex;
+  justify-content: center;
+}
+.mon-gauge-val {
+  font-size: 40px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 1px;
+  color: var(--c-text);
+  margin-bottom: 50px;
+}
+.mon-desc-sleep {
+  margin-top: 31px;
+}
+.mon-tiles {
+  margin-top: 25.6px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10.4px;
+}
+.mon-tile {
+  height: 135.6px;
+  border-radius: 13px;
+  background: #efefef;
+  padding: 14px 14px 0 14.2px;
+  display: flex;
+  flex-direction: column;
+}
+.mon-tile-icon {
+  color: #6e6e6e;
+}
+.mon-tile-label {
+  margin-top: 7.4px;
+  height: 38.2px;
+  font-size: 13.4px;
+  line-height: 19.1px;
+  font-weight: var(--fw-medium);
+  color: #202020;
+}
+.mon-tile-val {
+  margin-top: 5.8px;
+  font-size: 13px;
+  line-height: 19px;
+  color: #6e6e6e;
+}
+.mon-tile-bar {
+  margin-top: 10px;
+  height: 6.8px;
+  border-radius: 3.4px;
+  background: var(--c-track);
+}
+.mon-srow {
+  height: 118.2px;
+  padding-top: 0;
+}
+.mon-tiles + .mon-srow {
+  margin-top: 34.8px;
+}
+.mon-srow .mon-pair {
+  margin-top: 11.9px;
+  row-gap: 2.2px;
+}
+.mon-srow .mon-lbl {
+  line-height: 18.8px;
+  font-size: 13px;
+}
+.mon-dash {
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+.mon-dash b {
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+.mon-about-sleep {
+  margin-top: -12.4px;
+}
+
+/* ---------- blood pressure (capture: monitor_blood_pressure/*) ---------- */
+.mon-h3 {
+  font-size: 14.6px;
+  font-weight: var(--fw-bold);
+  line-height: 21px;
+  color: var(--c-text);
+}
+.mon-bp-avg {
+  margin-top: 10.2px;
+}
+.mon-bp-val {
+  margin-top: 6.2px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 15px;
+}
+.mon-bp-val b {
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+.mon-bp-rangeval b {
+  font-size: 21px;
+}
+.mon-note {
+  margin-top: 21px;
+  height: 116.6px;
+  border-radius: 17px;
+  background: #efefef;
+  padding: 14.7px 16px 0;
+}
+.mon-note h3 {
+  font-size: 13.8px;
+  font-weight: var(--fw-bold);
+  line-height: 20px;
+  color: #202020;
+}
+.mon-note p {
+  margin-top: 8px;
+  font-size: 13.8px;
+  line-height: 19px;
+  color: #6e6e6e;
+}
+.mon-bp-range {
+  margin-top: 23px;
+}
+.mon-bp-grid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12.8px 12.2px;
+}
+.mon-bp-tile {
+  height: 83.4px;
+  border-radius: 13px;
+  background: #efefef;
+  padding: 12px 14.2px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12.8px;
+  line-height: 19px;
+  color: #6e6e6e;
+}
+.mon-bp-tv {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 31px;
+  font-size: 13.5px;
+}
+.mon-bp-tv b {
+  font-size: 17px;
+  color: #202020;
+  letter-spacing: 1px;
+}
+.mon-factors-title {
+  margin-top: 22.6px;
+}
+.mon-factors {
+  margin-top: 13.2px;
+  padding-left: 26.3px;
+  display: flex;
+  flex-direction: column;
+  gap: 8.6px;
+  position: relative;
+}
+/* connector: vertical rule at x 26 from card 1 centre to card 3 centre, ticks into each card */
+.mon-factors::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 44.9px;
+  bottom: 44.9px;
+  width: 1.2px;
+  background: #cccccc;
+}
+.mon-factor {
+  position: relative;
+  height: 89.7px;
+  border-radius: 13px;
+  background: #efefef;
+  padding: 13px 14px 0;
+}
+.mon-factor::before {
+  content: "";
+  position: absolute;
+  left: -16.3px;
+  top: 44.9px;
+  width: 16.3px;
+  height: 1.2px;
+  background: #cccccc;
+}
+.mon-factor h3 {
+  font-size: 13.7px;
+  font-weight: var(--fw-bold);
+  line-height: 20px;
+  color: #202020;
+}
+.mon-factor p {
+  margin-top: 4px;
+  font-size: 13.5px;
+  line-height: 19px;
+  color: #6e6e6e;
+}
+.mon-about-bp {
+  margin-top: 22.6px;
+}

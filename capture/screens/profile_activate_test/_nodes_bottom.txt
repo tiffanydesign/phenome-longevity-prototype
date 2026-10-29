@@ -1,0 +1,8 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [26, 152, 182, 334] ''
+-- [461, 206, 819, 280] 'Activate Test'
+-- [316, 464, 964, 584] 'Activate New Kit'
+-- [78, 623, 1202, 753] 'Enter your kit activation code to get started with your test.'
+-- [78, 883, 386, 939] 'Activation Code'
+C- [78, 965, 1202, 1166] ''
+C- [78, 1270, 1202, 1439] 'Activate New Kit'

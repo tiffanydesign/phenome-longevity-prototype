@@ -1,0 +1,428 @@
+/* Add Device flow. y-values: XML bounds / 3.25 (capture/screens/add_device/*.xml); body starts at y = 103. */
+.adv-header {
+  position: relative;
+  height: 59px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+.adv-back {
+  width: 48px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  color: var(--c-text-strong);
+  z-index: 1;
+}
+.adv-header h1 {
+  position: absolute;
+  left: 60px;
+  right: 60px;
+  text-align: center;
+  font-size: 19.5px;
+  font-weight: var(--fw-regular);
+  color: var(--c-text-strong);
+}
+.adv-info {
+  margin-left: auto;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: var(--c-text-strong);
+  z-index: 1;
+}
+
+.adv {
+  padding: 23.8px 20.2px 0 20px;
+  display: flex;
+  flex-direction: column;
+}
+/* banner y 126.8, h 80 */
+.adv-banner {
+  height: 80px;
+  border-radius: 20px;
+  background: #f2f3f8; /* capture: add_device/top */
+  display: flex;
+  align-items: center;
+  padding: 0 22px 0 17.5px;
+  text-align: left;
+  color: #6b6b6b;
+}
+.adv-banner-icon {
+  color: var(--c-navy);
+  flex-shrink: 0;
+}
+.adv-banner-text {
+  flex: 1;
+  margin-left: 13px;
+  display: flex;
+  flex-direction: column;
+}
+.adv-banner-text b {
+  font-size: 15.5px;
+  font-weight: var(--fw-bold);
+  line-height: 20px;
+  color: var(--c-text);
+}
+.adv-banner-text span {
+  margin-top: 2px;
+  font-size: 12.8px;
+  line-height: 17px;
+  color: #757575;
+}
+
+/* device rows: y 222.8 / 291.7 / 360.9, h 61 */
+.adv-item {
+  margin-top: 16px;
+  height: 61px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #ffffff 0%, #e4e5e8 30%, #e2e3e8 80%, #e5e7f1 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 22px 0 17px;
+  color: var(--c-text);
+}
+.adv-item + .adv-item {
+  margin-top: 8px;
+}
+.adv-item-label {
+  flex: 1;
+  margin-left: 16px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+}
+.adv-item > svg {
+  color: #707070;
+}
+.adv-item-off {
+  background: linear-gradient(90deg, #ffffff 0%, #f4f4f5 30%, #f3f5fa 100%);
+  color: #9a9a9a;
+}
+.adv-item-off small {
+  margin-right: -6px;
+  font-size: 13.5px;
+  color: #c4c4c4;
+}
+
+/* Bluetooth error (capture: add_device/error_bluetooth) */
+.adv-error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 247.6px;
+  text-align: center;
+}
+.adv-btoff {
+  color: #bdbdbd;
+}
+.adv-error h2 {
+  margin-top: 26.6px;
+  font-size: 17.3px;
+  font-weight: var(--fw-bold);
+  line-height: 26px;
+  color: var(--c-text);
+}
+.adv-error p {
+  margin: 12px 24px 0;
+  font-size: 13.8px;
+  line-height: 20px;
+  color: #757575;
+}
+.adv-try {
+  margin-top: 32px;
+  width: 137.2px;
+  height: 51.1px;
+  border-radius: var(--r-pill);
+  background: var(--c-navy);
+  color: #fff;
+  font-size: 15.5px;
+  font-weight: var(--fw-bold);
+}
+
+/* scanning (capture: scanning_from_video.png — centre 197.6, 468.6) */
+.adv-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 365.6px;
+  height: 0;
+}
+.adv-pulse {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: adv-breathe 2.4s ease-in-out infinite;
+}
+.adv-pulse-3 {
+  width: 213px;
+  height: 213px;
+  background: #f3f4f9;
+}
+.adv-pulse-2 {
+  width: 158px;
+  height: 158px;
+  background: #e6e8f3;
+  animation-delay: 0.3s;
+}
+.adv-pulse-1 {
+  width: 110px;
+  height: 110px;
+  background: #d7dced;
+  animation-delay: 0.6s;
+}
+@keyframes adv-breathe {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+.adv-scan-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 14.5px;
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+}
+.adv-bt {
+  color: #23388b;
+}
+
+/* ---------- overlays ---------- */
+.adv-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+}
+.adv-scrim {
+  position: absolute;
+  inset: 0;
+  cursor: default;
+  animation: fade-in var(--dur-modal) var(--ease-out);
+}
+
+/* disclaimer sheet: y 447.1 → bottom */
+.adv-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 405.8px;
+  background: var(--c-bg);
+  border-radius: 26px 26px 0 0;
+  padding: 24px 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: sheet-in 280ms var(--ease-out);
+}
+.adv-sheet-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  background: #e8ebf3;
+  display: grid;
+  place-items: center;
+}
+.adv-sheet h2 {
+  margin-top: 23px;
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+  line-height: 24px;
+  color: var(--c-text);
+}
+.adv-sheet p {
+  margin: 13px -4px 0;
+  font-size: 15px;
+  line-height: 21.1px;
+  color: #757575;
+}
+.adv-ok {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 312.9px;
+  height: 48.9px;
+  border-radius: 14px;
+  background: var(--c-navy);
+  color: #fff;
+  font-size: 15px;
+  font-weight: var(--fw-bold);
+}
+
+/* Android permission dialog: 9.8..384 × 299.7..820.9 */
+.os-perm {
+  position: absolute;
+  left: 9.8px;
+  right: 9.8px;
+  top: 299.7px;
+  height: 521.2px;
+  border-radius: 28px;
+  background: #ffffff;
+  padding: 28.5px 28px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Roboto, "Google Sans", var(--font);
+  animation: modal-in var(--dur-modal) var(--ease-out);
+}
+.os-perm-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #e5e5e5;
+  display: grid;
+  place-items: center;
+}
+.os-perm h2 {
+  margin-top: 13px;
+  font-size: 17.6px;
+  font-weight: var(--fw-bold);
+  line-height: 21.5px;
+  text-align: center;
+  color: #111;
+}
+.os-perm-maps {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+.os-map {
+  width: 150.2px;
+  height: 148.9px;
+  border-radius: 22px;
+  border: 2.6px solid #c2b9a8;
+  background: #fbf8f2;
+  padding: 0 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+}
+.os-map[data-on] {
+  background: #f4db95;
+  border-color: #6f5d27;
+}
+.os-map-head {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 3px;
+  font-size: 13px;
+  color: #3a3527;
+}
+.os-map img {
+  width: 126.8px;
+  height: 93.2px;
+  border-radius: 10px;
+}
+.os-btn {
+  width: 318.2px;
+  height: 50.2px;
+  border-radius: var(--r-pill);
+  background: #f0f0f0;
+  color: #1f1f1f;
+  font-family: Roboto, "Google Sans", var(--font);
+  font-size: 16px;
+}
+.os-btn + .os-btn {
+  margin-top: 12px;
+}
+.os-btn-primary {
+  margin-top: 40.6px;
+  background: #4a80f7;
+  color: #fff;
+}
+
+/* Android "turn on Bluetooth" prompt: 11.7..382.2 × 661.2..821.2 */
+.os-bt {
+  position: absolute;
+  left: 11.7px;
+  right: 11.7px;
+  top: 661.2px;
+  height: 160px;
+  border-radius: 28px;
+  background: #ffffff;
+  padding: 23.7px 23.6px 0 27.4px;
+  font-family: Roboto, "Google Sans", var(--font);
+  animation: sheet-in 280ms var(--ease-out);
+}
+.os-bt p {
+  font-size: 15.8px;
+  line-height: 20px;
+  color: #1f1f1f;
+}
+.os-bt-row {
+  position: absolute;
+  left: 23.4px;
+  right: 23.4px;
+  top: 87.4px;
+  display: flex;
+  gap: 11.7px;
+}
+.os-bt-row .os-btn {
+  flex: 1;
+  width: auto;
+  height: 48.9px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+}
+
+/* No Device Found: 40.2..355 × 340.7..540.8 */
+.adv-dialog {
+  position: absolute;
+  left: 40.2px;
+  right: 39px;
+  top: 340.7px;
+  height: 200px;
+  border-radius: 26px;
+  background: var(--c-bg);
+  padding: 23.3px 23.8px 0;
+  animation: modal-in var(--dur-modal) var(--ease-out);
+}
+.adv-dialog h2 {
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+  line-height: 24px;
+  color: var(--c-text);
+}
+.adv-dialog p {
+  margin-top: 16px;
+  font-size: 14.2px;
+  line-height: 20px;
+  color: #757575;
+}
+.adv-dialog-actions {
+  position: absolute;
+  right: 25.2px;
+  top: 127.3px;
+  display: flex;
+  gap: 8px;
+}
+.adv-dialog-actions button {
+  height: 48px;
+  min-width: 64px;
+  font-size: 14.5px;
+  color: #707070;
+}
+.adv-dialog-actions .adv-retry {
+  color: var(--c-navy);
+  font-weight: var(--fw-bold);
+}

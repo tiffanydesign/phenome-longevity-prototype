@@ -1,0 +1,6 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [26, 152, 182, 334] ''
+-- [472, 206, 808, 280] 'Appearance'
+-- [78, 412, 788, 477] 'Choose how the app looks to you'
+C- [78, 555, 1202, 828] 'Light Mode | Best for daytime use'
+C- [78, 867, 1202, 1127] 'Dark Mode | Easier on the eyes at night'

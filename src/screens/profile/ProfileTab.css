@@ -1,0 +1,150 @@
+/* Profile tab — capture tab_profile/top + scroll_1 (bounds ÷ 3.25). Body starts at y = 103. */
+.scr:has(.prf-tab) {
+  --prf-logo: var(--c-navy);
+  --prf-name: var(--c-navy);
+  --prf-avatar: var(--c-navy);
+  --prf-email: #000000;
+}
+:root[data-theme="dark"] .scr:has(.prf-tab) {
+  --prf-logo: #ffffff;
+  --prf-name: #abb5d6;
+  --prf-avatar: #abb5d6;
+  --prf-email: #ffffff;
+}
+
+.prf-tab-logo {
+  height: 59px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4px;
+}
+
+.prf-tab {
+  padding: 28px var(--gutter) 7px; /* bottom: max scroll = 426 (tab_profile/scroll_1) */
+  display: flex;
+  flex-direction: column;
+}
+
+.prf-tab-title {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 28.3px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+
+/* ---------- user card (y 199, h 83) ---------- */
+.prf-tab-user {
+  margin-top: 28px;
+  height: 83px;
+  border-radius: 20px;
+  background: var(--prf-card);
+  display: flex;
+  align-items: center;
+  padding: 0 11px 0 16px;
+  text-align: left;
+  color: var(--prf-row);
+}
+.prf-tab-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--prf-avatar);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+.prf-tab-user-text {
+  flex: 1;
+  min-width: 0;
+  margin-left: 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.prf-tab-name {
+  font-size: 19.5px;
+  line-height: 22px;
+  font-weight: var(--fw-bold);
+  color: var(--prf-name);
+}
+.prf-tab-email {
+  font-size: 14.6px;
+  line-height: 18px;
+  color: var(--prf-email);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- sections ---------- */
+.prf-tab-section {
+  margin: 24px 0 8px 16px;
+  height: 17px;
+  line-height: 17px;
+  font-size: 12.4px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.2px;
+  color: var(--prf-section);
+}
+.prf-tab-card {
+  border-radius: 20px;
+  background: var(--prf-card);
+  overflow: hidden;
+}
+.prf-tab-row {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  padding: 0 19px 0 20px;
+  color: var(--prf-row);
+  text-align: left;
+}
+.prf-tab-icon {
+  display: grid;
+  place-items: center;
+  margin-right: 13px;
+}
+.prf-tab-label {
+  flex: 1;
+  font-size: 16.5px;
+  letter-spacing: 0.1px;
+}
+
+.prf-tab-logout {
+  margin-top: 23px;
+  color: var(--prf-danger);
+}
+
+/* ---------- logout confirm (not captured) ---------- */
+.prf-logout {
+  padding: 24px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+.prf-logout-title {
+  font-size: 19px;
+  font-weight: var(--fw-bold);
+}
+.prf-logout-text {
+  font-size: 15px;
+  color: var(--prf-muted, #757575);
+}
+.prf-logout-actions {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.prf-logout-actions .btn {
+  height: 46px;
+  font-size: 15px;
+}

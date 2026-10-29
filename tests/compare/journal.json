@@ -1,0 +1,31 @@
+[
+  { "name": "journal-activity-top", "route": "/journal/activity", "ref": "journal_activity/top" },
+  { "name": "journal-activity-after-log", "route": "/journal/activity/form/running", "ref": "journal_activity/after_log", "click": ["START ACTIVITY", "STOP ACTIVITY"] },
+  { "name": "journal-activity-add-top", "route": "/journal/activity/select", "ref": "activity_add/top" },
+  { "name": "journal-activity-add-search", "route": "/journal/activity/select", "query": "q=run", "ref": "activity_add/search" },
+  { "name": "journal-activity-form-top", "route": "/journal/activity/form/running", "ref": "activity_form/top" },
+  { "name": "journal-activity-form-running", "route": "/journal/activity/form/running", "ref": "activity_form/running", "click": ["START ACTIVITY"] },
+  { "name": "journal-activity-detail", "route": "/journal/activity/form/running", "ref": "activity_detail/top", "click": ["START ACTIVITY", "STOP ACTIVITY", "Running"] },
+
+  { "name": "journal-diet-top", "route": "/journal/diet", "ref": "journal_diet/top" },
+  { "name": "journal-diet-scroll1", "route": "/journal/diet", "ref": "journal_diet/scroll_1", "scroll": 437 },
+  { "name": "journal-diet-scroll2", "route": "/journal/diet", "ref": "journal_diet/scroll_2", "scroll": 874 },
+  { "name": "journal-diet-scroll3", "route": "/journal/diet", "ref": "journal_diet/scroll_3", "scroll": 1311 },
+  { "name": "journal-diet-scroll4", "route": "/journal/diet", "ref": "journal_diet/scroll_4", "scroll": 9999 },
+  { "name": "journal-diet-after-add", "route": "/journal/diet/add/breakfast", "query": "pick=shrimp-salad-1&g=110", "ref": "journal_diet/after_add", "click": ["ADD TO BREAKFAST"] },
+  { "name": "journal-meal-summary-top", "route": "/journal/diet/add/breakfast", "query": "pick=shrimp-salad-1&g=110", "ref": "meal_summary/top", "click": ["ADD TO BREAKFAST", "Shrimp garden salad"] },
+  { "name": "journal-meal-summary-scroll1", "route": "/journal/diet/add/breakfast", "query": "pick=shrimp-salad-1&g=110", "ref": "meal_summary/scroll_1", "click": ["ADD TO BREAKFAST", "Shrimp garden salad"], "scroll": 163 },
+  { "name": "journal-meal-log-top", "route": "/journal/diet/add/breakfast", "ref": "meal_log/top" },
+  { "name": "journal-meal-log-search", "route": "/journal/diet/add/breakfast", "query": "q=eggs", "ref": "meal_log/search_results" },
+  { "name": "journal-meal-log-item", "route": "/journal/diet/add/breakfast", "query": "q=eggs", "ref": "meal_log/item_detail", "click": ["Shrimp garden salad"] },
+  { "name": "journal-meal-log-permission", "route": "/journal/diet/add/breakfast", "query": "perm=1", "ref": "meal_log/permission_camera" },
+
+  { "name": "journal-habits-top", "route": "/journal/habits", "ref": "journal_habits/top" },
+  { "name": "journal-habits-scroll1", "route": "/journal/habits", "ref": "journal_habits/scroll_1", "scroll": 343 },
+  { "name": "journal-habit-detail", "route": "/journal/habits/water", "ref": "habit_detail/top" },
+  { "name": "journal-habit-completed", "route": "/journal/habits/water", "ref": "habit_detail/completed", "click": ["COMPLETE"], "wait": 0 },
+  { "name": "journal-habits-after-complete", "route": "/journal/habits", "ref": "journal_habits/after_complete", "click": ["Drink a glass of water", "COMPLETE"], "wait": 900 },
+  { "name": "journal-add-habit-top", "route": "/journal/habits/new", "ref": "add_habit/top" },
+  { "name": "journal-add-habit-filled", "route": "/journal/habits/new", "query": "name=Walk 10 minutes&notes=After lunch", "ref": "add_habit/filled" },
+  { "name": "journal-habits-after-add", "route": "/journal/habits/new", "query": "name=Walk 10 minutes&notes=After lunch", "ref": "journal_habits/after_add", "click": ["ADD TO HABITS", "Drink a glass of water", "COMPLETE"], "wait": 900 }
+]

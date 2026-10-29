@@ -1,0 +1,57 @@
+.dp {
+  width: 220px;
+  padding: 18px;
+  border-radius: 16px;
+  background: #fff;
+  color: #222;
+  box-shadow: 0 10px 30px rgba(20, 24, 40, 0.1);
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dp-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+.dp-path {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  color: #777;
+  word-break: break-all;
+}
+.dp-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dp-seg {
+  display: flex;
+  background: #f1f2f5;
+  border-radius: 8px;
+  padding: 2px;
+}
+.dp-seg button {
+  flex: 1;
+  height: 28px;
+  border-radius: 6px;
+  color: #666;
+}
+.dp-seg button[data-on] {
+  background: #fff;
+  color: #26387d;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.dp-link {
+  text-align: left;
+  color: #26387d;
+  font-weight: 700;
+}
+
+/* phones: the panel would cover the app — hide it */
+@media (max-width: 760px) {
+  .dp {
+    display: none;
+  }
+}

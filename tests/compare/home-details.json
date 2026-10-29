@@ -1,0 +1,33 @@
+[
+  { "name": "hd-capacity-top", "route": "/home/capacity", "ref": "capacity/top", "wait": 900 },
+  { "name": "hd-capacity-scroll1", "route": "/home/capacity", "ref": "capacity/scroll_1", "query": "hold=none", "scroll": 437, "wait": 900 },
+  { "name": "hd-capacity-scroll2", "route": "/home/capacity", "ref": "capacity/scroll_2", "query": "hold=none", "scroll": 844, "wait": 900 },
+  { "name": "hd-capacity-loading", "route": "/home/capacity", "ref": "capacity/loading", "query": "hold=skeleton" },
+  { "name": "hd-capacity-offline", "route": "/home/capacity", "ref": "offline/capacity", "query": "net=offline", "wait": 900 },
+  { "name": "hd-capacity-dark", "route": "/home/capacity", "ref": "dark_capacity/top", "query": "theme=dark", "wait": 900 },
+
+  { "name": "hd-steps-top", "route": "/home/monitor/steps", "ref": "steps/top", "query": "now=2026-10-28T14:38" },
+  { "name": "hd-steps-scroll1", "route": "/home/monitor/steps", "ref": "steps/scroll_1", "scroll": 406, "query": "now=2026-10-28T14:38" },
+  { "name": "hd-steps-W", "route": "/home/monitor/steps", "ref": "steps/period_W", "query": "now=2026-10-28T14:38&period=W" },
+  { "name": "hd-steps-M", "route": "/home/monitor/steps", "ref": "steps/period_M", "query": "now=2026-10-28T14:38&period=M" },
+  { "name": "hd-steps-6M", "route": "/home/monitor/steps", "ref": "steps/period_6M", "query": "now=2026-10-28T14:38&period=6M" },
+  { "name": "hd-steps-Y", "route": "/home/monitor/steps", "ref": "steps/period_Y", "query": "now=2026-10-28T14:38&period=Y" },
+  { "name": "hd-steps-dropdown", "route": "/home/monitor/steps", "ref": "steps/metric_dropdown", "click": ["Step Count"], "query": "now=2026-10-28T14:38" },
+  { "name": "hd-calories-top", "route": "/home/monitor/calories", "ref": "calories/top", "query": "now=2026-10-28T14:38" },
+  { "name": "hd-calories-scroll1", "route": "/home/monitor/calories", "ref": "calories/scroll_1", "scroll": 406, "query": "now=2026-10-28T14:38" },
+  { "name": "hd-sleep-top", "route": "/home/monitor/sleep", "ref": "sleep/top", "query": "now=2026-10-28T14:38" },
+  { "name": "hd-sleep-scroll1", "route": "/home/monitor/sleep", "ref": "sleep/scroll_1", "scroll": 437, "query": "now=2026-10-28T14:38" },
+  { "name": "hd-sleep-scroll2", "route": "/home/monitor/sleep", "ref": "sleep/scroll_2", "scroll": 527, "query": "now=2026-10-28T14:38" },
+  { "name": "hd-bp-top", "route": "/home/monitor/steps", "ref": "monitor_blood_pressure/top", "click": ["Step Count", "Blood Pressure"], "query": "now=2026-10-28T14:38" },
+  { "name": "hd-bp-scroll1", "route": "/home/monitor/bp", "ref": "monitor_blood_pressure/scroll_1", "scroll": 437, "query": "now=2026-10-28T14:38" },
+  { "name": "hd-bp-scroll2", "route": "/home/monitor/bp", "ref": "monitor_blood_pressure/scroll_2", "scroll": 874, "query": "now=2026-10-28T14:38" },
+  { "name": "hd-bp-scroll3", "route": "/home/monitor/bp", "ref": "monitor_blood_pressure/scroll_3", "scroll": 996, "query": "now=2026-10-28T14:38" },
+
+  { "name": "hd-device-top", "route": "/home/add-device", "ref": "add_device/top" },
+  { "name": "hd-device-disclaimer", "route": "/home/add-device", "ref": "add_device/disclaimer", "click": ["Not a medical device"] },
+  { "name": "hd-device-permission", "route": "/home/add-device", "ref": "add_device/permission_location", "click": ["Ring"] },
+  { "name": "hd-device-bterror", "route": "/home/add-device", "ref": "add_device/error_bluetooth", "click": ["Ring", "Only this time"] },
+  { "name": "hd-device-btprompt", "route": "/home/add-device", "ref": "add_device/bt_enable_prompt", "click": ["Ring", "Only this time", "Try Again"] },
+  { "name": "hd-device-scanning", "route": "/home/add-device", "ref": "add_device/scanning", "click": ["Ring", "Only this time", "Try Again", "Allow"] },
+  { "name": "hd-device-result", "route": "/home/add-device", "ref": "add_device/scan_result", "click": ["Ring", "Only this time", "Try Again", "Allow"], "wait": 8600 }
+]

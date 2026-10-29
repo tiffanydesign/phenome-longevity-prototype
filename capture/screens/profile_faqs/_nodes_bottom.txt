@@ -1,0 +1,10 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [26, 152, 182, 334] ''
+-- [566, 206, 714, 280] 'FAQs'
+C- [78, 386, 1202, 545] ''
+C- [78, 623, 1202, 831] 'How do I activate my test kit?'
+C- [78, 831, 1202, 1039] 'How long does it take to get my results?'
+C- [78, 1039, 1202, 1247] 'Can I change my personal information?'
+C- [78, 1247, 1202, 1455] 'How do I track my order?'
+C- [78, 1455, 1202, 1663] 'Is my data secure?'
+C- [78, 1663, 1202, 1871] 'How can I contact support?'

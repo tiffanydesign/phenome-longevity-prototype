@@ -1,0 +1,5 @@
+[
+  { "name": "home-top", "route": "/home", "ref": "home/top" },
+  { "name": "home-scroll2", "route": "/home", "ref": "home/scroll_2", "scroll": 853 },
+  { "name": "home-bottom", "route": "/home", "ref": "home/scroll_4", "scroll": 9999 }
+]

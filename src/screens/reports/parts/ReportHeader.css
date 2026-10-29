@@ -1,0 +1,8 @@
+/* capture: genetic_report/top — eyebrow ink 122 px wide, title 120 px ("Genetic Insights") */
+.rh-eyebrow {
+  font-size: 12px;
+}
+.rh-title {
+  font-size: 16px;
+  font-weight: var(--fw-bold);
+}

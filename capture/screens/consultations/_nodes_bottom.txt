@@ -1,0 +1,5 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [52, 191, 143, 282] ''
+-- [400, 198, 880, 276] 'Your Consultations'
+C- [65, 347, 1215, 523] 'Book Consultation'
+-- [65, 601, 1215, 1251] "You don't have any upcoming consultations."

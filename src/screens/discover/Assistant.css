@@ -1,0 +1,310 @@
+/* capture: assistant/* — body starts under the status bar (y 44); everything is placed
+   absolutely: top = capture y − 44. */
+.as-body.scroll {
+  overflow: hidden;
+  padding-bottom: 0;
+}
+
+/* children are positioned against this box (body padding does not offset absolute children) */
+.as-root {
+  position: absolute;
+  inset: var(--status-h) 0 0 0;
+}
+/* capture assistant/*: the glass tab bar shows no visible shadow/rim on the white page */
+.scr:has(.as-body) .tb .glass {
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.as-logo {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.as-actions {
+  position: absolute;
+  top: 63px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+.as-round {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #ececec;
+  background: var(--c-bg);
+  color: #6f6f6f;
+  display: grid;
+  place-items: center;
+}
+
+/* ---------- welcome ---------- */
+.as-title {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: var(--fw-bold);
+  line-height: 40px;
+  color: var(--c-text-strong);
+}
+.as-sub {
+  position: absolute;
+  top: 153px;
+  left: 22px;
+  right: 22px;
+  text-align: center;
+  font-size: 14.6px;
+  line-height: 20px;
+  color: var(--c-text-2);
+}
+.as-globe {
+  position: absolute;
+  top: 170px;
+  left: 22px;
+  width: 350px;
+  height: 350px;
+  opacity: 0.75;
+  pointer-events: none;
+}
+.as-chips {
+  position: absolute;
+  top: 355px;
+  left: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, 168px);
+  grid-auto-rows: 93px;
+  column-gap: 10px;
+  row-gap: 11px;
+}
+.as-chip {
+  border-radius: 16px;
+  border: 1px solid #ededed;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0 14px;
+  text-align: left;
+  font-size: 14.8px;
+  font-weight: var(--fw-medium);
+  line-height: 20px;
+  color: var(--c-text-strong);
+}
+
+/* ---------- chat (scroll area y 143–670) ---------- */
+.as-chat {
+  position: absolute;
+  top: 99px;
+  left: 0;
+  right: 0;
+  height: 527px;
+  padding: 10px 16px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+/* Chat bubbles render in the platform default (Roboto) in the capture, not Helvetica Neue.
+   TODO(fidelity): Roboto is not bundled; Arial is the closest local fallback. */
+.as-user,
+.as-ai {
+  font-family: Roboto, Arial, sans-serif;
+}
+.as-user {
+  align-self: flex-end;
+  max-width: 295px;
+  padding: 8px 20px;
+  border-radius: 22px;
+  background: #e4e8f0; /* capture: assistant/typing */
+  font-size: 14.8px;
+  line-height: 24px;
+  color: var(--c-text);
+  flex-shrink: 0;
+}
+.as-ai {
+  align-self: flex-start;
+  max-width: 295px;
+  padding: 14px 16px 16px;
+  border-radius: 22px;
+  background: var(--c-navy);
+  color: #fff;
+  font-size: 14.3px;
+  line-height: 20.2px;
+  flex-shrink: 0;
+}
+.as-ai p + ol,
+.as-ai ol + p {
+  margin-top: 15px;
+}
+.as-ai ol {
+  margin: 15px 0 0;
+  padding-left: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.as-ai b {
+  font-weight: var(--fw-bold);
+}
+.as-typing {
+  position: absolute;
+  top: 582px;
+  left: 17px;
+  width: 60px;
+  height: 36px;
+  border-radius: 18px;
+  background: var(--c-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.as-typing i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  animation: as-dot 1.2s infinite ease-in-out;
+}
+.as-typing i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.as-typing i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+@keyframes as-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+
+/* ---------- input (welcome y 668, chat y 687; 360×49) ---------- */
+.as-input {
+  position: absolute;
+  top: 624px;
+  left: 17px;
+  width: 360px;
+  height: 50px;
+  border-radius: 18px;
+  border: 1px solid #f0f0f0;
+  background: var(--c-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  padding: 0 7px 0 20px;
+  z-index: 2;
+}
+.as-input[data-chat] {
+  top: 643px;
+}
+.as-input input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 15.5px;
+  color: var(--c-text);
+}
+.as-input input::placeholder {
+  color: #9a9a9a;
+}
+.as-mic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: var(--c-navy);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+/* ---------- history sheet ---------- */
+.ah {
+  margin: -4px -4px 0;
+  display: flex;
+  flex-direction: column;
+}
+.ah-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ah-head h2 {
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+}
+.ah-new {
+  height: 38px;
+  padding: 0 14px 0 16px;
+  border-radius: var(--r-pill);
+  background: var(--c-navy);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: var(--fw-bold);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ah-group {
+  margin: 14px 0 10px;
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text-2);
+}
+.ah-item {
+  min-height: 85px;
+  margin-bottom: 8px;
+  padding: 12px 18px 12px 18px;
+  border-radius: 14px;
+  border: 1px solid #ececec;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+.ah-item[data-on] {
+  border: 1.5px solid var(--c-navy);
+  background: #f4f5f9; /* capture: assistant/history */
+}
+.ah-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #eef0f4;
+  color: var(--c-navy);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.ah-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ah-title {
+  font-size: 14.5px;
+  font-weight: var(--fw-medium);
+  line-height: 20px;
+}
+.ah-time {
+  font-size: 11.5px;
+  color: var(--c-text-2);
+}
+.ah-check {
+  color: var(--c-navy);
+  display: grid;
+}

@@ -1,0 +1,222 @@
+/* capture: welcome/top, login/top, signup/top, offline/launch_spinner. Accent #485a9c, disabled #919cbf. */
+.au-launch {
+  display: grid;
+  place-items: center;
+  padding-bottom: 20px;
+}
+
+/* ---------- welcome (absolute y from XML ÷ 3.25) ---------- */
+.au-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 32px;
+}
+.au-biglogo {
+  margin-top: 214px; /* logo top y 258 */
+}
+.au-wtitle {
+  margin-top: 64px; /* text block y 471 */
+  font-size: 27px;
+  font-weight: var(--fw-bold);
+  line-height: 34px;
+  text-align: center;
+  color: var(--c-text-strong);
+}
+.au-wtitle em,
+.au-wsub em,
+.au-title em {
+  font-style: normal;
+  color: #485a9c;
+}
+.au-wsub {
+  margin-top: 12px;
+  font-size: 14.5px;
+  line-height: 21px;
+  text-align: center;
+  color: var(--c-text-2);
+}
+.au-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: var(--fw-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.au-navy {
+  background: var(--c-navy);
+  color: #fff;
+}
+.au-navy:disabled {
+  background: #919cbf;
+  cursor: default;
+}
+.au-outline {
+  margin-top: 12px;
+  border: 1.5px solid var(--c-navy);
+  color: var(--c-navy);
+  font-weight: var(--fw-medium);
+}
+.au-join {
+  margin-top: 48px; /* y 641 */
+}
+.au-terms {
+  position: relative;
+  margin-top: 24px;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  color: #4c4c4c;
+}
+.au-terms u {
+  text-underline-offset: 2px;
+}
+.au-info {
+  position: absolute;
+  right: -30px;
+  top: 9px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1px solid #4c4c4c;
+  font-size: 9px;
+  line-height: 11px;
+  font-weight: var(--fw-bold);
+  text-align: center;
+}
+
+/* ---------- login / signup ---------- */
+.au-header {
+  position: relative;
+  height: 59px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.03);
+}
+.au-back {
+  position: absolute;
+  left: 8px;
+  top: 2px;
+  width: 48px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  color: var(--c-navy);
+}
+.au-form {
+  padding: 0 24px 32px;
+  display: flex;
+  flex-direction: column;
+}
+.au-title {
+  margin-top: 48px;
+  height: 40px;
+  font-size: 28.4px;
+  font-weight: var(--fw-bold);
+  line-height: 40px;
+  text-align: center;
+  color: var(--c-text-strong);
+}
+.au-title-signup {
+  height: 36px;
+  font-size: 28px;
+  line-height: 36px;
+}
+.au-subtitle {
+  margin-top: 8px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: #7584b9;
+}
+.au-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.au-label {
+  padding-left: 12px;
+  height: 20px;
+  font-size: 14.3px;
+  line-height: 20px;
+  color: var(--c-text);
+}
+.au-box {
+  height: 56px;
+  border-radius: 12px;
+  background: #f2f4f8;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  color: #a7aec2;
+}
+.au-box input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 16px;
+  color: var(--c-text);
+}
+.au-box input::placeholder {
+  color: #a3a8b5;
+}
+.au-eye {
+  color: #a7aec2;
+  display: grid;
+}
+.au-forgot {
+  align-self: flex-start;
+  height: 25px;
+  padding: 0 4px;
+  font-size: 11.7px;
+  font-weight: var(--fw-medium);
+  color: var(--c-navy);
+}
+.au-submit {
+  margin-top: 24px;
+  height: 56px;
+}
+.au-register {
+  margin-top: 24px;
+}
+.au-or {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13.2px;
+  font-weight: var(--fw-medium);
+  color: #c9cfe5;
+}
+.au-or span {
+  flex: 1;
+  height: 1px;
+  background: #e3e6ef;
+}
+.au-sso {
+  height: 52px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+}
+.au-otp {
+  margin-top: 24px;
+}
+.au-google {
+  background: #f2f2f2;
+  color: var(--c-text-strong);
+}
+.au-apple {
+  margin-top: 12px;
+  background: #171717;
+  color: #fff;
+}

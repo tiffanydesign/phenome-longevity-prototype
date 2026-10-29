@@ -1,0 +1,60 @@
+/* Lifestyle edit — capture profile_lifestyle/edit: label y 127, chips y 152 (h 41, row pitch 49). */
+.prf-ls-edit {
+  padding: 24px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.prf-chips-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.prf-chips-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.prf-chips-hint {
+  font-size: 10px;
+  color: #9e9e9e;
+  padding-right: 0;
+}
+.prf-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.prf-chip {
+  height: 41px;
+  padding: 0 17px;
+  border-radius: 10px;
+  border: 1px solid #dcdee3;
+  background: var(--prf-field);
+  font-size: 14px;
+  color: var(--prf-ink);
+  white-space: nowrap;
+}
+.prf-chip[data-on] {
+  height: 39px;
+  border-color: var(--c-navy);
+  background: var(--c-navy);
+  color: #fff;
+  font-weight: var(--fw-bold);
+}
+
+/* "Save" snackbar — profile_lifestyle/saved: navy band y 784 → bottom */
+.prf-snack {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 69px;
+  z-index: 70;
+  background: var(--c-navy);
+  color: #fff;
+  font-size: 15.5px;
+  font-weight: var(--fw-light);
+  padding: 15px 24px 0;
+  animation: fade-in var(--dur-fast) linear;
+}

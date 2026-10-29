@@ -1,0 +1,74 @@
+/* Privacy sheet — profile_privacy/top: sheet y 256, head to divider y 352, text from y 373; expanded top y 43. */
+.prf-pv {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+}
+.prf-pv-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.54); /* capture: #ffffff → #757575 */
+  animation: fade-in var(--dur-modal) var(--ease-out);
+}
+.prf-pv-scroll {
+  position: absolute;
+  inset: 43px 0 0 0;
+}
+.prf-pv-spacer {
+  display: block;
+  width: 100%;
+  height: 213px;
+  cursor: default;
+}
+.prf-pv-sheet {
+  min-height: 100%;
+  background: var(--c-bg);
+  border-radius: 20px 20px 0 0;
+  animation: sheet-in 280ms var(--ease-out);
+}
+.prf-pv-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: 96px;
+  padding-top: 12px;
+  background: var(--c-bg);
+  border-radius: 20px 20px 0 0;
+  border-bottom: 1px solid #c8cacd;
+}
+.prf-pv-handle {
+  display: block;
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: #b2b2b2;
+  margin: 0 auto;
+}
+.prf-pv-titlerow {
+  margin-top: 20px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 0 20px;
+}
+.prf-pv-title {
+  font-size: 19.5px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.prf-pv-close {
+  width: 48px;
+  height: 48px;
+  margin-right: 0;
+  display: grid;
+  place-items: center;
+  color: #757575;
+}
+.prf-pv-text {
+  padding: 20px 20px 40px;
+  white-space: pre-wrap;
+  font-size: 14.6px;
+  line-height: 22px;
+  color: var(--c-text);
+}

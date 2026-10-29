@@ -1,0 +1,10 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [13, 165, 169, 321] ''
+-- [415, 206, 865, 280] 'Cognitive Games'
+-S [0, 334, 1280, 2772] ''
+C- [78, 334, 1202, 598] 'Color Switch | Match colors to pass through obstacles! Timing is everything.'
+C- [78, 598, 1202, 1017] 'Ball Sort | Sort colored balls into tubes! Relaxing puzzle fun.'
+C- [78, 1017, 1202, 1436] '2048 | Swipe to merge tiles! Can you reach 2048?'
+C- [78, 1436, 1202, 1856] 'Memory Match | Flip cards and find matching pairs! Train your memory.'
+C- [78, 1856, 1202, 2275] 'Shape Fit | Drag pieces to fill the shape! A classic puzzle challenge.'
+C- [78, 2275, 1202, 2694] 'Tetris | Stack falling blocks and clear lines! A timeless test of speed and planning.'

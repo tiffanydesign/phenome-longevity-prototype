@@ -1,0 +1,12 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [26, 152, 182, 334] ''
+-- [425, 206, 855, 280] 'Lifestyle Habits'
+C- [1124, 165, 1280, 321] ''
+-- [78, 412, 443, 467] 'Daily Activity Level'
+-- [130, 539, 1150, 604] '—'
+-- [78, 701, 431, 757] 'Daily Water Intake'
+-- [130, 828, 1150, 893] '—'
+-- [78, 991, 503, 1046] 'Average Nightly Sleep'
+-- [130, 1117, 1150, 1182] '—'
+-- [78, 1280, 326, 1335] 'Health Goals'
+-- [130, 1407, 1150, 1472] '—'

@@ -1,0 +1,239 @@
+/* Activity screens. y-values from capture/screens/{journal_activity,activity_*}/*.xml ÷ 3.25. */
+
+/* ---------- list (body top y 195.7) ---------- */
+.act-list {
+  padding: 16px var(--gutter) 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.act-empty {
+  padding-top: 310.8px; /* text box y 522.5 */
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
+  color: #757575;
+}
+.act-card {
+  height: 68px;
+  border-radius: 13px;
+  background: var(--g-cart-row);
+  display: flex;
+  align-items: center;
+  padding: 0 16px 0 17.5px;
+  text-align: left;
+}
+.act-card-icon {
+  color: #f7ce46; /* capture: journal_activity/after_log */
+}
+.act-card-name {
+  flex: 1;
+  margin-left: 14.5px;
+  font-size: 16.5px;
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+}
+.act-card-stats {
+  display: grid;
+  grid-template-columns: 57.5px auto;
+  row-gap: 2px;
+  font-size: 11.9px;
+  line-height: 17px;
+  min-width: 106px;
+}
+.act-card-stats span {
+  color: #757575;
+}
+.act-card-stats b {
+  font-size: 12.4px;
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+}
+
+/* ---------- select ---------- */
+.act-search {
+  margin: 5.2px var(--gutter) 8px;
+  height: 48px;
+  border-radius: 14px;
+  background: #f2f2f2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  color: #6b6b6b;
+}
+.act-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 15.5px;
+  color: var(--c-text);
+  caret-color: var(--c-navy);
+}
+.act-search input::placeholder {
+  color: #8a8a8a;
+}
+.act-sports {
+  padding: 0 var(--gutter) 24px;
+}
+.act-sport {
+  height: 57.5px;
+  margin-bottom: 12.5px;
+  border-radius: 13px;
+  background: var(--g-cart-row);
+  display: flex;
+  align-items: center;
+  padding: 0 16px 0 15px;
+  cursor: pointer;
+}
+.act-sport-icon {
+  color: #727272;
+}
+.act-sport-name {
+  flex: 1;
+  margin-left: 13px;
+  font-size: 15.8px;
+  color: var(--c-text);
+}
+.act-star {
+  color: #999;
+  display: grid;
+}
+
+/* ---------- form ---------- */
+.act-form,
+.act-detail {
+  padding: 0 var(--gutter) 24px;
+}
+.act-picker {
+  width: 100%;
+  height: 50px;
+  margin-top: 9.2px;
+  border-radius: 13px;
+  background: #f2f2f2;
+  display: flex;
+  align-items: center;
+  padding: 0 18px 0 17px;
+  color: #555;
+}
+.act-picker:disabled {
+  cursor: default;
+}
+.act-picker-icon {
+  color: #deab4f; /* capture: activity_form/top */
+}
+.act-picker-name {
+  flex: 1;
+  text-align: left;
+  margin-left: 13px;
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+}
+.act-box {
+  background: #f4f4f4;
+  border-radius: 16px;
+  padding: 20.3px 20px 19.2px;
+}
+.act-box-time {
+  margin-top: 23.7px;
+}
+.act-box-kcal {
+  margin-top: 16.7px;
+}
+.act-box-title {
+  font-size: 15.8px;
+  font-weight: var(--fw-bold);
+  line-height: 22.8px;
+  color: var(--c-text);
+}
+.act-cols {
+  display: grid;
+  margin-top: 16px;
+}
+.act-cols-3 {
+  grid-template-columns: 104.6px 104.6px auto;
+}
+.act-cols-2 {
+  grid-template-columns: 156.9px auto;
+}
+.act-stat {
+  display: flex;
+  flex-direction: column;
+}
+.act-stat-label {
+  font-size: 12px;
+  line-height: 17.2px;
+  color: #757575;
+}
+.act-stat-val {
+  margin-top: 4px;
+  font-size: 15.3px;
+  line-height: 20.9px;
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+  white-space: nowrap;
+}
+.act-cta {
+  height: 55px;
+  background: #222;
+  font-size: 16.5px;
+  margin-bottom: -12px; /* button bottom y 832.9 */
+}
+
+/* ---------- detail ---------- */
+.act-detail-head {
+  display: flex;
+  align-items: center;
+  margin-top: 0.9px;
+}
+.act-detail-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f2f2f2;
+  display: grid;
+  place-items: center;
+  color: #f7ce46;
+}
+.act-detail-name {
+  margin-left: 12px;
+  font-size: 20.3px;
+  font-weight: var(--fw-bold);
+}
+.act-hr {
+  margin-top: 24.6px;
+  height: 179.4px;
+  display: grid;
+  place-items: center;
+  font-size: 13.1px;
+  color: #6f6f6f;
+  background: #f2f2f2;
+}
+.act-box-dtime,
+.act-box-dkcal {
+  padding: 18.4px 18.2px 16.9px;
+}
+.act-box-dtime {
+  margin-top: 16.5px;
+}
+.act-box-dkcal {
+  margin-top: 12.8px;
+}
+.act-box-dtime > .act-stat {
+  margin-top: 14.1px;
+}
+.act-box-dtime .act-cols {
+  margin-top: 12px;
+  grid-template-columns: 105.8px 105.8px auto;
+}
+.act-box-dkcal .act-cols {
+  margin-top: 13.9px;
+  grid-template-columns: 158.7px auto;
+}
+.act-box-dtime .act-stat-val,
+.act-box-dkcal .act-stat-val {
+  font-size: 15.2px;
+}

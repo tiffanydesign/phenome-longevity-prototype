@@ -1,0 +1,164 @@
+/* ---------- FAQs — profile_faqs/*: search y 119 (h 49), items from y 192 (h 52, pitch 64) ---------- */
+.prf-faq {
+  padding: 16px 24px 24px;
+}
+.prf-faq-search {
+  height: 49px;
+  border-radius: 14px;
+  background: var(--prf-card);
+  display: flex;
+  align-items: center;
+  padding: 0 4px 0 16px;
+  gap: 18px;
+  color: #7584b9;
+}
+.prf-faq-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 15.5px;
+  color: var(--prf-row);
+  caret-color: var(--c-navy);
+}
+.prf-faq-clear {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: #7584b9;
+}
+.prf-faq-list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.prf-faq-item {
+  border-radius: 16px;
+  background: var(--prf-card);
+  padding: 0 16px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  color: var(--prf-row);
+}
+.prf-faq-item[data-open] {
+  padding-bottom: 20px;
+}
+.prf-faq-q {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 15.5px;
+  letter-spacing: 0.1px;
+}
+.prf-faq-a {
+  margin-top: -6px;
+  font-size: 14.4px;
+  line-height: 20px;
+  color: #485a9c;
+}
+:root[data-theme="dark"] .prf-faq-a {
+  color: #abb5d6;
+}
+
+/* ---------- Appearance / Language shared ---------- */
+.prf-set {
+  padding: 24px 24px 24px;
+}
+.prf-set-sub {
+  height: 20px;
+  line-height: 20px;
+  font-size: 15px;
+  color: var(--prf-muted);
+}
+.prf-set-list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------- Language — profile_language/*: sub y 129, search y 168, list viewport y 237 → bottom ---------- */
+.scr-body.prf-lang-body {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.prf-lang-body > .prf-root {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.prf-lang {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 22px;
+}
+.prf-set-subrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+.prf-lang-count {
+  min-width: 34px;
+  height: 24px;
+  margin-top: 2px;
+  border-radius: 12px;
+  background: var(--prf-tile);
+  color: var(--c-navy);
+  font-size: 12.5px;
+  font-weight: var(--fw-bold);
+  display: grid;
+  place-items: center;
+}
+:root[data-theme="dark"] .prf-lang-count {
+  color: #abb5d6;
+}
+.prf-lang-search {
+  margin: 15px 24px 0;
+  height: 49px;
+  border-radius: 14px;
+  background: var(--prf-field);
+  box-shadow: 0 4px 10px rgba(30, 40, 80, 0.04);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 15px;
+  color: #424242;
+}
+:root[data-theme="dark"] .prf-lang-search {
+  color: #c7c7cc;
+}
+.prf-lang-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 15.5px;
+  color: var(--prf-ink);
+}
+.prf-lang-search input::placeholder {
+  color: var(--prf-muted);
+}
+.prf-lang-list {
+  margin-top: 20px; /* list viewport starts at y 237 */
+  flex: 1;
+  min-height: 0;
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.prf-lang-list > .prf-opt {
+  flex-shrink: 0;
+}

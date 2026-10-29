@@ -1,0 +1,132 @@
+.btn {
+  height: 52px;
+  padding: 0 24px;
+  border-radius: var(--r-md);
+  font-size: 17px;
+  font-weight: var(--fw-bold);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: opacity var(--dur-fast);
+}
+.btn:active {
+  opacity: 0.85;
+}
+.btn-block {
+  width: 100%;
+}
+.btn-navy {
+  background: var(--c-navy);
+  color: #fff;
+}
+.btn-black {
+  background: #000;
+  color: #fff;
+  letter-spacing: 0.4px;
+}
+.btn-outline {
+  background: transparent;
+  color: var(--c-navy);
+  border: 1.5px solid var(--c-navy);
+}
+.btn-soft {
+  background: var(--c-chip-navy-bg);
+  color: var(--c-navy);
+}
+.btn-disabled,
+.btn:disabled {
+  background: #929ec4;
+  color: #fff;
+  cursor: default;
+}
+
+/* ---------- segmented period ---------- */
+.seg {
+  display: flex;
+  height: 35px;
+  border-radius: var(--r-pill);
+  background: var(--c-surface);
+  padding: 0;
+}
+.seg-item {
+  flex: 1;
+  border-radius: var(--r-pill);
+  font-size: 15px;
+  color: var(--c-text-2);
+}
+.seg-item[data-active] {
+  background: #d6e8f2;
+  color: var(--c-blue);
+  font-weight: var(--fw-medium);
+}
+
+/* ---------- text field ---------- */
+.tf {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tf-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.tf-label {
+  font-size: 17px;
+  color: var(--c-text);
+}
+.tf-hint {
+  font-size: 14px;
+  color: var(--c-text-3);
+}
+.tf-box {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  border: 1px solid transparent;
+}
+.tf-box[data-error] {
+  border-color: var(--c-danger);
+}
+.tf-box input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 17px;
+}
+.tf-error {
+  font-size: 14px;
+  color: var(--c-danger);
+}
+
+/* ---------- stepper ---------- */
+.stp {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.stp-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--c-surface);
+  display: grid;
+  place-items: center;
+  color: var(--c-text);
+}
+.stp-btn:disabled {
+  color: var(--c-text-3);
+  cursor: default;
+}
+.stp-val {
+  min-width: 12px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: var(--fw-medium);
+}

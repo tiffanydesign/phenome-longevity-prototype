@@ -1,0 +1,12 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [13, 165, 169, 321] ''
+-- [545, 206, 735, 280] 'Activity'
+C- [1124, 165, 1280, 321] ''
+C- [78, 373, 303, 487] 'D'
+C- [303, 373, 528, 487] 'W'
+C- [528, 373, 752, 487] 'M'
+C- [752, 373, 977, 487] '6M'
+C- [977, 373, 1202, 487] 'Y'
+C- [284, 552, 368, 636] ''
+-- [433, 562, 847, 627] 'Today, 28 Oct 2026'
+-- [277, 1698, 1003, 1763] 'No activities logged for this period'

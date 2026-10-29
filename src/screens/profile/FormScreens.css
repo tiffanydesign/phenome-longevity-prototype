@@ -1,0 +1,196 @@
+/* Shared navy CTA (profile_activate_test / profile_change_password). */
+.prf-btn {
+  width: 100%;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--c-navy);
+  color: #fff;
+  font-size: 17px;
+  font-weight: var(--fw-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ---------- Activate Test (title y 143, input y 297, button y 391 / 416) ---------- */
+.prf-act {
+  padding: 40px 24px 24px;
+  display: flex;
+  flex-direction: column;
+}
+.prf-act-title {
+  height: 37px;
+  line-height: 37px;
+  text-align: center;
+  font-size: 26.5px;
+  font-weight: var(--fw-regular);
+  color: #000;
+}
+.prf-act-title b {
+  color: var(--c-navy);
+}
+:root[data-theme="dark"] .prf-act-title {
+  color: #fff;
+}
+.prf-act-sub {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 20px;
+  text-align: center;
+  color: #7584b9;
+}
+.prf-act-label {
+  margin-top: 40px;
+}
+.prf-act-input {
+  margin-top: 8px;
+  height: 62px;
+  border-radius: 14px;
+  border: 1.5px solid transparent;
+  background: var(--prf-field);
+  outline: 0;
+  text-align: center;
+  font-size: 22px;
+  font-weight: var(--fw-bold);
+  color: var(--prf-ink);
+  caret-color: var(--c-navy);
+}
+.prf-act-input[data-error] {
+  border-color: var(--prf-danger);
+}
+.prf-act-error {
+  margin-top: 8px;
+  font-size: 13.5px;
+  line-height: 17px;
+  color: var(--prf-danger);
+}
+.prf-act-btn {
+  margin-top: 32px;
+}
+
+/* ---------- Change Password (label y 159, box y 187 / 459, button y 555) ---------- */
+.prf-pw {
+  padding: 56px 24px 24px;
+  display: flex;
+  flex-direction: column;
+}
+.prf-pw-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.prf-pw-label {
+  padding-left: 12px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 15.5px;
+  color: var(--prf-label);
+}
+.prf-pw-box {
+  height: 56px;
+  border-radius: 16px;
+  background: #f2f4f8;
+  display: flex;
+  align-items: center;
+  padding: 0 15px 0 16px;
+  gap: 14px;
+  color: #abb5d6;
+}
+:root[data-theme="dark"] .prf-pw-box {
+  background: var(--prf-field);
+}
+.prf-pw-box input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 17px;
+  color: var(--prf-ink);
+  caret-color: var(--c-navy);
+}
+.prf-pw-box input[type="password"]:not(:placeholder-shown) {
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+.prf-pw-box input::placeholder {
+  color: #abb5d6;
+}
+.prf-pw-eye {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: #abb5d6;
+}
+.prf-pw-needs {
+  margin: 12px 0 0 12px;
+  height: 17px;
+  line-height: 17px;
+  font-size: 13px;
+  color: var(--prf-muted);
+}
+.prf-pw-rules {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0 0 0 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.prf-pw-rules li {
+  height: 19px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.8px;
+  color: var(--prf-muted);
+}
+.prf-pw-rules li[data-ok] {
+  color: var(--c-text);
+}
+.prf-pw-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--prf-muted);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+li[data-ok] .prf-pw-dot {
+  border: 0;
+  background: var(--c-navy);
+}
+.prf-pw-rules + .prf-pw-field {
+  margin-top: 24px;
+}
+.prf-pw-btn {
+  margin-top: 40px;
+  height: 56px;
+  border-radius: 16px;
+  font-size: 18px;
+}
+
+/* ---------- demo lists (orders / tests) ---------- */
+.prf-list {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.prf-list-item {
+  border-radius: 14px;
+  background: var(--prf-card);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--prf-muted);
+}
+.prf-list-item b {
+  font-size: 16px;
+  color: var(--prf-row);
+}

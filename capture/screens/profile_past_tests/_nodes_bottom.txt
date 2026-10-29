@@ -1,0 +1,4 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [26, 152, 182, 334] ''
+-- [357, 206, 923, 280] 'Past Activated Tests'
+-- [409, 1686, 871, 1751] 'No activated tests yet'

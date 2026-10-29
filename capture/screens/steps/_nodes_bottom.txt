@@ -1,0 +1,11 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [52, 191, 143, 282] ''
+-- [387, 198, 893, 276] 'Your Health Monitor'
+-S [0, 308, 1280, 2707] ''
+-- [52, 1183, 541, 1258] 'Today vs Yesterday'
+-- [52, 1297, 160, 1352] 'Today'
+-- [640, 1297, 818, 1352] 'Yesterday'
+-- [52, 1365, 103, 1495] '0'
+-- [640, 1365, 691, 1495] '0'
+-- [52, 2210, 506, 2285] 'About Step Count'
+-- [52, 2317, 1228, 2577] 'Step count tracks the total number of steps you take throughout the day. Regular walking a'

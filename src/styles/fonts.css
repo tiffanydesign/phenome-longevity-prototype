@@ -1,0 +1,36 @@
+/*
+ * Helvetica Neue — the app's bundled family (FontManifest.json in the APK).
+ * Licensed by the project owner via Adobe Fonts. To switch to an Adobe Fonts
+ * web kit instead of self-hosted files, replace this file's contents with the
+ * kit's <link>/@import and keep the family name "Helvetica Neue".
+ */
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("/phenome-longevity-prototype/assets/fonts/HelveticaNeueLight.otf") format("opentype");
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("/phenome-longevity-prototype/assets/fonts/HelveticaNeueRoman.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("/phenome-longevity-prototype/assets/fonts/HelveticaNeueMedium.otf") format("opentype");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("/phenome-longevity-prototype/assets/fonts/HelveticaNeueBold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("/phenome-longevity-prototype/assets/fonts/HelveticaNeueHeavy.otf") format("opentype");
+  font-weight: 800;
+  font-display: swap;
+}

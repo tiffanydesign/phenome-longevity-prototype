@@ -1,0 +1,27 @@
+# deps / build
+node_modules/
+dist/
+*.log
+
+# test output (regenerate with `npm run compare`)
+tests/out/
+
+# local env / secrets
+.env
+.env.*
+
+# --- capture: excluded for privacy (see README "Data & privacy") ---
+# PDF pages show a real patient's name / DOB
+capture/screens/report_pdf/
+# live camera feed of the room
+capture/screens/meal_camera/
+# clinic distances reveal the device location
+capture/screens/booking/type_selected.*
+capture/screens/booking/clinic_selected.*
+
+# --- capture: derived / bulky ---
+capture/recordings/frames/
+capture/apk_assets/lib/images/games/
+capture/.net_before.txt
+capture/.last_shot.txt
+capture/tools/.sensitive.json

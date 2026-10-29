@@ -1,0 +1,120 @@
+.pf-stage {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 24px 16px;
+}
+
+.pf-device {
+  width: 394px;
+  height: 853px;
+  border-radius: 48px;
+  padding: 0;
+  background: #0d0d0f;
+  box-shadow:
+    0 0 0 10px #0d0d0f,
+    0 0 0 11px #3b3b40,
+    0 30px 80px rgba(20, 24, 40, 0.35);
+  flex-shrink: 0;
+}
+
+.pf-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 40px;
+  background: var(--c-bg);
+  isolation: isolate;
+}
+
+/* ---------- status bar ---------- */
+.pf-status {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--status-h);
+  display: flex;
+  align-items: center;
+  padding: 0 28px 0 29px;
+  font-size: 15px;
+  font-weight: 500;
+  z-index: 50;
+  pointer-events: none;
+}
+.pf-time {
+  letter-spacing: 0.2px;
+}
+.pf-notif {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+}
+.pf-dots {
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+.pf-right {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.pf-battery {
+  min-width: 21px;
+  height: 12px;
+  padding: 0 3px;
+  border-radius: 3.5px;
+  background: #22c33f;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 12px;
+  text-align: center;
+}
+
+/* ---------- gesture handle ---------- */
+.pf-home-ind {
+  position: absolute;
+  left: 50%;
+  bottom: 9px;
+  width: 125px;
+  height: 5px;
+  margin-left: -62.5px;
+  border-radius: 3px;
+  background: #999;
+  z-index: 60;
+  pointer-events: none;
+}
+
+/* ---------- phones: full-bleed, real OS chrome ---------- */
+@media (max-width: 500px) {
+  .pf-stage {
+    padding: 0;
+    display: block;
+    min-height: 100dvh;
+  }
+  .pf-device {
+    width: 100%;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+    background: var(--c-bg);
+  }
+  .pf-screen {
+    border-radius: 0;
+    /* drawn status bar sits below the real OS bar / notch */
+    --status-h: calc(44px + env(safe-area-inset-top, 0px));
+    --home-ind-h: max(20px, env(safe-area-inset-bottom, 0px));
+  }
+  .pf-status {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  /* the OS draws its own gesture handle */
+  .pf-home-ind {
+    display: none;
+  }
+}

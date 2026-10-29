@@ -1,0 +1,442 @@
+/* Meal log / summary / camera. Body top y 98.8 (capture/screens/meal_*). */
+
+.ml-body {
+  margin-bottom: 20px; /* scroll view stops at y 832.9 */
+}
+.ml {
+  padding: 0 var(--gutter) 20px;
+  display: flex;
+  flex-direction: column;
+}
+.ml-title {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.ml-title h2 {
+  font-size: 25.5px;
+  font-weight: var(--fw-bold);
+  line-height: 31px;
+  color: var(--c-text);
+}
+.ml-title span {
+  margin-top: 4px;
+  font-size: 14.2px;
+  line-height: 19px;
+  color: #757575;
+}
+.ml-label {
+  margin-top: 24px;
+  font-size: 16.8px;
+  font-weight: var(--fw-regular);
+  line-height: 22.8px;
+}
+.ml-input {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  margin-top: 12px;
+  padding: 0 14px 0 16px;
+  border-radius: 14px;
+  background: #eef0f5;
+  color: #6d6e70;
+}
+.ml-input-btn {
+  width: 100%;
+  text-align: left;
+}
+.ml-placeholder {
+  flex: 1;
+  font-size: 15.5px;
+  color: #6d6e70;
+}
+.ml-input input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 15.5px;
+  color: var(--c-text);
+  caret-color: var(--c-navy);
+}
+.ml-camera {
+  margin-top: 12px;
+  height: 52px;
+  border-radius: 14px;
+  background: #000;
+  color: #fff;
+  display: grid;
+  place-items: center;
+}
+.ml-info {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 16px;
+  color: #757575;
+}
+.ml-info span {
+  font-size: 12.3px;
+  line-height: 16px;
+}
+.ml-info svg {
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+.ml-add {
+  margin-top: 15.3px;
+  height: 52px;
+  border-radius: 14px;
+  font-size: 15.5px;
+}
+.ml-add-off,
+.ml-add-off:disabled {
+  background: #ebebeb;
+  color: #a4a4a4;
+}
+
+/* ---------- selected food ---------- */
+.ml-food {
+  margin-top: 23.5px;
+  min-height: 86.6px;
+  border-radius: 14px;
+  background: #eef0f5;
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+}
+.ml-food-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.ml-food-text b {
+  font-size: 15px;
+  font-weight: var(--fw-bold);
+  line-height: 21px;
+}
+.ml-food-text span {
+  font-size: 12.5px;
+  line-height: 17px;
+  color: #757575;
+}
+.ml-food-del {
+  margin-left: 12px;
+  color: #4e4f51;
+  display: grid;
+}
+.ml-label-weight {
+  margin-top: 24.7px;
+}
+.ml-weight {
+  margin-top: 11.7px;
+  height: 52.5px;
+  border-radius: 14px;
+  background: #eef0f5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  color: #6d6e70;
+}
+.ml-weight button {
+  display: grid;
+  color: inherit;
+}
+.ml-weight button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.ml-weight-val {
+  font-size: 15px;
+  color: var(--c-text);
+}
+.ml-weight-val b {
+  font-size: 21.5px;
+  font-weight: var(--fw-bold);
+  color: #000;
+}
+.ml-nutr-head {
+  margin-top: 24.7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 16.8px;
+  line-height: 23px;
+}
+.ml-nutr-head b {
+  color: var(--c-calories);
+  font-weight: var(--fw-bold);
+}
+.ml-macros {
+  margin-top: 11.3px;
+}
+.ml-bars {
+  margin-top: 16px;
+}
+.ml-bars .jr-nutr,
+.ms-bars .jr-nutr {
+  padding-top: 16.8px;
+}
+
+/* ---------- meal summary ---------- */
+.ms-item {
+  margin-top: 24px;
+  min-height: 92px;
+  border-radius: 14px;
+  background: #eef0f5;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: left;
+  padding: 14px 16px 0;
+}
+.ms-item-name {
+  font-size: 15px;
+  font-weight: var(--fw-medium);
+  line-height: 21px;
+}
+.ms-item-desc {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  color: #222;
+}
+.ms-item-desc span {
+  flex: 1;
+  min-width: 0;
+  font-size: 11.6px;
+  line-height: 17px;
+  color: #6f6f6f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ms-item-kcal {
+  margin-top: 6px;
+  font-size: 13.3px;
+  font-weight: var(--fw-bold);
+  line-height: 18px;
+}
+.ms-add {
+  align-self: flex-start;
+  margin-top: 16px;
+  height: 40px;
+  width: 121.8px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, #59acca, #4277b1); /* capture: meal_summary/top */
+  color: #fff;
+  font-size: 15.6px;
+  font-weight: var(--fw-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+.ms-nutr-head {
+  margin-top: 24px;
+}
+.ms-macros {
+  margin-top: 11.2px;
+}
+.ms-bars {
+  margin-top: 24.4px;
+}
+.ms-full {
+  margin-top: 18px;
+  height: 53.8px;
+  border-radius: 12px;
+  border: 1.5px solid #222;
+  font-size: 15.5px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.3px;
+}
+
+/* ---------- search sheet ---------- */
+.ml-ov {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.ml-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.54);
+  animation: fade-in var(--dur-modal) var(--ease-out);
+  cursor: default;
+}
+.ml-sheet {
+  position: relative;
+  height: calc(100% - 128px); /* sheet top y 128 */
+  background: var(--c-bg);
+  border-radius: 21px 21px 0 0;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  animation: sheet-in 280ms var(--ease-out);
+}
+.ml-sheet-head {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 14px;
+}
+.ml-sheet-head h2 {
+  font-size: 21.5px;
+  font-weight: var(--fw-bold);
+  line-height: 28px;
+}
+.ml-sheet-head p {
+  margin-top: 6px;
+  font-size: 15.6px;
+  line-height: 22px;
+  color: #757575;
+}
+.ml-sheet-x {
+  width: 24px;
+  height: 24px;
+  margin-top: 17px;
+  display: grid;
+  place-items: center;
+  color: #444;
+}
+.ml-sheet-input {
+  height: 49.3px;
+  margin-top: 16px;
+}
+.ml-results {
+  flex: 1;
+  min-height: 0;
+  margin-top: 16px;
+}
+.ml-result {
+  width: 100%;
+  height: 63px;
+  margin-bottom: 9px;
+  border-radius: 14px;
+  background: #eef0f5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 13px 0 14px;
+  text-align: left;
+  color: #222;
+}
+.ml-result-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ml-result-text b {
+  font-size: 14.4px;
+  font-weight: var(--fw-bold);
+  line-height: 20px;
+}
+.ml-result-text span {
+  font-size: 11.6px;
+  line-height: 17px;
+  color: #6f6f6f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ml-noresult {
+  text-align: center;
+  color: #757575;
+  font-size: 14px;
+  padding-top: 24px;
+}
+
+/* ---------- Android permission dialog (system UI) ---------- */
+.ml-ov-perm {
+  justify-content: flex-start;
+}
+.ml-scrim-perm {
+  background: rgba(0, 0, 0, 0.6);
+}
+.ml-perm {
+  position: absolute;
+  left: 9.8px;
+  right: 9.8px;
+  top: 472.6px;
+  height: 348.3px;
+  border-radius: 28px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28.4px 28px 0;
+  font-family: Roboto, "Google Sans", Arial, sans-serif;
+  animation: modal-in var(--dur-modal) var(--ease-out);
+}
+.ml-perm-icon {
+  width: 31.6px;
+  height: 31.6px;
+  border-radius: 8px;
+  background: #e5e5e5;
+  display: grid;
+  place-items: center;
+  color: #222;
+}
+.ml-perm h2 {
+  margin-top: 14.8px;
+  padding: 0 8px;
+  text-align: center;
+  font-size: 17.5px;
+  font-weight: 700;
+  line-height: 22.75px;
+  color: #111;
+}
+.ml-perm-btn {
+  width: 100%;
+  height: 50.2px;
+  border-radius: 25px;
+  background: #f0f0f0;
+  font-family: inherit;
+  font-size: 16.8px;
+  color: #1f1f1f;
+  margin-top: 12px;
+}
+.ml-perm-primary {
+  margin-top: 32px;
+  background: #4a80f7;
+  color: #fff;
+}
+
+/* ---------- camera placeholder ---------- */
+.mc {
+  position: absolute;
+  inset: 0;
+  background: #0b0b0c;
+}
+.mc-view {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 50% 45%, #2a2a2c 0%, #121213 70%);
+}
+.mc-close {
+  position: absolute;
+  left: 329.8px;
+  top: 54.8px;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+.mc-shutter {
+  position: absolute;
+  left: 161.8px;
+  top: 731.1px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: inset 0 0 0 4px #fff, inset 0 0 0 7px #0b0b0c;
+}

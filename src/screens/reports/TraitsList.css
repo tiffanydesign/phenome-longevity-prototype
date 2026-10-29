@@ -1,0 +1,331 @@
+/* capture: traits_list/top — body starts y 103; search 113–161; count 186–206; list 216–843 */
+.tl-navtitle {
+  font-size: 19.5px;
+  font-weight: var(--fw-bold);
+}
+.tl-body.scr-body {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.tl-search {
+  margin: 10px 10px 0;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: var(--r-pill);
+  background: #e8f2fb;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 0 0 14px;
+  color: var(--c-text-2);
+}
+.tl-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 13.5px;
+  letter-spacing: 0.3px;
+  color: var(--c-text-2);
+}
+.tl-search input::placeholder {
+  color: var(--c-text-2);
+}
+.tl-found {
+  margin: 23px 10px 0;
+  height: 20px;
+  flex-shrink: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--c-text-2);
+}
+.tl-list {
+  margin: 10px 10px 0;
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 10px;
+}
+
+/* category chips: 72-wide cells, 60 Ø circles, count badge bottom-right */
+.tl-chips {
+  display: flex;
+  height: 89px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tl-chips::-webkit-scrollbar {
+  display: none;
+}
+.tl-chip {
+  width: 72px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tl-chip-circle {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e8f2fb;
+  color: #6b7074;
+  display: grid;
+  place-items: center;
+}
+.tl-chip[data-on] .tl-chip-circle {
+  background: #4f5f9b;
+  color: #fff;
+}
+.tl-chip-circle i {
+  position: absolute;
+  right: -2px;
+  bottom: -1px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 1px;
+  border-radius: var(--r-pill);
+  background: #3d4f8f;
+  border: 1.5px solid #fff;
+  color: #fff;
+  font-style: normal;
+  font-size: 8.5px;
+  font-weight: var(--fw-bold);
+  display: grid;
+  place-items: center;
+}
+.tl-chip-label {
+  margin-top: 4px;
+  font-size: 7.8px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+  white-space: nowrap;
+}
+
+/* trait card (slot 346: card 4 px below slot top, 337 tall) */
+.tc {
+  --tc-track: #eeeeee;
+  position: relative;
+  display: block;
+  width: 362px;
+  height: 337px;
+  margin: 4px 6px 5px;
+  border-radius: 24px;
+  background: var(--c-bg);
+  box-shadow: 0 2px 10px rgba(30, 40, 80, 0.05);
+  text-align: center;
+}
+.tc > span {
+  position: absolute;
+}
+.tc-arc {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.tc-info {
+  left: 14px;
+  top: 15.6px;
+  color: var(--c-navy);
+}
+.tc-icon {
+  left: 151px;
+  top: 98.5px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #e8f2fb;
+  color: var(--c-navy);
+  display: grid;
+  place-items: center;
+}
+.tc-icon > span {
+  transform: scale(0.82);
+}
+.tc-less,
+.tc-more {
+  top: 175px;
+  font-size: 10.6px;
+  color: var(--c-text-2);
+}
+.tc-less {
+  left: 31px;
+}
+.tc-more {
+  right: 30px;
+}
+.tc-name {
+  left: 0;
+  right: 0;
+  top: 193px;
+  font-size: 15.5px;
+  line-height: 22px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.tc-gene {
+  left: 0;
+  right: 0;
+  top: 216px;
+  font-size: 12.5px;
+  line-height: 20px;
+  color: var(--c-text-2);
+}
+.tc-sum {
+  left: 12px;
+  right: 12px;
+  top: 241px;
+  font-size: 11.6px;
+  line-height: 16px;
+  color: var(--c-text-2);
+}
+
+/* empty search (capture: traits_list/search_results) */
+.tl-empty {
+  padding-top: 102px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--c-text-2);
+  text-align: center;
+}
+.tl-empty b {
+  margin-top: 26px;
+  font-size: 15.5px;
+  font-weight: var(--fw-bold);
+}
+.tl-empty span {
+  margin-top: 12px;
+  font-size: 13.5px;
+}
+
+/* captured Android keyboard (search_focus / search_results), not part of the app */
+.tl-kb {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 306.5px;
+  z-index: 70;
+}
+
+/* ---------- trait modal (capture: traits_list/modal_trait, card 20–374 × 99–781) ---------- */
+.tm {
+  height: 682px;
+  display: flex;
+  flex-direction: column;
+}
+.tm-head {
+  height: 70px;
+  flex-shrink: 0;
+  background: #e8f2fb;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  padding-left: 20px;
+}
+.tm-head-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--c-navy);
+  color: #fff;
+  display: grid;
+  place-items: center;
+}
+.tm-head h2 {
+  font-size: 19px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.tm-body {
+  flex: 1;
+  min-height: 0;
+  padding: 20px 20px 0;
+}
+.tm-summary {
+  border: 1px solid #b9c1d9;
+  border-radius: 12px;
+  background: #e8ebf2;
+  padding: 15px 16px 18px;
+}
+.tm-summary h3,
+.tm-h {
+  font-size: 15.5px;
+  line-height: 23px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.tm-summary p {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--c-text);
+}
+.tm-h {
+  margin-top: 17px;
+}
+.tm-keys {
+  margin: 20px 4px 0;
+  border: 1px solid #e4e6ec;
+  border-radius: 12px;
+  padding: 0 16px;
+}
+.tm-key {
+  height: 61px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border-bottom: 1px solid #cfd2d8;
+}
+.tm-key:last-child {
+  border-bottom: 0;
+}
+.tm-key-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #f3f5f9;
+  color: var(--c-navy);
+  display: grid;
+  place-items: center;
+}
+.tm-key-text {
+  display: flex;
+  flex-direction: column;
+}
+.tm-key-text span {
+  font-size: 13px;
+  line-height: 16px;
+  color: var(--c-text-2);
+}
+.tm-key-text b {
+  font-size: 15.5px;
+  line-height: 20px;
+  font-weight: var(--fw-medium);
+  color: var(--c-text);
+}
+.tm-desc {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 20.2px;
+  color: var(--c-text);
+}
+.tm-foot {
+  height: 80px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 16px 24px 0;
+}
+.tm-foot button {
+  height: 48px;
+  padding: 0 0;
+  margin-top: -2px;
+  font-size: 15.5px;
+  font-weight: var(--fw-bold);
+  color: var(--c-navy);
+}

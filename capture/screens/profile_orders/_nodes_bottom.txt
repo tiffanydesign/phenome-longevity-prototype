@@ -1,0 +1,4 @@
+focus: com.szalongevity.sza_mobile/com.szalongevity.sza_mobile.MainActivity
+C- [26, 152, 182, 334] ''
+-- [453, 206, 827, 280] 'Order History'
+-- [497, 1686, 783, 1751] 'No orders yet'

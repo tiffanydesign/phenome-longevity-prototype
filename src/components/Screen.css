@@ -1,0 +1,40 @@
+.scr {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--c-bg);
+  animation: fade-in var(--dur-fast) linear;
+}
+
+.scr-header {
+  flex-shrink: 0;
+  padding-top: var(--status-h);
+  background: var(--c-bg);
+  position: relative;
+  z-index: 10;
+}
+
+/* no header: body starts below the status bar */
+.scr > .scr-body:nth-child(2) {
+  padding-top: var(--status-h);
+}
+
+.scr-body {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+/* tab roots: leave room for the floating nav */
+.scr[data-tabs] .scr-body {
+  padding-bottom: calc(var(--nav-h) + var(--nav-bottom) + 16px);
+}
+
+.scr-footer {
+  flex-shrink: 0;
+  padding: 12px var(--gutter) calc(var(--home-ind-h) + 12px);
+  background: var(--c-bg);
+  position: relative;
+  z-index: 10;
+}
