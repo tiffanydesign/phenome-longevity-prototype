@@ -1,0 +1,420 @@
+.tw {
+  position: absolute;
+  inset: 0;
+}
+.tw-top {
+  position: relative;
+  z-index: 2;
+}
+
+.tw-review {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--v-navy);
+  background: var(--v-solid);
+  box-shadow: var(--v-shadow);
+}
+
+/* lens: three categories, one body */
+.tw-lens {
+  position: relative;
+  z-index: 2;
+  margin: 2px 16px 0;
+  height: 44px;
+  padding: 4px;
+  display: flex;
+  border-radius: 22px;
+  background: #ffffff66;
+  box-shadow: inset 0 0 0 1px #203a851f;
+}
+.tw-lens i {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / 3);
+  border-radius: 18px;
+  background: var(--v-navy);
+  transform: translateX(calc(var(--i) * 100%));
+  transition: transform 0.34s var(--v-ease);
+}
+.tw-lens button {
+  position: relative;
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+  color: var(--v-ink-2);
+  transition: color 0.2s linear;
+}
+.tw-lens button[aria-selected="true"] {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* the figure */
+.tw-stage {
+  position: absolute;
+  left: 50%;
+  top: 140px;
+  margin-left: -196.5px;
+  transform-origin: 50% 0;
+  transform: scale(var(--s, 1));
+  transition: transform 0.72s var(--v-ease);
+  view-transition-name: v2-hero;
+}
+.tw-stage[data-organ="organ"] {
+  transform: translateY(-20px) scale(calc(var(--s, 1) * 0.8));
+}
+.tw-stage[data-organ="region"] {
+  transform: translateY(-16px) scale(calc(var(--s, 1) * 0.86));
+}
+.tw-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.tw-lead {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  animation: tw-in 0.5s var(--v-ease) 0.1s backwards;
+}
+.tw-pin {
+  position: absolute;
+  min-width: 88px;
+  padding: 2px 0 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  animation: tw-in 0.5s var(--v-ease) 0.1s backwards;
+}
+.tw-pin[data-side="l"] {
+  left: 18px;
+}
+.tw-pin[data-side="r"] {
+  right: 18px;
+  align-items: flex-end;
+  text-align: right;
+}
+.tw-pin small {
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.tw-pin span {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.tw-pin b {
+  font-family: var(--v-num);
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.tw-pin u {
+  font-size: 13px;
+  color: var(--v-ink-2);
+  text-decoration: none;
+}
+.tw-pin[data-flag] small,
+.tw-pin[data-flag] u {
+  color: var(--v-gold-ink);
+}
+@keyframes tw-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* the sheet: lens summary at rest, the organ's data when one is open */
+.tw-sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(100% - 108px);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  border-radius: 28px 28px 0 0;
+  background: var(--v-solid);
+  box-shadow: 0 -16px 34px -24px #24365e80;
+  transition: transform 0.46s var(--v-ease);
+}
+.tw-sheet[data-drag] {
+  transition: none;
+}
+.tw-sheet[data-snap="peek"]:not([data-drag]) .tw-scroll {
+  opacity: 0;
+  pointer-events: none;
+}
+.tw-grab {
+  flex: none;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  touch-action: none;
+}
+.tw-grab i {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: #203a8533;
+}
+.tw-sum {
+  flex: none;
+  padding: 0 20px 12px;
+  touch-action: none;
+  cursor: grab;
+}
+.tw-sum h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+.tw-sum p {
+  margin: 3px 0 0;
+  font-size: 14px;
+  color: var(--v-ink-2);
+}
+.tw-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 20px calc(136px + var(--tail, 0px));
+  scrollbar-width: none;
+  transition: opacity 0.2s linear;
+}
+.tw-scroll::-webkit-scrollbar {
+  display: none;
+}
+.tw-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tw-list li + li {
+  border-top: 1px solid var(--v-line);
+}
+.tw-list button {
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--v-ink);
+}
+.tw-list svg,
+.tw-row svg {
+  flex: none;
+  color: var(--v-ink-3);
+}
+.tw-thumb {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  overflow: hidden;
+}
+.tw-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+.tw-name small,
+.tw-organ-head small {
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--v-ink-2);
+}
+.tw-name small[data-status="monitor"] {
+  color: var(--v-gold-ink);
+}
+.tw-val {
+  flex: none;
+  font-size: 13px;
+  color: var(--v-ink-2);
+  white-space: nowrap;
+}
+.tw-val b {
+  font-family: var(--v-num);
+  font-size: 19px;
+  font-weight: 300;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.tw-estimate {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 20px;
+  background: #e6ecf6;
+}
+.tw-estimate p {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.42;
+  color: var(--v-ink-2);
+}
+
+/* rows dissolve before they reach the bar, so the pill never sits on half a line */
+.tw::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 112px;
+  z-index: 30;
+  pointer-events: none;
+  background: linear-gradient(to bottom, #ffffff00, #fffffff5 38%);
+}
+
+/* organ view */
+.tw-organ-head {
+  flex: none;
+  padding: 0 14px 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  touch-action: none;
+  cursor: grab;
+}
+.tw-organ-head h2 {
+  margin: 0;
+  font-family: var(--v-display);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.1;
+}
+.tw-organ-head small {
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: #e6ecf6;
+  color: var(--v-ink-2);
+}
+.tw-organ-head small[data-status="monitor"] {
+  color: var(--v-gold-ink);
+  background: var(--v-gold-wash);
+}
+.tw-organ-head button {
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e6ecf6;
+  color: var(--v-navy);
+}
+.tw-age {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0 10px;
+}
+.tw-age b {
+  font-family: var(--v-num);
+  font-size: 46px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.tw-age span {
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--v-ink-2);
+}
+.tw-read {
+  margin: 0 0 14px;
+  font-size: 16px;
+  line-height: 1.42;
+  text-wrap: pretty;
+}
+.tw-action {
+  width: 100%;
+  min-height: 64px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  background: linear-gradient(128deg, var(--v-navy), var(--v-deep));
+}
+.tw-action small {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #ffffffd0;
+}
+.tw-group {
+  margin-top: 18px;
+}
+.tw-group h3 {
+  margin: 0 0 2px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--v-ink-2);
+}
+.tw-row {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 16px;
+  border-bottom: 1px solid var(--v-line);
+}
+.tw-row > span:first-child {
+  flex: 1;
+  min-width: 0;
+}
+.tw-row small {
+  display: block;
+  margin-top: 1px;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.tw-row[data-flag] > span:first-child {
+  color: var(--v-gold-ink);
+  font-weight: 500;
+}
+.tw-study {
+  width: 100%;
+  min-height: 56px;
+  margin-top: 16px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--v-ink);
+  background: #e6ecf6;
+}
+.tw-ask {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 16px;
+  border-radius: 24px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--v-navy);
+  background: #e6ecf6;
+}

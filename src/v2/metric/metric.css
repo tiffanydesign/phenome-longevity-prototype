@@ -1,0 +1,226 @@
+.mx {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.mx::-webkit-scrollbar {
+  display: none;
+}
+.mx-head {
+  position: relative;
+  padding: calc(var(--status-h) + 2px) 20px 20px;
+  overflow: hidden;
+  border-radius: 0 0 28px 28px;
+  background: var(--f);
+  color: #fff;
+}
+.mx-art {
+  position: absolute;
+  top: 26px;
+  right: -22px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.mx-value {
+  position: relative;
+  margin-top: 18px;
+  font-size: 16px;
+  color: #ffffffd9;
+}
+.mx-value b {
+  font-family: var(--v-num);
+  font-size: 62px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.mx-delta {
+  position: relative;
+  margin: 12px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 15px;
+}
+.mx-delta em {
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v-ink);
+  background: #fff;
+}
+.mx-delta em[data-status="monitor"] {
+  color: #5c4100;
+  background: #f4d48a;
+}
+.mx-source {
+  position: relative;
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: #ffffffd9;
+}
+.mx-body {
+  padding: 14px 16px 44px;
+}
+.mx-panel {
+  padding: 14px 14px 12px;
+  border-radius: var(--v-r);
+  background: var(--v-solid);
+  box-shadow: var(--v-shadow);
+}
+.mx-panel h2 {
+  margin: 2px 2px 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.mx-foot {
+  margin: 10px 2px 2px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--v-ink-2);
+}
+.mx-seg {
+  position: relative;
+  height: 40px;
+  margin-bottom: 10px;
+  padding: 3px;
+  display: flex;
+  border-radius: 20px;
+  background: #e6ecf6;
+}
+.mx-seg i {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc((100% - 6px) / 3);
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: var(--v-shadow);
+  transform: translateX(calc(var(--i) * 100%));
+  transition: transform 0.32s var(--v-ease);
+}
+.mx-seg button {
+  position: relative;
+  flex: 1;
+  text-align: center;
+  font-size: 14px;
+  color: var(--v-ink-2);
+}
+.mx-seg button[aria-selected="true"] {
+  color: var(--v-ink);
+  font-weight: 500;
+}
+.v2-chart svg,
+.v2-cohort svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: pan-y;
+  cursor: crosshair;
+}
+.v2-chart-read {
+  font-family: var(--v-text);
+  font-size: 13px;
+  font-weight: 500;
+  fill: #fff;
+}
+.v2-chart-axis {
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.mx-stats {
+  margin: 12px 0 2px;
+  padding-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--v-line);
+}
+.mx-stats dt {
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.mx-stats dd {
+  margin: 2px 0 0;
+  font-family: var(--v-num);
+  font-size: 20px;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+}
+.mx-note {
+  margin: 16px 4px;
+  font-size: 16px;
+  line-height: 1.42;
+  text-wrap: pretty;
+}
+.mx-twin {
+  width: 100%;
+  min-height: 92px;
+  padding: 8px 18px 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--v-r);
+  color: #fff;
+  background: linear-gradient(135deg, #0f2461, #203a85);
+  box-shadow: 0 16px 30px -22px #0f2461;
+}
+.mx-twin-art {
+  flex: none;
+  width: 84px;
+  height: 84px;
+}
+.mx-twin > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+.mx-twin b {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+}
+.mx-twin small {
+  display: block;
+  margin-top: 3px;
+  font-size: 14px;
+  color: #ffffffd0;
+}
+.mx-related {
+  margin-top: 18px;
+}
+.mx-related h2 {
+  margin: 0 4px 4px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.mx-related button {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 15px;
+  border-bottom: 1px solid var(--v-line);
+}
+.mx-related span:first-child {
+  flex: 1;
+}
+.mx-related-v {
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.mx-related-v b {
+  font-family: var(--v-num);
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--v-ink);
+}

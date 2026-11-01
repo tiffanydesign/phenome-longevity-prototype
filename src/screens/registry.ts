@@ -7,6 +7,7 @@ import { routes as journal } from "./journal";
 import { routes as discover } from "./discover";
 import { routes as auth } from "./auth";
 import { routes as reports } from "./reports";
+import { routes as redesign } from "@/v2";
 
 /** Registry of every screen; order = order in the #/__screens index. */
-export const SCREENS: ScreenRoute[] = [...home, ...journal, ...discover, ...insights, ...reports, ...store, ...profile, ...auth];
+export const SCREENS: ScreenRoute[] = [...home, ...journal, ...discover, ...insights, ...reports, ...store, ...profile, ...auth, ...redesign];

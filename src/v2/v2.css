@@ -1,0 +1,280 @@
+/*
+ * Phenome redesign. Tokens come from the Digital Twin (phenome-twin-mobile.html);
+ * structure comes from Samsung Health: icon tabs on top, a floating pill and a
+ * round button below, large coloured cards between them.
+ * Gold still means Monitor and nothing else.
+ */
+:root {
+  --v-ink: #10214b;
+  --v-ink-2: #4a5578;
+  --v-ink-3: #636c8c;
+  --v-navy: #203a85;
+  --v-deep: #0f2461;
+  --v-line: #203a851f;
+  --v-gold: #b27f00;
+  --v-gold-ink: #7a5600;
+  --v-gold-wash: #b27f001f;
+  --v-glass: #ffffffb8;
+  --v-solid: #fffffff5;
+  --v-r: 24px;
+  --v-shadow: 0 10px 24px -18px #24365e66;
+  --v-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --v-display: "contralto-big", "Contralto Big", Optima, Candara, "Gill Sans", sans-serif;
+  --v-text: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  --v-num: "new-science-mono", "New Science Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --v-field:
+    radial-gradient(760px 620px at 88% -8%, #30b0cd1f, transparent 62%),
+    radial-gradient(640px 640px at -160px -120px, #c4daf780, #c4daf700 68%),
+    linear-gradient(150deg, #eef3f9 0%, #e5edf7 46%, #dce7f4 100%);
+}
+
+.v2 {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--v-field);
+  color: var(--v-ink);
+  font-family: var(--v-text);
+  -webkit-font-smoothing: antialiased;
+}
+.v2 :where(button) {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+.v2 button:focus-visible,
+.v2 a:focus-visible,
+.v2-nav a:focus-visible,
+.v2-nav button:focus-visible {
+  outline: 2px solid var(--v-navy);
+  outline-offset: 2px;
+}
+.v2 ::selection {
+  background: #203a8533;
+}
+
+/* colour fields: what a Samsung Health card's hue does, in the app's own mesh gradients */
+[data-field] {
+  --f: #fff;
+  --c-accent: var(--v-navy);
+  --fg: #fff;
+  --fg-2: #ffffffd9;
+}
+[data-field="capacity"] {
+  --f: radial-gradient(120% 130% at 100% 0%, #3f8fd0 0%, #3f8fd000 62%), linear-gradient(115deg, #2a4597, #3553a8);
+  --c-accent: #2f4a9c;
+}
+[data-field="activity"] {
+  --f: radial-gradient(110% 130% at 100% 0%, #d8606f 0%, #d8606f00 62%), linear-gradient(115deg, #3f4da3, #7e4f98);
+  --c-accent: #b0405f;
+}
+[data-field="sleep"] {
+  --f: linear-gradient(150deg, #1b1d63, #3b2a8c 70%, #5a35a8);
+  --c-accent: #4b36a6;
+}
+[data-field="vitals"] {
+  --f: radial-gradient(110% 130% at 100% 0%, #2fb0cf 0%, #2fb0cf00 60%), linear-gradient(120deg, #0f5f86, #13709a);
+  --c-accent: #0f6f96;
+}
+[data-field="heart"] {
+  --f: radial-gradient(110% 120% at 100% 0%, #e0566f 0%, #e0566f00 60%), linear-gradient(120deg, #7f2a58, #a0325e);
+  --c-accent: #a8335f;
+}
+[data-field="body"] {
+  --f: linear-gradient(125deg, #2b4796, #1c3579);
+  --c-accent: #2b4796;
+}
+[data-field="food"] {
+  --f: radial-gradient(110% 130% at 100% 0%, #e3954d 0%, #e3954d00 62%), linear-gradient(115deg, #5d5496, #8d5678);
+  --c-accent: #a65a3c;
+}
+[data-field="habit"] {
+  --f: radial-gradient(110% 130% at 100% 0%, #38b49b 0%, #38b49b00 60%), linear-gradient(120deg, #0e6a5e, #107466);
+  --c-accent: #0f7a6b;
+}
+[data-field="plain"] {
+  --f: var(--v-solid);
+  --fg: var(--v-ink);
+  --fg-2: var(--v-ink-2);
+}
+
+/* ---------- top of every tab root ---------- */
+.v2-top {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: calc(var(--status-h) + 8px) 12px 6px 20px;
+}
+.v2-top h1 {
+  flex: 1;
+  margin: 0;
+  font-family: var(--v-display);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.v2-avatar {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--v-solid);
+  color: var(--v-navy);
+  box-shadow: var(--v-shadow);
+}
+.v2-avatar i {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--v-navy);
+  box-shadow: 0 0 0 2px #fff;
+}
+.v2-iconbtn {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+.v2-iconbtn[aria-pressed="true"] {
+  background: var(--v-solid);
+  color: var(--v-navy);
+}
+
+/* ---------- bottom bar ---------- */
+.v2-nav {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 22px;
+  z-index: 40;
+  display: flex;
+  gap: 10px;
+  font-family: var(--v-text);
+}
+.v2-nav-pill {
+  flex: 1;
+  height: 66px;
+  padding: 5px;
+  display: flex;
+  border-radius: 33px;
+  background: #ffffffcc;
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  box-shadow: 0 14px 30px -14px #24365e99, 0 0 0 1px #203a851a, inset 0 0 0 1px #ffffffa6;
+}
+.v2-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border-radius: 28px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--v-ink-2);
+  text-decoration: none;
+  transition: background 0.24s linear, color 0.24s linear;
+}
+.v2-nav-item.active {
+  background: var(--v-navy);
+  color: #fff;
+}
+.v2-nav-ai {
+  flex: none;
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  background: radial-gradient(90% 90% at 30% 20%, #3f5cb4, var(--v-deep));
+  box-shadow: 0 14px 30px -14px #0f246199;
+}
+
+/* ---------- shared ---------- */
+.v2-back {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+}
+.v2-back[data-tone="light"] {
+  color: #fff;
+}
+.v2-back button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  margin-left: -8px;
+}
+.v2-back h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+.v2-pillbtn {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 22px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--v-navy);
+  background: var(--v-solid);
+  box-shadow: var(--v-shadow);
+  transition: transform 0.18s var(--v-ease);
+}
+.v2-pillbtn[data-solid] {
+  color: #fff;
+  background: var(--v-navy);
+}
+.v2-pillbtn:active {
+  transform: scale(0.96);
+}
+[data-status] {
+  font-style: normal;
+}
+.v2-p {
+  margin: 0 -0.2em;
+  font-style: normal;
+}
+
+/* ---------- screen to screen ---------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+}
+::view-transition-group(v2-hero) {
+  animation-duration: 0.48s;
+  animation-timing-function: var(--v-ease);
+}
+::view-transition-old(v2-hero),
+::view-transition-new(v2-hero) {
+  animation-duration: 0.3s;
+  height: 100%;
+  object-fit: cover;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

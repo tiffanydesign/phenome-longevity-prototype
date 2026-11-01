@@ -26,7 +26,12 @@ export function AssistantScreen() {
 
   useEffect(() => {
     const q = hashQuery().get("ask");
-    if (q && assistantStore.get().current === null) ask(q, offline);
+    if (!q) return;
+    const { chats, current } = assistantStore.get();
+    const open = chats.find((c) => c.id === current);
+    if (open?.msgs.some((m) => m.role === "user" && m.text === q)) return;
+    if (current !== null) newChat();
+    ask(q, offline);
     // run once on mount
   }, []);
 
