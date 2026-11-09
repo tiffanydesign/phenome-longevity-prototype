@@ -1,0 +1,750 @@
+/* one scrolling page: the figure on top, its readings straight under it */
+.tw {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #26398033 transparent;
+}
+.tw-top {
+  position: relative;
+  /* above the lenses, so the view menu opens over them */
+  z-index: 5;
+}
+.tw-top h1 {
+  font-family: var(--v-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.tw-review {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--v-navy);
+  box-shadow: 0 8px 16px -10px #263980b3;
+}
+
+/*
+ * lens: the same segmented track as Home's tabs, one white blob sliding under
+ * the selected lens, a small mark and name side by side. It scrolls with the page.
+ */
+.tw-lens {
+  --n: 3;
+  position: relative;
+  z-index: 2;
+  margin: 2px 16px 0;
+  height: 48px;
+  padding: 4px;
+  display: flex;
+  border-radius: 24px;
+  background: var(--v-fill);
+}
+.tw-lens-blob {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / var(--n));
+  border-radius: 20px;
+  background: var(--v-card);
+  box-shadow: 0 2px 8px -3px #24365e40;
+  transform: translateX(calc(var(--i) * 100%));
+  transition: transform 0.36s var(--v-ease);
+}
+.tw-lens button {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  /* every lens in the brand navy: the tabs are a way in, not a reading, so they carry no category colour */
+  color: var(--v-ink-3);
+  transition: color 0.2s linear;
+}
+.tw-lens button[aria-selected="true"] {
+  color: var(--v-navy);
+}
+.tw-lens-mark {
+  flex: none;
+  display: grid;
+  place-items: center;
+}
+.tw-lens-t {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 600 14px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.tw-lens button[aria-selected="true"] .tw-lens-t {
+  color: var(--v-ink);
+}
+/* a lens with a study to look at: one small soft dot, no count, no words */
+.tw-lens-dot {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffb600;
+}
+
+/* the figure; its feet fade into the ground the readings sit on */
+.tw-hero {
+  position: relative;
+  margin-top: -16px;
+}
+.tw-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 160px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, #fff0, var(--v-field) 85%);
+}
+.tw-stage {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  margin-left: -196.5px;
+  transform-origin: 50% 0;
+  transform: scale(var(--s, 1));
+  transition: transform 0.72s var(--v-ease);
+  view-transition-name: v2-hero;
+}
+.tw-stage[data-organ="organ"] {
+  transform: scale(calc(var(--s, 1) * 0.8));
+}
+.tw-stage[data-organ="region"] {
+  transform: scale(calc(var(--s, 1) * 0.86));
+}
+/* the status cover only once something scrolls under it */
+.tw-veil {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+.tw-veil[data-on] {
+  opacity: 1;
+}
+.tw-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* a reading as a small flat card: the way into its study, so it reads as tappable */
+/* every pin the same width and height, so the zigzag reads as two clean columns stepping down */
+.tw-pin {
+  position: absolute;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 150px;
+  min-height: 64px;
+  padding: 10px 22px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 18px;
+  text-align: left;
+  background: var(--v-card);
+  box-shadow:
+    0 0 0 1px var(--v-line),
+    0 8px 20px -14px #26398066;
+  animation: tw-in 0.5s var(--v-ease) 0.1s backwards;
+  transition: transform 0.18s var(--v-ease);
+}
+.tw-pin:active {
+  transform: scale(0.96);
+}
+.tw-pin[data-side="l"] {
+  left: 14px;
+}
+.tw-pin[data-side="r"] {
+  right: 14px;
+}
+.tw-pin small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 600 11.5px/1.15 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+}
+.tw-pin[data-flag] small::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--v-gold);
+}
+.tw-pin[data-flag] small {
+  color: var(--v-gold-ink);
+}
+.tw-pin span {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  white-space: nowrap;
+}
+.tw-pin b {
+  color: var(--v-navy);
+  font: 700 24px/1 var(--v-num);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.tw-pin u {
+  font: 500 11.5px/1 var(--v-text);
+  color: var(--v-ink-2);
+  text-decoration: none;
+}
+/* a reading outside its range says so in words under the number, in the Monitor ink */
+.tw-pin em {
+  font: 600 11px/1.1 var(--v-text);
+  font-style: normal;
+  color: var(--v-gold-ink);
+}
+/* the way in sits in the card's top corner, so the number keeps the whole width */
+.tw-pin span svg {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  width: 13px;
+  height: 13px;
+  color: var(--v-ink-3, #8a93ad);
+}
+@keyframes tw-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* the readings: lens summary and rows at rest, the organ's data when one is open */
+.tw-detail {
+  position: relative;
+  margin-top: -64px;
+  padding-bottom: 120px;
+  animation: tw-in 0.4s var(--v-ease) backwards;
+}
+
+.tw-body {
+  padding: 0 20px;
+}
+.tw-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tw-list li + li {
+  border-top: 1px solid var(--v-line);
+}
+.tw-list button {
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--v-ink);
+}
+.tw-list svg {
+  flex: none;
+  color: var(--v-ink-3);
+}
+/* the study's mark: its organ in its own hue on a pale disc of the same hue */
+.tw-thumb {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--mid) 13%, var(--v-card));
+}
+/* an open study names its lens in the study's hue, over the name */
+.tw-over {
+  margin: 0 20px 2px;
+  font: 600 14px var(--v-text);
+  color: color-mix(in oklab, var(--mid), var(--fg) 38%);
+}
+.tw-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+/* status as a capsule, in the presentation's words: yellow when it asks for a look, green when in range */
+.tw-name small,
+.tw-organ-head small {
+  display: block;
+  width: fit-content;
+  margin-top: 3px;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--v-ok-ink);
+  background: var(--v-ok-pill);
+}
+.tw-name small[data-status="monitor"],
+.tw-organ-head small[data-status="monitor"] {
+  color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
+}
+.tw-val {
+  flex: none;
+  font-size: 13px;
+  color: var(--v-ink-2);
+  white-space: nowrap;
+}
+.tw-val b {
+  font-family: var(--v-num);
+  font-size: 19px;
+  font-weight: 300;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* organ view */
+.tw-organ-head {
+  padding: 0 14px 8px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tw-organ-head h2 {
+  margin: 0;
+  font-family: var(--v-display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.tw-organ-head small {
+  margin-top: 0;
+  padding: 3px 10px;
+  font-size: 13px;
+}
+.tw-organ-head button {
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--v-fill);
+  color: var(--v-navy);
+}
+/* the study's lead, then its cards, the same ones the full review shows */
+.tw-reading {
+  margin: 2px 0 12px;
+}
+.tw-reading p {
+  margin: 2px 0 0;
+  font-size: 15px;
+  color: var(--v-ink-2);
+}
+.tw-reading .tw-asof {
+  font-size: 13px;
+}
+.tw-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tw-study {
+  width: 100%;
+  min-height: 56px;
+  margin-top: 16px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--v-ink);
+  background: var(--v-fill);
+}
+.tw-ask {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 16px;
+  border-radius: 24px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--v-navy);
+  background: var(--v-fill);
+}
+
+/* =====================================================================
+ * Checkpoints: Live, one visit, or Trends, chosen at the top right
+ * ===================================================================== */
+
+/* the switcher: names what is on screen; Live carries the navy dot, a visit carries none */
+.tw-cp {
+  position: relative;
+  flex: none;
+}
+.tw-cp-btn {
+  min-height: 40px;
+  padding: 0 12px 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: inset 0 0 0 1px var(--v-line);
+}
+.tw-cp-btn svg {
+  color: var(--v-ink-3);
+}
+.tw-cp[data-view="trends"] .tw-cp-btn svg:first-child {
+  color: var(--v-navy);
+}
+/* a visit is the past: the control takes the pale navy of the snapshot band, so it never passes for now */
+.tw-cp[data-view="visit"] .tw-cp-btn {
+  color: var(--v-navy);
+  background: var(--tw-past-wash);
+  box-shadow: none;
+}
+.tw-cp[data-view="visit"] .tw-cp-btn svg {
+  color: currentColor;
+  opacity: 0.7;
+}
+.tw-cp-live {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--v-navy);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-navy) 18%, transparent);
+}
+
+.tw-cp-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+  width: 296px;
+  padding: 6px;
+  border-radius: 18px;
+  background: var(--v-card);
+  box-shadow:
+    0 0 0 1px var(--v-line),
+    0 18px 40px -12px #0b0d1440;
+  transform-origin: top right;
+  animation: tw-cp-in 0.22s var(--v-ease);
+}
+@keyframes tw-cp-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(-4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tw-cp-menu {
+    animation: none;
+  }
+}
+.tw-cp-item {
+  width: 100%;
+  min-height: 56px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 12px;
+  text-align: left;
+  color: var(--v-ink);
+}
+.tw-cp-item:active,
+.tw-cp-item[aria-checked="true"] {
+  background: var(--v-card-2);
+}
+.tw-cp-item > svg {
+  flex: none;
+  color: var(--v-navy);
+}
+.tw-cp-item:disabled {
+  opacity: 0.45;
+}
+.tw-cp-lead {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 600 14px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-2);
+  background: var(--v-fill);
+}
+.tw-cp-lead[data-kind="live"] {
+  background: color-mix(in srgb, var(--v-navy) 12%, transparent);
+}
+.tw-cp-lead[data-kind="trends"] {
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 12%, transparent);
+}
+.tw-cp-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.tw-cp-text b {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.tw-cp-text em {
+  padding: 1px 7px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 12%, transparent);
+}
+.tw-cp-text small {
+  overflow: hidden;
+  font-size: 13px;
+  color: var(--v-ink-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tw-cp-head {
+  margin: 10px 10px 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--v-ink-3);
+}
+/* Trends is the end of the list, not one more visit: a rule sets it apart */
+.tw-cp-rule {
+  height: 1px;
+  margin: 6px 10px;
+  background: var(--v-line);
+}
+
+/*
+ * The snapshot band: a visit names itself in the brand's pale navy above the
+ * lenses, a clock-back mark on white, and the way back to now at the right.
+ */
+.tw {
+  --tw-past-wash: color-mix(in srgb, var(--v-navy) 11%, var(--v-card));
+  --tw-past-ink: #5d6a93;
+}
+:root[data-theme="dark"] .tw {
+  --tw-past-wash: color-mix(in srgb, var(--v-navy) 20%, var(--v-card));
+  --tw-past-ink: #a9b4d8;
+}
+.tw-snap {
+  position: relative;
+  z-index: 2;
+  margin: 4px 16px 10px;
+  padding: 8px 8px 8px 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 18px;
+  color: var(--v-ink);
+  background: var(--tw-past-wash);
+}
+.tw-snap-mark {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-navy);
+  background: var(--v-card);
+}
+.tw-snap-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.tw-snap-text b {
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tw-snap-text small {
+  overflow: hidden;
+  font-size: 12px;
+  color: var(--tw-past-ink);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.tw-snap-back {
+  flex: none;
+  min-height: 36px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--v-navy);
+  background: var(--v-card);
+}
+
+/* a past figure: pin numbers in the muted slate of the figure, the chevrons quieter still */
+.tw-hero[data-past] .tw-pin svg {
+  color: var(--v-ink-3);
+}
+.tw-hero[data-past] .tw-pin b {
+  color: var(--tw-past-ink);
+}
+.tw-now {
+  display: block;
+  margin-top: 2px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--v-navy);
+}
+
+.tw-study > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+.tw-study small {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--v-ink-2);
+}
+
+/* =====================================================================
+ * Trends: no figure, one chart per study, one point per visit
+ * ===================================================================== */
+.tw-trends {
+  padding: 8px 16px 120px;
+  animation: tw-in 0.4s var(--v-ease) backwards;
+}
+.tw-trends-span {
+  margin: 6px 4px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v-ink-2);
+}
+.tw-chart {
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 14px 16px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 20px;
+  text-align: left;
+  color: var(--v-ink);
+  background: var(--v-card);
+}
+.tw-chart-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tw-chart-head > svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--v-ink-3);
+}
+.tw-chart-t {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--mid);
+}
+.tw-chart-t small {
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--v-ok-ink);
+  background: var(--v-ok-pill);
+}
+.tw-chart-t small[data-status="monitor"] {
+  color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
+}
+.tw-chart-now {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 4px;
+}
+.tw-chart-now b {
+  font: 600 30px/1 var(--v-num);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.tw-chart-now u {
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--v-ink-2);
+}
+.tw-chart-now em {
+  margin-left: auto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--v-ink-2);
+}
+.tw-chart-l {
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.tw-chart .v2-history {
+  margin-top: 6px;
+}
+.tw-trends-h {
+  margin: 20px 4px 4px;
+  font: var(--v-t-section, 700 19px/1.2 var(--v-text));
+}
+.tw-trends-rest {
+  padding: 0 16px;
+  border-radius: 20px;
+  background: var(--v-card);
+}
+.tw-why {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--v-ink-2);
+}

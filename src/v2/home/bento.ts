@@ -12,6 +12,7 @@ export interface Slot {
 export const SIZES: Record<string, Size[]> = {
   twin: ["l", "w", "t"],
   capacity: ["s", "w"],
+  workouts: ["s", "w"],
   activity: ["s", "w"],
   sleep: ["s", "w"],
   vitals: ["s", "w"],
@@ -19,28 +20,31 @@ export const SIZES: Record<string, Size[]> = {
   food: ["s", "w"],
   habits: ["s", "w"],
   consult: ["w", "s"],
-  store: ["s", "w"],
+  store: ["w", "s"],
 };
 
 const DEFAULT: Slot[] = [
   { id: "twin", size: "l" },
-  { id: "capacity", size: "s" },
   { id: "activity", size: "s" },
   { id: "sleep", size: "s" },
+  { id: "capacity", size: "s" },
+  { id: "workouts", size: "s" },
   { id: "vitals", size: "s" },
   { id: "food", size: "s" },
   { id: "body", size: "s" },
   { id: "habits", size: "s" },
-  { id: "store", size: "s" },
   { id: "consult", size: "w" },
+  { id: "store", size: "w" },
 ];
 
-const KEY = "phenome.v2.bento";
+const KEY = "phenome.v2.bento.6";
 
 function load(): Slot[] {
   try {
     const saved = JSON.parse(localStorage.getItem(KEY) ?? "null") as Slot[] | null;
-    if (saved?.length === DEFAULT.length && saved.every((s) => SIZES[s.id])) return saved;
+    // any subset of the known cards, each once: a card the member removed simply is not in the list
+    const ids = saved?.map((s) => s.id) ?? [];
+    if (saved?.length && new Set(ids).size === ids.length && saved.every((s) => SIZES[s.id]?.includes(s.size))) return saved;
   } catch {
     // private window or corrupt value: fall through to the default layout
   }
@@ -79,6 +83,14 @@ export function useBento(editing: boolean, onEdit: (on: boolean) => void) {
   }, []);
 
   const reset = useCallback(() => setSlots(DEFAULT), []);
+
+  /** Take a card off Home; the last one stays, so the page is never empty. */
+  const remove = useCallback((id: string) => setSlots((all) => (all.length > 1 ? all.filter((s) => s.id !== id) : all)), []);
+
+  /** Put a removed card back at the end, at its first size. */
+  const restore = useCallback((id: string) => setSlots((all) => (all.some((s) => s.id === id) ? all : [...all, { id, size: SIZES[id][0] }])), []);
+
+  const hidden = Object.keys(SIZES).filter((id) => !slots.some((s) => s.id === id));
 
   const down = (e: ReactPointerEvent<HTMLElement>, id: string) => {
     const box = e.currentTarget.getBoundingClientRect();
@@ -144,5 +156,5 @@ export function useBento(editing: boolean, onEdit: (on: boolean) => void) {
     return was;
   };
 
-  return { slots, dragging, resize, reset, down, move, up, consumedHold };
+  return { slots, hidden, dragging, resize, reset, remove, restore, down, move, up, consumedHold };
 }

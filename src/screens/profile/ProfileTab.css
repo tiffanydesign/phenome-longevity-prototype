@@ -13,6 +13,7 @@
 }
 
 .prf-tab-logo {
+  position: relative;
   height: 59px;
   display: flex;
   align-items: center;
@@ -147,4 +148,54 @@
 .prf-logout-actions .btn {
   height: 46px;
   font-size: 15px;
+}
+
+/* ---------- opened as a page (redesign): a back button, and the devices section ---------- */
+.prf-tab-back {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  transform: translateY(-50%);
+  color: var(--prf-row);
+}
+.prf-tab-bell {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  transform: translateY(-50%);
+  color: var(--prf-row);
+}
+.prf-tab-bell i {
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  font: 700 11px/1 var(--font, inherit);
+  font-style: normal;
+  color: #fff;
+  background: #e5484d;
+}
+.prf-tab-on {
+  font-size: 13px;
+  font-weight: var(--fw-medium);
+  color: #3f8f4e;
+}
+.prf-tab-plus {
+  width: 22px;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 400;
 }

@@ -82,7 +82,7 @@ The captures come from the owner's test account. Before publishing:
 
 A redesign of the app around the digital twin lives beside the replica, under `src/v2/`. The replica's routes are untouched.
 
-- **Structure** follows Samsung Health: icon tabs and swipeable pages on Home, a floating pill with a round AI button at the bottom, profile top right, cards that can be dragged and resized (long-press, or the ⋮ menu).
+- **Structure:** icon tabs and swipeable pages on Home, a floating pill with a round AI button at the bottom, profile top right, cards that can be dragged and resized (long-press, or the ⋮ menu).
 - **Navigation:** Home, Twin, Omics. Vitals, Body and Food are Home tabs because they change daily. Omics changes between scans, so it has its own destination. Store moved to a Home card.
 - **Twin:** one figure with three lenses (Vitals, Body, Omics), the same three categories the data is filed under. Entry points: the Twin tab, the Home tile, "See it on your twin" on every metric, and Omics.
 - **Data link:** `src/v2/data/metrics.ts` is one table in which every number names its organ, source and status. Cards, charts and body regions all read from it.

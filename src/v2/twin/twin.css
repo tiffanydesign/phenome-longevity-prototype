@@ -1,10 +1,21 @@
+/* one scrolling page: the figure on top, its readings straight under it */
 .tw {
   position: absolute;
   inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #26398033 transparent;
 }
 .tw-top {
   position: relative;
   z-index: 2;
+}
+.tw-top h1 {
+  font-family: var(--v-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .tw-review {
@@ -13,52 +24,107 @@
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--v-navy);
-  background: var(--v-solid);
-  box-shadow: var(--v-shadow);
+  color: #fff;
+  background: var(--v-navy);
+  box-shadow: 0 8px 16px -10px #263980b3;
 }
 
-/* lens: three categories, one body */
+/* lens: three categories, one body, as three summary tiles side by side */
 .tw-lens {
   position: relative;
   z-index: 2;
   margin: 2px 16px 0;
-  height: 44px;
-  padding: 4px;
-  display: flex;
-  border-radius: 22px;
-  background: #ffffff66;
-  box-shadow: inset 0 0 0 1px #203a851f;
-}
-.tw-lens i {
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 4px;
-  width: calc((100% - 8px) / 3);
-  border-radius: 18px;
-  background: var(--v-navy);
-  transform: translateX(calc(var(--i) * 100%));
-  transition: transform 0.34s var(--v-ease);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
 }
 .tw-lens button {
   position: relative;
-  flex: 1;
-  text-align: center;
-  font-size: 15px;
-  color: var(--v-ink-2);
-  transition: color 0.2s linear;
+  min-width: 0;
+  height: 50px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-radius: 16px;
+  background: #f2f4f8;
+  box-shadow: inset 0 0 0 1.5px transparent;
+  transition:
+    background 0.2s linear,
+    box-shadow 0.2s linear,
+    transform 0.18s var(--v-ease);
 }
+.tw-lens button:active {
+  transform: scale(0.97);
+}
+/* the lens in view: lifted onto white and ringed in navy */
 .tw-lens button[aria-selected="true"] {
-  color: #fff;
-  font-weight: 500;
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 1.5px var(--v-navy),
+    0 6px 14px -10px #263980b3;
+}
+.tw-lens-mark {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  /* every lens in the brand navy: the tabs are a way in, not a reading, so they carry no category colour */
+  color: var(--v-navy);
+  background: #fff;
+}
+.tw-lens button[aria-selected="true"] .tw-lens-mark {
+  background: #e6ebf8;
+}
+.tw-lens-t {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 700 16px/1.1 var(--v-text);
+  letter-spacing: -0.02em;
+  color: var(--v-ink-2, #4a5068);
+}
+.tw-lens button[aria-selected="true"] .tw-lens-t {
+  color: var(--v-ink);
+}
+/* a lens with a study to look at: one small soft dot, no count, no words */
+.tw-lens-dot {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffb600;
+  box-shadow: 0 0 0 2px #f2f4f8;
+}
+.tw-lens button[aria-selected="true"] .tw-lens-dot {
+  box-shadow: 0 0 0 2px #fff;
 }
 
-/* the figure */
+/* the figure; its feet fade into the ground the readings sit on */
+.tw-hero {
+  position: relative;
+  margin-top: -16px;
+}
+.tw-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 160px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, #fff0, var(--v-field) 85%);
+}
 .tw-stage {
   position: absolute;
   left: 50%;
-  top: 140px;
+  top: 0;
   margin-left: -196.5px;
   transform-origin: 50% 0;
   transform: scale(var(--s, 1));
@@ -66,66 +132,105 @@
   view-transition-name: v2-hero;
 }
 .tw-stage[data-organ="organ"] {
-  transform: translateY(-20px) scale(calc(var(--s, 1) * 0.8));
+  transform: scale(calc(var(--s, 1) * 0.8));
 }
 .tw-stage[data-organ="region"] {
-  transform: translateY(-16px) scale(calc(var(--s, 1) * 0.86));
+  transform: scale(calc(var(--s, 1) * 0.86));
+}
+/* the status cover only once something scrolls under it */
+.tw-veil {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+.tw-veil[data-on] {
+  opacity: 1;
 }
 .tw-field {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  cursor: pointer;
 }
-.tw-lead {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  animation: tw-in 0.5s var(--v-ease) 0.1s backwards;
-}
+/* a reading as a small flat card: the way into its study, so it reads as tappable */
+/* every pin the same width and height, so the zigzag reads as two clean columns stepping down */
 .tw-pin {
   position: absolute;
-  min-width: 88px;
-  padding: 2px 0 6px;
+  z-index: 1;
+  box-sizing: border-box;
+  width: 150px;
+  min-height: 64px;
+  padding: 10px 22px 10px 12px;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 4px;
+  border-radius: 18px;
+  text-align: left;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px #2639801a,
+    0 8px 20px -14px #26398066;
   animation: tw-in 0.5s var(--v-ease) 0.1s backwards;
+  transition: transform 0.18s var(--v-ease);
+}
+.tw-pin:active {
+  transform: scale(0.96);
 }
 .tw-pin[data-side="l"] {
-  left: 18px;
+  left: 14px;
 }
 .tw-pin[data-side="r"] {
-  right: 18px;
-  align-items: flex-end;
-  text-align: right;
+  right: 14px;
 }
 .tw-pin small {
-  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 600 11.5px/1.15 var(--v-text);
   color: var(--v-ink-2);
+  white-space: nowrap;
+}
+.tw-pin[data-flag] small::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--v-gold);
+}
+.tw-pin[data-flag] small {
+  color: var(--v-gold-ink);
 }
 .tw-pin span {
   display: flex;
   align-items: baseline;
-  gap: 4px;
+  gap: 3px;
+  white-space: nowrap;
 }
 .tw-pin b {
-  font-family: var(--v-num);
-  font-size: 30px;
-  font-weight: 300;
-  line-height: 1;
+  color: var(--v-navy);
+  font: 700 24px/1 var(--v-num);
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 .tw-pin u {
-  font-size: 13px;
+  font: 500 11.5px/1 var(--v-text);
   color: var(--v-ink-2);
   text-decoration: none;
 }
-.tw-pin[data-flag] small,
-.tw-pin[data-flag] u {
+/* a reading outside its range says so in words under the number, in the Monitor ink */
+.tw-pin em {
+  font: 600 11px/1.1 var(--v-text);
+  font-style: normal;
   color: var(--v-gold-ink);
+}
+/* the way in sits in the card's top corner, so the number keeps the whole width */
+.tw-pin span svg {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  width: 13px;
+  height: 13px;
+  color: var(--v-ink-3, #8a93ad);
 }
 @keyframes tw-in {
   from {
@@ -133,68 +238,16 @@
   }
 }
 
-/* the sheet: lens summary at rest, the organ's data when one is open */
-.tw-sheet {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: calc(100% - 108px);
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  border-radius: 28px 28px 0 0;
-  background: var(--v-solid);
-  box-shadow: 0 -16px 34px -24px #24365e80;
-  transition: transform 0.46s var(--v-ease);
+/* the readings: lens summary and rows at rest, the organ's data when one is open */
+.tw-detail {
+  position: relative;
+  margin-top: -64px;
+  padding-bottom: 120px;
+  animation: tw-in 0.4s var(--v-ease) backwards;
 }
-.tw-sheet[data-drag] {
-  transition: none;
-}
-.tw-sheet[data-snap="peek"]:not([data-drag]) .tw-scroll {
-  opacity: 0;
-  pointer-events: none;
-}
-.tw-grab {
-  flex: none;
-  height: 22px;
-  display: grid;
-  place-items: center;
-  cursor: grab;
-  touch-action: none;
-}
-.tw-grab i {
-  width: 36px;
-  height: 4px;
-  border-radius: 2px;
-  background: #203a8533;
-}
-.tw-sum {
-  flex: none;
-  padding: 0 20px 12px;
-  touch-action: none;
-  cursor: grab;
-}
-.tw-sum h2 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 500;
-}
-.tw-sum p {
-  margin: 3px 0 0;
-  font-size: 14px;
-  color: var(--v-ink-2);
-}
-.tw-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  padding: 0 20px calc(136px + var(--tail, 0px));
-  scrollbar-width: none;
-  transition: opacity 0.2s linear;
-}
-.tw-scroll::-webkit-scrollbar {
-  display: none;
+
+.tw-body {
+  padding: 0 20px;
 }
 .tw-list {
   list-style: none;
@@ -212,16 +265,26 @@
   gap: 12px;
   color: var(--v-ink);
 }
-.tw-list svg,
-.tw-row svg {
+.tw-list svg {
   flex: none;
   color: var(--v-ink-3);
 }
+/* the study's mark: its organ in its own hue on a pale disc of the same hue */
 .tw-thumb {
   flex: none;
   width: 46px;
   height: 46px;
+  display: grid;
+  place-items: center;
   overflow: hidden;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--mid) 13%, #fff);
+}
+/* an open study names its lens in the study's hue, over the name */
+.tw-over {
+  margin: 0 20px 2px;
+  font: 600 14px var(--v-text);
+  color: color-mix(in oklab, var(--mid), var(--fg) 38%);
 }
 .tw-name {
   flex: 1;
@@ -229,15 +292,23 @@
   font-size: 16px;
   font-weight: 500;
 }
+/* status as a capsule, in the presentation's words: yellow when it asks for a look, green when in range */
 .tw-name small,
 .tw-organ-head small {
   display: block;
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--v-ink-2);
+  width: fit-content;
+  margin-top: 3px;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--v-ok-ink);
+  background: var(--v-ok-pill);
 }
-.tw-name small[data-status="monitor"] {
+.tw-name small[data-status="monitor"],
+.tw-organ-head small[data-status="monitor"] {
   color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
 }
 .tw-val {
   flex: none;
@@ -252,58 +323,26 @@
   color: var(--v-ink);
   font-variant-numeric: tabular-nums;
 }
-.tw-estimate {
-  margin-top: 14px;
-  padding: 16px;
-  border-radius: 20px;
-  background: #e6ecf6;
-}
-.tw-estimate p {
-  margin: 0 0 12px;
-  font-size: 14px;
-  line-height: 1.42;
-  color: var(--v-ink-2);
-}
-
-/* rows dissolve before they reach the bar, so the pill never sits on half a line */
-.tw::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 112px;
-  z-index: 30;
-  pointer-events: none;
-  background: linear-gradient(to bottom, #ffffff00, #fffffff5 38%);
-}
 
 /* organ view */
 .tw-organ-head {
-  flex: none;
   padding: 0 14px 8px 20px;
   display: flex;
   align-items: center;
   gap: 10px;
-  touch-action: none;
-  cursor: grab;
 }
 .tw-organ-head h2 {
   margin: 0;
   font-family: var(--v-display);
-  font-size: 30px;
-  font-weight: 400;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   line-height: 1.1;
 }
 .tw-organ-head small {
+  margin-top: 0;
   padding: 3px 10px;
-  border-radius: 10px;
-  background: #e6ecf6;
-  color: var(--v-ink-2);
-}
-.tw-organ-head small[data-status="monitor"] {
-  color: var(--v-gold-ink);
-  background: var(--v-gold-wash);
+  font-size: 13px;
 }
 .tw-organ-head button {
   margin-left: auto;
@@ -315,83 +354,22 @@
   background: #e6ecf6;
   color: var(--v-navy);
 }
-.tw-age {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 2px 0 10px;
+/* the study's lead, then its cards, the same ones the full review shows */
+.tw-reading {
+  margin: 2px 0 12px;
 }
-.tw-age b {
-  font-family: var(--v-num);
-  font-size: 46px;
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-.tw-age span {
-  font-size: 14px;
-  line-height: 1.3;
-  color: var(--v-ink-2);
-}
-.tw-read {
-  margin: 0 0 14px;
-  font-size: 16px;
-  line-height: 1.42;
-  text-wrap: pretty;
-}
-.tw-action {
-  width: 100%;
-  min-height: 64px;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border-radius: 20px;
-  color: #fff;
+.tw-reading p {
+  margin: 2px 0 0;
   font-size: 15px;
-  font-weight: 500;
-  background: linear-gradient(128deg, var(--v-navy), var(--v-deep));
-}
-.tw-action small {
-  display: block;
-  margin-bottom: 2px;
-  font-size: 13px;
-  font-weight: 400;
-  color: #ffffffd0;
-}
-.tw-group {
-  margin-top: 18px;
-}
-.tw-group h3 {
-  margin: 0 0 2px;
-  font-size: 14px;
-  font-weight: 500;
   color: var(--v-ink-2);
 }
-.tw-row {
-  width: 100%;
-  min-height: 56px;
+.tw-reading .tw-asof {
+  font-size: 13px;
+}
+.tw-cards {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  font-size: 16px;
-  border-bottom: 1px solid var(--v-line);
-}
-.tw-row > span:first-child {
-  flex: 1;
-  min-width: 0;
-}
-.tw-row small {
-  display: block;
-  margin-top: 1px;
-  font-size: 13px;
-  color: var(--v-ink-2);
-}
-.tw-row[data-flag] > span:first-child {
-  color: var(--v-gold-ink);
-  font-weight: 500;
+  flex-direction: column;
+  gap: 12px;
 }
 .tw-study {
   width: 100%;

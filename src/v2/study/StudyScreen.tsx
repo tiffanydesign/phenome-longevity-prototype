@@ -1,6 +1,5 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Icon } from "@/components/Icon";
 import { HomeIndicator, StatusBar } from "@/components/PhoneFrame";
 import { asset } from "@/lib/asset";
 import { Chevron, IconClose } from "../ui/icons";
@@ -12,7 +11,6 @@ import { Pill } from "./parts";
 import { StudyList } from "./StudyList";
 import "./study.css";
 
-type Snap = "peek" | "full";
 const SWIPE = 48;
 
 /** The room display's own camera flight, recorded, so a phone gets it without a WebGL scene. */
@@ -31,11 +29,32 @@ function StudyFilm({ code }: { code: string }) {
   );
 }
 
+/** Where the member is in the review: one thin line, filled to the study in view. */
+function Progress({ index }: { index: number }) {
+  return (
+    <span className="rv-path" aria-hidden>
+      <i style={{ width: `${((index + 1) / STUDIES.length) * 100}%` }} />
+    </span>
+  );
+}
+
+/** The twin's display face, loaded for the review's study names only. */
+const KIT = "https://use.typekit.net/omf6kcr.css";
+function useDisplayFace() {
+  useEffect(() => {
+    if (document.querySelector(`link[href="${KIT}"]`)) return;
+    const l = document.createElement("link");
+    l.rel = "stylesheet";
+    l.href = KIT;
+    document.head.appendChild(l);
+  }, []);
+}
+
 /**
  * The clinic's presentation, rebuilt for one hand. On the wall the figure and
- * its panel sit side by side and a clinician drives; here the figure takes the
- * top of the screen, the panel is a sheet under it, and the member walks the
- * same nineteen studies with a swipe.
+ * its panel sit side by side and a clinician drives; here the figure opens the
+ * page, fades into the panel under it, and the whole page scrolls as one. The
+ * member walks the same nineteen studies with a swipe on the figure or the bar.
  */
 export function StudyScreen() {
   const { code } = useParams();
@@ -45,20 +64,13 @@ export function StudyScreen() {
   const study = STUDIES[index];
   const [visit, setVisit] = useState(VISITS[VISITS.length - 1]);
   const [listOpen, setListOpen] = useState(false);
-  const [snap, setSnap] = useState<Snap>("peek");
-  const [drag, setDrag] = useState<number | null>(null);
   const view = useMemo(() => viewOf(study.code, visit), [study.code, visit]);
-  const root = useRef<HTMLDivElement>(null);
-  const body = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(853);
+  useDisplayFace();
+  const page = useRef<HTMLDivElement>(null);
   const swipe = useRef<{ x: number; y: number } | null>(null);
-  const grab = useRef({ y: 0, top: 0, moved: false });
-  const dragged = useRef<number | null>(null);
 
-  useLayoutEffect(() => setHeight(root.current?.clientHeight ?? 853), []);
   useEffect(() => {
-    setSnap("peek");
-    body.current?.scrollTo({ top: 0 });
+    page.current?.scrollTo({ top: 0 });
   }, [study.code]);
 
   const step = (d: number) => {
@@ -75,32 +87,6 @@ export function StudyScreen() {
     return () => window.removeEventListener("keydown", key);
   });
 
-  const tops: Record<Snap, number> = { peek: Math.round(height * 0.59), full: 104 };
-  const top = drag ?? tops[snap];
-  const grabDown = (e: PointerEvent<HTMLElement>) => {
-    grab.current = { y: e.clientY, top: tops[snap], moved: false };
-    e.currentTarget.setPointerCapture(e.pointerId);
-  };
-  const grabMove = (e: PointerEvent<HTMLElement>) => {
-    if (!e.buttons) return;
-    const dy = e.clientY - grab.current.y;
-    if (Math.abs(dy) > 4) grab.current.moved = true;
-    if (grab.current.moved) {
-      dragged.current = Math.max(tops.full, Math.min(tops.peek + 40, grab.current.top + dy));
-      setDrag(dragged.current);
-    }
-  };
-  const grabUp = () => {
-    // read from the ref: a fast flick can lift before the last move has rendered
-    const at = dragged.current;
-    dragged.current = null;
-    if (at === null) {
-      if (!grab.current.moved) setSnap(snap === "peek" ? "full" : "peek");
-      return;
-    }
-    setSnap(at < (tops.full + tops.peek) / 2 ? "full" : "peek");
-    setDrag(null);
-  };
   const close = () => {
     // next, previous and list jumps replace, so one step back is where the review was opened
     if ((window.history.state?.idx ?? 0) > 0) nav(-1);
@@ -108,47 +94,32 @@ export function StudyScreen() {
   };
 
   return (
-    <div className="v2 rv" ref={root}>
+    <div className="v2 rv">
       <StatusBar tone="dark" />
-      <div
-        className="rv-stage"
-        onPointerDown={(e) => {
-          swipe.current = { x: e.clientX, y: e.clientY };
-        }}
-        onPointerUp={(e) => {
-          const start = swipe.current;
-          swipe.current = null;
-          if (!start) return;
-          const dx = e.clientX - start.x;
-          if (Math.abs(dx) > SWIPE && Math.abs(dx) > Math.abs(e.clientY - start.y)) step(dx < 0 ? 1 : -1);
-        }}
-        onPointerCancel={() => {
-          swipe.current = null;
-        }}
-      >
-        <StudyFilm code={study.code} />
-      </div>
-
-      <header className="rv-top">
-        <button aria-label="Close review" onClick={close}>
-          <IconClose />
-        </button>
-        <span>{study.section}</span>
-        <button className="rv-top-list" aria-label="All studies" onClick={() => setListOpen(true)}>
-          <i />
-          <i />
-          <i />
-        </button>
-      </header>
-
-      <section className="rv-sheet" data-drag={drag !== null ? "" : undefined} style={{ transform: `translateY(${top}px)`, "--tail": `${top - tops.full}px` } as React.CSSProperties} aria-label={study.name}>
-        <div className="rv-grab" onPointerDown={grabDown} onPointerMove={grabMove} onPointerUp={grabUp} onPointerCancel={grabUp}>
-          <i aria-hidden />
+      <div className="rv-page" ref={page}>
+        <div
+          className="rv-stage"
+          onPointerDown={(e) => {
+            swipe.current = { x: e.clientX, y: e.clientY };
+          }}
+          onPointerUp={(e) => {
+            const start = swipe.current;
+            swipe.current = null;
+            if (!start) return;
+            const dx = e.clientX - start.x;
+            if (Math.abs(dx) > SWIPE && Math.abs(dx) > Math.abs(e.clientY - start.y)) step(dx < 0 ? 1 : -1);
+          }}
+          onPointerCancel={() => {
+            swipe.current = null;
+          }}
+        >
+          <StudyFilm code={study.code} />
         </div>
-        <div className="rv-body" ref={body}>
+
+        <section className="rv-body" aria-label={study.name}>
           <div className="rv-lead">
+            {/* the study's name in the twin's display face; its section rides in the bar below */}
             <h2>{study.name}</h2>
-            <p className="rv-lead-note">{study.note}</p>
             <div className="rv-lead-row">
               <div>
                 <Hero value={view.value} unit={view.unit} flagged={view.flagged} />
@@ -173,31 +144,42 @@ export function StudyScreen() {
           )}
 
           {view.cards}
-        </div>
-      </section>
+        </section>
+      </div>
+
+      <header className="rv-top">
+        <button aria-label="Close review" onClick={close}>
+          <IconClose />
+        </button>
+        <span />
+        <button className="rv-top-list" aria-label="All studies" onClick={() => setListOpen(true)}>
+          <i />
+          <i />
+          <i />
+        </button>
+      </header>
 
       <div className="v2-nav">
         <nav className="rv-bar" aria-label="Studies">
           <button aria-label="Previous study" disabled={index === 0} onClick={() => step(-1)}>
             <Chevron dir="left" size={22} />
           </button>
-          <button className="rv-bar-at" onClick={() => setListOpen(true)}>
-            <b>
-              {String(index + 1).padStart(2, "0")} <small>/ {STUDIES.length}</small>
-            </b>
-            <span className="rv-ticks-bar" aria-hidden>
-              {STUDIES.map((s, i) => (
-                <i key={s.code} data-on={i <= index ? "" : undefined} data-gap={i > 0 && STUDIES[i - 1].section !== s.section ? "" : undefined} />
-              ))}
+          <button className="rv-bar-at" onClick={() => setListOpen(true)} aria-label={`Study ${index + 1} of ${STUDIES.length}: ${study.name}. Show all studies`}>
+            <span className="rv-bar-text">
+              <span className="rv-bar-row">
+                {study.section !== "Baseline" && <span className="rv-section">{study.section}</span>}
+                <b>{study.name}</b>
+                <small>
+                  {index + 1} / {STUDIES.length}
+                </small>
+              </span>
+              <Progress index={index} />
             </span>
           </button>
           <button aria-label="Next study" disabled={index === STUDIES.length - 1} onClick={() => step(1)}>
             <Chevron size={22} />
           </button>
         </nav>
-        <button className="v2-nav-ai" aria-label="Ask Longevity AI about this study" onClick={() => go(`/v2/assistant?ask=${encodeURIComponent(`Explain my ${study.name.toLowerCase()} results`)}`)}>
-          <Icon name="Nav_LongevityAI" size={26} />
-        </button>
       </div>
 
       {listOpen && <StudyList at={index} visit={visit} onClose={() => setListOpen(false)} />}

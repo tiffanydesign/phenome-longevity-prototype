@@ -17,29 +17,77 @@ const smooth = (pts: [number, number][]) =>
     return `${d} C${mid},${py} ${mid},${y} ${x},${y}`;
   }, "");
 
-/** Small trend on a card: shape of the week only. The numbers live on the detail. */
-export function CardTrend({ values, kind, w = 132, h = 44, color = "currentColor" }: { values: number[]; kind: "line" | "bars"; w?: number; h?: number; color?: string }) {
-  const { lo, hi } = scale(values, undefined, kind === "bars");
-  const y = (v: number) => h - 3 - ((v - lo) / (hi - lo)) * (h - 6);
-  const step = w / values.length;
-  if (kind === "bars") {
-    const bar = Math.max(3, step * 0.56);
-    return (
-      <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden>
-        {values.map((v, i) => {
-          const top = y(v);
-          return <rect key={i} x={i * step + (step - bar) / 2} y={top} width={bar} height={h - top} rx={bar / 2} fill={color} opacity={i === values.length - 1 ? 1 : 0.5} />;
-        })}
-      </svg>
-    );
-  }
-  const pts = values.map((v, i): [number, number] => [(i / (values.length - 1)) * (w - 6) + 1, y(v)]);
+/**
+ * A reading's history, drawn as a quiet line over a pale area: a dotted guide
+ * at each point, the day or visit under it, the usual limits as rules with
+ * their names at the right, and the latest point as an open ring. Flat colour
+ * and transparency only.
+ */
+export function HistoryChart({ values, labels, marks = [] }: { values: number[]; labels: string[]; marks?: { value: number; label: string }[] }) {
+  const W = 300;
+  // the line uses the whole width, centred in the card; a limit's name sits on its rule at the right end
+  const PLOT = W;
+  const TOP = 10;
+  const BASE = 92;
+  const all = [...values, ...marks.map((m) => m.value)];
+  const lo = Math.min(...all);
+  const hi = Math.max(...all);
+  const pad = (hi - lo || 1) * 0.2;
+  const y = (v: number) => BASE - ((v - (lo - pad)) / (hi - lo + 2 * pad)) * (BASE - TOP);
+  const x = (i: number) => 10 + (i / Math.max(1, values.length - 1)) * (PLOT - 20);
+  const pts = values.map((v, i): [number, number] => [x(i), y(v)]);
   const [ex, ey] = pts[pts.length - 1];
+  const line = smooth(pts);
   return (
-    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden>
-      <path d={smooth(pts)} fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" />
-      <circle cx={ex} cy={ey} r="3.4" fill={color} />
+    <svg className="v2-history" viewBox={`0 0 ${W} 116`} width="100%" role="img" aria-label={`From ${Math.round(values[0])} to ${Math.round(values[values.length - 1])}`}>
+      <line x1="0" x2={PLOT} y1={BASE} y2={BASE} stroke="currentColor" strokeOpacity="0.16" />
+      {pts.map(([px], i) => (
+        <line key={i} x1={px} x2={px} y1={TOP} y2={BASE} stroke="currentColor" strokeOpacity="0.14" strokeDasharray="1.5 3.5" />
+      ))}
+      {marks.map((m) => (
+        <g key={m.label}>
+          <line x1="0" x2={PLOT} y1={y(m.value)} y2={y(m.value)} stroke="currentColor" strokeOpacity="0.28" strokeWidth="1.4" />
+          <text x={PLOT - 2} y={y(m.value) - 5} textAnchor="end" className="v2-history-mark">
+            {m.label}
+          </text>
+        </g>
+      ))}
+      <path d={`${line} L${ex},${BASE} L${pts[0][0]},${BASE} Z`} fill="var(--mid)" opacity="0.12" />
+      <path d={line} fill="none" stroke="var(--mid)" strokeOpacity="0.75" strokeWidth="2.4" strokeLinecap="round" />
+      <circle cx={ex} cy={ey} r="11" fill="var(--mid)" opacity="0.16" />
+      <circle cx={ex} cy={ey} r="6" fill="#fff" stroke="var(--mid)" strokeWidth="3.4" />
+      {labels.map((l, i) => (
+        <text key={i} x={x(i)} y="110" textAnchor="middle" className="v2-history-label">
+          {l}
+        </text>
+      ))}
     </svg>
+  );
+}
+
+/**
+ * Today against the day before, as two capsules on one scale: the earlier day
+ * pale, today in the field's hue, each with its number at the end. Read at a
+ * glance as longer or shorter, no axis needed.
+ */
+export function CompareBars({ today, before, max, labels = ["Yesterday", "Today"] }: { today: number; before: number; max: number; labels?: [string, string] }) {
+  const rows: [string, number, boolean][] = [
+    [labels[0], before, false],
+    [labels[1], today, true],
+  ];
+  return (
+    <span className="v2-compare" role="img" aria-label={`${labels[0]} ${before}, ${labels[1]} ${today}`}>
+      {rows.map(([label, v, now]) => (
+        <span key={label} className="v2-compare-row" data-now={now ? "" : undefined}>
+          <small>{label}</small>
+          <span className="v2-compare-bar">
+            <i style={{ width: `${Math.max(14, Math.min(100, (v / max) * 100))}%` }}>
+              <b>{v}</b>
+            </i>
+          </span>
+        </span>
+      ))}
+    </span>
   );
 }
 
@@ -54,7 +102,7 @@ interface TrendProps {
 
 const CHART = { w: 361, h: 196, top: 34, bottom: 22 };
 
-/** Detail chart. Dragging across it reads any point back, as Samsung Health's charts do. */
+/** Detail chart. Dragging across it reads any point back. */
 export function TrendChart({ values, labels, kind, band, unit, decimals = 0 }: TrendProps) {
   const [hit, setHit] = useState<number | null>(null);
   const ref = useRef<SVGSVGElement>(null);

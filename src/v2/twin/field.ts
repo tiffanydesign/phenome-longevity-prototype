@@ -1,5 +1,13 @@
 import { asset } from "@/lib/asset";
-import type { Organ } from "../data/organs";
+import type { Sex } from "@/lib/prefs";
+/** A region of the figure: where it sits and how far it reaches, in the viewer's 200×560 SVG units. */
+export interface Place {
+  at: [number, number];
+  radius: [number, number];
+}
+
+/** "body" is baked once per sex; organ maps are shared. */
+export const sexMap = (name: string, sex: Sex) => (name === "body" && sex === "female" ? "body-female" : name);
 
 /** Same cell grid as scripts/bake-twin.mjs: one dot per cell, 80 across. */
 export const COLS = 80;
@@ -45,6 +53,52 @@ export function loadMap(name: string): Promise<CellMap> {
   return hit;
 }
 
+/**
+ * Home's figure, baked through digitaltwin.html's home framing on a grid of its
+ * own. `svg` carries the viewer's SVG units into its cells: col = x*a + b, row = y*c + d.
+ */
+export interface HeroMap {
+  cols: number;
+  rows: number;
+  svg: [number, number, number, number];
+  cov: Float32Array;
+  tone: Float32Array;
+}
+
+const heroCache = new Map<Sex, Promise<HeroMap>>();
+
+export function loadHero(sex: Sex): Promise<HeroMap> {
+  let hit = heroCache.get(sex);
+  if (hit) return hit;
+  const name = sex === "female" ? "hero-female" : "hero";
+  hit = Promise.all([
+    fetch(asset(`twin/${name}.json`)).then((r) => r.json() as Promise<Pick<HeroMap, "cols" | "rows" | "svg">>),
+    new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = () => reject(new Error(`twin map missing: ${name}`));
+      img.src = asset(`twin/${name}.png`);
+    }),
+  ]).then(([frame, img]) => {
+    const c = document.createElement("canvas");
+    c.width = frame.cols;
+    c.height = frame.rows;
+    const g = c.getContext("2d", { willReadFrequently: true })!;
+    g.drawImage(img, 0, 0);
+    const d = g.getImageData(0, 0, frame.cols, frame.rows).data;
+    const n = frame.cols * frame.rows;
+    const cov = new Float32Array(n);
+    const tone = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      cov[i] = d[i * 4] / 255;
+      tone[i] = d[i * 4 + 1] / 255;
+    }
+    return { ...frame, cov, tone };
+  });
+  heroCache.set(sex, hit);
+  return hit;
+}
+
 /* viewBox the body was baked through: -56 -8 312 358.8 */
 export const toCell = (x: number, y: number): [number, number] => [((x + 56) / 312) * COLS, ((y + 8) / 358.8) * ROWS];
 
@@ -56,7 +110,7 @@ export function hexRgb(hex: string): Rgb {
 }
 
 export interface Tint {
-  organ: Organ;
+  organ: Place;
   color: string;
   strength: number;
 }

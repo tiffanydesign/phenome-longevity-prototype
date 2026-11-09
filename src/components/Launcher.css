@@ -1,0 +1,120 @@
+/*
+ * The phone's front page for the prototype: the app's own ground, navy and
+ * type, so the step from here into the app reads as one product. The entries
+ * are thumb-sized rows; the settings reuse the desktop panel's toggles, larger.
+ */
+.ln {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  overflow-y: auto;
+  padding: calc(env(safe-area-inset-top, 0px) + 28px) 20px calc(env(safe-area-inset-bottom, 0px) + 28px);
+  background: #f4f6fb;
+  color: #1c2a5c;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.ln-head {
+  margin: 8px 4px 22px;
+}
+.ln-kicker {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #263980;
+}
+.ln-head h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.ln-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ln-entries button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+  padding: 14px 16px 14px 18px;
+  border-radius: 20px;
+  text-align: left;
+  color: inherit;
+  background: #fff;
+  box-shadow: 0 0 0 1px #26398012;
+  transition: transform 0.16s ease-out;
+}
+.ln-entries button:active {
+  transform: scale(0.98);
+}
+.ln-entries span {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ln-entries b {
+  font-size: 18px;
+  font-weight: 700;
+}
+.ln-entries small {
+  font-size: 14px;
+  color: #4a5578;
+}
+.ln-entries i {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #263980;
+}
+.ln-settings {
+  margin-top: 26px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 0 0 1px #26398012;
+  font-size: 14px;
+}
+.ln-settings h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+/* the desktop panel's toggles, sized for a thumb */
+.ln-settings .dp-row > span {
+  font-weight: 600;
+  color: #4a5578;
+}
+.ln-settings .dp-seg {
+  border-radius: 12px;
+  padding: 3px;
+  background: #eef1f8;
+}
+.ln-settings .dp-seg button {
+  height: 40px;
+  border-radius: 9px;
+  font-size: 14px;
+}
+.ln-note {
+  margin: -6px 0 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #4a5578;
+}
+.ln-hint {
+  margin: 18px 6px 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #4a5578;
+  text-align: center;
+}

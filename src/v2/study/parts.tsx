@@ -4,9 +4,11 @@ import { Num } from "../ui/Num";
 /**
  * The room display's chart family, redrawn for one thumb and one column. The
  * meaning of each mark is the portal's: a band for a reference range, a marker
- * for the reading, green only for in range, gold for outside it, red for a
- * finding that needs attention. Colour is never the only signal; every state
- * also carries its words.
+ * for the reading, green only for in range, gold for outside it, terracotta for
+ * a finding to go through with the clinician. The marks are soft on purpose: a
+ * result says what to do next, it does not sound an alarm, so there is no
+ * triangle and no exclamation mark. Colour is never the only signal; every
+ * state also carries its words.
  */
 export type Tone = "ok" | "mon" | "alert" | "";
 
@@ -22,20 +24,22 @@ export function Mark({ tone }: { tone: Tone }) {
         <path d="M5.7 10.3 8.7 13.3 14.4 7" fill="none" stroke="#417e1b" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     );
+  // a point to keep an eye on
   if (tone === "mon")
     return (
       <svg className="rv-mark" viewBox="0 0 20 20" aria-hidden>
-        <path d="M10 2.2 18.4 16.9H1.6z" fill="#e8bb50" stroke="#e8bb50" strokeWidth="2.4" strokeLinejoin="round" />
-        <path d="M10 7.4v4.6" stroke="#10214b" strokeWidth="2.1" strokeLinecap="round" />
-        <circle cx="10" cy="14.6" r="1.2" fill="#10214b" />
+        <circle cx="10" cy="10" r="10" fill="#fff0cc" />
+        <circle cx="10" cy="10" r="5.6" fill="none" stroke="#ffb600" strokeWidth="1.6" />
+        <circle cx="10" cy="10" r="2.4" fill="#ffb600" />
       </svg>
     );
+  // one to talk through with the clinician
   if (tone === "alert")
     return (
       <svg className="rv-mark" viewBox="0 0 20 20" aria-hidden>
-        <circle cx="10" cy="10" r="10" fill="#d93a1e" />
-        <path d="M10 5.2v6" stroke="#fff" strokeWidth="2.3" strokeLinecap="round" />
-        <circle cx="10" cy="14.6" r="1.3" fill="#fff" />
+        <circle cx="10" cy="10" r="10" fill="#fce4da" />
+        <path d="M5.4 7.6c0-1.2.9-2.1 2.1-2.1h5c1.2 0 2.1.9 2.1 2.1v3.3c0 1.2-.9 2.1-2.1 2.1H9.6l-2.5 2v-2h.4c-1.2 0-2.1-.9-2.1-2.1z" fill="none" stroke="#c4572e" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M8 9.3h4" stroke="#c4572e" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     );
   return (
@@ -78,12 +82,32 @@ export function Card({ title, aside, children }: { title?: string; aside?: React
   );
 }
 
+/** Words, not numbers: a record read as label and entry on one line each, the summary first. */
+export function Facts({ lead, items }: { lead?: ReactNode; items: { label: string; value: string }[] }) {
+  return (
+    <>
+      {lead && <p className="rv-facts-lead">{lead}</p>}
+      <dl className="rv-facts">
+        {items.map((f) => (
+          <div key={f.label} data-empty={/^none/i.test(f.value) ? "" : undefined}>
+            <dt>{f.label}</dt>
+            <dd>{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </>
+  );
+}
+
+/** A reading in words ("Moderate", "None recorded") is set as text, not at a number's size. */
+const isWord = (v: unknown) => typeof v === "string" && !/^[\d−+\-.<>≈~]/.test(v.trim());
+
 export function Cells({ items, cols = 2 }: { items: ({ label: string; value?: string | number | null; unit?: string; tone?: Tone; under?: ReactNode } | null)[]; cols?: number }) {
   const shown = items.filter((i) => i && i.value !== undefined && i.value !== null && i.value !== "");
   return (
     <div className="rv-cells" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
       {shown.map((c) => (
-        <div key={c!.label} className="rv-cell" data-tone={c!.tone}>
+        <div key={c!.label} className="rv-cell" data-tone={c!.tone} data-word={isWord(c!.value) ? "" : undefined} data-empty={/^none/i.test(String(c!.value)) ? "" : undefined}>
           <span>{c!.label}</span>
           <b>
             {c!.value}
@@ -140,6 +164,18 @@ export function Range({ value, low, high, tone, ticks }: { value: number; low: n
   );
 }
 
+/** A z-score on a fixed −3 to 3 axis with the typical band inside ±1.5, drawn but not written, as the portal does. */
+export function ZRange({ z, tone }: { z: number | null; tone?: Tone }) {
+  if (z === null) return null;
+  const at = (v: number) => ((Math.max(-3, Math.min(3, v)) + 3) / 6) * 100;
+  return (
+    <div className="rv-range rv-z" data-tone={tone ?? ""}>
+      <i style={{ left: `${at(-1.5)}%`, width: `${at(1.5) - at(-1.5)}%` }} />
+      <b style={{ left: `${at(z)}%` }} />
+    </div>
+  );
+}
+
 /** The change across visits. The room display steps through them; on a phone the shape says more. */
 export function VisitTrend({ values, at }: { values: number[]; at: number }) {
   const lo = Math.min(...values);
@@ -152,13 +188,13 @@ export function VisitTrend({ values, at }: { values: number[]; at: number }) {
     <svg className="rv-trend" width={W} height={H} viewBox={`0 0 ${W} ${H}`} aria-hidden>
       <polyline points={values.map((v, i) => `${x(i)},${y(v)}`).join(" ")} fill="none" stroke="#7185bd" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
       {values.map((v, i) => (
-        <circle key={i} cx={x(i)} cy={y(v)} r={i === at ? 4 : 2} fill={i === at ? "#203a85" : "#a9b5d9"} />
+        <circle key={i} cx={x(i)} cy={y(v)} r={i === at ? 4 : 2} fill={i === at ? "#263980" : "#a9b5d9"} />
       ))}
     </svg>
   );
 }
 
-const RAMP = ["#0a1e57", "#203a85", "#7185bd", "#a9b5d9", "#435ba1"];
+const RAMP = ["#0a1e57", "#263980", "#7185bd", "#a9b5d9", "#435ba1"];
 
 /** Parts of one whole: one hue in depths ordered by share, then what each part is. */
 export function Parts({ items, unit = "%" }: { items: { name: string; value: number }[]; unit?: string }) {
@@ -216,10 +252,10 @@ export const Note = ({ children }: { children: ReactNode }) => <p className="rv-
 export function Ring({ share, label }: { share: number; label: string }) {
   const c = 2 * Math.PI * 42;
   return (
-    <svg className="rv-ring" viewBox="0 0 110 110" aria-hidden>
+    <svg className="rv-share" viewBox="0 0 110 110" aria-hidden>
       <g transform="translate(55 55)">
         <circle r="42" fill="none" stroke="#e6e9f2" strokeWidth="9" />
-        <circle r="42" fill="none" stroke="#203a85" strokeWidth="9" strokeLinecap="round" strokeDasharray={c.toFixed(1)} strokeDashoffset={(c * (1 - share)).toFixed(1)} transform="rotate(-90)" />
+        <circle r="42" fill="none" stroke="#263980" strokeWidth="9" strokeLinecap="round" strokeDasharray={c.toFixed(1)} strokeDashoffset={(c * (1 - share)).toFixed(1)} transform="rotate(-90)" />
         <text y="9" textAnchor="middle" fontSize="24" fill="#10214b">
           {label}
         </text>
@@ -236,11 +272,11 @@ export function AgeDial({ chronological, predicted }: { chronological: number; p
   const x = (100 + 78 * Math.cos(a)).toFixed(1);
   const y = (100 - 78 * Math.sin(a)).toFixed(1);
   const good = diff < 0;
-  const accent = good ? "#509b21" : "#b27f00";
+  const accent = good ? "#509b21" : "#ffb600";
   return (
-    <svg className="rv-dial" viewBox="0 0 200 124" aria-hidden>
+    <svg className="rv-dial" viewBox="0 0 200 134" aria-hidden>
       <path d="M100 22 A78 78 0 0 0 22 100" fill="none" stroke="#509b2138" strokeWidth="7" strokeLinecap="round" />
-      <path d="M100 22 A78 78 0 0 1 178 100" fill="none" stroke="#b27f0038" strokeWidth="7" strokeLinecap="round" />
+      <path d="M100 22 A78 78 0 0 1 178 100" fill="none" stroke="#ffb60040" strokeWidth="7" strokeLinecap="round" />
       <path d={`M100 22 A78 78 0 0 ${share < 0.5 ? 0 : 1} ${x} ${y}`} fill="none" stroke={accent} strokeWidth="7" strokeLinecap="round" />
       <circle cx={x} cy={y} r="7.5" fill={accent} stroke="#fff" strokeWidth="3" />
       <text x="100" y="92" textAnchor="middle" fontSize="36" fill={good ? "#417e1b" : "#8f6600"}>
@@ -248,6 +284,12 @@ export function AgeDial({ chronological, predicted }: { chronological: number; p
       </text>
       <text x="100" y="112" textAnchor="middle" fontSize="13" fill="#4a5578">
         years
+      </text>
+      <text x="6" y="128" fontSize="12.5" fill="#417e1b">
+        Younger
+      </text>
+      <text x="194" y="128" textAnchor="end" fontSize="12.5" fill="#8f6600">
+        Older
       </text>
     </svg>
   );
@@ -264,7 +306,7 @@ export function Heartbeat({ intervals }: { intervals: { name: string; ms: number
           <svg viewBox="0 20 135 90" aria-hidden>
             <rect x={n.from} y="24" width={n.to - n.from} height="78" fill="#30b0cd" fillOpacity="0.16" />
             <path d={BEAT} fill="none" stroke="#4a5578" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-            <path d={`M${n.from} 100v7H${n.to}v-7`} fill="none" stroke="#203a8573" strokeWidth="1.6" />
+            <path d={`M${n.from} 100v7H${n.to}v-7`} fill="none" stroke="#26398073" strokeWidth="1.6" />
           </svg>
           <span>{n.name}</span>
           <b>
@@ -292,8 +334,8 @@ const ICONS: Record<string, ReactNode> = {
   multisystem: <path d="M12 7.5 6.8 16M12 7.5 17.2 16M8.8 17.6h6.4" />,
 };
 
-const FILL: Record<string, string> = { typical: "#e6e9f2", moderate: "#e8bb50", high: "#d93a1e" };
-const GLYPH: Record<string, string> = { typical: "#203a85", moderate: "#10214b", high: "#fff" };
+const FILL: Record<string, string> = { typical: "#e6e9f2", moderate: "#e8bb50", high: "#d9774f" };
+const GLYPH: Record<string, string> = { typical: "#263980", moderate: "#10214b", high: "#fff" };
 
 /** ProteoRisk's body-systems wheel: colour and count here, the names listed underneath. */
 export function Wheel({ systems }: { systems: { code: string; name: string; status: string }[] }) {
@@ -335,7 +377,7 @@ export function Wheel({ systems }: { systems: { code: string; name: string; stat
   );
 }
 
-const TIER: Record<string, string> = { high: "#d93a1e", moderate: "#e8bb50", low: "#203a85" };
+const TIER: Record<string, string> = { high: "#d9774f", moderate: "#e8bb50", low: "#263980" };
 
 export function Gauge({ score, tier }: { score: number; tier: string }) {
   const arc = (end: number) => {

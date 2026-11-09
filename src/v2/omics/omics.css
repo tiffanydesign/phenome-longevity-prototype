@@ -1,170 +1,163 @@
+/* Omics, set as Home is set: the same top, coaching line, tiles and fields */
 .om {
-  flex: 1;
-  min-height: 0;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   overflow-y: auto;
+  /* the title scrolls with the page, as on Home; only the status bar stays covered */
   padding: 0 16px 112px;
   scrollbar-width: none;
 }
 .om::-webkit-scrollbar {
   display: none;
 }
-.om-coach {
-  margin: 4px 4px 14px;
-  font-size: 16px;
-  line-height: 1.42;
-  color: var(--v-ink-2);
-  text-wrap: pretty;
+.om-top {
+  margin: 0 -16px 8px;
 }
+.om-coach {
+  margin: 0 4px 16px;
+}
+
+/* organ ages: a Home tile, its dots navy for younger and Monitor yellow for older */
 .om-ages {
   width: 100%;
   display: block;
   padding: 16px 18px 12px;
   border-radius: var(--v-r);
-  color: #fff;
-  background: radial-gradient(90% 90% at 92% 0%, #3a5bb9, #3a5bb900 70%), linear-gradient(150deg, #0f2461, #1a3179);
-  box-shadow: 0 18px 34px -22px #0f2461;
+  color: var(--fg);
+  background: var(--f);
+  transition: transform 0.18s var(--v-ease);
+}
+.om-ages:active,
+.om-row:active {
+  transform: scale(0.98);
 }
 .om-ages-h {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 14px;
-  color: #ffffffd9;
+  font: var(--v-t-note);
+  color: var(--fg-2);
 }
 .om-ages-h > span {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
 }
 .om-ages-h b {
-  font-family: var(--v-display);
-  font-size: 28px;
-  font-weight: 400;
-  color: #fff;
+  font: var(--v-t-head);
+  letter-spacing: -0.01em;
+  color: var(--fg);
 }
-.om-axis {
-  margin: 12px 0 6px 74px;
-  padding-right: 36px;
+.om-go {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--fg);
+  background: #ffffffb3;
+}
+/* the overview's counts, then each study that carries a status */
+.om-counts {
+  margin: 12px 0 8px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  font: var(--v-t-note);
+  color: var(--fg-2);
+}
+.om-counts span {
   display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: #ffffffc4;
+  flex-direction: column;
 }
-.om-age {
-  height: 34px;
+.om-counts b {
+  font: 700 22px var(--v-text);
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+.om-lead {
+  min-height: 38px;
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 14px;
+  border-top: 1px solid #ffffff80;
+  font: 500 14px var(--v-text);
 }
-.om-age-n {
-  flex: 0 0 64px;
-}
-.om-age-t {
-  position: relative;
+.om-lead-n {
   flex: 1;
-  height: 2px;
-  background: #ffffff38;
 }
-.om-age-t::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: -7px;
-  width: 1px;
-  height: 16px;
-  background: #ffffff8c;
+.om-lead-v b {
+  font: 700 17px var(--v-text);
+  font-variant-numeric: tabular-nums;
 }
-.om-age-t i {
-  position: absolute;
-  top: -5px;
-  left: var(--p);
-  width: 12px;
-  height: 12px;
-  margin-left: -6px;
-  border-radius: 50%;
-  background: #7fd2e6;
+.om-lead em {
+  padding: 2px 9px;
+  border-radius: 10px;
+  font: 600 12px var(--v-text);
+  font-style: normal;
+  color: var(--v-ok-ink);
+  background: var(--v-ok-pill);
 }
-.om-age[data-older] .om-age-t i {
-  background: #e8bb50;
+.om-lead[data-tone="mon"] em,
+.om-lead[data-tone="alert"] em {
+  color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
 }
-.om-age b {
-  flex: 0 0 26px;
-  text-align: right;
-  font-family: var(--v-num);
-  font-size: 18px;
-  font-weight: 300;
+
+/* the two plain rows, as Home's booking tile */
+.om-row {
+  height: auto;
+  min-height: 76px;
+  margin-top: 12px;
+  justify-content: center;
 }
+.om-row .v2-tile-t,
+.om-row .v2-tile-s {
+  padding-right: 48px;
+}
+
 .om-h {
   margin: 22px 4px 10px;
-  font-size: 18px;
-  font-weight: 500;
+  font: var(--v-t-head);
+  letter-spacing: -0.01em;
 }
 .om-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 150px;
   gap: 12px;
-}
-.om-panel {
-  min-height: 96px;
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 8px;
-  border-radius: 20px;
-  background: var(--v-solid);
-  box-shadow: var(--v-shadow);
-  transition: transform 0.18s var(--v-ease);
-}
-.om-panel:active {
-  transform: scale(0.98);
 }
 .om-panel:first-child {
   grid-column: span 2;
 }
-.om-panel b {
-  font-size: 16px;
-  font-weight: 500;
+.om-panel:first-child .v2-glyph {
+  right: 10px;
 }
-.om-panel span {
-  font-size: 14px;
-  color: var(--v-ink-2);
-}
-.om-panel[data-flag] span {
+.om-flag {
+  display: inline-block;
+  margin-bottom: 6px;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font: 600 12px var(--v-text);
+  font-style: normal;
   color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
 }
+
+/* results still with the lab: open slots, not rows of grey text */
 .om-wait {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .om-wait li {
-  padding: 12px 4px;
-  font-size: 15px;
+  padding: 9px 14px;
+  border-radius: 18px;
+  font: 500 14px var(--v-text);
   color: var(--v-ink-2);
-  border-bottom: 1px solid var(--v-line);
-}
-.om-reports {
-  width: 100%;
-  margin-top: 18px;
-  min-height: 72px;
-  padding: 12px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 20px;
-  background: var(--v-solid);
-  box-shadow: var(--v-shadow);
-}
-.om-reports b {
-  display: block;
-  font-size: 16px;
-  font-weight: 500;
-}
-.om-reports small {
-  display: block;
-  margin-top: 2px;
-  font-size: 14px;
-  color: var(--v-ink-2);
+  border: 1.5px dashed #2639803d;
 }

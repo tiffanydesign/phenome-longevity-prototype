@@ -1,8 +1,9 @@
 import { allLabs, labTotals, Labs } from "./blocks";
+import { STUDIES } from "./catalog";
 import { IN, M, pick, placeOf, series, trim, VISITS, words, type Rec, type StudyView } from "./data";
-import { Bullets, Card, Cells, Finding, Heartbeat, Note, Parts, Range, Ring, type Tone } from "./parts";
+import { Bullets, Card, Cells, Facts, Finding, Heartbeat, Note, Parts, Pill, Range, Ring, type Tone } from "./parts";
 
-function labStudy(study: string, visit: number, title: string): StudyView {
+function labStudy(study: string, visit: number): StudyView {
   const t = labTotals(study, visit);
   return {
     value: String(t.inRange),
@@ -10,7 +11,7 @@ function labStudy(study: string, visit: number, title: string): StudyView {
     trend: VISITS.map((v) => labTotals(study, v).inRange),
     at: VISITS.indexOf(visit),
     ...(t.outside ? IN("mon", `${t.outside} outside range`) : IN("ok", "All in range")),
-    cards: <Labs study={study} visit={visit} title={title} />,
+    cards: <Labs study={study} visit={visit} />,
   };
 }
 
@@ -23,16 +24,20 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
     const s = pick(M.skin, visit);
     const gut = pick(M.gut, visit);
     const pr = pick(M.proteomics, visit);
-    const h = M.history;
+    // the newest history record taken by this visit; the portal's metadata record, which has no visit, counts at every one
+    const taken = (M.history as Rec[]).filter((r) => r.visit === null || r.visit === undefined || r.visit <= visit);
+    const h = taken[taken.length - 1] ?? M.history[M.history.length - 1];
+    const us = pick(M.ultrasound, visit);
+    const gp = pick(M.gp, visit);
     return {
       value: String(labs.inRange),
-      label: `of ${labs.total} markers in range`,
+      label: labs.inRange === labs.total ? "markers in range" : `of ${labs.total} markers in range`,
       trend: VISITS.map((n) => allLabs(n).inRange),
       at: placeOf(M.vitals, visit),
       cards: (
         <>
           <Card title="Vitals">
-            <Cells items={[{ label: "Resting heart", value: v.pulseBpm, unit: "bpm" }, { label: "Blood pressure", value: `${v.systolicBloodPressureMmhg}/${v.diastolicBloodPressureMmhg}` }]} />
+            <Cells items={[{ label: "Resting heart", value: v.pulseBpm, unit: "bpm" }, { label: "Blood pressure", value: `${v.systolicBloodPressureMmhg}/${v.diastolicBloodPressureMmhg}` }, { label: "Studies", value: STUDIES.length }]} />
           </Card>
           <Card title="Body">
             <Cells
@@ -45,19 +50,27 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
             />
           </Card>
           <Card title="Omics">
-            <Cells items={[{ label: "Molecular layers", value: M.overview.layers }, { label: "Proteins", value: pr.proteins }, { label: "Metabolites", value: M.overview.metabolites }, { label: "Gut species", value: gut.richness }]} />
+            <Cells items={[{ label: "Molecular layers", value: M.overview.layers }, { label: "Proteins", value: pr?.proteins }, { label: "Metabolites", value: M.overview.metabolitesAt[String(visit)] || null }, { label: "Gut species", value: gut?.richness }]} />
           </Card>
-          <Card title="Clinical record">
-            <Cells
-              cols={1}
+          <Card title="Patient history" aside={<span className="rv-count">{h.date}</span>}>
+            <Facts
               items={[
-                { label: "Chief concerns", value: h.chiefConcerns.join(", ") },
+                ...(h.chiefConcerns.length ? [{ label: "Chief concerns", value: h.chiefConcerns.join(", ") }] : []),
                 { label: "Conditions", value: h.conditions.join(", ") || "None recorded" },
                 { label: "Medication", value: h.medications.join(", ") || "None recorded" },
                 { label: "Allergies", value: h.allergies.join(", ") || "None recorded" },
               ]}
             />
-            <Note>{pick(M.gp, visit).clinicalImpression}</Note>
+          </Card>
+          <Card title="Diagnostic ultrasound">
+            {us.studies.map((s: Rec) => (
+              <Finding key={s.region} tone="" title={s.region} detail={s.finding} />
+            ))}
+            <Note>{us.impression}</Note>
+          </Card>
+          <Card title="GP examination">
+            <Facts lead={gp.clinicalImpression} items={gp.findings} />
+            <Bullets items={gp.recommendations} />
           </Card>
         </>
       ),
@@ -112,15 +125,31 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
     const t = pick(M.tonometry, visit);
     const r = M.tonometryRanges;
     const isOut = (v: number, lim: { low: number; high: number }) => v < lim.low || v > lim.high;
-    const outside = Number(isOut(t.leftEyePressureMmhg, r.leftEyePressureMmhg)) + Number(isOut(t.rightEyePressureMmhg, r.rightEyePressureMmhg));
-    const eye = (label: string, v: number, lim: { low: number; high: number }) => ({ label, value: trim(v), unit: "mmHg", tone: (v < lim.low || v > lim.high ? "mon" : "") as Tone, under: <Range value={v} ticks {...lim} /> });
+    // each eye carries its own words, as the portal gives them; the lead is the right eye's
+    const place = (v: number, lim: { low: number; high: number }) => (v < lim.low ? "Below range" : v > lim.high ? "Above range" : "In range");
+    const eye = (label: string, v: number, lim: { low: number; high: number }) => {
+      const out = isOut(v, lim);
+      return {
+        label,
+        value: trim(v),
+        unit: "mmHg",
+        tone: (out ? "mon" : "") as Tone,
+        under: (
+          <>
+            <Pill tone={out ? "mon" : "ok"}>{place(v, lim)}</Pill>
+            <Range value={v} ticks {...lim} />
+          </>
+        ),
+      };
+    };
+    const right = place(t.rightEyePressureMmhg, r.rightEyePressureMmhg);
     return {
       value: trim(t.rightEyePressureMmhg),
       unit: "mmHg",
       label: "Right eye pressure",
       trend: series(M.tonometry, "rightEyePressureMmhg"),
       at: placeOf(M.tonometry, visit),
-      ...(outside ? IN("mon", `${outside} outside range`) : IN()),
+      ...(right === "In range" ? IN() : IN("mon", right)),
       cards: (
         <Card title="Eye pressure">
           <Cells items={[eye("Left eye", t.leftEyePressureMmhg, r.leftEyePressureMmhg), eye("Right eye", t.rightEyePressureMmhg, r.rightEyePressureMmhg)]} />
@@ -169,6 +198,7 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
       cards: (
         <>
           <Card title="Electrocardiogram">
+            <Cells items={[{ label: "Heart rate", value: e.heartRateBpm, unit: "bpm" }, { label: "Rhythm", value: words(e.rhythm) }]} />
             <Heartbeat
               intervals={[
                 { name: "PR", ms: e.prIntervalMs, from: 14, to: 46 },
@@ -209,7 +239,7 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
             items={[
               { label: "VO₂", value: Math.round(r.vo2MlMin), unit: "mL/min" },
               { label: "VCO₂", value: Math.round(r.vco2MlMin), unit: "mL/min" },
-              { label: "Resp. quotient", value: trim(r.respiratoryQuotient, 2) },
+              { label: "Respiratory quotient", value: trim(r.respiratoryQuotient, 2) },
             ]}
           />
           <Note>{r.interpretation}</Note>
@@ -218,9 +248,9 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
     };
   },
 
-  liver: (visit) => labStudy("liver", visit, "Liver function"),
-  kidneys: (visit) => labStudy("kidneys", visit, "Laboratory results"),
-  thyroid: (visit) => labStudy("thyroid", visit, "Blood tests"),
+  liver: (visit) => labStudy("liver", visit),
+  kidneys: (visit) => labStudy("kidneys", visit),
+  thyroid: (visit) => labStudy("thyroid", visit),
 
   stomach(visit) {
     const n = pick(M.nutrition, visit);
@@ -232,7 +262,7 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
       ...(t.outside ? IN("mon", `${t.outside} outside range`) : IN("ok", "All in range")),
       cards: (
         <>
-          <Labs study="stomach" visit={visit} title="Metabolic health" />
+          <Labs study="stomach" visit={visit} />
           <Card title="Nutrition assessment">
             <Cells cols={1} items={[{ label: "Dietary pattern", value: n.dietaryPattern }]} />
             <h4 className="rv-sub">Goals</h4>
@@ -243,12 +273,12 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
           <Card title="Dietary history">
             <Cells
               items={[
-                { label: "Intolerances", value: d.intolerances.join(", ") || "None recorded" },
-                { label: "Frequent symptoms", value: d.symptoms.join(", ") || "None recorded" },
-                { label: "Meals and snacks", value: d.meals },
+                { label: "Allergies and intolerances", value: d.intolerances.join(", ") || "None recorded" },
+                { label: "Frequent digestive symptoms", value: d.symptoms.join(", ") || "None recorded" },
+                { label: "Meals and snacks a day", value: d.meals },
                 { label: "Salt intake", value: d.salt },
                 { label: "Diet", value: d.diet },
-                { label: "Active days", value: d.activeDays, unit: "/ 7" },
+                { label: "Active days a week", value: d.activeDays, unit: "/ 7" },
               ]}
             />
           </Card>
@@ -261,12 +291,15 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
     const c = pick(M.composition, visit);
     const a = pick(M.anthro, visit);
     const r = M.anthroRanges.bmiKgM2;
+    const bmiOut = a.bmiKgM2 < r.low || a.bmiKgM2 > r.high;
     return {
       value: trim(c.bodyFatPercent),
       unit: "%",
       label: "Body fat",
       trend: series(M.composition, "bodyFatPercent"),
       at: placeOf(M.composition, visit),
+      // body fat has no range in the portal; BMI does, so the study takes its words
+      ...(bmiOut ? IN("mon", a.bmiKgM2 < r.low ? "Below range" : "Above range") : IN()),
       cards: (
         <>
           <Card title="VISBODY scan">
@@ -285,7 +318,23 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
                 { label: "Hip", value: trim(a.hipCircumferenceCm), unit: "cm" },
               ]}
             />
-            <Cells cols={1} items={[{ label: "BMI", value: trim(a.bmiKgM2), unit: "kg/m²", under: <Range value={a.bmiKgM2} ticks {...r} /> }]} />
+            <Cells
+              cols={1}
+              items={[
+                {
+                  label: "BMI",
+                  value: trim(a.bmiKgM2),
+                  unit: "kg/m²",
+                  tone: (bmiOut ? "mon" : "") as Tone,
+                  under: (
+                    <>
+                      <Pill tone={bmiOut ? "mon" : "ok"}>{a.bmiKgM2 < r.low ? "Below range" : a.bmiKgM2 > r.high ? "Above range" : "In range"}</Pill>
+                      <Range value={a.bmiKgM2} ticks {...r} />
+                    </>
+                  ),
+                },
+              ]}
+            />
           </Card>
         </>
       ),
@@ -329,7 +378,8 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
         <>
           <Card title="Skin map">
             <Note>{s.summary}</Note>
-            {s.lesions.map((l: Rec) => (
+            {/* the portal names the first three; the count above holds them all */}
+            {s.lesions.slice(0, 3).map((l: Rec) => (
               <Finding key={l.identifier} tone={tone(l.risk)} title={`${l.identifier} · ${words(l.region)}`} detail={`${words(l.risk)} risk · ${l.change}`} />
             ))}
           </Card>

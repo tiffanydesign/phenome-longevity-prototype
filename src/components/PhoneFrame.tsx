@@ -1,22 +1,78 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePrefs } from "@/lib/prefs";
+import { EDITION } from "@/lib/edition";
 import { DevPanel } from "./DevPanel";
+import { Launcher } from "./Launcher";
 import "./PhoneFrame.css";
 
 /**
  * Device chrome. Desktop: a centred 394×853 phone shell. Phones (≤ 500px wide):
  * full-bleed; the drawn status bar is kept (owner's choice) but pushed below the
- * real OS bar via safe-area insets, and the drawn gesture handle is hidden.
+ * real OS bar via safe-area insets, and the drawn gesture handle is hidden. On a
+ * phone the prototype opens on its launcher (entry and settings) first, once per
+ * session, then the app fills the screen.
  */
 export function PhoneFrame({ children }: { children: ReactNode }) {
+  const phone = useIsPhone();
+  const [launched, setLaunched] = useState(() => readLaunched());
+  const taps = useRef<number[]>([]);
+
+  const start = () => {
+    setLaunched(true);
+    try {
+      sessionStorage.setItem(LAUNCHED, "1");
+    } catch {
+      /* storage blocked: the launcher returns on the next load */
+    }
+  };
+
+  // three quick taps on the status strip bring the prototype's front page back
+  const tapStatus = () => {
+    const now = Date.now();
+    taps.current = [...taps.current.filter((t) => now - t < 700), now];
+    if (taps.current.length < 3) return;
+    taps.current = [];
+    setLaunched(false);
+    try {
+      sessionStorage.removeItem(LAUNCHED);
+    } catch {
+      /* nothing stored */
+    }
+  };
+
   return (
     <div className="pf-stage">
       <div className="pf-device">
         <div className="pf-screen">{children}</div>
+        {phone && launched && <button className="pf-status-hit" aria-label="Prototype settings" onClick={tapStatus} />}
       </div>
       <DevPanel />
+      {phone && !launched && <Launcher onStart={start} />}
     </div>
   );
+}
+
+const LAUNCHED = `phenome.launched.${EDITION}`;
+
+function readLaunched(): boolean {
+  try {
+    return sessionStorage.getItem(LAUNCHED) === "1";
+  } catch {
+    return false;
+  }
+}
+
+/** A real phone, by width: the frame is already full-bleed there, and the side panel hidden. */
+function useIsPhone(): boolean {
+  const q = "(max-width: 500px)";
+  const [on, setOn] = useState(() => window.matchMedia(q).matches);
+  useEffect(() => {
+    const m = window.matchMedia(q);
+    const f = () => setOn(m.matches);
+    m.addEventListener("change", f);
+    return () => m.removeEventListener("change", f);
+  }, []);
+  return on;
 }
 
 /** Android status bar as captured on the POCO X8 Pro Max (HyperOS 4). */

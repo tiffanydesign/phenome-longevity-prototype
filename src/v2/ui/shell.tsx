@@ -1,23 +1,10 @@
-import { useEffect, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { NavLink, useLocation, useNavigate, type NavigateOptions } from "react-router-dom";
 import { Icon } from "@/components/Icon";
 import { HomeIndicator, StatusBar } from "@/components/PhoneFrame";
-import { Chevron, IconTwin } from "./icons";
+import { Chevron, IconAgent, IconHome, IconInsights, IconOmics, IconTwin } from "./icons";
 import "../v2.css";
-
-/** The Adobe kit the Digital Twin site uses: Contralto for display, New Science Mono for numerals. */
-const KIT = "https://use.typekit.net/omf6kcr.css";
-
-function useKit() {
-  useEffect(() => {
-    if (document.querySelector(`link[href="${KIT}"]`)) return;
-    const l = document.createElement("link");
-    l.rel = "stylesheet";
-    l.href = KIT;
-    document.head.appendChild(l);
-  }, []);
-}
 
 /**
  * Route change wrapped in a view transition, so the tile or card the member
@@ -32,17 +19,31 @@ export function useGo() {
       nav(to, opts);
       return;
     }
-    if (opts?.from) opts.from.style.viewTransitionName = "v2-hero";
+    const from = opts?.from;
+    const root = document.documentElement;
+    // a card opening a metric becomes that page's header: both are captured square and
+    // without shadow, and the transition's own frame carries the corners from one to the other
+    const sheet = !!from && to.startsWith("/v2/metric");
+    if (from) {
+      from.style.viewTransitionName = "v2-hero";
+      if (sheet) {
+        root.style.setProperty("--vt-from-r", getComputedStyle(from).borderTopLeftRadius);
+        from.dataset.vtSnap = "";
+        root.dataset.vt = "sheet";
+      }
+    }
     const vt = document.startViewTransition(() => {
-      if (opts?.from) opts.from.style.viewTransitionName = "";
+      if (from) {
+        from.style.viewTransitionName = "";
+        delete from.dataset.vtSnap;
+      }
       flushSync(() => nav(to, opts));
     });
-    vt.finished.catch(() => undefined);
+    vt.finished.catch(() => undefined).finally(() => delete root.dataset.vt);
   };
 }
 
 export function V2Screen({ children, nav = true, tone = "dark" }: { children: ReactNode; nav?: boolean; tone?: "dark" | "light" }) {
-  useKit();
   return (
     <div className="v2">
       <StatusBar tone={tone} />
@@ -54,12 +55,13 @@ export function V2Screen({ children, nav = true, tone = "dark" }: { children: Re
 }
 
 const TABS = [
-  { to: "/v2/home", label: "Home", icon: <Icon name="Nav_Home" size={22} /> },
+  { to: "/v2/home", label: "Home", icon: <IconHome /> },
   { to: "/v2/twin", label: "Twin", icon: <IconTwin size={22} /> },
-  { to: "/v2/omics", label: "Omics", icon: <Icon name="Nav_Insights" size={22} /> },
+  { to: "/v2/omics", label: "Omics", icon: <IconOmics /> },
+  { to: "/v2/insights", label: "Insights", icon: <IconInsights /> },
 ];
 
-/** Samsung Health's bar: a floating pill of destinations, with the round button beside it. */
+/** The bar: a floating pill of destinations, with the round button beside it. */
 export function V2Nav() {
   const go = useGo();
   const { pathname } = useLocation();
@@ -83,7 +85,7 @@ export function V2Nav() {
         ))}
       </nav>
       <button className="v2-nav-ai" aria-label="Longevity AI" onClick={() => go("/v2/assistant")}>
-        <Icon name="Nav_LongevityAI" size={26} />
+        <IconAgent />
       </button>
     </div>
   );
@@ -93,7 +95,7 @@ export function Avatar() {
   const go = useGo();
   return (
     <button className="v2-avatar" aria-label="Profile" onClick={() => go("/v2/profile")}>
-      <Icon name="Nav_Profile" size={20} />
+      <Icon name="Nav_Profile" size={18} />
       <i aria-hidden />
     </button>
   );

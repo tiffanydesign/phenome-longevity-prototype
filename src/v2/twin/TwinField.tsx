@@ -1,32 +1,35 @@
 import { useEffect, useRef, useState } from "react";
-import { ORGANS, type Organ } from "../data/organs";
-import { buildTints, COLS, COUNT, easeOut, hexRgb, loadMap, pickMarks, ROWS, staggerFrom, toCell, type CellMap, type Rgb, type Tint } from "./field";
+import { usePrefs } from "@/lib/prefs";
+import { REGIONS } from "./regions";
+import { M } from "../study/data";
+import { buildTints, COLS, COUNT, easeOut, hexRgb, loadMap, pickMarks, ROWS, sexMap, staggerFrom, toCell, type CellMap, type Place, type Rgb, type Tint } from "./field";
 
 const MORPH_MS = 620;
 const SPREAD_MS = 520;
 const TINT_MS = 420;
-/** a heart at 58 bpm and lungs at 14 breaths a minute: the figure runs on the member's own numbers */
-const BEAT_MS = 60000 / 58;
-const BREATH_MS = 60000 / 14;
+/** the heart and breath waves run on the member's own pulse and breathing rate from their latest visit */
+const LATEST_VITALS = M.vitals[M.vitals.length - 1];
+const BEAT_MS = 60000 / LATEST_VITALS.pulseBpm;
+const BREATH_MS = 60000 / LATEST_VITALS.respiratoryRatePerMin;
 
 interface Props {
   /** cell map to show: "body" or an organ's map */
   map: string;
   tints: Tint[];
   /** region the morph starts from */
-  focus?: Organ | null;
+  focus?: Place | null;
   /** run the heart and breath waves (Vitals lens) */
   alive?: boolean;
   /** show the skin markings as larger dots */
   marks?: boolean;
-  /** "dark" for the navy Home tile */
+  /** "dark" for a figure on a deep field */
   ground?: "light" | "dark";
   label: string;
   onTapCell?: (x: number, y: number) => void;
   className?: string;
 }
 
-const RAMP = { light: [hexRgb("#7185bd"), hexRgb("#203a85")], dark: [hexRgb("#8ea3d8"), hexRgb("#ffffff")] };
+const RAMP = { light: [hexRgb("#5aaeca"), hexRgb("#263980")], dark: [hexRgb("#8ea3d8"), hexRgb("#ffffff")] };
 
 /**
  * The twin. Same cells, same radii and same colour ramp as the viewer's
@@ -34,7 +37,10 @@ const RAMP = { light: [hexRgb("#7185bd"), hexRgb("#203a85")], dark: [hexRgb("#8e
  * regions swell and tint with status, the heart beats at the member's resting
  * rate, and tapping an organ regrows the dots into that organ in place.
  */
-export function TwinField({ map, tints, focus, alive, marks, ground = "light", label, onTapCell, className }: Props) {
+export function TwinField({ map: mapName, tints, focus, alive, marks, ground = "light", label, onTapCell, className }: Props) {
+  const { sex } = usePrefs();
+  const map = sexMap(mapName, sex);
+  const body = sexMap("body", sex);
   const canvas = useRef<HTMLCanvasElement>(null);
   const state = useRef({
     now: new Float32Array(COUNT),
@@ -54,7 +60,7 @@ export function TwinField({ map, tints, focus, alive, marks, ground = "light", l
 
   useEffect(() => {
     let dead = false;
-    Promise.all([loadMap(map), loadMap("body")]).then(([next, body]: [CellMap, CellMap]) => {
+    Promise.all([loadMap(map), loadMap(body)]).then(([next, body]: [CellMap, CellMap]) => {
       if (dead) return;
       const s = state.current;
       s.from = s.now.slice();
@@ -70,7 +76,7 @@ export function TwinField({ map, tints, focus, alive, marks, ground = "light", l
     return () => {
       dead = true;
     };
-  }, [map, focus]);
+  }, [map, body, focus]);
 
   useEffect(() => {
     const s = state.current;
@@ -93,8 +99,8 @@ export function TwinField({ map, tints, focus, alive, marks, ground = "light", l
     };
     resize();
 
-    const heart = toCell(ORGANS.heart.at[0], ORGANS.heart.at[1]);
-    const lungs = toCell(ORGANS.lungs.at[0], ORGANS.lungs.at[1]);
+    const heart = toCell(REGIONS.heart.at[0], REGIONS.heart.at[1]);
+    const lungs = toCell(REGIONS.lungs.at[0], REGIONS.lungs.at[1]);
 
     const draw = (t: number) => {
       const pitch = el.width / COLS;

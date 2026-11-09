@@ -1,90 +1,242 @@
 import type { ReactNode } from "react";
 
-/** Line icons drawn for the top tabs, one weight, in the same 24 grid as the app's own set. */
+/**
+ * Line icons drawn for the tabs and the bar, one weight, in the same 24 grid as
+ * the app's own set. `ic-fill` shapes go solid when selected, `ic-knock` lines
+ * cut back out of them (v2.css).
+ */
 function Line({ size = 24, children }: { size?: number; children: ReactNode }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
       {children}
     </svg>
   );
 }
 
+/*
+ * The Home tabs, in one weight and rounded geometry, with one rule: a line
+ * at rest, solid when selected. `ic-dot` parts are solid
+ * at rest too, so each glyph keeps a readable silhouette; `ic-knock` lines cut
+ * back out of the fill.
+ */
+
+/** Overview: four tiles, the first one already filled in. */
 export const IconAll = () => (
   <Line>
-    <rect x="3.5" y="3.5" width="7" height="7" rx="2.2" />
-    <rect x="13.5" y="3.5" width="7" height="7" rx="3.5" />
-    <rect x="3.5" y="13.5" width="7" height="7" rx="3.5" />
-    <rect x="13.5" y="13.5" width="7" height="7" rx="2.2" />
+    <rect className="ic-dot" x="3.75" y="3.75" width="7" height="7" rx="2.2" />
+    <rect
+      className="ic-fill"
+      x="13.25"
+      y="3.75"
+      width="7"
+      height="7"
+      rx="2.2"
+    />
+    <rect
+      className="ic-fill"
+      x="3.75"
+      y="13.25"
+      width="7"
+      height="7"
+      rx="2.2"
+    />
+    <rect
+      className="ic-fill"
+      x="13.25"
+      y="13.25"
+      width="7"
+      height="7"
+      rx="2.2"
+    />
   </Line>
 );
 
-export const IconActivity = () => (
-  <Line>
-    <circle cx="14.5" cy="4.6" r="1.8" />
-    <path d="M9 9.2l3.6-1.6 3 2.7 2.9.7" />
-    <path d="M12.6 7.6l-1.4 5 3.2 2.6.6 5.2" />
-    <path d="M11.2 12.6l-1.5 3.5-4.2.6" />
-  </Line>
-);
-
-export const IconSleep = () => (
-  <Line>
-    <path d="M19.6 14.4A8 8 0 1 1 9.6 4.4a6.4 6.4 0 0 0 10 10z" />
-    <path d="M16.6 3.6l.7 1.9 1.9.7-1.9.7-.7 1.9-.7-1.9-1.9-.7 1.9-.7z" />
-  </Line>
-);
-
+/** Vitals: the heart with a beat running through it. */
 export const IconVitals = () => (
   <Line>
-    <path d="M20.3 9.2c0 5-8.3 10.8-8.3 10.8S3.7 14.2 3.7 9.2A4.7 4.7 0 0 1 12 6.3a4.7 4.7 0 0 1 8.3 2.9z" />
-    <path d="M6.6 12h3l1.4-2.6 2 4.6 1.3-2h3" />
+    <path
+      className="ic-fill"
+      d="M12 20.4s-8.4-5-8.4-11.1A4.8 4.8 0 0 1 12 6.3a4.8 4.8 0 0 1 8.4 3c0 6.1-8.4 11.1-8.4 11.1z"
+    />
+    <path className="ic-knock" d="M6.8 12.6h2.6l1.5-2.7 2.1 4.9 1.4-2.2h2.8" />
   </Line>
 );
 
-export const IconBody = () => (
+/** Sleep: a bed, the pillow solid. */
+export const IconSleep = () => (
   <Line>
-    <circle cx="12" cy="4.8" r="2.1" />
-    <path d="M5 9.2c4.6 1.4 9.4 1.4 14 0" />
-    <path d="M9.3 10.2v4.3l-1 6.3M14.7 10.2v4.3l1 6.3M9.3 14.5h5.4" />
+    <path d="M3.2 5.6v14M20.8 14v5.6" />
+    <rect
+      className="ic-fill"
+      x="3.2"
+      y="13.4"
+      width="17.6"
+      height="3.4"
+      rx="1"
+    />
+    <rect className="ic-dot" x="5.2" y="9.6" width="4.8" height="3" rx="1.4" />
+    <path
+      className="ic-fill"
+      d="M11.6 13.4v-2.2c0-.9.7-1.6 1.6-1.6h5.2c1.3 0 2.4 1.1 2.4 2.4v1.4z"
+    />
   </Line>
 );
 
-export const IconFood = () => (
-  <Line>
-    <path d="M7 3.5v6.2M4.4 3.5v3.9a2.6 2.6 0 0 0 5.2 0V3.5M7 10v10.5" />
-    <path d="M17 20.5V14h-2.6V8.6c0-3 1.4-5.1 3.3-5.1V14" />
-  </Line>
-);
-
-export const IconMore = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-    <circle cx="12" cy="5" r="1.9" />
-    <circle cx="12" cy="12" r="1.9" />
-    <circle cx="12" cy="19" r="1.9" />
+/** Activity: a runner mid-stride, drawn in SF's heavier limbs. */
+export const IconActivity = () => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden
+  >
+    <circle cx="15.4" cy="4.2" r="2.2" fill="currentColor" stroke="none" />
+    <path d="M13.6 8.1 11.4 13" strokeWidth="3.8" />
+    <path d="M13.4 8.4 10.1 9.2 8.4 11.6" />
+    <path d="M13 9.7l2.3 2 2.9-.6" />
+    <path d="M11.4 13l3.2 2.2-1 4.8" />
+    <path d="M11.4 13l-1.8 3.4-3.8.9" />
   </svg>
 );
 
-/** The figure as a handful of cells: the nav's mark for the twin. */
+/** Body: a figure cheering, arms up on the diagonal, drawn as a solid pictogram with round ends, the weight of the runner beside it. */
+export const IconBody = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <circle cx="12" cy="4.2" r="2.3" fill="currentColor" stroke="none" />
+    <path d="M10.1 8.3 6.4 4.4M13.9 8.3l3.7-3.9" />
+    <rect x="9.6" y="7.3" width="4.8" height="5.4" rx="1.2" fill="currentColor" stroke="none" />
+    <path d="M10.9 12.4l-1.2 7.8M13.1 12.4l1.3 7.8" />
+  </svg>
+);
+
+/**
+ * Food: a round-headed fork and a round-backed knife, crossed at the middle on
+ * slim handles, so only the handles meet and both heads keep their space.
+ */
+export const IconFood = () => (
+  <Line>
+    <g transform="rotate(-42 12 12)">
+      <path d="M9.4 1.6v3.3a2.6 2.6 0 0 0 5.2 0V1.6M12 1.6v3.2" />
+      <rect className="ic-fill" x="11" y="9" width="2" height="13.4" rx="1" />
+    </g>
+    <g transform="rotate(42 12 12)">
+      <path className="ic-dot" d="M13.2 1.4c-2.4.5-3.6 3-3.6 5.8v1.4h3.6z" />
+      <rect className="ic-fill" x="11" y="9.6" width="2" height="12.8" rx="1" />
+    </g>
+  </Line>
+);
+
+export const IconHome = () => (
+  <Line size={22}>
+    {/* selected, the house stays a line and only its door fills */}
+    <path d="M4 10.8 12 4l8 6.8V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19z" />
+    <path className="ic-fill" d="M9.8 20.5v-4.6a.6.6 0 0 1 .6-.6h3.2a.6.6 0 0 1 .6.6v4.6" />
+  </Line>
+);
+
+/** Insights: findings joined up, three nodes and the links between them; selected, the main node fills. */
+export const IconInsights = () => (
+  <Line size={22}>
+    <path d="M8.2 8.6 10.6 14M15.8 8.4 13.4 14M8.8 6.6h6.4" />
+    <circle cx="6.6" cy="6.6" r="2.4" />
+    <circle cx="17.4" cy="6.6" r="2.4" />
+    <circle className="ic-fill" cx="12" cy="17" r="3.2" />
+  </Line>
+);
+
+/**
+ * The assistant: a working spark rather than a chat bubble. One large
+ * four-pointed star with a smaller one beside it and a point of light, filled.
+ */
+export const IconAgent = ({ size = 26 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+    <path d="M10 3.5c.5 3.9 2.6 6 6.5 6.5-3.9.5-6 2.6-6.5 6.5-.5-3.9-2.6-6-6.5-6.5 3.9-.5 6-2.6 6.5-6.5z" />
+    <path d="M18 13.5c.3 2 1.3 3 3.3 3.3-2 .3-3 1.3-3.3 3.3-.3-2-1.3-3-3.3-3.3 2-.3 3-1.3 3.3-3.3z" />
+    <circle cx="18.6" cy="5" r="1.4" />
+  </svg>
+);
+
+/** The double helix: what Omics reads, drawn as two strands and three rungs. */
+export const IconOmics = () => (
+  <Line size={22}>
+    <path d="M8 3c0 5 8 6 8 9s-8 4-8 9" />
+    <path d="M16 3c0 5-8 6-8 9s8 4 8 9" />
+    <path d="M8.6 5.2h6.8M8 12h8M8.6 18.8h6.8" />
+  </Line>
+);
+
+/**
+ * The twin: one bust split down the middle. The left half is drawn (you), the
+ * right half is the halftone the Twin tab renders you in. Selected, the drawn
+ * half fills; the dots stay dots.
+ */
 export function IconTwin({ size = 22 }: { size?: number }) {
+  /* the drawn half mirrored: its outline as dots, and a halftone inside */
   const dots: [number, number, number][] = [
-    [12, 3.6, 2.3],
-    [12, 9, 1.7], [8.4, 9, 1.35], [15.6, 9, 1.35], [4.9, 10.8, 1.05], [19.1, 10.8, 1.05],
-    [12, 13, 1.7], [9.3, 13, 1.25], [14.7, 13, 1.25],
-    [10, 17, 1.35], [14, 17, 1.35], [10, 21, 1.05], [14, 21, 1.05],
+    [13.5, 3.2, 0.9],
+    [15, 4.9, 0.9],
+    [15, 7.1, 0.9],
+    [13.5, 8.8, 0.9],
+    [13.4, 11.7, 0.9],
+    [15.9, 12.7, 0.9],
+    [17.8, 14.8, 0.9],
+    [19, 17.7, 0.9],
+    [19.4, 20.2, 0.9],
+    [13.9, 14.4, 0.75],
+    [16.1, 16.4, 0.75],
+    [13.9, 18.4, 0.75],
+    [16.6, 20.2, 0.75],
+    [13.9, 20.2, 0.75],
   ];
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      {dots.map(([x, y, r]) => (
-        <circle key={`${x}-${y}`} cx={x} cy={y} r={r} />
-      ))}
-    </svg>
+    <Line size={size}>
+      <path className="ic-fill" d="M12 2.8a3.2 3.2 0 0 0 0 6.4z" />
+      <path className="ic-fill" d="M12 11.6c-4 0-7 3-7.4 8.6H12z" />
+      <g fill="currentColor" stroke="none">
+        {dots.map(([x, y, r]) => (
+          <circle key={`${x}-${y}`} cx={x} cy={y} r={r} />
+        ))}
+      </g>
+    </Line>
   );
 }
 
-export function Chevron({ dir = "right", size = 18 }: { dir?: "right" | "left" | "up"; size?: number }) {
+export function Chevron({
+  dir = "right",
+  size = 18,
+}: {
+  dir?: "right" | "left" | "up";
+  size?: number;
+}) {
   const rot = { right: 0, left: 180, up: -90 }[dir];
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: `rotate(${rot}deg)` }} aria-hidden>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ transform: `rotate(${rot}deg)` }}
+      aria-hidden
+    >
       <path d="M9 5.5l6.5 6.5L9 18.5" />
     </svg>
   );
@@ -97,13 +249,54 @@ export const IconClose = () => (
 );
 
 export const IconGrip = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
-    {[3, 8, 13].flatMap((y) => [5.5, 10.5].map((x) => <circle key={`${x}-${y}`} cx={x} cy={y} r="1.3" />))}
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    aria-hidden
+  >
+    {[3, 8, 13].flatMap((y) =>
+      [5.5, 10.5].map((x) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r="1.3" />
+      )),
+    )}
   </svg>
 );
 
 export const IconResize = () => (
   <Line size={16}>
     <path d="M4 10v10h10M20 14V4H10M4 20L20 4" />
+  </Line>
+);
+
+/*
+ * The Twin lens marks: three shapes that share nothing, so each lens is told
+ * apart by outline alone. Vitals a beat, Body the standing figure, Omics a molecule.
+ */
+
+/** Vitals lens: one heartbeat on a flat line. */
+export const IconLensVitals = ({ size = 20 }: { size?: number }) => (
+  <Line size={size}>
+    <path strokeWidth="2" d="M2.5 12.5h4l2-5 3.5 10 2.6-7.5 1.4 2.5h5.5" />
+  </Line>
+);
+
+/** Body lens: the figure standing, arms a little out, as the twin stands. */
+export const IconLensBody = ({ size = 20 }: { size?: number }) => (
+  <Line size={size}>
+    <circle cx="12" cy="4.6" r="2.2" fill="currentColor" stroke="none" />
+    <path strokeWidth="2" d="M12 8.6v6.2M12 9.4 7.2 13M12 9.4l4.8 3.6M12 14.8l-2.6 5.6M12 14.8l2.6 5.6" />
+  </Line>
+);
+
+/** Omics lens: three bonded atoms, one larger, read as a molecule. */
+export const IconLensOmics = ({ size = 20 }: { size?: number }) => (
+  <Line size={size}>
+    <path strokeWidth="2" d="M9.6 10.4 6.6 7.4M13.4 10.6l3.4-2.8M12 14.2v3.4" />
+    <circle cx="11.5" cy="12" r="2.8" fill="currentColor" stroke="none" />
+    <circle cx="5.4" cy="6.2" r="2" />
+    <circle cx="18" cy="6.8" r="2" />
+    <circle cx="12" cy="19.6" r="1.8" />
   </Line>
 );

@@ -1,0 +1,161 @@
+.vs {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: var(--status-h) 16px 48px;
+  background: var(--v-bg);
+  scrollbar-width: none;
+}
+.vs-lead {
+  margin: 2px 4px 0;
+  font: 400 15px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+/* the two visits side by side: two rows of segments, the earlier above */
+.vs-pick {
+  margin-top: 18px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+}
+.vs-pick > div {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+.vs-pick > div > span {
+  padding-left: 4px;
+  font: 600 13px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.vs-seg {
+  display: flex;
+  padding: 2px;
+  border-radius: 10px;
+  background: var(--v-fill);
+}
+.vs-seg button {
+  flex: 1;
+  height: 32px;
+  border-radius: 8px;
+  text-align: center !important;
+  font: 500 13px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+  transition: background 0.2s linear;
+}
+.vs-seg button[aria-checked="true"] {
+  font-weight: 650;
+  background: var(--v-card);
+  box-shadow: 0 1px 3px #0000001f, 0 0 0 0.5px #0000000a;
+}
+:root[data-theme="dark"] .vs-seg button[aria-checked="true"] {
+  background: #636366;
+}
+.vs-seg button:disabled {
+  color: var(--v-ink-3);
+  opacity: 0.45;
+  cursor: default;
+}
+.vs-group h2 {
+  margin: 28px 4px 8px;
+  font: var(--v-t-section);
+  letter-spacing: -0.01em;
+}
+.vs-card {
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  overflow: hidden;
+}
+.vs-card > * + * {
+  border-top: 0.5px solid var(--v-line);
+}
+.vs-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 64px 96px;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+}
+.vs-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  font: 500 15px/1.25 var(--v-text);
+  color: var(--v-ink);
+}
+.vs-name > span:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.vs-mark {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--mid);
+  background: color-mix(in srgb, var(--mid) 14%, transparent);
+}
+.vs-flag {
+  padding: 3px 8px;
+  border-radius: 10px;
+  font: 600 11px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
+}
+.vs-flag[data-status="alert"] {
+  color: #fff;
+  background: var(--v-alert);
+}
+.vs-spark {
+  color: var(--mid);
+}
+.vs-vals {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  text-align: right;
+}
+.vs-now {
+  font: 650 18px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  color: var(--v-ink);
+}
+.vs-now small {
+  margin-left: 3px;
+  font: 500 11px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.vs-change {
+  font: 500 12px/1.2 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-2);
+}
+.vs-link {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font: 400 16px/1 var(--v-text);
+  color: var(--v-ink);
+}
+.vs-link span {
+  flex: 1;
+}
+.vs-link svg {
+  color: var(--v-ink-3);
+}

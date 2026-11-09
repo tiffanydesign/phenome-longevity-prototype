@@ -1,68 +1,94 @@
-import { useMemo } from "react";
-import { metric, seriesFor, STATUS_LABEL, type Tab } from "../data/metrics";
-import { ORGANS } from "../data/organs";
-import { CardTrend } from "../ui/charts";
-import { DotArt, type Shape } from "../ui/DotArt";
+import { metric, STATUS_LABEL, type Tab } from "../data/metrics";
+import { visitDate } from "../study/data";
+import { LATEST } from "../twin/regions";
+import { Art, METRIC_ART } from "../ui/Art";
 import { Num } from "../ui/Num";
 import { useGo } from "../ui/shell";
+import { TipCard } from "./TipCard";
 
 interface Page {
   title: string;
-  /** Samsung Health's coaching line under the heading, written from the member's own numbers */
-  coach: string;
-  cards: { id: string; art?: Shape }[];
+  cards: string[];
 }
 
 const PAGES: Record<Exclude<Tab, "all">, Page> = {
   activity: {
     title: "Activity",
-    coach: "1,518 steps from your goal. A 15-minute walk this evening closes it.",
-    cards: [{ id: "steps", art: "rings" }, { id: "kcal" }, { id: "workouts", art: "tick" }, { id: "distance" }],
+    cards: ["steps", "kcal", "workouts", "distance"],
   },
   sleep: {
     title: "Sleep",
-    coach: "Third night above seven hours. Your HRV has risen with it.",
-    cards: [{ id: "sleep", art: "moon" }, { id: "deep" }, { id: "temp" }],
+    cards: ["sleep", "deep", "temp"],
   },
   vitals: {
     title: "Vitals",
-    coach: "Recovery is ahead of your load today. hs-CRP is the one reading to watch.",
-    cards: [{ id: "capacity", art: "gauge" }, { id: "rhr" }, { id: "hrv", art: "radar" }, { id: "crp" }, { id: "bp" }, { id: "spo2" }, { id: "resp" }],
+    cards: ["capacity", "rhr", "hrv", "bp", "pulse", "spo2", "resp", "crp"],
   },
   body: {
     title: "Body",
-    coach: "Weight is holding at 86 kg. BMI is the marker your clinician is watching.",
-    cards: [{ id: "weight" }, { id: "bmi" }, { id: "visceral" }, { id: "bone" }, { id: "skin" }],
+    cards: ["weight", "bmi", "bodyfat", "visceral", "bone", "skin"],
   },
   food: {
     title: "Food",
-    coach: "760 kcal left today. Fibre has been high all week, and your gut shows it.",
-    cards: [{ id: "diet", art: "plate" }, { id: "habits", art: "tick" }, { id: "diversity" }, { id: "glucose" }],
+    cards: ["diet", "habits", "glucose", "diversity"],
   },
 };
+
+/**
+ * A tab's readings in two groups by when they were taken: what the ring and the
+ * diary measured today, then what the clinic measured at the last visit. In each
+ * group a reading outside its range comes first, so it is never buried.
+ */
+function groupsOf(cards: string[]) {
+  const ms = cards.map((id) => metric(id));
+  const first = (list: typeof ms) => [...list].sort((a, b) => Number(b.status !== "normal") - Number(a.status !== "normal"));
+  const visit = (s: string) => s === "clinic" || s === "omics";
+  return [
+    { id: "today", title: "Today", meta: "", list: first(ms.filter((m) => !visit(m.source))) },
+    { id: "visit", title: "From your visit", meta: visitDate(LATEST), list: first(ms.filter((m) => visit(m.source))) },
+  ].filter((g) => g.list.length > 0);
+}
 
 export function CategoryPage({ tab }: { tab: Exclude<Tab, "all"> }) {
   const page = PAGES[tab];
   return (
     <div className="v2-cat">
       <h2>{page.title}</h2>
-      <p>{page.coach}</p>
-      {page.cards.map((c) => (
-        <MetricCard key={c.id} id={c.id} art={c.art} />
+      <TipCard tab={tab} />
+      {groupsOf(page.cards).map((g) => (
+        <section key={g.id} className="v2-group" aria-label={g.title}>
+          <header className="v2-sec">
+            <h3>{g.title}</h3>
+            {g.meta && <span>{g.meta}</span>}
+          </header>
+          {g.list.map((m) => (
+            <MetricCard key={m.id} id={m.id} />
+          ))}
+        </section>
       ))}
     </div>
   );
 }
 
+/** The way a change went, as a small arrow, when its words start with a sign; nothing for a change without one. */
+function Direction({ delta }: { delta: string }) {
+  const sign = delta.trim()[0];
+  if (sign !== "+" && sign !== "−" && sign !== "-") return null;
+  return (
+    <svg className="v2-card-dir" width="12" height="12" viewBox="0 0 12 12" aria-label={sign === "+" ? "up" : "down"}>
+      <path d={sign === "+" ? "M6 10V2.6M2.6 5.6 6 2.2l3.4 3.4" : "M6 2v7.4M2.6 6.4 6 9.8l3.4-3.4"} fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 /** Overview to detail: the card keeps its number and trend, and grows into the metric's page. */
-function MetricCard({ id, art }: { id: string; art?: Shape }) {
+function MetricCard({ id }: { id: string }) {
   const go = useGo();
   const m = metric(id);
-  const organ = ORGANS[m.organ];
-  const week = useMemo(() => (m.chart === "scan" ? [] : seriesFor(m, "W")), [m]);
+  const flagged = m.status !== "normal";
   return (
-    <button className="v2-card" data-field={m.field} data-flag={m.status === "monitor" ? "" : undefined} onClick={(e) => go(`/v2/metric/${m.id}`, { from: e.currentTarget })}>
-      <span className="v2-card-art">{art ? <DotArt shape={art} size={132} /> : <DotArt organ={organ.map === "body" ? "body" : organ.map} size={150} />}</span>
+    <button className="v2-card" data-field={m.field} data-flag={flagged ? "" : undefined} onClick={(e) => go(`/v2/metric/${m.id}`, { from: e.currentTarget })}>
+      <Art className="v2-card-art" name={METRIC_ART[m.id]} />
       <span className="v2-card-t">{m.label}</span>
       <span className="v2-card-v">
         <b>
@@ -71,11 +97,11 @@ function MetricCard({ id, art }: { id: string; art?: Shape }) {
         {m.unit}
       </span>
       <span className="v2-card-foot">
+        {flagged && <em className="v2-card-flag">{STATUS_LABEL[m.status]}</em>}
         <span className="v2-card-d">
-          {m.status === "monitor" && <em>{STATUS_LABEL.monitor}</em>}
-          {m.delta}
+          <Direction delta={m.delta} />
+          {m.delta.replace(/^[+−-]\s?/, "")}
         </span>
-        {m.chart !== "scan" && <CardTrend values={week} kind={m.chart} w={112} h={34} />}
       </span>
     </button>
   );

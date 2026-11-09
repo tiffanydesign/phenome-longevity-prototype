@@ -35,7 +35,7 @@ export function StudyList({ at, visit, onClose }: { at: number; visit: number; o
                   <img src={asset(`twin/study/${s.code}.webp`)} alt="" loading="lazy" />
                   <span className="rv-list-n">
                     {s.name}
-                    <small data-tone={view.tone}>{view.status ?? s.note}</small>
+                    {view.status && <small data-tone={view.tone}>{view.status}</small>}
                   </span>
                   <span className="rv-list-v">
                     <b>

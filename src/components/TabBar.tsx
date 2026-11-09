@@ -1,5 +1,7 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { V2Nav } from "@/v2/ui/shell";
+import { V2Nav as V3Nav } from "@/v3/ui/shell";
+import { EDITION } from "@/lib/edition";
 import { Icon } from "./Icon";
 import "./TabBar.css";
 
@@ -13,9 +15,9 @@ const TABS = [
 /** Floating frosted-glass tab pill + separate Longevity AI button (capture: home/scroll_4). */
 export function TabBar() {
   const nav = useNavigate();
-  const { pathname } = useLocation();
-  // screens the redesign reuses as they are keep its bar, not the replica's
-  if (pathname.startsWith("/v2")) return <V2Nav />;
+  // screens a redesign reuses as they are keep its bar, not the replica's
+  if (EDITION === "v2") return <V2Nav />;
+  if (EDITION === "v3") return <V3Nav />;
   return (
     <div className="tb">
       <nav className="tb-pill glass">

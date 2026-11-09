@@ -1,10 +1,18 @@
 import type { ReactNode } from "react";
-import memberData from "./member.json";
+import { readMemberMode, type MemberMode } from "@/lib/prefs";
+import clinic from "./member.json";
+import first from "./member-first.json";
+import risk from "./member-risk.json";
+import varied from "./member-varied.json";
 import type { Tone } from "./parts";
 
 /* eslint-disable @typescript-eslint/no-explicit-any -- the fixture mirrors the portal's loose payloads */
 export type Rec = Record<string, any>;
-export const M = memberData as unknown as Rec;
+/** the clinic portal's member, or a design scenario built from their results (DevPanel "Member") */
+const MEMBERS: Record<MemberMode, unknown> = { clinic, varied, first, risk };
+export const M = MEMBERS[readMemberMode()] as Rec;
+/** the presentation studies this member has results for */
+export const HAS = (code: string): boolean => (M.studies as string[]).includes(code);
 
 export const VISITS: number[] = M.visits;
 export const visitDate = (v: number): string => M.visitDates[String(v)];

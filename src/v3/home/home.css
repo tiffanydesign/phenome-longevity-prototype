@@ -1,0 +1,1288 @@
+/* title and tabs as one block over the pages, moved by the page in view */
+.v2-head {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 2;
+  will-change: transform;
+}
+.v2-head .v2-top {
+  padding-top: calc(var(--status-h) + 8px);
+}
+
+/* ---------- icon tabs: one capsule ---------- */
+.v2-tabs {
+  --n: 6;
+  position: relative;
+  flex-shrink: 0;
+  margin: 2px 16px 0;
+  height: 48px;
+  padding: 4px;
+  display: flex;
+  border-radius: 24px;
+  /* one steady track in the brand's pale navy whatever tab is open; only the selected icon takes its tab's colour */
+  background: var(--v-fill);
+}
+.v2-tabs button {
+  position: relative;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--v-ink-3);
+  transition: color 0.2s linear;
+}
+.v2-tabs button[aria-selected="true"] {
+  --knock: #fff;
+  color: var(--mid);
+}
+.v2-tabs-blob {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / var(--n));
+  border-radius: 20px;
+  background: var(--v-card);
+  box-shadow: 0 2px 8px -3px #24365e40;
+  transform: translateX(calc(var(--i) * 100%));
+  transition: transform 0.36s var(--v-ease);
+}
+
+/* ---------- sideways pages ---------- */
+.v2-pager {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.v2-pager::-webkit-scrollbar,
+.v2-page::-webkit-scrollbar,
+.v2-report-track::-webkit-scrollbar {
+  display: none;
+}
+.v2-page {
+  flex: 0 0 100%;
+  min-width: 0;
+  overflow-y: auto;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  scrollbar-width: none;
+  /* starts under the frosted bar (status 44 + title 58 + tabs 50), so cards scroll up behind it */
+  padding: calc(var(--status-h) + 122px) 16px 112px;
+}
+
+/* ---------- report strip ---------- */
+.v2-report {
+  position: relative;
+  margin-bottom: 12px;
+  border-radius: var(--v-r);
+  /* a message, quieter than the tiles: white, held by a hairline of the brand navy */
+  background: var(--v-card);
+  box-shadow: none;
+}
+.v2-report-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.v2-report-track button {
+  flex: 0 0 100%;
+  padding: 15px 44px 13px 18px;
+  scroll-snap-align: start;
+  font: 700 15px/1.34 var(--v-text);
+  text-wrap: pretty;
+}
+.v2-report-track button span {
+  display: block;
+  margin-top: 10px;
+  min-height: 20px;
+  text-align: right;
+  color: var(--v-navy);
+}
+/* closes the message in view */
+.v2-report-close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink-3);
+}
+.v2-report-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* round dots, each its own button: 8px to see, 28px to hit */
+.v2-report-dots {
+  position: absolute;
+  left: 8px;
+  bottom: 9px;
+  display: flex;
+}
+.v2-report-dots button {
+  width: 22px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+}
+.v2-report-dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #26398033;
+  transition: background 0.24s linear;
+}
+.v2-report-dots [aria-current] i {
+  background: var(--v-navy);
+}
+
+/* ---------- bento ---------- */
+.v2-bento {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 86px;
+  grid-auto-flow: dense;
+  gap: var(--v-s-gap);
+}
+.v2-slot {
+  position: relative;
+  grid-column: span 1;
+  grid-row: span 2;
+  min-width: 0;
+  user-select: none;
+  -webkit-touch-callout: none;
+  transition: transform 0.2s var(--v-ease);
+}
+.v2-slot[data-size="w"] {
+  grid-column: span 2;
+}
+.v2-slot[data-size="t"] {
+  grid-row: span 4;
+}
+.v2-slot[data-size="l"] {
+  grid-column: span 2;
+  grid-row: span 4;
+}
+.v2-bento[data-editing] .v2-slot {
+  touch-action: none;
+  cursor: grab;
+}
+.v2-bento[data-editing] .v2-slot > button:not(.v2-slot-remove) {
+  pointer-events: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #26398033;
+}
+.v2-slot[data-drag] {
+  z-index: 5;
+  transition: none;
+  cursor: grabbing;
+}
+.v2-slot[data-drag] > button:not(.v2-slot-remove) {
+  box-shadow: 0 22px 40px -20px #10214b99;
+}
+.v2-slot-tools {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+  color: var(--v-navy);
+}
+.v2-slot-tools i,
+.v2-slot-tools button {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--v-card);
+  box-shadow: var(--v-shadow);
+}
+/* remove: a round minus at the card's top-left corner, as a home screen's edit mode shows it */
+.v2-slot-remove {
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  z-index: 3;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #8a93ad;
+  box-shadow: 0 0 0 2px #fff;
+}
+.v2-slot-remove i {
+  width: 11px;
+  height: 2.4px;
+  border-radius: 2px;
+  background: #fff;
+}
+/* when a card stands alone in its row, the size buttons that would close the gap are picked out */
+.v2-slot-tools[data-hint] button {
+  color: #fff;
+  background: var(--v-navy);
+}
+.v2-edit-hint {
+  margin: 14px 4px 0;
+  font: 500 13px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+  text-align: center;
+}
+.v2-edit-add {
+  margin-top: 18px;
+}
+.v2-edit-add h3 {
+  margin: 0 4px 10px;
+  font: var(--v-t-card);
+  color: var(--v-ink);
+}
+.v2-edit-add > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.v2-edit-add button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 40px;
+  padding: 0 16px 0 10px;
+  border-radius: 20px;
+  font: 600 14px/1 var(--v-text);
+  color: var(--v-navy);
+  background: var(--v-fill);
+}
+.v2-edit-add button i {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 700 16px/1 var(--v-text);
+  font-style: normal;
+  color: #fff;
+  background: var(--v-navy);
+}
+
+/* first arrival only: the cards settle in reading order */
+.v2-bento[data-intro] .v2-slot {
+  animation: v2-rise 0.46s var(--v-ease) backwards;
+  animation-delay: calc(var(--n) * 45ms);
+}
+@keyframes v2-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-bento[data-intro] .v2-slot {
+    animation: none;
+  }
+}
+.v2-all-foot {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+/* the layout controls sit flat like the cards: a pale navy capsule, no shadow; Done is the solid one */
+.v2-all-foot .v2-pillbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 22px;
+  border-radius: 23px;
+  font: 600 15px/1 var(--v-text);
+  background: var(--v-fill);
+  box-shadow: none;
+}
+.v2-all-foot .v2-pillbtn[data-solid] {
+  background: var(--v-navy);
+}
+.v2-editbtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.v2-tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 14px 16px;
+  overflow: hidden;
+  border-radius: var(--v-r);
+  background: var(--f);
+  color: var(--fg);
+  transition: transform 0.18s var(--v-ease);
+}
+.v2-tile:active,
+.v2-twin-tile:active,
+.v2-card:active {
+  transform: scale(0.98);
+}
+.v2-tile-t {
+  position: relative;
+  display: block;
+  font: var(--v-t-card);
+}
+.v2-tile-s {
+  position: relative;
+  display: block;
+  margin-top: 3px;
+  font: var(--v-t-note);
+  color: var(--fg-2);
+}
+.v2-tile-foot {
+  position: relative;
+  margin-top: auto;
+}
+.v2-tile-v {
+  display: block;
+  font: 500 14px/1.1 var(--v-text);
+  color: var(--fg-2);
+}
+.v2-tile-v b,
+.v2-card-v b {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+.v2-tile-v b {
+  font: var(--v-t-value);
+  letter-spacing: -0.02em;
+}
+.v2-tile .v2-p,
+.v2-card .v2-p {
+  margin: 0;
+}
+/* the mark names the card's kind: large and cut by the corner, the number keeps the open left side */
+.v2-glyph {
+  position: absolute;
+  top: -8px;
+  right: -16px;
+  width: 104px;
+  height: 104px;
+  pointer-events: none;
+}
+.v2-slot[data-size="w"] .v2-glyph {
+  right: -8px;
+}
+@keyframes v2-sweep {
+  from {
+    stroke-dasharray: 0 100;
+  }
+}
+/* day-on-day comparison: on a wide card it fills the left column between the name and the number */
+.v2-tile-compare {
+  display: none;
+  position: relative;
+  width: 52%;
+  margin-top: 14px;
+}
+.v2-slot[data-size="w"] .v2-tile-compare {
+  display: block;
+}
+/* and the mark grows into the right column, centred on the card's height */
+.v2-slot[data-size="w"] .v2-tile:has(.v2-tile-compare) .v2-glyph {
+  top: 50%;
+  right: 18px;
+  width: 132px;
+  height: 132px;
+  transform: translateY(-50%);
+}
+.v2-compare {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.v2-compare-row {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  align-items: center;
+  gap: 6px;
+}
+.v2-compare-row small {
+  font: 600 11px/1 var(--v-text);
+  color: var(--fg-2);
+}
+.v2-compare-bar {
+  display: block;
+}
+.v2-compare-bar i {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 20px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: var(--v-fill);
+}
+.v2-compare-row[data-now] .v2-compare-bar i {
+  background: var(--mid);
+}
+.v2-compare-bar b {
+  font: 700 12px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+.v2-compare-row[data-now] .v2-compare-bar b {
+  color: #fff;
+}
+.v2-tile-go {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 36px;
+  height: 36px;
+  margin-top: -18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--v-fill);
+  color: var(--v-navy);
+}
+.v2-slot[data-card="consult"][data-size="w"],
+.v2-slot[data-card="store"][data-size="w"] {
+  grid-row: span 1;
+}
+.v2-slot[data-card="consult"][data-size="w"] .v2-tile {
+  justify-content: center;
+}
+/* the store sits apart from the readings: sand at its palest, warm enough to set off the silver ring */
+.v2-tile-store {
+  justify-content: center;
+  background: var(--v-card);
+}
+.v2-tile-store img {
+  position: absolute;
+  right: -6px;
+  bottom: -10px;
+  width: 128px;
+}
+.v2-slot[data-card="store"][data-size="w"] img {
+  right: 8px;
+  bottom: -34px;
+}
+
+/* the twin's front door: sky ground, figure and leaders inside a card */
+.v2-twin-tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--v-r);
+  color: var(--v-navy);
+  background: var(--v-card);
+  transition: transform 0.18s var(--v-ease);
+}
+.v2-twin-tile-stage {
+  position: absolute;
+  top: 2px;
+  left: -8%;
+  width: 116%;
+  aspect-ratio: 80 / 92;
+}
+.v2-twin-tile-lead {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* the digital twin's home figure: half length, and the bake already dissolves it at the waist; box set inline from HERO_BOX */
+.v2-twin-tile-field {
+  position: absolute;
+}
+.v2-callout {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 26%;
+}
+.v2-callout[data-side="r"] {
+  right: 11.2%;
+  top: 16.6%;
+  align-items: flex-end;
+  text-align: right;
+}
+.v2-callout[data-side="l"] {
+  left: 11.2%;
+  top: 37.2%;
+}
+.v2-callout small {
+  font: 500 12px/1.2 var(--v-text);
+  color: #3f5183;
+}
+.v2-callout span {
+  white-space: nowrap;
+}
+.v2-callout b {
+  font-family: var(--v-num);
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.v2-callout u {
+  margin-left: 3px;
+  font: 500 12px var(--v-text);
+  text-decoration: none;
+  color: #3f5183;
+}
+.v2-twin-tile-head {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.v2-twin-tile-t {
+  font: 700 26px/1.05 var(--v-text);
+  letter-spacing: -0.02em;
+}
+.v2-twin-tile-s {
+  font: var(--v-t-note);
+  color: #3f5183;
+}
+.v2-twin-tile-go {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--v-navy);
+  color: #fff;
+}
+.v2-results {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* one dot per marker, and each band as wide as its count */
+.v2-results-bar {
+  display: flex;
+  gap: 2px;
+  height: 16px;
+}
+.v2-results-bar > span {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--band);
+}
+.v2-results-bar > span:first-child {
+  border-radius: 6px 3px 3px 6px;
+}
+.v2-results-bar > span:last-child {
+  border-radius: 3px 6px 6px 3px;
+}
+.v2-results-bar i {
+  flex: none;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--dot);
+}
+/* critical: the portal's danger red, ahead of the gold */
+.v2-results [data-status="alert"] {
+  --band: #c4572e;
+  --dot: #fce4da;
+  --key: #c4572e;
+}
+.v2-results [data-status="monitor"] {
+  --band: #ffb600;
+  --dot: #7a5600;
+  --key: #ffb600;
+}
+.v2-results [data-status="normal"] {
+  --band: #7fbcdc;
+  --dot: #263980;
+  --key: #4f96d1;
+}
+.v2-results-key {
+  display: flex;
+  justify-content: space-between;
+  font: 500 13px/1.2 var(--v-text);
+}
+.v2-results-key span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.v2-results-key i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--key);
+}
+.v2-results-key b {
+  font-weight: 700;
+}
+/* shorter or narrower cards keep the figure and the bar, and drop the leaders */
+.v2-twin-tile[data-size="w"] .v2-callout,
+.v2-twin-tile[data-size="t"] .v2-callout,
+.v2-twin-tile[data-size="w"] .v2-twin-tile-lead,
+.v2-twin-tile[data-size="t"] .v2-twin-tile-lead {
+  display: none;
+}
+.v2-twin-tile[data-size="w"] .v2-twin-tile-stage {
+  top: -6px;
+  left: 42%;
+  width: 62%;
+}
+.v2-twin-tile[data-size="t"] .v2-twin-tile-stage {
+  top: 66px;
+  left: -8%;
+  width: 116%;
+}
+/* 52 dots still have to fit one per marker on the narrow bar */
+.v2-twin-tile[data-size="t"] .v2-results-bar i {
+  width: 2px;
+  height: 2px;
+}
+.v2-twin-tile[data-size="t"] .v2-results-key {
+  flex-direction: column;
+  gap: 3px;
+}
+.v2-twin-tile[data-size="t"] .v2-twin-tile-go {
+  top: 12px;
+  right: 10px;
+}
+
+/* ---------- category pages ---------- */
+.v2-cat > h2 {
+  margin: 6px 4px 6px;
+  font: var(--v-t-head);
+  letter-spacing: -0.01em;
+}
+.v2-cat > .v2-say {
+  margin: 0 4px 18px;
+}
+/* a group's heading: its name, and when its readings were taken at the right */
+.v2-sec {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: var(--v-s-section) 4px var(--v-s-gap);
+}
+.v2-sec h3 {
+  margin: 0;
+  font: var(--v-t-section);
+  letter-spacing: -0.01em;
+  color: var(--v-ink);
+}
+.v2-sec span {
+  font: var(--v-t-note);
+  color: var(--v-ink-2);
+}
+/* the Today heading steps through the week: the date between two small arrows */
+/* the day heading: its name at the left, a small date capsule at the right that opens the week */
+.v2-day {
+  align-items: center;
+}
+.v2-date {
+  position: relative;
+}
+.v2-date-btn {
+  height: 32px;
+  padding: 0 10px 0 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 16px;
+  font: 600 13px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: 0 0 0 0.5px var(--v-line);
+}
+.v2-date-btn svg {
+  color: var(--v-ink-3);
+}
+.v2-date-btn > svg:first-child {
+  color: var(--v-navy);
+}
+/* a day other than today: the capsule takes the brand's pale navy, so the cards are read as that day's */
+.v2-date-btn[data-past] {
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 11%, var(--v-card));
+  box-shadow: none;
+}
+.v2-week {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: repeat(7, 40px);
+  gap: 2px;
+  padding: 6px;
+  border-radius: 18px;
+  background: var(--v-card);
+  box-shadow:
+    0 0 0 0.5px var(--v-line),
+    0 18px 40px -12px #0b0d1440;
+  transform-origin: top right;
+  animation: v2-week-in 0.2s var(--v-ease);
+}
+@keyframes v2-week-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(-4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-week {
+    animation: none;
+  }
+}
+.v2-week button {
+  position: relative;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 14px;
+  color: var(--v-ink);
+}
+.v2-week button:active {
+  background: var(--v-card-2);
+}
+.v2-week small {
+  font: 600 11px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.v2-week b {
+  font: 600 15px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+}
+/* today: a small navy dot under its number */
+.v2-week button[data-today]::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--v-navy);
+}
+.v2-week button[aria-pressed="true"] {
+  color: #fff;
+  background: var(--v-navy);
+}
+.v2-week button[aria-pressed="true"] small {
+  color: #ffffffb3;
+}
+.v2-week button[aria-pressed="true"]::after {
+  background: #fff;
+}
+:root[data-theme="dark"] .v2-week button[aria-pressed="true"],
+:root[data-theme="dark"] .v2-week button[aria-pressed="true"] small {
+  color: #0b0d14;
+}
+:root[data-theme="dark"] .v2-week button[aria-pressed="true"]::after {
+  background: #0b0d14;
+}
+.v2-cat .v2-tip + .v2-group .v2-sec {
+  margin-top: 20px;
+}
+/* a reading as a compact card: name, then the number as the largest thing, then its change */
+.v2-card {
+  position: relative;
+  width: 100%;
+  min-height: 128px;
+  margin-bottom: var(--v-s-gap);
+  padding: var(--v-s-pad) 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--v-r);
+  background: var(--f);
+  color: var(--fg);
+  transition: transform 0.18s var(--v-ease);
+}
+/* the object large and cut by the card's corner, so it gives the card its character without crowding the number */
+.v2-card .v2-glyph {
+  top: -10px;
+  right: -20px;
+  width: 124px;
+  height: 124px;
+}
+.v2-card-t {
+  position: relative;
+  font: var(--v-t-card);
+}
+.v2-card-v {
+  position: relative;
+  margin-top: 8px;
+  font: 500 14px/1.1 var(--v-text);
+  color: var(--fg-2);
+}
+.v2-card-v b {
+  font: var(--v-t-value);
+  letter-spacing: -0.02em;
+}
+.v2-card-foot {
+  position: relative;
+  margin-top: auto;
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--fg);
+}
+/* the change since last time, one quiet line under the number with its direction: name, number, change and nothing else */
+.v2-card-d {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 600 13px/1.2 var(--v-text);
+  color: var(--fg-2);
+}
+.v2-card-dir {
+  flex: none;
+  margin-left: -2px;
+}
+/* a reading outside its range: the clinic's Monitor pair, a small solid pill before the change */
+.v2-card-flag {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 11px;
+  border-radius: 13px;
+  font: 700 12px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
+}
+
+
+/* ---------- the tab's tip: one sentence, an optional history, closed with a cross or a swipe ---------- */
+.v2-tip {
+  position: relative;
+  margin: 4px 0 14px;
+  padding: 16px 18px 12px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  color: var(--v-ink);
+  box-shadow: none;
+  touch-action: pan-y;
+  transition:
+    transform 0.22s var(--v-ease),
+    opacity 0.22s linear;
+}
+.v2-tip-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink-2);
+  background: var(--v-fill);
+}
+.v2-tip-close svg {
+  width: 14px;
+  height: 14px;
+}
+.v2-tip-text {
+  margin: 0 34px 0 0;
+  font: 600 16px/1.35 var(--v-text);
+  letter-spacing: -0.01em;
+  color: var(--v-ink);
+}
+.v2-tip-title {
+  margin: 14px 0 4px;
+  font: 700 13px/1.2 var(--v-text);
+  color: var(--mid);
+}
+.v2-history {
+  display: block;
+  color: var(--v-ink);
+  overflow: visible;
+}
+.v2-history-label,
+.v2-history-mark {
+  font: 600 10px var(--v-text);
+  fill: var(--v-ink-3, #8a93ad);
+}
+
+/* Home's groups: the twin first with no heading, then Today, the visit, and the rest */
+.v2-home-group + .v2-home-group {
+  margin-top: 0;
+}
+.v2-home-group[aria-label="Your twin"] {
+  margin-top: var(--v-s-gap);
+}
+
+
+/* =====================================================================
+ * Clinical edition: a fixed bar, reading chips, and cards that carry
+ * colour only in their mark, name and chart.
+ * ===================================================================== */
+.v2-head {
+  padding-top: var(--status-h);
+  /* the head's box spans the tabs even once they have slid away; only its parts take taps */
+  pointer-events: none;
+}
+.v2-head > * {
+  pointer-events: auto;
+}
+/* Home's bar: the brand mark at the left, devices and profile at the right */
+.v2-hbar {
+  position: relative;
+  z-index: 2;
+  height: 52px;
+  padding: 0 14px 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  pointer-events: none;
+}
+.v2-hbar > * {
+  pointer-events: auto;
+}
+.v2-hlogo {
+  display: flex;
+  align-items: center;
+  color: var(--v-navy);
+  transform: translateY(calc(var(--lift, 0px) * -1));
+  opacity: var(--logo-o, 1);
+}
+:root[data-theme="dark"] .v2-hlogo {
+  color: var(--v-ink);
+}
+/* the two round buttons: bare at rest, gathered on a glass capsule once cards pass under them */
+.v2-hpill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  margin-right: -4px;
+  border-radius: 26px;
+  box-shadow: 0 0 0 0.5px transparent;
+  transition:
+    background 0.25s linear,
+    box-shadow 0.25s linear;
+}
+/* clear glass: the cards stay legible through it, as a health app's floating header does */
+.v2-hpill .v2-round {
+  background: #ffffff99;
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+}
+:root[data-theme="dark"] .v2-hpill .v2-round {
+  background: #ffffff14;
+}
+.v2-head[data-under] .v2-hpill {
+  background: #ffffff8c;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px #ffffffb3,
+    0 8px 20px -12px #0b0d1430;
+}
+:root[data-theme="dark"] .v2-head[data-under] .v2-hpill {
+  background: #1c1c1e8c;
+  box-shadow: inset 0 0 0 1px #ffffff1a;
+}
+/* on the capsule the round buttons let it show through: the mark bare, the avatar a touch see-through */
+.v2-head[data-under] .v2-hpill .v2-round {
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.v2-head[data-under] .v2-hpill .v2-avatar {
+  background: color-mix(in srgb, var(--v-navy) 82%, transparent);
+}
+.v2-avatar-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--v-alert);
+  box-shadow: 0 0 0 2px var(--v-bg);
+}
+.v2-topbar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 52px;
+  padding: 0 14px;
+}
+.v2-topbar-side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.v2-round {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: 0 0 0 0.5px var(--v-line);
+}
+.v2-bell i {
+  position: absolute;
+  top: -2px;
+  right: -3px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  font: 700 11px/1 var(--v-text);
+  font-style: normal;
+  color: #fff;
+  background: var(--v-alert);
+  box-shadow: 0 0 0 2px var(--v-bg);
+}
+.v2-avatar {
+  width: 38px;
+  height: 38px;
+  font: 650 13px/1 var(--v-text);
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: var(--v-navy);
+}
+:root[data-theme="dark"] .v2-avatar {
+  color: #0b0d14;
+}
+.v2-avatar::before {
+  display: none;
+}
+
+/* the day's readings as chips: the tab is the reading, as a health app's summary row shows it */
+.v2-chips {
+  display: flex;
+  gap: 8px;
+  padding: 4px 16px 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.v2-chips::-webkit-scrollbar {
+  display: none;
+}
+.v2-chips button {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 14px 0 11px;
+  border-radius: 16px;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: 0 0 0 0.5px var(--v-line);
+  transition: box-shadow 0.2s linear, transform 0.16s var(--v-ease);
+}
+.v2-chips button:active {
+  transform: scale(0.97);
+}
+.v2-chips button[aria-selected="true"] {
+  box-shadow: inset 0 0 0 2px var(--v-ink);
+}
+.v2-chips svg {
+  flex: none;
+  color: var(--mid);
+}
+.v2-chips span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.v2-chips small {
+  font: 500 11.5px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.v2-chips b {
+  font: 650 14px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+/*
+ * The tab track as clear glass over the ground: a translucent white body with a
+ * hairline edge, the selected tab a solid white blob. Moved by the page in view
+ * (HomeScreen follow), so it scrolls away with the cards.
+ */
+.v2-head .v2-tabs {
+  z-index: 0;
+  margin: 2px 16px 12px;
+  background: #ffffff73;
+  box-shadow: inset 0 0 0 1px #ffffffb3;
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  transform: translateY(calc(var(--lift, 0px) * -1));
+  opacity: var(--tabs-o, 1);
+}
+:root[data-theme="dark"] .v2-head .v2-tabs {
+  background: #ffffff10;
+  box-shadow: inset 0 0 0 1px #ffffff1a;
+}
+.v2-head .v2-tabs-blob {
+  box-shadow: 0 2px 10px -4px #24365e33;
+}
+.v2-page {
+  padding-top: calc(var(--status-h) + 114px);
+  background: var(--v-bg);
+}
+
+/* a card's kind line: mark and name in the category colour, a small chevron after */
+.v2-kind {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  font: 600 15px/1.2 var(--v-text);
+  color: var(--mid);
+}
+.v2-kind > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.v2-kind > svg:first-child {
+  flex: none;
+}
+.v2-kind-go {
+  flex: none;
+  color: var(--v-ink-3);
+  margin-left: 1px;
+}
+.v2-tile,
+.v2-card {
+  box-shadow: none;
+}
+.v2-tile-v,
+.v2-card-v {
+  color: var(--v-ink-3);
+}
+.v2-tile-v b,
+.v2-card-v b {
+  color: var(--v-ink);
+}
+.v2-tile-s,
+.v2-card-d {
+  color: var(--v-ink-2);
+}
+.v2-card {
+  min-height: 116px;
+}
+.v2-card-v {
+  margin-top: 14px;
+}
+.v2-sec h3 {
+  font: var(--v-t-section);
+  letter-spacing: -0.015em;
+}
+.v2-cat > h2 {
+  font: var(--v-t-head);
+  letter-spacing: -0.02em;
+}
+
+/* clinic visits on Home: the last visit, three of its readings, and the way into comparing them */
+.v2-visits {
+  gap: 14px;
+}
+.v2-visits-rows {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.v2-visits-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.v2-visits-row small {
+  font: 500 12px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.v2-visits-row b {
+  font: 650 20px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+}
+.v2-visits-row em {
+  margin-left: 3px;
+  font: 500 11px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+}
+.v2-visits-row > span {
+  font: 500 11.5px/1.25 var(--v-text);
+  color: var(--v-ink-3);
+}
+.v2-visits-go {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 0.5px solid var(--v-line);
+  font: 600 15px/1 var(--v-text);
+  color: var(--v-accent);
+}
+
+/* the week behind the number, between the name and the reading */
+.v2-mini {
+  display: block;
+  width: 100%;
+  height: 40px;
+  margin: auto 0 12px;
+}
+.v2-mini + .v2-tile-foot {
+  margin-top: 0;
+}

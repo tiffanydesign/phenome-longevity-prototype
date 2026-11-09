@@ -1,0 +1,4854 @@
+{
+  "scenario": "varied",
+  "studies": [
+    "apose",
+    "natural",
+    "eye",
+    "brain",
+    "heart",
+    "lungs",
+    "liver",
+    "kidneys",
+    "thyroid",
+    "stomach",
+    "composition",
+    "skeletal",
+    "dermatology",
+    "genomics",
+    "guthealth",
+    "oralhealth",
+    "transcriptomics",
+    "proteomics",
+    "metabolomics"
+  ],
+  "visits": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "visitDates": {
+    "1": "4 Nov 2025",
+    "2": "2 Feb 2026",
+    "3": "3 May 2026",
+    "4": "1 Aug 2026"
+  },
+  "sex": "FEMALE",
+  "vitals": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "pulseBpm": 70,
+      "spo2Percent": 98,
+      "temperatureC": 36.6,
+      "respiratoryRatePerMin": 14,
+      "systolicBloodPressureMmhg": 124,
+      "diastolicBloodPressureMmhg": 80
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "pulseBpm": 71,
+      "spo2Percent": 98,
+      "temperatureC": 36.6,
+      "respiratoryRatePerMin": 14,
+      "systolicBloodPressureMmhg": 128,
+      "diastolicBloodPressureMmhg": 82
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "pulseBpm": 73,
+      "spo2Percent": 98,
+      "temperatureC": 36.6,
+      "respiratoryRatePerMin": 14,
+      "systolicBloodPressureMmhg": 132,
+      "diastolicBloodPressureMmhg": 84
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "pulseBpm": 74,
+      "spo2Percent": 98,
+      "temperatureC": 36.6,
+      "respiratoryRatePerMin": 14,
+      "systolicBloodPressureMmhg": 136,
+      "diastolicBloodPressureMmhg": 86
+    }
+  ],
+  "vitalRanges": {
+    "spo2Percent": {
+      "low": 95,
+      "high": 100
+    },
+    "systolicBloodPressureMmhg": {
+      "low": 90,
+      "high": 120
+    },
+    "diastolicBloodPressureMmhg": {
+      "low": 60,
+      "high": 80
+    }
+  },
+  "tonometry": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "leftEyePressureMmhg": 16.2,
+      "rightEyePressureMmhg": 17.5,
+      "leftCornealThicknessUm": null,
+      "rightCornealThicknessUm": null,
+      "method": "non_contact_tonometry"
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "leftEyePressureMmhg": 16.8,
+      "rightEyePressureMmhg": 19.2,
+      "leftCornealThicknessUm": null,
+      "rightCornealThicknessUm": null,
+      "method": "non_contact_tonometry"
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "leftEyePressureMmhg": 17.5,
+      "rightEyePressureMmhg": 20.8,
+      "leftCornealThicknessUm": null,
+      "rightCornealThicknessUm": null,
+      "method": "non_contact_tonometry"
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "leftEyePressureMmhg": 18.1,
+      "rightEyePressureMmhg": 22.5,
+      "leftCornealThicknessUm": null,
+      "rightCornealThicknessUm": null,
+      "method": "non_contact_tonometry"
+    }
+  ],
+  "tonometryRanges": {
+    "leftEyePressureMmhg": {
+      "low": 10,
+      "high": 21
+    },
+    "rightEyePressureMmhg": {
+      "low": 10,
+      "high": 21
+    }
+  },
+  "ecg": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "heartRateBpm": 66,
+      "rhythm": "sinus_rhythm",
+      "prIntervalMs": 178,
+      "qrsDurationMs": 92,
+      "qtIntervalMs": 398,
+      "qtcIntervalMs": 417,
+      "interpretation": "Normal sinus rhythm without acute abnormalities"
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "heartRateBpm": 65,
+      "rhythm": "sinus_rhythm",
+      "prIntervalMs": 191,
+      "qrsDurationMs": 92,
+      "qtIntervalMs": 398,
+      "qtcIntervalMs": 417,
+      "interpretation": "Normal sinus rhythm without acute abnormalities"
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "heartRateBpm": 65,
+      "rhythm": "sinus_rhythm",
+      "prIntervalMs": 205,
+      "qrsDurationMs": 92,
+      "qtIntervalMs": 398,
+      "qtcIntervalMs": 417,
+      "interpretation": "Sinus rhythm with first-degree AV block"
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "heartRateBpm": 64,
+      "rhythm": "sinus_rhythm",
+      "prIntervalMs": 218,
+      "qrsDurationMs": 92,
+      "qtIntervalMs": 398,
+      "qtcIntervalMs": 417,
+      "interpretation": "Sinus rhythm with first-degree AV block"
+    }
+  ],
+  "abi": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "leftAbi": 0.9,
+      "rightAbi": 1.11,
+      "interpretation": "Normal bilateral perfusion"
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "leftAbi": 0.9,
+      "rightAbi": 1.11,
+      "interpretation": "Normal bilateral perfusion"
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "leftAbi": 0.9,
+      "rightAbi": 1.11,
+      "interpretation": "Normal bilateral perfusion"
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "leftAbi": 0.9,
+      "rightAbi": 1.11,
+      "interpretation": "Mildly reduced perfusion on the left"
+    }
+  ],
+  "abiRanges": {
+    "leftAbi": {
+      "low": 0.9,
+      "high": 1.4
+    },
+    "rightAbi": {
+      "low": 0.9,
+      "high": 1.4
+    }
+  },
+  "rmr": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "restingEnergyExpenditureKcalDay": 1421,
+      "vo2MlMin": 232.6,
+      "vco2MlMin": 193.6,
+      "respiratoryQuotient": 0.83,
+      "interpretation": "Balanced substrate utilization at rest"
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "restingEnergyExpenditureKcalDay": 1422,
+      "vo2MlMin": 233.5,
+      "vco2MlMin": 194.5,
+      "respiratoryQuotient": 0.83,
+      "interpretation": "Balanced substrate utilization at rest"
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "restingEnergyExpenditureKcalDay": 1422,
+      "vo2MlMin": 234.1,
+      "vco2MlMin": 195.1,
+      "respiratoryQuotient": 0.83,
+      "interpretation": "Balanced substrate utilization at rest"
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "restingEnergyExpenditureKcalDay": 1423,
+      "vo2MlMin": 235.4,
+      "vco2MlMin": 196.4,
+      "respiratoryQuotient": 0.83,
+      "interpretation": "Balanced substrate utilization at rest"
+    }
+  ],
+  "bone": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "fractureRisk5yPercent": 3.1,
+      "fragilityScore": 11.8,
+      "sites": [
+        {
+          "tScore": -0.8,
+          "zScore": 0.1,
+          "hipSide": null,
+          "anatomicalSite": "lumbar_spine",
+          "boneMineralDensityGcm2": 1.02
+        },
+        {
+          "tScore": -1,
+          "zScore": -0.1,
+          "hipSide": "LEFT",
+          "anatomicalSite": "hip",
+          "boneMineralDensityGcm2": 0.9
+        }
+      ],
+      "findings": "Bone density is within the expected range for age"
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "fractureRisk5yPercent": 4.2,
+      "fragilityScore": 10.9,
+      "sites": [
+        {
+          "tScore": -1.1,
+          "zScore": 0.1,
+          "hipSide": null,
+          "anatomicalSite": "lumbar_spine",
+          "boneMineralDensityGcm2": 0.99
+        },
+        {
+          "tScore": -1.3,
+          "zScore": -0.1,
+          "hipSide": "LEFT",
+          "anatomicalSite": "hip",
+          "boneMineralDensityGcm2": 0.87
+        }
+      ],
+      "findings": "Bone density is within the expected range for age"
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "fractureRisk5yPercent": 5.4,
+      "fragilityScore": 10.3,
+      "sites": [
+        {
+          "tScore": -1.3,
+          "zScore": 0.1,
+          "hipSide": null,
+          "anatomicalSite": "lumbar_spine",
+          "boneMineralDensityGcm2": 0.97
+        },
+        {
+          "tScore": -1.6,
+          "zScore": -0.1,
+          "hipSide": "LEFT",
+          "anatomicalSite": "hip",
+          "boneMineralDensityGcm2": 0.85
+        }
+      ],
+      "findings": "Low bone density at the hip"
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "fractureRisk5yPercent": 6.5,
+      "fragilityScore": 9,
+      "sites": [
+        {
+          "tScore": -1.6,
+          "zScore": 0.1,
+          "hipSide": null,
+          "anatomicalSite": "lumbar_spine",
+          "boneMineralDensityGcm2": 0.94
+        },
+        {
+          "tScore": -1.9,
+          "zScore": -0.1,
+          "hipSide": "LEFT",
+          "anatomicalSite": "hip",
+          "boneMineralDensityGcm2": 0.82
+        }
+      ],
+      "findings": "Low bone density at the hip"
+    }
+  ],
+  "cognitive": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "score": 28,
+      "maximumScore": 30,
+      "instrument": "MoCA",
+      "interpretation": "Performance within the expected range",
+      "domains": {
+        "memory": 4,
+        "language": 3,
+        "attention": 6,
+        "executive": 5
+      }
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "score": 27,
+      "maximumScore": 30,
+      "instrument": "MoCA",
+      "interpretation": "Performance within the expected range",
+      "domains": {
+        "memory": 4,
+        "language": 3,
+        "attention": 6,
+        "executive": 5
+      }
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "score": 27,
+      "maximumScore": 30,
+      "instrument": "MoCA",
+      "interpretation": "Performance within the expected range",
+      "domains": {
+        "memory": 4,
+        "language": 3,
+        "attention": 6,
+        "executive": 5
+      }
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "score": 26,
+      "maximumScore": 30,
+      "instrument": "MoCA",
+      "interpretation": "Mild difficulty with delayed recall",
+      "domains": {
+        "memory": 4,
+        "language": 3,
+        "attention": 6,
+        "executive": 5
+      }
+    }
+  ],
+  "skin": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "lesions": [
+        {
+          "risk": "low",
+          "change": "stable",
+          "region": "upper_back",
+          "identifier": "L-001"
+        }
+      ],
+      "summary": "No suspicious interval change",
+      "recommendations": [
+        "Routine annual surveillance",
+        "Continue sun protection"
+      ]
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "lesions": [
+        {
+          "risk": "low",
+          "change": "stable",
+          "region": "upper_back",
+          "identifier": "L-001"
+        },
+        {
+          "risk": "low",
+          "change": "stable",
+          "region": "right_forearm",
+          "identifier": "L-002"
+        }
+      ],
+      "summary": "No suspicious interval change",
+      "recommendations": [
+        "Routine annual surveillance",
+        "Continue sun protection"
+      ]
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "lesions": [
+        {
+          "risk": "low",
+          "change": "stable",
+          "region": "upper_back",
+          "identifier": "L-001"
+        },
+        {
+          "risk": "low",
+          "change": "stable",
+          "region": "right_forearm",
+          "identifier": "L-002"
+        }
+      ],
+      "summary": "No suspicious interval change",
+      "recommendations": [
+        "Routine annual surveillance",
+        "Continue sun protection"
+      ]
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "lesions": [
+        {
+          "risk": "low",
+          "change": "stable",
+          "region": "upper_back",
+          "identifier": "L-001"
+        },
+        {
+          "risk": "moderate",
+          "change": "enlarged",
+          "region": "right_forearm",
+          "identifier": "L-002"
+        },
+        {
+          "risk": "high",
+          "change": "new",
+          "region": "left_shoulder",
+          "identifier": "L-003"
+        }
+      ],
+      "summary": "One new lesion referred for dermatology review",
+      "recommendations": [
+        "Routine annual surveillance",
+        "Continue sun protection"
+      ]
+    }
+  ],
+  "composition": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "bodyFatPercent": 29.5,
+      "fatMassKg": 21.9,
+      "leanMassKg": 47.5,
+      "skeletalMuscleMassKg": 25.8,
+      "visceralFatRating": 9
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "bodyFatPercent": 30.7,
+      "fatMassKg": 23.2,
+      "leanMassKg": 48.4,
+      "skeletalMuscleMassKg": 26.7,
+      "visceralFatRating": 10
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "bodyFatPercent": 31.9,
+      "fatMassKg": 24.6,
+      "leanMassKg": 49,
+      "skeletalMuscleMassKg": 27.3,
+      "visceralFatRating": 10
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "bodyFatPercent": 33.1,
+      "fatMassKg": 25.9,
+      "leanMassKg": 50.3,
+      "skeletalMuscleMassKg": 28.6,
+      "visceralFatRating": 11
+    }
+  ],
+  "anthro": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "heightCm": 168,
+      "weightKg": 74.2,
+      "waistCircumferenceCm": 86,
+      "hipCircumferenceCm": 95.7,
+      "bmiKgM2": 26.3
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "heightCm": 168,
+      "weightKg": 75.6,
+      "waistCircumferenceCm": 88,
+      "hipCircumferenceCm": 95.3,
+      "bmiKgM2": 26.8
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "heightCm": 168,
+      "weightKg": 77,
+      "waistCircumferenceCm": 90,
+      "hipCircumferenceCm": 95,
+      "bmiKgM2": 27.3
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "heightCm": 168,
+      "weightKg": 78.4,
+      "waistCircumferenceCm": 92,
+      "hipCircumferenceCm": 94.3,
+      "bmiKgM2": 27.8
+    }
+  ],
+  "anthroRanges": {
+    "bmiKgM2": {
+      "low": 18.5,
+      "high": 24.9
+    }
+  },
+  "nutrition": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "dietaryPattern": "Mediterranean",
+      "goals": [
+        "Improve fibre diversity",
+        "Maintain lean mass"
+      ],
+      "recommendations": [
+        "Thirty plant foods per week",
+        "Protein distributed across meals"
+      ]
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "dietaryPattern": "Mediterranean",
+      "goals": [
+        "Improve fibre diversity",
+        "Maintain lean mass"
+      ],
+      "recommendations": [
+        "Thirty plant foods per week",
+        "Protein distributed across meals"
+      ]
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "dietaryPattern": "Mediterranean",
+      "goals": [
+        "Improve fibre diversity",
+        "Maintain lean mass"
+      ],
+      "recommendations": [
+        "Thirty plant foods per week",
+        "Protein distributed across meals"
+      ]
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "dietaryPattern": "Mediterranean",
+      "goals": [
+        "Improve fibre diversity",
+        "Maintain lean mass"
+      ],
+      "recommendations": [
+        "Thirty plant foods per week",
+        "Protein distributed across meals"
+      ]
+    }
+  ],
+  "dietary": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "intolerances": [],
+      "symptoms": [],
+      "meals": "3 + 1",
+      "salt": "Moderate",
+      "diet": "Mediterranean",
+      "activeDays": 5
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "intolerances": [
+        "Peanuts"
+      ],
+      "symptoms": [],
+      "meals": "3 + 1",
+      "salt": "Moderate",
+      "diet": "Mediterranean",
+      "activeDays": 5
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "intolerances": [
+        "Peanuts"
+      ],
+      "symptoms": [
+        "Bloating"
+      ],
+      "meals": "3 + 1",
+      "salt": "Moderate",
+      "diet": "Mediterranean",
+      "activeDays": 5
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "intolerances": [
+        "Peanuts"
+      ],
+      "symptoms": [
+        "Reflux or heartburn",
+        "Bloating"
+      ],
+      "meals": "3 + 1",
+      "salt": "Moderate",
+      "diet": "Mediterranean",
+      "activeDays": 5
+    }
+  ],
+  "history": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "chiefConcerns": [
+        "Cardiometabolic longevity",
+        "Sleep quality"
+      ],
+      "conditions": [
+        "Seasonal allergic rhinitis"
+      ],
+      "medications": [],
+      "allergies": [
+        "Grass pollen"
+      ]
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "chiefConcerns": [
+        "Cardiometabolic longevity",
+        "Sleep quality"
+      ],
+      "conditions": [
+        "Seasonal allergic rhinitis"
+      ],
+      "medications": [],
+      "allergies": [
+        "Grass pollen"
+      ]
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "chiefConcerns": [
+        "Cardiometabolic longevity",
+        "Sleep quality"
+      ],
+      "conditions": [
+        "Seasonal allergic rhinitis"
+      ],
+      "medications": [],
+      "allergies": [
+        "Grass pollen"
+      ]
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "chiefConcerns": [
+        "Cardiometabolic longevity",
+        "Sleep quality"
+      ],
+      "conditions": [
+        "Seasonal allergic rhinitis"
+      ],
+      "medications": [
+        "Atorvastatin 10 mg"
+      ],
+      "allergies": [
+        "Grass pollen"
+      ]
+    }
+  ],
+  "gp": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "clinicalImpression": "Well adult with modifiable cardiometabolic prevention opportunities",
+      "findings": [
+        {
+          "label": "Respiratory",
+          "value": "Clear breath sounds"
+        },
+        {
+          "label": "Cardiovascular",
+          "value": "Normal heart sounds"
+        },
+        {
+          "label": "Gait",
+          "value": "Normal"
+        },
+        {
+          "label": "Coordination",
+          "value": "Normal"
+        },
+        {
+          "label": "Cranial nerves",
+          "value": "Intact"
+        }
+      ],
+      "recommendations": [
+        "Continue aerobic and resistance exercise",
+        "Review longitudinal lipid trend"
+      ]
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "clinicalImpression": "Well adult with modifiable cardiometabolic prevention opportunities",
+      "findings": [
+        {
+          "label": "Respiratory",
+          "value": "Clear breath sounds"
+        },
+        {
+          "label": "Cardiovascular",
+          "value": "Normal heart sounds"
+        },
+        {
+          "label": "Gait",
+          "value": "Normal"
+        },
+        {
+          "label": "Coordination",
+          "value": "Normal"
+        },
+        {
+          "label": "Cranial nerves",
+          "value": "Intact"
+        }
+      ],
+      "recommendations": [
+        "Continue aerobic and resistance exercise",
+        "Review longitudinal lipid trend"
+      ]
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "clinicalImpression": "Well adult with modifiable cardiometabolic prevention opportunities",
+      "findings": [
+        {
+          "label": "Respiratory",
+          "value": "Clear breath sounds"
+        },
+        {
+          "label": "Cardiovascular",
+          "value": "Normal heart sounds"
+        },
+        {
+          "label": "Gait",
+          "value": "Normal"
+        },
+        {
+          "label": "Coordination",
+          "value": "Normal"
+        },
+        {
+          "label": "Cranial nerves",
+          "value": "Intact"
+        }
+      ],
+      "recommendations": [
+        "Continue aerobic and resistance exercise",
+        "Review longitudinal lipid trend"
+      ]
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "clinicalImpression": "Well adult with modifiable cardiometabolic prevention opportunities",
+      "findings": [
+        {
+          "label": "Respiratory",
+          "value": "Clear breath sounds"
+        },
+        {
+          "label": "Cardiovascular",
+          "value": "Normal heart sounds"
+        },
+        {
+          "label": "Gait",
+          "value": "Normal"
+        },
+        {
+          "label": "Coordination",
+          "value": "Normal"
+        },
+        {
+          "label": "Cranial nerves",
+          "value": "Intact"
+        }
+      ],
+      "recommendations": [
+        "Continue aerobic and resistance exercise",
+        "Review longitudinal lipid trend"
+      ]
+    }
+  ],
+  "ultrasound": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "studies": [
+        {
+          "region": "Abdomen",
+          "finding": "No focal abnormality detected"
+        }
+      ],
+      "impression": "No significant sonographic abnormality"
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "studies": [
+        {
+          "region": "Abdomen",
+          "finding": "No focal abnormality detected"
+        }
+      ],
+      "impression": "No significant sonographic abnormality"
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "studies": [
+        {
+          "region": "Abdomen",
+          "finding": "No focal abnormality detected"
+        }
+      ],
+      "impression": "No significant sonographic abnormality"
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "studies": [
+        {
+          "region": "Abdomen",
+          "finding": "No focal abnormality detected"
+        }
+      ],
+      "impression": "No significant sonographic abnormality"
+    }
+  ],
+  "labs": {
+    "natural": [
+      {
+        "code": "cbc",
+        "name": "Complete blood count",
+        "core": true,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "White blood cells",
+                "value": 6.2,
+                "unit": "10^9/L",
+                "low": 4,
+                "high": 11,
+                "flag": "normal"
+              },
+              {
+                "name": "Neutrophils",
+                "value": 3.4,
+                "unit": "10^9/L",
+                "low": 1.5,
+                "high": 7.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Lymphocytes",
+                "value": 2.1,
+                "unit": "10^9/L",
+                "low": 1,
+                "high": 4,
+                "flag": "normal"
+              },
+              {
+                "name": "Monocytes",
+                "value": 0.5,
+                "unit": "10^9/L",
+                "low": 0.2,
+                "high": 0.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Eosinophils",
+                "value": 0.15,
+                "unit": "10^9/L",
+                "low": 0,
+                "high": 0.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Basophils",
+                "value": 0.04,
+                "unit": "10^9/L",
+                "low": 0,
+                "high": 0.1,
+                "flag": "normal"
+              },
+              {
+                "name": "Red blood cells",
+                "value": 4.6,
+                "unit": "10^12/L",
+                "low": 3.8,
+                "high": 5.2,
+                "flag": "normal"
+              },
+              {
+                "name": "Hemoglobin",
+                "value": 139,
+                "unit": "g/L",
+                "low": 120,
+                "high": 160,
+                "flag": "normal"
+              },
+              {
+                "name": "Hematocrit",
+                "value": 0.42,
+                "unit": "L/L",
+                "low": 0.36,
+                "high": 0.46,
+                "flag": "normal"
+              },
+              {
+                "name": "MCV",
+                "value": 91,
+                "unit": "fL",
+                "low": 80,
+                "high": 100,
+                "flag": "normal"
+              },
+              {
+                "name": "MCH",
+                "value": 30,
+                "unit": "pg",
+                "low": 27,
+                "high": 33,
+                "flag": "normal"
+              },
+              {
+                "name": "RDW",
+                "value": 12.6,
+                "unit": "%",
+                "low": 11.5,
+                "high": 14.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Platelets",
+                "value": 248,
+                "unit": "10^9/L",
+                "low": 150,
+                "high": 400,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "White blood cells",
+                "value": 6.2,
+                "unit": "10^9/L",
+                "low": 4,
+                "high": 11,
+                "flag": "normal"
+              },
+              {
+                "name": "Neutrophils",
+                "value": 3.4,
+                "unit": "10^9/L",
+                "low": 1.5,
+                "high": 7.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Lymphocytes",
+                "value": 2.1,
+                "unit": "10^9/L",
+                "low": 1,
+                "high": 4,
+                "flag": "normal"
+              },
+              {
+                "name": "Monocytes",
+                "value": 0.5,
+                "unit": "10^9/L",
+                "low": 0.2,
+                "high": 0.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Eosinophils",
+                "value": 0.15,
+                "unit": "10^9/L",
+                "low": 0,
+                "high": 0.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Basophils",
+                "value": 0.04,
+                "unit": "10^9/L",
+                "low": 0,
+                "high": 0.1,
+                "flag": "normal"
+              },
+              {
+                "name": "Red blood cells",
+                "value": 4.6,
+                "unit": "10^12/L",
+                "low": 3.8,
+                "high": 5.2,
+                "flag": "normal"
+              },
+              {
+                "name": "Hemoglobin",
+                "value": 139,
+                "unit": "g/L",
+                "low": 120,
+                "high": 160,
+                "flag": "normal"
+              },
+              {
+                "name": "Hematocrit",
+                "value": 0.42,
+                "unit": "L/L",
+                "low": 0.36,
+                "high": 0.46,
+                "flag": "normal"
+              },
+              {
+                "name": "MCV",
+                "value": 91,
+                "unit": "fL",
+                "low": 80,
+                "high": 100,
+                "flag": "normal"
+              },
+              {
+                "name": "MCH",
+                "value": 30,
+                "unit": "pg",
+                "low": 27,
+                "high": 33,
+                "flag": "normal"
+              },
+              {
+                "name": "RDW",
+                "value": 12.6,
+                "unit": "%",
+                "low": 11.5,
+                "high": 14.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Platelets",
+                "value": 248,
+                "unit": "10^9/L",
+                "low": 150,
+                "high": 400,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "White blood cells",
+                "value": 6.2,
+                "unit": "10^9/L",
+                "low": 4,
+                "high": 11,
+                "flag": "normal"
+              },
+              {
+                "name": "Neutrophils",
+                "value": 3.4,
+                "unit": "10^9/L",
+                "low": 1.5,
+                "high": 7.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Lymphocytes",
+                "value": 2.1,
+                "unit": "10^9/L",
+                "low": 1,
+                "high": 4,
+                "flag": "normal"
+              },
+              {
+                "name": "Monocytes",
+                "value": 0.5,
+                "unit": "10^9/L",
+                "low": 0.2,
+                "high": 0.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Eosinophils",
+                "value": 0.15,
+                "unit": "10^9/L",
+                "low": 0,
+                "high": 0.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Basophils",
+                "value": 0.04,
+                "unit": "10^9/L",
+                "low": 0,
+                "high": 0.1,
+                "flag": "normal"
+              },
+              {
+                "name": "Red blood cells",
+                "value": 4.6,
+                "unit": "10^12/L",
+                "low": 3.8,
+                "high": 5.2,
+                "flag": "normal"
+              },
+              {
+                "name": "Hemoglobin",
+                "value": 139,
+                "unit": "g/L",
+                "low": 120,
+                "high": 160,
+                "flag": "normal"
+              },
+              {
+                "name": "Hematocrit",
+                "value": 0.42,
+                "unit": "L/L",
+                "low": 0.36,
+                "high": 0.46,
+                "flag": "normal"
+              },
+              {
+                "name": "MCV",
+                "value": 91,
+                "unit": "fL",
+                "low": 80,
+                "high": 100,
+                "flag": "normal"
+              },
+              {
+                "name": "MCH",
+                "value": 30,
+                "unit": "pg",
+                "low": 27,
+                "high": 33,
+                "flag": "normal"
+              },
+              {
+                "name": "RDW",
+                "value": 12.6,
+                "unit": "%",
+                "low": 11.5,
+                "high": 14.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Platelets",
+                "value": 248,
+                "unit": "10^9/L",
+                "low": 150,
+                "high": 400,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "White blood cells",
+                "value": 6.2,
+                "unit": "10^9/L",
+                "low": 4,
+                "high": 11,
+                "flag": "normal"
+              },
+              {
+                "name": "Neutrophils",
+                "value": 3.4,
+                "unit": "10^9/L",
+                "low": 1.5,
+                "high": 7.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Lymphocytes",
+                "value": 2.1,
+                "unit": "10^9/L",
+                "low": 1,
+                "high": 4,
+                "flag": "normal"
+              },
+              {
+                "name": "Monocytes",
+                "value": 0.5,
+                "unit": "10^9/L",
+                "low": 0.2,
+                "high": 0.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Eosinophils",
+                "value": 0.15,
+                "unit": "10^9/L",
+                "low": 0,
+                "high": 0.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Basophils",
+                "value": 0.04,
+                "unit": "10^9/L",
+                "low": 0,
+                "high": 0.1,
+                "flag": "normal"
+              },
+              {
+                "name": "Red blood cells",
+                "value": 4.6,
+                "unit": "10^12/L",
+                "low": 3.8,
+                "high": 5.2,
+                "flag": "normal"
+              },
+              {
+                "name": "Hemoglobin",
+                "value": 139,
+                "unit": "g/L",
+                "low": 120,
+                "high": 160,
+                "flag": "normal"
+              },
+              {
+                "name": "Hematocrit",
+                "value": 0.42,
+                "unit": "L/L",
+                "low": 0.36,
+                "high": 0.46,
+                "flag": "normal"
+              },
+              {
+                "name": "MCV",
+                "value": 91,
+                "unit": "fL",
+                "low": 80,
+                "high": 100,
+                "flag": "normal"
+              },
+              {
+                "name": "MCH",
+                "value": 30,
+                "unit": "pg",
+                "low": 27,
+                "high": 33,
+                "flag": "normal"
+              },
+              {
+                "name": "RDW",
+                "value": 12.6,
+                "unit": "%",
+                "low": 11.5,
+                "high": 14.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Platelets",
+                "value": 248,
+                "unit": "10^9/L",
+                "low": 150,
+                "high": 400,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "iron",
+        "name": "Iron status",
+        "core": true,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "Ferritin",
+                "value": 22,
+                "unit": "µg/L",
+                "low": 15,
+                "high": 150,
+                "flag": "normal"
+              },
+              {
+                "name": "Iron",
+                "value": 18,
+                "unit": "µmol/L",
+                "low": 9,
+                "high": 30,
+                "flag": "normal"
+              },
+              {
+                "name": "Transferrin",
+                "value": 2.6,
+                "unit": "g/L",
+                "low": 2,
+                "high": 3.6,
+                "flag": "normal"
+              },
+              {
+                "name": "Transferrin saturation",
+                "value": 28,
+                "unit": "%",
+                "low": 15,
+                "high": 45,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "Ferritin",
+                "value": 19,
+                "unit": "µg/L",
+                "low": 15,
+                "high": 150,
+                "flag": "normal"
+              },
+              {
+                "name": "Iron",
+                "value": 18,
+                "unit": "µmol/L",
+                "low": 9,
+                "high": 30,
+                "flag": "normal"
+              },
+              {
+                "name": "Transferrin",
+                "value": 2.6,
+                "unit": "g/L",
+                "low": 2,
+                "high": 3.6,
+                "flag": "normal"
+              },
+              {
+                "name": "Transferrin saturation",
+                "value": 28,
+                "unit": "%",
+                "low": 15,
+                "high": 45,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "Ferritin",
+                "value": 15,
+                "unit": "µg/L",
+                "low": 15,
+                "high": 150,
+                "flag": "normal"
+              },
+              {
+                "name": "Iron",
+                "value": 18,
+                "unit": "µmol/L",
+                "low": 9,
+                "high": 30,
+                "flag": "normal"
+              },
+              {
+                "name": "Transferrin",
+                "value": 2.6,
+                "unit": "g/L",
+                "low": 2,
+                "high": 3.6,
+                "flag": "normal"
+              },
+              {
+                "name": "Transferrin saturation",
+                "value": 28,
+                "unit": "%",
+                "low": 15,
+                "high": 45,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "Ferritin",
+                "value": 12,
+                "unit": "µg/L",
+                "low": 15,
+                "high": 150,
+                "flag": "low"
+              },
+              {
+                "name": "Iron",
+                "value": 18,
+                "unit": "µmol/L",
+                "low": 9,
+                "high": 30,
+                "flag": "normal"
+              },
+              {
+                "name": "Transferrin",
+                "value": 2.6,
+                "unit": "g/L",
+                "low": 2,
+                "high": 3.6,
+                "flag": "normal"
+              },
+              {
+                "name": "Transferrin saturation",
+                "value": 28,
+                "unit": "%",
+                "low": 15,
+                "high": 45,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "vitamins",
+        "name": "Vitamins",
+        "core": true,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "Vitamin D (25-OH)",
+                "value": 42,
+                "unit": "nmol/L",
+                "low": 50,
+                "high": 150,
+                "flag": "low"
+              },
+              {
+                "name": "Vitamin B12",
+                "value": 430,
+                "unit": "pmol/L",
+                "low": 150,
+                "high": 650,
+                "flag": "normal"
+              },
+              {
+                "name": "Folate",
+                "value": 22,
+                "unit": "nmol/L",
+                "low": 10,
+                "high": 45,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "Vitamin D (25-OH)",
+                "value": 51,
+                "unit": "nmol/L",
+                "low": 50,
+                "high": 150,
+                "flag": "normal"
+              },
+              {
+                "name": "Vitamin B12",
+                "value": 430,
+                "unit": "pmol/L",
+                "low": 150,
+                "high": 650,
+                "flag": "normal"
+              },
+              {
+                "name": "Folate",
+                "value": 22,
+                "unit": "nmol/L",
+                "low": 10,
+                "high": 45,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "Vitamin D (25-OH)",
+                "value": 59,
+                "unit": "nmol/L",
+                "low": 50,
+                "high": 150,
+                "flag": "normal"
+              },
+              {
+                "name": "Vitamin B12",
+                "value": 430,
+                "unit": "pmol/L",
+                "low": 150,
+                "high": 650,
+                "flag": "normal"
+              },
+              {
+                "name": "Folate",
+                "value": 22,
+                "unit": "nmol/L",
+                "low": 10,
+                "high": 45,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "Vitamin D (25-OH)",
+                "value": 68,
+                "unit": "nmol/L",
+                "low": 50,
+                "high": 150,
+                "flag": "normal"
+              },
+              {
+                "name": "Vitamin B12",
+                "value": 430,
+                "unit": "pmol/L",
+                "low": 150,
+                "high": 650,
+                "flag": "normal"
+              },
+              {
+                "name": "Folate",
+                "value": 22,
+                "unit": "nmol/L",
+                "low": 10,
+                "high": 45,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "inflammation",
+        "name": "Inflammation",
+        "core": true,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "hsCRP",
+                "value": 0.8,
+                "unit": "mg/L",
+                "low": 0,
+                "high": 3,
+                "flag": "normal"
+              },
+              {
+                "name": "Homocysteine",
+                "value": 9,
+                "unit": "µmol/L",
+                "low": 5,
+                "high": 15,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "hsCRP",
+                "value": 0.72,
+                "unit": "mg/L",
+                "low": 0,
+                "high": 3,
+                "flag": "normal"
+              },
+              {
+                "name": "Homocysteine",
+                "value": 9,
+                "unit": "µmol/L",
+                "low": 5,
+                "high": 15,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "hsCRP",
+                "value": 0.64,
+                "unit": "mg/L",
+                "low": 0,
+                "high": 3,
+                "flag": "normal"
+              },
+              {
+                "name": "Homocysteine",
+                "value": 9,
+                "unit": "µmol/L",
+                "low": 5,
+                "high": 15,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "hsCRP",
+                "value": 0.56,
+                "unit": "mg/L",
+                "low": 0,
+                "high": 3,
+                "flag": "normal"
+              },
+              {
+                "name": "Homocysteine",
+                "value": 9,
+                "unit": "µmol/L",
+                "low": 5,
+                "high": 15,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "heart": [
+      {
+        "code": "lipids",
+        "name": "Lipids",
+        "core": true,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "Total cholesterol",
+                "value": 4.8,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 5,
+                "flag": "normal"
+              },
+              {
+                "name": "LDL cholesterol",
+                "value": 2.6,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 3,
+                "flag": "normal"
+              },
+              {
+                "name": "HDL cholesterol",
+                "value": 1.4,
+                "unit": "mmol/L",
+                "low": 1,
+                "high": 2.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Non-HDL cholesterol",
+                "value": 3.4,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 3.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Triglycerides",
+                "value": 1.1,
+                "unit": "mmol/L",
+                "low": 0.4,
+                "high": 1.7,
+                "flag": "normal"
+              },
+              {
+                "name": "ApoB",
+                "value": 0.88,
+                "unit": "g/L",
+                "low": 0.4,
+                "high": 1,
+                "flag": "normal"
+              },
+              {
+                "name": "Lp(a)",
+                "value": 32,
+                "unit": "nmol/L",
+                "low": 0,
+                "high": 75,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "Total cholesterol",
+                "value": 5.07,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 5,
+                "flag": "high"
+              },
+              {
+                "name": "LDL cholesterol",
+                "value": 2.87,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 3,
+                "flag": "normal"
+              },
+              {
+                "name": "HDL cholesterol",
+                "value": 1.42,
+                "unit": "mmol/L",
+                "low": 1,
+                "high": 2.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Non-HDL cholesterol",
+                "value": 3.3,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 3.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Triglycerides",
+                "value": 1.07,
+                "unit": "mmol/L",
+                "low": 0.4,
+                "high": 1.7,
+                "flag": "normal"
+              },
+              {
+                "name": "ApoB",
+                "value": 0.86,
+                "unit": "g/L",
+                "low": 0.4,
+                "high": 1,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "Total cholesterol",
+                "value": 5.33,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 5,
+                "flag": "high"
+              },
+              {
+                "name": "LDL cholesterol",
+                "value": 3.13,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 3,
+                "flag": "high"
+              },
+              {
+                "name": "HDL cholesterol",
+                "value": 1.44,
+                "unit": "mmol/L",
+                "low": 1,
+                "high": 2.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Non-HDL cholesterol",
+                "value": 3.2,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 3.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Triglycerides",
+                "value": 1.04,
+                "unit": "mmol/L",
+                "low": 0.4,
+                "high": 1.7,
+                "flag": "normal"
+              },
+              {
+                "name": "ApoB",
+                "value": 0.84,
+                "unit": "g/L",
+                "low": 0.4,
+                "high": 1,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "Total cholesterol",
+                "value": 5.6,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 5,
+                "flag": "high"
+              },
+              {
+                "name": "LDL cholesterol",
+                "value": 3.4,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 3,
+                "flag": "high"
+              },
+              {
+                "name": "HDL cholesterol",
+                "value": 1.46,
+                "unit": "mmol/L",
+                "low": 1,
+                "high": 2.5,
+                "flag": "normal"
+              },
+              {
+                "name": "Non-HDL cholesterol",
+                "value": 3.1,
+                "unit": "mmol/L",
+                "low": 0,
+                "high": 3.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Triglycerides",
+                "value": 1.01,
+                "unit": "mmol/L",
+                "low": 0.4,
+                "high": 1.7,
+                "flag": "normal"
+              },
+              {
+                "name": "ApoB",
+                "value": 0.82,
+                "unit": "g/L",
+                "low": 0.4,
+                "high": 1,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "clotting",
+        "name": "Clotting",
+        "core": false,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "INR",
+                "value": 1,
+                "unit": "ratio",
+                "low": 0.8,
+                "high": 1.2,
+                "flag": "normal"
+              },
+              {
+                "name": "APTT",
+                "value": 29,
+                "unit": "s",
+                "low": 25,
+                "high": 35,
+                "flag": "normal"
+              },
+              {
+                "name": "Fibrinogen",
+                "value": 2.8,
+                "unit": "g/L",
+                "low": 2,
+                "high": 4,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "INR",
+                "value": 1,
+                "unit": "ratio",
+                "low": 0.8,
+                "high": 1.2,
+                "flag": "normal"
+              },
+              {
+                "name": "APTT",
+                "value": 29,
+                "unit": "s",
+                "low": 25,
+                "high": 35,
+                "flag": "normal"
+              },
+              {
+                "name": "Fibrinogen",
+                "value": 2.8,
+                "unit": "g/L",
+                "low": 2,
+                "high": 4,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "INR",
+                "value": 1,
+                "unit": "ratio",
+                "low": 0.8,
+                "high": 1.2,
+                "flag": "normal"
+              },
+              {
+                "name": "APTT",
+                "value": 29,
+                "unit": "s",
+                "low": 25,
+                "high": 35,
+                "flag": "normal"
+              },
+              {
+                "name": "Fibrinogen",
+                "value": 2.8,
+                "unit": "g/L",
+                "low": 2,
+                "high": 4,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "INR",
+                "value": 1,
+                "unit": "ratio",
+                "low": 0.8,
+                "high": 1.2,
+                "flag": "normal"
+              },
+              {
+                "name": "APTT",
+                "value": 29,
+                "unit": "s",
+                "low": 25,
+                "high": 35,
+                "flag": "normal"
+              },
+              {
+                "name": "Fibrinogen",
+                "value": 2.8,
+                "unit": "g/L",
+                "low": 2,
+                "high": 4,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "liver": [
+      {
+        "code": "liver",
+        "name": "Liver function",
+        "core": true,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "ALT",
+                "value": 30,
+                "unit": "U/L",
+                "low": 0,
+                "high": 45,
+                "flag": "normal"
+              },
+              {
+                "name": "AST",
+                "value": 22,
+                "unit": "U/L",
+                "low": 0,
+                "high": 40,
+                "flag": "normal"
+              },
+              {
+                "name": "GGT",
+                "value": 18,
+                "unit": "U/L",
+                "low": 0,
+                "high": 55,
+                "flag": "normal"
+              },
+              {
+                "name": "ALP",
+                "value": 72,
+                "unit": "U/L",
+                "low": 30,
+                "high": 130,
+                "flag": "normal"
+              },
+              {
+                "name": "Total bilirubin",
+                "value": 11,
+                "unit": "µmol/L",
+                "low": 0,
+                "high": 21,
+                "flag": "normal"
+              },
+              {
+                "name": "Direct bilirubin",
+                "value": 3,
+                "unit": "µmol/L",
+                "low": 0,
+                "high": 5,
+                "flag": "normal"
+              },
+              {
+                "name": "Albumin",
+                "value": 44,
+                "unit": "g/L",
+                "low": 35,
+                "high": 50,
+                "flag": "normal"
+              },
+              {
+                "name": "Total protein",
+                "value": 72,
+                "unit": "g/L",
+                "low": 60,
+                "high": 80,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "ALT",
+                "value": 41,
+                "unit": "U/L",
+                "low": 0,
+                "high": 45,
+                "flag": "normal"
+              },
+              {
+                "name": "AST",
+                "value": 22,
+                "unit": "U/L",
+                "low": 0,
+                "high": 40,
+                "flag": "normal"
+              },
+              {
+                "name": "GGT",
+                "value": 18,
+                "unit": "U/L",
+                "low": 0,
+                "high": 55,
+                "flag": "normal"
+              },
+              {
+                "name": "ALP",
+                "value": 72,
+                "unit": "U/L",
+                "low": 30,
+                "high": 130,
+                "flag": "normal"
+              },
+              {
+                "name": "Total bilirubin",
+                "value": 11,
+                "unit": "µmol/L",
+                "low": 0,
+                "high": 21,
+                "flag": "normal"
+              },
+              {
+                "name": "Direct bilirubin",
+                "value": 3,
+                "unit": "µmol/L",
+                "low": 0,
+                "high": 5,
+                "flag": "normal"
+              },
+              {
+                "name": "Albumin",
+                "value": 44,
+                "unit": "g/L",
+                "low": 35,
+                "high": 50,
+                "flag": "normal"
+              },
+              {
+                "name": "Total protein",
+                "value": 72,
+                "unit": "g/L",
+                "low": 60,
+                "high": 80,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "ALT",
+                "value": 51,
+                "unit": "U/L",
+                "low": 0,
+                "high": 45,
+                "flag": "high"
+              },
+              {
+                "name": "AST",
+                "value": 22,
+                "unit": "U/L",
+                "low": 0,
+                "high": 40,
+                "flag": "normal"
+              },
+              {
+                "name": "GGT",
+                "value": 18,
+                "unit": "U/L",
+                "low": 0,
+                "high": 55,
+                "flag": "normal"
+              },
+              {
+                "name": "ALP",
+                "value": 72,
+                "unit": "U/L",
+                "low": 30,
+                "high": 130,
+                "flag": "normal"
+              },
+              {
+                "name": "Total bilirubin",
+                "value": 11,
+                "unit": "µmol/L",
+                "low": 0,
+                "high": 21,
+                "flag": "normal"
+              },
+              {
+                "name": "Direct bilirubin",
+                "value": 3,
+                "unit": "µmol/L",
+                "low": 0,
+                "high": 5,
+                "flag": "normal"
+              },
+              {
+                "name": "Albumin",
+                "value": 44,
+                "unit": "g/L",
+                "low": 35,
+                "high": 50,
+                "flag": "normal"
+              },
+              {
+                "name": "Total protein",
+                "value": 72,
+                "unit": "g/L",
+                "low": 60,
+                "high": 80,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "ALT",
+                "value": 62,
+                "unit": "U/L",
+                "low": 0,
+                "high": 45,
+                "flag": "high"
+              },
+              {
+                "name": "AST",
+                "value": 22,
+                "unit": "U/L",
+                "low": 0,
+                "high": 40,
+                "flag": "normal"
+              },
+              {
+                "name": "GGT",
+                "value": 18,
+                "unit": "U/L",
+                "low": 0,
+                "high": 55,
+                "flag": "normal"
+              },
+              {
+                "name": "ALP",
+                "value": 72,
+                "unit": "U/L",
+                "low": 30,
+                "high": 130,
+                "flag": "normal"
+              },
+              {
+                "name": "Total bilirubin",
+                "value": 11,
+                "unit": "µmol/L",
+                "low": 0,
+                "high": 21,
+                "flag": "normal"
+              },
+              {
+                "name": "Direct bilirubin",
+                "value": 3,
+                "unit": "µmol/L",
+                "low": 0,
+                "high": 5,
+                "flag": "normal"
+              },
+              {
+                "name": "Albumin",
+                "value": 44,
+                "unit": "g/L",
+                "low": 35,
+                "high": 50,
+                "flag": "normal"
+              },
+              {
+                "name": "Total protein",
+                "value": 72,
+                "unit": "g/L",
+                "low": 60,
+                "high": 80,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "kidneys": [
+      {
+        "code": "kidney",
+        "name": "Kidney function",
+        "core": true,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "Creatinine",
+                "value": 72,
+                "unit": "µmol/L",
+                "low": 45,
+                "high": 90,
+                "flag": "normal"
+              },
+              {
+                "name": "Cystatin C",
+                "value": 0.82,
+                "unit": "mg/L",
+                "low": 0.61,
+                "high": 0.95,
+                "flag": "normal"
+              },
+              {
+                "name": "eGFR",
+                "value": 97,
+                "unit": "mL/min/1.73m2",
+                "low": 60,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Urea",
+                "value": 5.1,
+                "unit": "mmol/L",
+                "low": 2.5,
+                "high": 7.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Uric acid",
+                "value": 270,
+                "unit": "µmol/L",
+                "low": 140,
+                "high": 360,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "Creatinine",
+                "value": 72.5,
+                "unit": "µmol/L",
+                "low": 45,
+                "high": 90,
+                "flag": "normal"
+              },
+              {
+                "name": "Cystatin C",
+                "value": 0.83,
+                "unit": "mg/L",
+                "low": 0.61,
+                "high": 0.95,
+                "flag": "normal"
+              },
+              {
+                "name": "eGFR",
+                "value": 96,
+                "unit": "mL/min/1.73m2",
+                "low": 60,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Urea",
+                "value": 5.1,
+                "unit": "mmol/L",
+                "low": 2.5,
+                "high": 7.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Uric acid",
+                "value": 270,
+                "unit": "µmol/L",
+                "low": 140,
+                "high": 360,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "Creatinine",
+                "value": 73,
+                "unit": "µmol/L",
+                "low": 45,
+                "high": 90,
+                "flag": "normal"
+              },
+              {
+                "name": "Cystatin C",
+                "value": 0.84,
+                "unit": "mg/L",
+                "low": 0.61,
+                "high": 0.95,
+                "flag": "normal"
+              },
+              {
+                "name": "eGFR",
+                "value": 95,
+                "unit": "mL/min/1.73m2",
+                "low": 60,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Urea",
+                "value": 5.1,
+                "unit": "mmol/L",
+                "low": 2.5,
+                "high": 7.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Uric acid",
+                "value": 270,
+                "unit": "µmol/L",
+                "low": 140,
+                "high": 360,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "Creatinine",
+                "value": 73.5,
+                "unit": "µmol/L",
+                "low": 45,
+                "high": 90,
+                "flag": "normal"
+              },
+              {
+                "name": "Cystatin C",
+                "value": 0.85,
+                "unit": "mg/L",
+                "low": 0.61,
+                "high": 0.95,
+                "flag": "normal"
+              },
+              {
+                "name": "eGFR",
+                "value": 94,
+                "unit": "mL/min/1.73m2",
+                "low": 60,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Urea",
+                "value": 5.1,
+                "unit": "mmol/L",
+                "low": 2.5,
+                "high": 7.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Uric acid",
+                "value": 270,
+                "unit": "µmol/L",
+                "low": 140,
+                "high": 360,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "electrolytes",
+        "name": "Electrolytes and minerals",
+        "core": true,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "Sodium",
+                "value": 140,
+                "unit": "mmol/L",
+                "low": 135,
+                "high": 145,
+                "flag": "normal"
+              },
+              {
+                "name": "Potassium",
+                "value": 4.4,
+                "unit": "mmol/L",
+                "low": 3.5,
+                "high": 5.1,
+                "flag": "normal"
+              },
+              {
+                "name": "Chloride",
+                "value": 102,
+                "unit": "mmol/L",
+                "low": 98,
+                "high": 107,
+                "flag": "normal"
+              },
+              {
+                "name": "Calcium",
+                "value": 2.37,
+                "unit": "mmol/L",
+                "low": 2.15,
+                "high": 2.55,
+                "flag": "normal"
+              },
+              {
+                "name": "Magnesium",
+                "value": 0.84,
+                "unit": "mmol/L",
+                "low": 0.7,
+                "high": 1,
+                "flag": "normal"
+              },
+              {
+                "name": "Phosphate",
+                "value": 1.1,
+                "unit": "mmol/L",
+                "low": 0.8,
+                "high": 1.5,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "Sodium",
+                "value": 140,
+                "unit": "mmol/L",
+                "low": 135,
+                "high": 145,
+                "flag": "normal"
+              },
+              {
+                "name": "Potassium",
+                "value": 5,
+                "unit": "mmol/L",
+                "low": 3.5,
+                "high": 5.1,
+                "flag": "normal"
+              },
+              {
+                "name": "Chloride",
+                "value": 102,
+                "unit": "mmol/L",
+                "low": 98,
+                "high": 107,
+                "flag": "normal"
+              },
+              {
+                "name": "Calcium",
+                "value": 2.37,
+                "unit": "mmol/L",
+                "low": 2.15,
+                "high": 2.55,
+                "flag": "normal"
+              },
+              {
+                "name": "Magnesium",
+                "value": 0.84,
+                "unit": "mmol/L",
+                "low": 0.7,
+                "high": 1,
+                "flag": "normal"
+              },
+              {
+                "name": "Phosphate",
+                "value": 1.1,
+                "unit": "mmol/L",
+                "low": 0.8,
+                "high": 1.5,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "Sodium",
+                "value": 140,
+                "unit": "mmol/L",
+                "low": 135,
+                "high": 145,
+                "flag": "normal"
+              },
+              {
+                "name": "Potassium",
+                "value": 5.7,
+                "unit": "mmol/L",
+                "low": 3.5,
+                "high": 5.1,
+                "flag": "high"
+              },
+              {
+                "name": "Chloride",
+                "value": 102,
+                "unit": "mmol/L",
+                "low": 98,
+                "high": 107,
+                "flag": "normal"
+              },
+              {
+                "name": "Calcium",
+                "value": 2.37,
+                "unit": "mmol/L",
+                "low": 2.15,
+                "high": 2.55,
+                "flag": "normal"
+              },
+              {
+                "name": "Magnesium",
+                "value": 0.84,
+                "unit": "mmol/L",
+                "low": 0.7,
+                "high": 1,
+                "flag": "normal"
+              },
+              {
+                "name": "Phosphate",
+                "value": 1.1,
+                "unit": "mmol/L",
+                "low": 0.8,
+                "high": 1.5,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "Sodium",
+                "value": 140,
+                "unit": "mmol/L",
+                "low": 135,
+                "high": 145,
+                "flag": "normal"
+              },
+              {
+                "name": "Potassium",
+                "value": 6.3,
+                "unit": "mmol/L",
+                "low": 3.5,
+                "high": 5.1,
+                "flag": "critical_high"
+              },
+              {
+                "name": "Chloride",
+                "value": 102,
+                "unit": "mmol/L",
+                "low": 98,
+                "high": 107,
+                "flag": "normal"
+              },
+              {
+                "name": "Calcium",
+                "value": 2.37,
+                "unit": "mmol/L",
+                "low": 2.15,
+                "high": 2.55,
+                "flag": "normal"
+              },
+              {
+                "name": "Magnesium",
+                "value": 0.84,
+                "unit": "mmol/L",
+                "low": 0.7,
+                "high": 1,
+                "flag": "normal"
+              },
+              {
+                "name": "Phosphate",
+                "value": 1.1,
+                "unit": "mmol/L",
+                "low": 0.8,
+                "high": 1.5,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "urinalysis",
+        "name": "Urinalysis",
+        "core": true,
+        "blood": false,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "Dipstick",
+                "value": {
+                  "blood": "negative",
+                  "glucose": "negative",
+                  "nitrite": "negative",
+                  "protein": "negative"
+                },
+                "unit": null,
+                "low": null,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Microscopy",
+                "value": {
+                  "bacteria": "none",
+                  "redBloodCellsPerHpf": 0,
+                  "whiteBloodCellsPerHpf": 1
+                },
+                "unit": null,
+                "low": null,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Albumin/creatinine ratio",
+                "value": 1.2,
+                "unit": "mg/mmol",
+                "low": 0,
+                "high": 3,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "Dipstick",
+                "value": {
+                  "blood": "negative",
+                  "glucose": "negative",
+                  "nitrite": "negative",
+                  "protein": "negative"
+                },
+                "unit": null,
+                "low": null,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Microscopy",
+                "value": {
+                  "bacteria": "none",
+                  "redBloodCellsPerHpf": 0,
+                  "whiteBloodCellsPerHpf": 1
+                },
+                "unit": null,
+                "low": null,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Albumin/creatinine ratio",
+                "value": 1.2,
+                "unit": "mg/mmol",
+                "low": 0,
+                "high": 3,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "Dipstick",
+                "value": {
+                  "blood": "negative",
+                  "glucose": "negative",
+                  "nitrite": "negative",
+                  "protein": "negative"
+                },
+                "unit": null,
+                "low": null,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Microscopy",
+                "value": {
+                  "bacteria": "none",
+                  "redBloodCellsPerHpf": 0,
+                  "whiteBloodCellsPerHpf": 1
+                },
+                "unit": null,
+                "low": null,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Albumin/creatinine ratio",
+                "value": 1.2,
+                "unit": "mg/mmol",
+                "low": 0,
+                "high": 3,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "Dipstick",
+                "value": {
+                  "blood": "negative",
+                  "glucose": "negative",
+                  "nitrite": "negative",
+                  "protein": "negative"
+                },
+                "unit": null,
+                "low": null,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Microscopy",
+                "value": {
+                  "bacteria": "none",
+                  "redBloodCellsPerHpf": 0,
+                  "whiteBloodCellsPerHpf": 1
+                },
+                "unit": null,
+                "low": null,
+                "high": null,
+                "flag": "normal"
+              },
+              {
+                "name": "Albumin/creatinine ratio",
+                "value": 1.2,
+                "unit": "mg/mmol",
+                "low": 0,
+                "high": 3,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "stomach": [
+      {
+        "code": "metabolic",
+        "name": "Metabolic health",
+        "core": true,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "Glucose",
+                "value": 5.2,
+                "unit": "mmol/L",
+                "low": 3.9,
+                "high": 5.5,
+                "flag": "normal"
+              },
+              {
+                "name": "HbA1c",
+                "value": 36,
+                "unit": "mmol/mol",
+                "low": 20,
+                "high": 41,
+                "flag": "normal"
+              },
+              {
+                "name": "Insulin",
+                "value": 6.8,
+                "unit": "mIU/L",
+                "low": 2,
+                "high": 25,
+                "flag": "normal"
+              },
+              {
+                "name": "HOMA-IR",
+                "value": 1.48,
+                "unit": "index",
+                "low": 0.5,
+                "high": 2,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "Glucose",
+                "value": 5.5,
+                "unit": "mmol/L",
+                "low": 3.9,
+                "high": 5.5,
+                "flag": "normal"
+              },
+              {
+                "name": "HbA1c",
+                "value": 38.7,
+                "unit": "mmol/mol",
+                "low": 20,
+                "high": 41,
+                "flag": "normal"
+              },
+              {
+                "name": "Insulin",
+                "value": 6.6,
+                "unit": "mIU/L",
+                "low": 2,
+                "high": 25,
+                "flag": "normal"
+              },
+              {
+                "name": "HOMA-IR",
+                "value": 1.41,
+                "unit": "index",
+                "low": 0.5,
+                "high": 2,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "Glucose",
+                "value": 5.8,
+                "unit": "mmol/L",
+                "low": 3.9,
+                "high": 5.5,
+                "flag": "high"
+              },
+              {
+                "name": "HbA1c",
+                "value": 41.3,
+                "unit": "mmol/mol",
+                "low": 20,
+                "high": 41,
+                "flag": "high"
+              },
+              {
+                "name": "Insulin",
+                "value": 6.4,
+                "unit": "mIU/L",
+                "low": 2,
+                "high": 25,
+                "flag": "normal"
+              },
+              {
+                "name": "HOMA-IR",
+                "value": 1.34,
+                "unit": "index",
+                "low": 0.5,
+                "high": 2,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "Glucose",
+                "value": 6.1,
+                "unit": "mmol/L",
+                "low": 3.9,
+                "high": 5.5,
+                "flag": "high"
+              },
+              {
+                "name": "HbA1c",
+                "value": 44,
+                "unit": "mmol/mol",
+                "low": 20,
+                "high": 41,
+                "flag": "high"
+              },
+              {
+                "name": "Insulin",
+                "value": 6.2,
+                "unit": "mIU/L",
+                "low": 2,
+                "high": 25,
+                "flag": "normal"
+              },
+              {
+                "name": "HOMA-IR",
+                "value": 1.27,
+                "unit": "index",
+                "low": 0.5,
+                "high": 2,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "thyroid": [
+      {
+        "code": "thyroid",
+        "name": "Thyroid",
+        "core": true,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "TSH",
+                "value": 1.8,
+                "unit": "mIU/L",
+                "low": 0.4,
+                "high": 4,
+                "flag": "normal"
+              },
+              {
+                "name": "Free T4",
+                "value": 15,
+                "unit": "pmol/L",
+                "low": 10,
+                "high": 22,
+                "flag": "normal"
+              },
+              {
+                "name": "Free T3",
+                "value": 4.6,
+                "unit": "pmol/L",
+                "low": 3.1,
+                "high": 6.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Anti-TPO",
+                "value": 12,
+                "unit": "IU/mL",
+                "low": 0,
+                "high": 34,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "TSH",
+                "value": 1.8,
+                "unit": "mIU/L",
+                "low": 0.4,
+                "high": 4,
+                "flag": "normal"
+              },
+              {
+                "name": "Free T4",
+                "value": 15,
+                "unit": "pmol/L",
+                "low": 10,
+                "high": 22,
+                "flag": "normal"
+              },
+              {
+                "name": "Free T3",
+                "value": 4.6,
+                "unit": "pmol/L",
+                "low": 3.1,
+                "high": 6.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Anti-TPO",
+                "value": 12,
+                "unit": "IU/mL",
+                "low": 0,
+                "high": 34,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "TSH",
+                "value": 1.8,
+                "unit": "mIU/L",
+                "low": 0.4,
+                "high": 4,
+                "flag": "normal"
+              },
+              {
+                "name": "Free T4",
+                "value": 15,
+                "unit": "pmol/L",
+                "low": 10,
+                "high": 22,
+                "flag": "normal"
+              },
+              {
+                "name": "Free T3",
+                "value": 4.6,
+                "unit": "pmol/L",
+                "low": 3.1,
+                "high": 6.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Anti-TPO",
+                "value": 12,
+                "unit": "IU/mL",
+                "low": 0,
+                "high": 34,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "TSH",
+                "value": 1.8,
+                "unit": "mIU/L",
+                "low": 0.4,
+                "high": 4,
+                "flag": "normal"
+              },
+              {
+                "name": "Free T4",
+                "value": 15,
+                "unit": "pmol/L",
+                "low": 10,
+                "high": 22,
+                "flag": "normal"
+              },
+              {
+                "name": "Free T3",
+                "value": 4.6,
+                "unit": "pmol/L",
+                "low": 3.1,
+                "high": 6.8,
+                "flag": "normal"
+              },
+              {
+                "name": "Anti-TPO",
+                "value": 12,
+                "unit": "IU/mL",
+                "low": 0,
+                "high": 34,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "code": "hormones",
+        "name": "Hormones",
+        "core": false,
+        "blood": true,
+        "visits": [
+          {
+            "visit": 1,
+            "date": "4 Nov 2025",
+            "analytes": [
+              {
+                "name": "Cortisol",
+                "value": 360,
+                "unit": "nmol/L",
+                "low": 140,
+                "high": 690,
+                "flag": "normal"
+              },
+              {
+                "name": "DHEA-S",
+                "value": 5.2,
+                "unit": "µmol/L",
+                "low": 1,
+                "high": 10,
+                "flag": "normal"
+              },
+              {
+                "name": "Testosterone",
+                "value": 1.3,
+                "unit": "nmol/L",
+                "low": 0.3,
+                "high": 1.7,
+                "flag": "normal"
+              },
+              {
+                "name": "SHBG",
+                "value": 55,
+                "unit": "nmol/L",
+                "low": 18,
+                "high": 114,
+                "flag": "normal"
+              },
+              {
+                "name": "Estradiol",
+                "value": 180,
+                "unit": "pmol/L",
+                "low": 70,
+                "high": 530,
+                "flag": "normal"
+              },
+              {
+                "name": "IGF-1",
+                "value": 165,
+                "unit": "ng/mL",
+                "low": 90,
+                "high": 250,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 2,
+            "date": "2 Feb 2026",
+            "analytes": [
+              {
+                "name": "Cortisol",
+                "value": 360,
+                "unit": "nmol/L",
+                "low": 140,
+                "high": 690,
+                "flag": "normal"
+              },
+              {
+                "name": "DHEA-S",
+                "value": 5.2,
+                "unit": "µmol/L",
+                "low": 1,
+                "high": 10,
+                "flag": "normal"
+              },
+              {
+                "name": "Testosterone",
+                "value": 1.3,
+                "unit": "nmol/L",
+                "low": 0.3,
+                "high": 1.7,
+                "flag": "normal"
+              },
+              {
+                "name": "SHBG",
+                "value": 55,
+                "unit": "nmol/L",
+                "low": 18,
+                "high": 114,
+                "flag": "normal"
+              },
+              {
+                "name": "Estradiol",
+                "value": 180,
+                "unit": "pmol/L",
+                "low": 70,
+                "high": 530,
+                "flag": "normal"
+              },
+              {
+                "name": "IGF-1",
+                "value": 165,
+                "unit": "ng/mL",
+                "low": 90,
+                "high": 250,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 3,
+            "date": "3 May 2026",
+            "analytes": [
+              {
+                "name": "Cortisol",
+                "value": 360,
+                "unit": "nmol/L",
+                "low": 140,
+                "high": 690,
+                "flag": "normal"
+              },
+              {
+                "name": "DHEA-S",
+                "value": 5.2,
+                "unit": "µmol/L",
+                "low": 1,
+                "high": 10,
+                "flag": "normal"
+              },
+              {
+                "name": "Testosterone",
+                "value": 1.3,
+                "unit": "nmol/L",
+                "low": 0.3,
+                "high": 1.7,
+                "flag": "normal"
+              },
+              {
+                "name": "SHBG",
+                "value": 55,
+                "unit": "nmol/L",
+                "low": 18,
+                "high": 114,
+                "flag": "normal"
+              },
+              {
+                "name": "Estradiol",
+                "value": 180,
+                "unit": "pmol/L",
+                "low": 70,
+                "high": 530,
+                "flag": "normal"
+              },
+              {
+                "name": "IGF-1",
+                "value": 165,
+                "unit": "ng/mL",
+                "low": 90,
+                "high": 250,
+                "flag": "normal"
+              }
+            ]
+          },
+          {
+            "visit": 4,
+            "date": "1 Aug 2026",
+            "analytes": [
+              {
+                "name": "Cortisol",
+                "value": 360,
+                "unit": "nmol/L",
+                "low": 140,
+                "high": 690,
+                "flag": "normal"
+              },
+              {
+                "name": "DHEA-S",
+                "value": 5.2,
+                "unit": "µmol/L",
+                "low": 1,
+                "high": 10,
+                "flag": "normal"
+              },
+              {
+                "name": "Testosterone",
+                "value": 1.3,
+                "unit": "nmol/L",
+                "low": 0.3,
+                "high": 1.7,
+                "flag": "normal"
+              },
+              {
+                "name": "SHBG",
+                "value": 55,
+                "unit": "nmol/L",
+                "low": 18,
+                "high": 114,
+                "flag": "normal"
+              },
+              {
+                "name": "Estradiol",
+                "value": 180,
+                "unit": "pmol/L",
+                "low": 70,
+                "high": 530,
+                "flag": "normal"
+              },
+              {
+                "name": "IGF-1",
+                "value": 165,
+                "unit": "ng/mL",
+                "low": 90,
+                "high": 250,
+                "flag": "normal"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "genome": {
+    "date": "4 Nov 2025",
+    "veryImportant": 1,
+    "important": 4,
+    "noteworthy": 7,
+    "lead": "Charcot-Marie-Tooth disease axonal type 2P · LRSAM1"
+  },
+  "carrier": [
+    {
+      "disease": "Biotinidase deficiency",
+      "gene": "BTD"
+    },
+    {
+      "disease": "Congenital adrenal hyperplasia due to 21-hydroxylase deficiency",
+      "gene": "CYP21A2"
+    }
+  ],
+  "newborn": [
+    {
+      "disease": "Alpha-1-antitrypsin deficiency",
+      "gene": "SERPINA1"
+    },
+    {
+      "disease": "Alpha1-Antitrypsin deficiency",
+      "gene": "SERPINA1"
+    }
+  ],
+  "newbornCarrier": 2,
+  "gpgs": {
+    "domains": [
+      {
+        "name": "Cardiology",
+        "level": "Elevated",
+        "z": 1.4501
+      },
+      {
+        "name": "Endocrinology",
+        "level": "Mildly elevated",
+        "z": 0.9158
+      }
+    ],
+    "closest": {
+      "name": "Coronary Artery Disease",
+      "probability": 0.53
+    }
+  },
+  "gut": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "phyla": [
+        {
+          "name": "Bacteroidetes",
+          "value": 43.8672
+        },
+        {
+          "name": "Firmicutes",
+          "value": 35.97749
+        },
+        {
+          "name": "Proteobacteria",
+          "value": 13.48859
+        },
+        {
+          "name": "Actinobacteria",
+          "value": 2.13655
+        },
+        {
+          "name": "Verrucomicrobia",
+          "value": 0.20394
+        }
+      ],
+      "richness": 150,
+      "shannon": 4.5,
+      "evenness": 0.6133,
+      "fb": 0.820146,
+      "lowest": [
+        {
+          "name": "Eating Disorder",
+          "score": 0.25,
+          "band": "Low"
+        }
+      ],
+      "low": [
+        {
+          "name": "Eating Disorder",
+          "score": 0.25,
+          "band": "Low"
+        }
+      ]
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "phyla": [
+        {
+          "name": "Bacteroidetes",
+          "value": 47.98735
+        },
+        {
+          "name": "Firmicutes",
+          "value": 34.84325
+        },
+        {
+          "name": "Proteobacteria",
+          "value": 11.54586
+        },
+        {
+          "name": "Actinobacteria",
+          "value": 2.39297
+        },
+        {
+          "name": "Verrucomicrobia",
+          "value": 0.76779
+        }
+      ],
+      "richness": 133,
+      "shannon": 4.3,
+      "evenness": 0.6506,
+      "fb": 0.726092,
+      "lowest": [
+        {
+          "name": "Bloating",
+          "score": 0.352941,
+          "band": "Normal-low"
+        }
+      ],
+      "low": []
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "phyla": [
+        {
+          "name": "Bacteroidetes",
+          "value": 52.10058
+        },
+        {
+          "name": "Firmicutes",
+          "value": 31.56987
+        },
+        {
+          "name": "Proteobacteria",
+          "value": 8.94148
+        },
+        {
+          "name": "Actinobacteria",
+          "value": 2.75681
+        },
+        {
+          "name": "Verrucomicrobia",
+          "value": 1.3681
+        }
+      ],
+      "richness": 115,
+      "shannon": 4.1,
+      "evenness": 0.6742,
+      "fb": 0.605941,
+      "lowest": [
+        {
+          "name": "AUTISM ",
+          "score": 0.314444,
+          "band": "Normal-low"
+        }
+      ],
+      "low": []
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "phyla": [
+        {
+          "name": "Bacteroidetes",
+          "value": 55.78857
+        },
+        {
+          "name": "Firmicutes",
+          "value": 29.93517
+        },
+        {
+          "name": "Proteobacteria",
+          "value": 7.15361
+        },
+        {
+          "name": "Actinobacteria",
+          "value": 2.9622
+        },
+        {
+          "name": "Verrucomicrobia",
+          "value": 1.89658
+        }
+      ],
+      "richness": 98,
+      "shannon": 3.9,
+      "evenness": 0.7153,
+      "fb": 0.536582,
+      "lowest": [
+        {
+          "name": "AUTISM ",
+          "score": 0.18,
+          "band": "Low"
+        },
+        {
+          "name": "ALZHEIMER'S DISEASE ",
+          "score": 0.22,
+          "band": "Low"
+        },
+        {
+          "name": "Arrythmia",
+          "score": 0.27,
+          "band": "Low"
+        }
+      ],
+      "low": [
+        {
+          "name": "AUTISM ",
+          "score": 0.18,
+          "band": "Low"
+        },
+        {
+          "name": "ALZHEIMER'S DISEASE ",
+          "score": 0.22,
+          "band": "Low"
+        },
+        {
+          "name": "Arrythmia",
+          "score": 0.27,
+          "band": "Low"
+        }
+      ]
+    }
+  ],
+  "oral": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "phyla": [
+        {
+          "name": "Firmicutes",
+          "value": 40.12259
+        },
+        {
+          "name": "Bacteroidetes",
+          "value": 33.75901
+        },
+        {
+          "name": "Proteobacteria",
+          "value": 14.57706
+        },
+        {
+          "name": "Fusobacteria",
+          "value": 6.3319
+        },
+        {
+          "name": "Actinobacteria",
+          "value": 3.06937
+        }
+      ],
+      "richness": 169,
+      "shannon": 5.1847,
+      "evenness": 0.7242,
+      "fb": 1.1885,
+      "lowest": [
+        {
+          "name": "Periodontitis",
+          "score": 0.142857,
+          "band": "Low"
+        },
+        {
+          "name": "Halitozis",
+          "score": 0.333333,
+          "band": "Low"
+        }
+      ],
+      "low": [
+        {
+          "name": "Periodontitis",
+          "score": 0.142857,
+          "band": "Low"
+        },
+        {
+          "name": "Halitozis",
+          "score": 0.333333,
+          "band": "Low"
+        }
+      ]
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "phyla": [
+        {
+          "name": "Firmicutes",
+          "value": 43.0859
+        },
+        {
+          "name": "Bacteroidetes",
+          "value": 32.16753
+        },
+        {
+          "name": "Proteobacteria",
+          "value": 15.1242
+        },
+        {
+          "name": "Fusobacteria",
+          "value": 5.88239
+        },
+        {
+          "name": "Actinobacteria",
+          "value": 3.48341
+        }
+      ],
+      "richness": 176,
+      "shannon": 5.2514,
+      "evenness": 0.7442,
+      "fb": 1.3394220000000001,
+      "lowest": [
+        {
+          "name": "Periodontitis",
+          "score": 0.285714,
+          "band": "Low"
+        }
+      ],
+      "low": [
+        {
+          "name": "Periodontitis",
+          "score": 0.285714,
+          "band": "Low"
+        }
+      ]
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "phyla": [
+        {
+          "name": "Firmicutes",
+          "value": 47.35546
+        },
+        {
+          "name": "Bacteroidetes",
+          "value": 28.91958
+        },
+        {
+          "name": "Proteobacteria",
+          "value": 16.2293
+        },
+        {
+          "name": "Fusobacteria",
+          "value": 5.3583
+        },
+        {
+          "name": "Actinobacteria",
+          "value": 3.92839
+        }
+      ],
+      "richness": 177,
+      "shannon": 5.3187,
+      "evenness": 0.7473,
+      "fb": 1.6374879999999998,
+      "lowest": [
+        {
+          "name": "Periodontitis",
+          "score": 0.428571,
+          "band": "Normal"
+        }
+      ],
+      "low": []
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "phyla": [
+        {
+          "name": "Firmicutes",
+          "value": 48.54479
+        },
+        {
+          "name": "Bacteroidetes",
+          "value": 25.86939
+        },
+        {
+          "name": "Proteobacteria",
+          "value": 16.39229
+        },
+        {
+          "name": "Fusobacteria",
+          "value": 4.59976
+        },
+        {
+          "name": "Actinobacteria",
+          "value": 4.20791
+        }
+      ],
+      "richness": 180,
+      "shannon": 5.381,
+      "evenness": 0.7604,
+      "fb": 1.8765340000000001,
+      "lowest": [
+        {
+          "name": "Bipolar Disorder",
+          "score": 0.3,
+          "band": "Low"
+        }
+      ],
+      "low": [
+        {
+          "name": "Bipolar Disorder",
+          "score": 0.3,
+          "band": "Low"
+        }
+      ]
+    }
+  ],
+  "vaginal": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "species": [
+        {
+          "name": "Gardnerella vaginalis",
+          "value": 29.73846
+        },
+        {
+          "name": "Lactobacillus iners",
+          "value": 24.42952
+        },
+        {
+          "name": "Fannyhessea vaginae",
+          "value": 10.96228
+        },
+        {
+          "name": "Prevotella bivia",
+          "value": 8.27701
+        },
+        {
+          "name": "Megasphaera lornae",
+          "value": 6.60514
+        }
+      ]
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "species": [
+        {
+          "name": "Lactobacillus iners",
+          "value": 67.19804
+        },
+        {
+          "name": "Gardnerella vaginalis",
+          "value": 12.42016
+        },
+        {
+          "name": "Lactobacillus crispatus",
+          "value": 8.60221
+        },
+        {
+          "name": "Fannyhessea vaginae",
+          "value": 3.30052
+        },
+        {
+          "name": "Prevotella bivia",
+          "value": 2.31984
+        }
+      ]
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "species": [
+        {
+          "name": "Lactobacillus crispatus",
+          "value": 57.76016
+        },
+        {
+          "name": "Lactobacillus iners",
+          "value": 29.65473
+        },
+        {
+          "name": "Lactobacillus jensenii",
+          "value": 6.19342
+        },
+        {
+          "name": "Lactobacillus gasseri",
+          "value": 3.7709
+        },
+        {
+          "name": "Gardnerella vaginalis",
+          "value": 1.2846
+        }
+      ]
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "species": [
+        {
+          "name": "Lactobacillus crispatus",
+          "value": 84.2404
+        },
+        {
+          "name": "Lactobacillus jensenii",
+          "value": 6.97176
+        },
+        {
+          "name": "Lactobacillus iners",
+          "value": 4.53439
+        },
+        {
+          "name": "Lactobacillus gasseri",
+          "value": 2.70956
+        },
+        {
+          "name": "Limosilactobacillus vaginalis",
+          "value": 1.13466
+        }
+      ]
+    }
+  ],
+  "transcriptome": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "predicted": 17.6,
+      "chronological": 18,
+      "gap": -0.4,
+      "signals": [
+        {
+          "name": "Coronary Artery Disease",
+          "confidence": "High",
+          "z": 4.11
+        },
+        {
+          "name": "Type 2 Diabetes",
+          "confidence": "Moderate",
+          "z": 1.35
+        }
+      ],
+      "cells": [
+        {
+          "name": "Neutrophils",
+          "value": 52.03
+        },
+        {
+          "name": "T Cells",
+          "value": 23.68
+        },
+        {
+          "name": "Monocytes",
+          "value": 11.92
+        },
+        {
+          "name": "Basophils",
+          "value": 4.71
+        },
+        {
+          "name": "Others",
+          "value": 7.719999999999999
+        }
+      ]
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "predicted": 18.9,
+      "chronological": 18,
+      "gap": 0.9,
+      "signals": [
+        {
+          "name": "Coronary Artery Disease",
+          "confidence": "Moderate",
+          "z": 2.44
+        }
+      ],
+      "cells": [
+        {
+          "name": "Neutrophils",
+          "value": 50.160000000000004
+        },
+        {
+          "name": "T Cells",
+          "value": 25.77
+        },
+        {
+          "name": "Monocytes",
+          "value": 11.03
+        },
+        {
+          "name": "Basophils",
+          "value": 4.71
+        },
+        {
+          "name": "Others",
+          "value": 8.17
+        }
+      ]
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "predicted": 20.1,
+      "chronological": 18,
+      "gap": 2.1,
+      "signals": [
+        {
+          "name": "Coronary Artery Disease",
+          "confidence": "High",
+          "z": 2.4
+        }
+      ],
+      "cells": [
+        {
+          "name": "Neutrophils",
+          "value": 48.52
+        },
+        {
+          "name": "T Cells",
+          "value": 28.13
+        },
+        {
+          "name": "Monocytes",
+          "value": 10.17
+        },
+        {
+          "name": "Basophils",
+          "value": 4.760000000000001
+        },
+        {
+          "name": "Others",
+          "value": 8.549999999999999
+        }
+      ]
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "predicted": 21.4,
+      "chronological": 18,
+      "gap": 3.4,
+      "signals": [
+        {
+          "name": "Coronary Artery Disease",
+          "confidence": "High",
+          "z": 2.4
+        }
+      ],
+      "cells": [
+        {
+          "name": "Neutrophils",
+          "value": 46.339999999999996
+        },
+        {
+          "name": "T Cells",
+          "value": 30.78
+        },
+        {
+          "name": "Monocytes",
+          "value": 9.120000000000001
+        },
+        {
+          "name": "Basophils",
+          "value": 4.73
+        },
+        {
+          "name": "Others",
+          "value": 9
+        }
+      ]
+    }
+  ],
+  "proteomics": [
+    {
+      "visit": 1,
+      "date": "4 Nov 2025",
+      "proteins": 2661,
+      "systems": [
+        {
+          "code": "circulatory",
+          "name": "Heart and blood vessels",
+          "status": "high"
+        },
+        {
+          "code": "respiratory",
+          "name": "Lungs and breathing",
+          "status": "typical"
+        },
+        {
+          "code": "metabolic",
+          "name": "Metabolism and hormones",
+          "status": "high"
+        },
+        {
+          "code": "digestive",
+          "name": "Digestion",
+          "status": "typical"
+        },
+        {
+          "code": "genitourinary",
+          "name": "Urinary and reproductive system",
+          "status": "typical"
+        },
+        {
+          "code": "musculoskeletal",
+          "name": "Bones, joints and muscles",
+          "status": "typical"
+        },
+        {
+          "code": "blood",
+          "name": "Blood and immunity",
+          "status": "typical"
+        },
+        {
+          "code": "infections",
+          "name": "Infections",
+          "status": "typical"
+        },
+        {
+          "code": "neoplasms",
+          "name": "Tumours and growths",
+          "status": "typical"
+        },
+        {
+          "code": "eye",
+          "name": "Eyes",
+          "status": "typical"
+        },
+        {
+          "code": "skin",
+          "name": "Skin",
+          "status": "typical"
+        },
+        {
+          "code": "multisystem",
+          "name": "Several body systems",
+          "status": "moderate"
+        }
+      ],
+      "highlights": [
+        {
+          "name": "High Cholesterol (Hypercholesterolaemia)",
+          "score": 80,
+          "tier": "high",
+          "when": "Now"
+        },
+        {
+          "name": "Obesity",
+          "score": 72,
+          "tier": "high",
+          "when": "Within 10 years"
+        },
+        {
+          "name": "Hypertension (High Blood Pressure)",
+          "score": 70,
+          "tier": "high",
+          "when": "Now"
+        },
+        {
+          "name": "Major Cardiovascular Event Risk (Heart Attack / Stroke / CV Death)",
+          "score": 68,
+          "tier": "high",
+          "when": "Now"
+        }
+      ]
+    },
+    {
+      "visit": 2,
+      "date": "2 Feb 2026",
+      "proteins": 2652,
+      "systems": [
+        {
+          "code": "circulatory",
+          "name": "Heart and blood vessels",
+          "status": "moderate"
+        },
+        {
+          "code": "respiratory",
+          "name": "Lungs and breathing",
+          "status": "typical"
+        },
+        {
+          "code": "metabolic",
+          "name": "Metabolism and hormones",
+          "status": "high"
+        },
+        {
+          "code": "digestive",
+          "name": "Digestion",
+          "status": "typical"
+        },
+        {
+          "code": "genitourinary",
+          "name": "Urinary and reproductive system",
+          "status": "typical"
+        },
+        {
+          "code": "musculoskeletal",
+          "name": "Bones, joints and muscles",
+          "status": "typical"
+        },
+        {
+          "code": "blood",
+          "name": "Blood and immunity",
+          "status": "typical"
+        },
+        {
+          "code": "infections",
+          "name": "Infections",
+          "status": "typical"
+        },
+        {
+          "code": "neoplasms",
+          "name": "Tumours and growths",
+          "status": "typical"
+        },
+        {
+          "code": "eye",
+          "name": "Eyes",
+          "status": "typical"
+        },
+        {
+          "code": "skin",
+          "name": "Skin",
+          "status": "typical"
+        },
+        {
+          "code": "multisystem",
+          "name": "Several body systems",
+          "status": "moderate"
+        }
+      ],
+      "highlights": [
+        {
+          "name": "High Cholesterol (Hypercholesterolaemia)",
+          "score": 69,
+          "tier": "high",
+          "when": "Now"
+        },
+        {
+          "name": "Major Cardiovascular Event Risk (Heart Attack / Stroke / CV Death)",
+          "score": 63,
+          "tier": "moderate",
+          "when": "Now"
+        },
+        {
+          "name": "Obesity",
+          "score": 60,
+          "tier": "moderate",
+          "when": "Within 10 years"
+        },
+        {
+          "name": "Hypertension (High Blood Pressure)",
+          "score": 56,
+          "tier": "moderate",
+          "when": "Now"
+        }
+      ]
+    },
+    {
+      "visit": 3,
+      "date": "3 May 2026",
+      "proteins": 2697,
+      "systems": [
+        {
+          "code": "circulatory",
+          "name": "Heart and blood vessels",
+          "status": "moderate"
+        },
+        {
+          "code": "respiratory",
+          "name": "Lungs and breathing",
+          "status": "typical"
+        },
+        {
+          "code": "metabolic",
+          "name": "Metabolism and hormones",
+          "status": "moderate"
+        },
+        {
+          "code": "digestive",
+          "name": "Digestion",
+          "status": "moderate"
+        },
+        {
+          "code": "genitourinary",
+          "name": "Urinary and reproductive system",
+          "status": "typical"
+        },
+        {
+          "code": "musculoskeletal",
+          "name": "Bones, joints and muscles",
+          "status": "typical"
+        },
+        {
+          "code": "blood",
+          "name": "Blood and immunity",
+          "status": "typical"
+        },
+        {
+          "code": "infections",
+          "name": "Infections",
+          "status": "typical"
+        },
+        {
+          "code": "neoplasms",
+          "name": "Tumours and growths",
+          "status": "typical"
+        },
+        {
+          "code": "eye",
+          "name": "Eyes",
+          "status": "typical"
+        },
+        {
+          "code": "skin",
+          "name": "Skin",
+          "status": "typical"
+        },
+        {
+          "code": "multisystem",
+          "name": "Several body systems",
+          "status": "moderate"
+        }
+      ],
+      "highlights": [
+        {
+          "name": "Major Cardiovascular Event Risk (Heart Attack / Stroke / CV Death)",
+          "score": 63,
+          "tier": "moderate",
+          "when": "Now"
+        },
+        {
+          "name": "High Cholesterol (Hypercholesterolaemia)",
+          "score": 57,
+          "tier": "moderate",
+          "when": "Now"
+        },
+        {
+          "name": "Obesity",
+          "score": 46,
+          "tier": "moderate",
+          "when": "Within 10 years"
+        },
+        {
+          "name": "Type 2 Diabetes",
+          "score": 43,
+          "tier": "moderate",
+          "when": "Within 10 years"
+        }
+      ]
+    },
+    {
+      "visit": 4,
+      "date": "1 Aug 2026",
+      "proteins": 2588,
+      "systems": [
+        {
+          "code": "circulatory",
+          "name": "Heart and blood vessels",
+          "status": "high"
+        },
+        {
+          "code": "respiratory",
+          "name": "Lungs and breathing",
+          "status": "typical"
+        },
+        {
+          "code": "metabolic",
+          "name": "Metabolism and hormones",
+          "status": "moderate"
+        },
+        {
+          "code": "digestive",
+          "name": "Digestion",
+          "status": "moderate"
+        },
+        {
+          "code": "genitourinary",
+          "name": "Urinary and reproductive system",
+          "status": "typical"
+        },
+        {
+          "code": "musculoskeletal",
+          "name": "Bones, joints and muscles",
+          "status": "typical"
+        },
+        {
+          "code": "blood",
+          "name": "Blood and immunity",
+          "status": "typical"
+        },
+        {
+          "code": "infections",
+          "name": "Infections",
+          "status": "typical"
+        },
+        {
+          "code": "neoplasms",
+          "name": "Tumours and growths",
+          "status": "typical"
+        },
+        {
+          "code": "eye",
+          "name": "Eyes",
+          "status": "typical"
+        },
+        {
+          "code": "skin",
+          "name": "Skin",
+          "status": "typical"
+        },
+        {
+          "code": "multisystem",
+          "name": "Several body systems",
+          "status": "moderate"
+        }
+      ],
+      "highlights": [
+        {
+          "name": "Major Cardiovascular Event Risk (Heart Attack / Stroke / CV Death)",
+          "score": 71,
+          "tier": "high",
+          "when": "Now"
+        },
+        {
+          "name": "High Cholesterol (Hypercholesterolaemia)",
+          "score": 44,
+          "tier": "moderate",
+          "when": "Now"
+        },
+        {
+          "name": "Gastro-oesophageal Reflux Disease (Acid Reflux)",
+          "score": 41,
+          "tier": "moderate",
+          "when": "Within 10 years"
+        },
+        {
+          "name": "Coronary Atherosclerosis (Plaque in the Heart Arteries)",
+          "score": 37,
+          "tier": "moderate",
+          "when": "Within 10 years"
+        }
+      ]
+    }
+  ],
+  "metabolomics": [
+    {
+      "name": "Plasma lipidomics",
+      "visits": [
+        {
+          "visit": 1,
+          "date": "4 Nov 2025",
+          "measured": 52,
+          "top": [
+            {
+              "name": "Cholesterol",
+              "share": 1
+            },
+            {
+              "name": "CE 18:2",
+              "share": 0.7181377792375319
+            },
+            {
+              "name": "PC 34:1",
+              "share": 0.4472128117931034
+            }
+          ]
+        },
+        {
+          "visit": 2,
+          "date": "2 Feb 2026",
+          "measured": 52,
+          "top": [
+            {
+              "name": "Cholesterol",
+              "share": 1
+            },
+            {
+              "name": "CE 18:2",
+              "share": 0.8322902851147577
+            },
+            {
+              "name": "PC 34:1",
+              "share": 0.49664401501572814
+            }
+          ]
+        },
+        {
+          "visit": 3,
+          "date": "3 May 2026",
+          "measured": 52,
+          "top": [
+            {
+              "name": "Cholesterol",
+              "share": 1
+            },
+            {
+              "name": "CE 18:2",
+              "share": 0.9408846042926725
+            },
+            {
+              "name": "PC 34:1",
+              "share": 0.57324866126298
+            }
+          ]
+        },
+        {
+          "visit": 4,
+          "date": "1 Aug 2026",
+          "measured": 52,
+          "top": [
+            {
+              "name": "CE 18:2",
+              "share": 1
+            },
+            {
+              "name": "Cholesterol",
+              "share": 0.8903672302284023
+            },
+            {
+              "name": "PC 34:1",
+              "share": 0.6221094833164796
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Plasma metabolomics",
+      "visits": [
+        {
+          "visit": 1,
+          "date": "4 Nov 2025",
+          "measured": 58,
+          "top": [
+            {
+              "name": "Glucose",
+              "share": 1
+            },
+            {
+              "name": "Lactate",
+              "share": 0.423554351733836
+            },
+            {
+              "name": "Urea",
+              "share": 0.2713441586225108
+            }
+          ]
+        },
+        {
+          "visit": 2,
+          "date": "2 Feb 2026",
+          "measured": 58,
+          "top": [
+            {
+              "name": "Glucose",
+              "share": 1
+            },
+            {
+              "name": "Lactate",
+              "share": 0.4813985215087682
+            },
+            {
+              "name": "Urea",
+              "share": 0.263408856558567
+            }
+          ]
+        },
+        {
+          "visit": 3,
+          "date": "3 May 2026",
+          "measured": 58,
+          "top": [
+            {
+              "name": "Glucose",
+              "share": 1
+            },
+            {
+              "name": "Lactate",
+              "share": 0.4665014929516385
+            },
+            {
+              "name": "Urea",
+              "share": 0.3102474575946728
+            }
+          ]
+        },
+        {
+          "visit": 4,
+          "date": "1 Aug 2026",
+          "measured": 58,
+          "top": [
+            {
+              "name": "Glucose",
+              "share": 1
+            },
+            {
+              "name": "Lactate",
+              "share": 0.4546873721854965
+            },
+            {
+              "name": "Urea",
+              "share": 0.2999162240406833
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Urine metabolomics",
+      "visits": [
+        {
+          "visit": 1,
+          "date": "4 Nov 2025",
+          "measured": 41,
+          "top": [
+            {
+              "name": "Urea",
+              "share": 1
+            },
+            {
+              "name": "Creatinine",
+              "share": 0.1890592884403337
+            },
+            {
+              "name": "Hippuric acid",
+              "share": 0.036524072211417506
+            }
+          ]
+        },
+        {
+          "visit": 2,
+          "date": "2 Feb 2026",
+          "measured": 41,
+          "top": [
+            {
+              "name": "Urea",
+              "share": 1
+            },
+            {
+              "name": "Creatinine",
+              "share": 0.20457698530744522
+            },
+            {
+              "name": "Hippuric acid",
+              "share": 0.03656346345774175
+            }
+          ]
+        },
+        {
+          "visit": 3,
+          "date": "3 May 2026",
+          "measured": 41,
+          "top": [
+            {
+              "name": "Urea",
+              "share": 1
+            },
+            {
+              "name": "Creatinine",
+              "share": 0.1517558976698591
+            },
+            {
+              "name": "Hippuric acid",
+              "share": 0.03245406256913205
+            }
+          ]
+        },
+        {
+          "visit": 4,
+          "date": "1 Aug 2026",
+          "measured": 41,
+          "top": [
+            {
+              "name": "Urea",
+              "share": 1
+            },
+            {
+              "name": "Creatinine",
+              "share": 0.19432977789496444
+            },
+            {
+              "name": "Hippuric acid",
+              "share": 0.04464801020887544
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "overview": {
+    "layers": 5,
+    "metabolites": 84,
+    "metabolitesAt": {
+      "1": 84,
+      "2": 84,
+      "3": 84,
+      "4": 84
+    }
+  }
+}

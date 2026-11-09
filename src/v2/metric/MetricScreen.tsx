@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { metric, metricsFor, rangeLabels, seriesFor, SOURCE_LABEL, STATUS_LABEL, type Metric, type Range } from "../data/metrics";
-import { LENS_ORDER, LENSES, ORGANS } from "../data/organs";
-import { CohortCurve, TrendChart } from "../ui/charts";
-import { DotArt } from "../ui/DotArt";
+import { metric, metricsFor, rangeLabels, seriesFor, SOURCE_LABEL, STATUS_LABEL, visitLabels, type Range } from "../data/metrics";
+import { ICON, lensOf, readingOf, REGIONS } from "../twin/regions";
+import { TrendChart } from "../ui/charts";
+import { Art, METRIC_ART } from "../ui/Art";
+import { OrganIcon } from "../ui/OrganIcon";
 import { Chevron } from "../ui/icons";
 import { Num } from "../ui/Num";
+import { WalkArt } from "../ui/WalkArt";
 import { BackBar, useGo, V2Screen } from "../ui/shell";
 import "./metric.css";
 
@@ -15,58 +17,64 @@ const RANGES: { id: Range; label: string }[] = [
   { id: "M", label: "Month" },
 ];
 
-/** The lens an organ opens under: the one matching where this number came from, if it holds the organ. */
-function lensFor(m: Metric) {
-  const want = m.source === "omics" ? "omics" : m.source === "clinic" && m.tab === "body" ? "body" : "vitals";
-  return LENSES[want].organs.includes(m.organ) ? want : LENS_ORDER.find((l) => LENSES[l].organs.includes(m.organ)) ?? "vitals";
-}
-
 export function MetricScreen() {
   const { id = "capacity" } = useParams();
   const go = useGo();
   const m = metric(id);
-  const organ = ORGANS[m.organ];
+  const organ = REGIONS[m.organ];
+  const reading = readingOf(m.organ);
   const [range, setRange] = useState<Range>("W");
 
   const values = useMemo(() => (m.chart === "scan" ? [] : seriesFor(m, range)), [m, range]);
   const labels = useMemo(() => rangeLabels(range, values.length), [range, values.length]);
+  const visits = useMemo(() => visitLabels(), []);
   const decimals = m.decimals ?? 0;
   const fmt = (v: number) => v.toLocaleString("en-GB", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
   const stats = values.length ? [{ k: "Average", v: values.reduce((a, b) => a + b, 0) / values.length }, { k: "Lowest", v: Math.min(...values) }, { k: "Highest", v: Math.max(...values) }] : [];
-  const flagged = metricsFor(m.organ).find((r) => r.status === "monitor");
   const chartUnit = m.unit.startsWith("/") ? m.unit.match(/[a-z]+$/i)?.[0] ?? "" : m.unit;
   const related = metricsFor(m.organ).filter((r) => r.id !== m.id).slice(0, 3);
 
   return (
-    <V2Screen nav={false} tone="light">
+    <V2Screen nav={false} tone={m.field === "sleep" ? "light" : "dark"}>
+      <div className="v2-veil" data-at="status" data-field={m.field} aria-hidden />
       <div className="mx scroll">
         <header className="mx-head" data-field={m.field} style={{ viewTransitionName: "v2-hero" }}>
           <BackBar tone="light" title={m.label} />
-          <div className="mx-art">
-            <DotArt organ={organ.map} size={190} />
-          </div>
+          {m.id === "steps" ? (
+            <div className="mx-art" data-art="walk">
+              <WalkArt size={150} />
+            </div>
+          ) : (
+            <div className="mx-art" data-art="glyph">
+              <Art name={METRIC_ART[m.id] ?? "check"} />
+            </div>
+          )}
           <div className="mx-value">
             <b>
               <Num v={m.value} />
             </b>{" "}
             <span>{m.unit}</span>
           </div>
+          {/* status, change and source on one line: what the number means, then where it came from */}
           <p className="mx-delta">
             <em data-status={m.status}>{STATUS_LABEL[m.status]}</em>
-            {m.delta}
-          </p>
-          <p className="mx-source">
-            {SOURCE_LABEL[m.source]}, {m.when}
+            <span>{m.delta}</span>
+            <span className="mx-source">
+              {SOURCE_LABEL[m.source]}, {m.when}
+            </span>
           </p>
         </header>
 
         <div className="mx-body" data-field={m.field}>
+          <header className="v2-sec mx-sec-first">
+            <h3>{m.chart === "scan" ? "Across your visits" : "Trend"}</h3>
+            {m.chart === "scan" && <span>{visits.length} visits</span>}
+          </header>
           {m.chart === "scan" ? (
             <section className="mx-panel">
-              <h2>Against 10,000 members your age</h2>
-              <CohortCurve percentile={m.cohort ?? 50} first={m.scans?.[0] ?? m.base} second={m.scans?.[1] ?? m.base} unit={m.unit} />
+              <TrendChart values={m.scans ?? []} labels={visits} kind="line" band={m.band} unit={chartUnit} decimals={decimals} />
               <p className="mx-foot">
-                Scan 1, Feb 2024 to scan 2, 14 Jul 2026. You sit at the {m.cohort}th percentile.
+                {visits.length} clinic visits, {visits[0]} to {visits[visits.length - 1]}.{m.band ? ` The band is the reference range, ${m.band[0]}–${m.band[1]}.` : ""}
               </p>
             </section>
           ) : (
@@ -93,27 +101,19 @@ export function MetricScreen() {
             </section>
           )}
 
+          <header className="v2-sec">
+            <h3>About this reading</h3>
+          </header>
           <p className="mx-note">{m.note}</p>
-
-          <button className="mx-twin" onClick={() => go(`/v2/twin?lens=${lensFor(m)}&organ=${organ.id}`)}>
-            <span className="mx-twin-art">
-              <DotArt organ={organ.map} size={84} color="#ffffff" crop={organ.map === "body" ? 1.3 : 1.1} />
-            </span>
-            <span>
-              <b>See it on your twin</b>
-              <small>
-                {organ.name}
-                {organ.age ? `, reads ${organ.age}` : ""}. {flagged ? `${flagged.label} on Monitor` : STATUS_LABEL[organ.status]}.
-              </small>
-            </span>
-            <Chevron />
-          </button>
 
           {related.length > 0 && (
             <section className="mx-related">
-              <h2>Also from your {organ.name.toLowerCase()}</h2>
+              <header className="v2-sec">
+                <h3>Also from your {organ.name.toLowerCase()}</h3>
+              </header>
               {related.map((r) => (
-                <button key={r.id} onClick={() => go(`/v2/metric/${r.id}`, { replace: true })}>
+                <button key={r.id} data-field={r.field} onClick={() => go(`/v2/metric/${r.id}`, { replace: true })}>
+                  <i className="mx-related-dot" aria-hidden />
                   <span>{r.label}</span>
                   <span className="mx-related-v">
                     <b>
@@ -126,6 +126,19 @@ export function MetricScreen() {
               ))}
             </section>
           )}
+
+          {/* the way back into the twin closes the page, one quiet row rather than a block */}
+          <button className="mx-twin" onClick={() => go(`/v2/twin?lens=${lensOf(organ.id)}&organ=${organ.id}`)}>
+            <OrganIcon organ={ICON[organ.id]} size={40} />
+            <span>
+              <b>See it on your twin</b>
+              <small>
+                {organ.name}
+                {reading.status ? `. ${reading.status}.` : "."}
+              </small>
+            </span>
+            <Chevron size={16} />
+          </button>
         </div>
       </div>
     </V2Screen>

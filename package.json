@@ -8,6 +8,10 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "compare": "node tests/compare.mjs",
+    "portal:fetch": "node scripts/fetch-portal.mjs",
+    "portal:build": "node --max-old-space-size=4096 scripts/build-scenarios.mjs && node --max-old-space-size=4096 scripts/build-member.mjs && node --max-old-space-size=4096 scripts/build-member.mjs varied && node --max-old-space-size=4096 scripts/build-member.mjs first && node --max-old-space-size=4096 scripts/build-member.mjs risk",
+    "portal:check": "node tests/capture-parity.mjs both clinic && node tests/twin-parity.mjs clinic",
+    "portal:check:all": "npm run portal:check && node tests/capture-parity.mjs both varied && node tests/twin-parity.mjs varied && node tests/capture-parity.mjs both first && node tests/twin-parity.mjs first && node tests/capture-parity.mjs both risk && node tests/twin-parity.mjs risk",
     "deploy": "npm run build && node scripts/deploy-gh-pages.mjs"
   },
   "dependencies": {

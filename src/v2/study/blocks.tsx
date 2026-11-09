@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Chevron } from "../ui/icons";
-import { IN, M, pick, placeOf, said, series, trim, type Rec, type StudyView } from "./data";
-import { Card, Cells, Finding, Parts, Pill, Range, type Tone } from "./parts";
+import { M, pick, placeOf, said, series, trim, type Rec, type StudyView } from "./data";
+import { Card, Cells, Finding, Note, Parts, Pill, Range, type Tone } from "./parts";
 
 /* ── laboratory panels ── */
 const LAB_TONE: Record<string, Tone> = { low: "mon", high: "mon", abnormal: "mon", critical_low: "alert", critical_high: "alert" };
@@ -63,13 +63,66 @@ export function labTotals(study: string, visit: number) {
   return { inRange, total: all.length, outside: all.length - inRange };
 }
 
-export function Labs({ study, visit, title = "Blood tests" }: { study: string; visit: number; title?: string }) {
-  const t = labTotals(study, visit);
+/** A panel's own line, as the portal sums it up when the room screen is short of space. */
+function LabCount({ panel, visit, named }: { panel: Rec; visit: number; named: boolean }) {
+  const analytes = pick(panel.visits, visit).analytes as Rec[];
+  const outside = analytes.filter((a) => LAB_TONE[a.flag]).length;
   return (
-    <Card title={title} aside={t.outside ? <Pill tone="mon">{t.outside} outside range</Pill> : <Pill tone="ok">All in range</Pill>}>
-      {[...(M.labs[study] as Rec[])].sort((a, b) => Number(b.core) - Number(a.core)).map((p) => (
+    <h4 className="rv-sub">
+      {named ? `${panel.name} · ` : ""}
+      {outside ? `${outside} outside` : `${analytes.length} in range`}
+    </h4>
+  );
+}
+
+/** Up to this many markers the portal shows every one; past it, a row per panel and the flagged markers. */
+const LAB_SHOWN = 8;
+
+/** The portal's title for a region's panels: the panel's own name when there is one, else what they are. */
+export function labTitle(study: string): string {
+  const panels = M.labs[study] as Rec[];
+  if (panels.length === 1) return panels[0].name;
+  return panels.every((p) => p.blood) ? "Blood tests" : "Laboratory results";
+}
+
+export function Labs({ study, visit }: { study: string; visit: number }) {
+  const panels = M.labs[study] as Rec[];
+  const all = panels.flatMap((p) => pick(p.visits, visit).analytes as Rec[]);
+  const flagged = all.filter((a) => LAB_TONE[a.flag]);
+  const critical = flagged.some((a) => LAB_TONE[a.flag] === "alert");
+  const allIn = all.every((a) => a.flag === "normal");
+  const aside = flagged.length ? <Pill tone={critical ? "alert" : "mon"}>{`${flagged.length} outside range`}</Pill> : allIn ? <Pill tone="ok">All in range</Pill> : undefined;
+  if (all.length <= LAB_SHOWN) {
+    return (
+      <Card title={labTitle(study)} aside={aside}>
+        {panels.map((p) => (
+          <div key={p.code}>
+            <LabCount panel={p} visit={visit} named={panels.length > 1} />
+            <div className="rv-analytes">
+              {(pick(p.visits, visit).analytes as Rec[]).map((a) => (
+                <Analyte key={a.name} a={a} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </Card>
+    );
+  }
+  return (
+    <Card title={labTitle(study)} aside={aside}>
+      {panels.map((p) => (
         <LabPanel key={p.code} panel={p} visit={visit} />
       ))}
+      {flagged.length > 0 && (
+        <div className="rv-analytes">
+          {panels.flatMap((p) =>
+            (pick(p.visits, visit).analytes as Rec[])
+              .filter((a) => LAB_TONE[a.flag])
+              .slice(0, LAB_SHOWN)
+              .map((a) => <Analyte key={`${p.code}/${a.name}`} a={a} />),
+          )}
+        </div>
+      )}
     </Card>
   );
 }
@@ -104,17 +157,19 @@ export function Microbiome({ rec }: { rec: Rec }) {
           })}
         />
       </Card>
-      <Card title="Condition scores" aside={flagged ? <Pill tone="mon">{rec.low.length} low</Pill> : <Pill tone="ok">No low scores</Pill>}>
-        {shown.map((s) => (
+      <Card title="Condition scores" aside={flagged ? <Pill tone="mon">{rec.low.length === 1 ? "1 low score" : `${rec.low.length} low scores`}</Pill> : <Pill tone="ok">No low scores</Pill>}>
+        {shown.slice(0, 3).map((s) => (
           <Finding key={s.name} tone={s.band === "Low" ? "mon" : "ok"} title={s.name} detail={s.band} value={Math.round(s.score * 100)} />
         ))}
+        {/* the three lowest by name, the rest as a count, as the portal lists them */}
+        {shown.length > 3 && <Note>{`+${shown.length - 3}`}</Note>}
       </Card>
     </>
   );
 }
 
-export function microbeLead(rows: Rec[], visit: number): Pick<StudyView, "value" | "label" | "trend" | "at" | "tone" | "status"> {
+/** Richness leads; the portal gives the report no overall status, so neither does the lead. */
+export function microbeLead(rows: Rec[], visit: number): Pick<StudyView, "value" | "label" | "trend" | "at"> {
   const r = pick(rows, visit);
-  const out = INDICES.filter((i) => r[i.key] < i.low || r[i.key] > i.high).length;
-  return { value: String(r.richness), label: "species richness", trend: series(rows, "richness"), at: placeOf(rows, visit), ...(out ? IN("mon", `${out} outside range`) : IN()) };
+  return { value: String(r.richness), label: "species richness", trend: series(rows, "richness"), at: placeOf(rows, visit) };
 }

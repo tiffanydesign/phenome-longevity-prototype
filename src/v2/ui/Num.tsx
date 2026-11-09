@@ -1,4 +1,4 @@
-/** New Science Mono gives punctuation a full cell; pull it in so 7:24 reads as one value. */
+/** Punctuation wrapped apart from the digits, so a face that sets it wide can pull it in (`.v2-p`). */
 export function Num({ v }: { v: string }) {
   const parts = v.match(/[.,:]|[^.,:]+/g) ?? [];
   return (

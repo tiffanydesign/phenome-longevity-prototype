@@ -1,17 +1,38 @@
 /* The figure's field is the room display's own; the film carries it, so the screen does too. */
 .rv {
   overflow: clip;
-  background: linear-gradient(170deg, #e6f0f8, #dfe6f3);
+  background: #f2f5fb;
 }
 .rv .pf-status,
-.rv-top,
-.rv-sheet {
+.rv-top {
   z-index: 3;
 }
 
-.rv-stage {
+/*
+ * One page, one scroll: the film opens it and fades into the panels, and the
+ * scrollbar on the right is the only one there is.
+ */
+.rv-page {
   position: absolute;
-  inset: 0 0 auto 0;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #26398052 transparent;
+}
+.rv-page::-webkit-scrollbar {
+  width: 4px;
+}
+.rv-page::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: #26398052;
+}
+.rv-page::-webkit-scrollbar-track {
+  margin: calc(var(--status-h) + 60px) 0 104px;
+}
+
+.rv-stage {
+  position: relative;
   aspect-ratio: 394 / 520;
   touch-action: pan-y;
   user-select: none;
@@ -21,15 +42,11 @@
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-}
-/* the status bar and the top controls keep their ground over any figure */
-.rv-film::after {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 112px;
-  z-index: 1;
-  background: linear-gradient(to bottom, #e6f0f8f2 34%, #e6f0f800);
+  background: #e6f0f8;
+  /* a fade into the page, never a hard edge: a transparency mask, as the twin's own crop.
+     It is gone by 80%, so the study's name and number below sit on clean ground, not on dots */
+  -webkit-mask-image: linear-gradient(#000 45%, transparent 80%);
+  mask-image: linear-gradient(#000 45%, transparent 80%);
 }
 .rv-film img,
 .rv-film video {
@@ -56,11 +73,6 @@
   align-items: center;
   justify-content: space-between;
 }
-.rv-top > span {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--v-ink-2);
-}
 .rv-top button {
   width: 44px;
   height: 44px;
@@ -68,8 +80,11 @@
   place-items: center;
   border-radius: 50%;
   color: var(--v-navy);
-  background: #ffffffc7;
-  box-shadow: var(--v-shadow);
+  /* solid white with a hairline, so the two buttons stay distinct over the film and over a card scrolled beneath them */
+  background: #fff;
+  box-shadow:
+    0 0 0 1px #2639801f,
+    0 6px 16px -8px #24365e66;
 }
 .rv-top-list {
   align-content: center;
@@ -82,43 +97,11 @@
   background: currentColor;
 }
 
-/* the sheet */
-.rv-sheet {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: calc(100% - 104px);
-  display: flex;
-  flex-direction: column;
-  border-radius: 28px 28px 0 0;
-  background: #f2f5fb;
-  box-shadow: 0 -16px 34px -24px #24365e80;
-  transition: transform 0.46s var(--v-ease);
-}
-.rv-sheet[data-drag] {
-  transition: none;
-}
-.rv-grab {
-  flex: none;
-  height: 20px;
-  display: grid;
-  place-items: center;
-  cursor: grab;
-  touch-action: none;
-}
-.rv-grab i {
-  width: 36px;
-  height: 4px;
-  border-radius: 2px;
-  background: #203a8533;
-}
+/* the panels pick up where the film fades, a little over it */
 .rv-body {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  padding: 0 16px calc(120px + var(--tail, 0px));
-  scrollbar-width: none;
+  position: relative;
+  margin-top: -64px;
+  padding: 0 16px 128px;
 }
 .rv-body::-webkit-scrollbar,
 .rv-list-body::-webkit-scrollbar {
@@ -128,29 +111,38 @@
   content: "";
   position: absolute;
   inset: auto 0 0 0;
-  height: 112px;
+  height: 98px;
   z-index: 3;
   pointer-events: none;
-  background: linear-gradient(to bottom, #f2f5fb00, #f2f5fb 44%);
+  background: #f2f5fb;
 }
 .rv .v2-nav {
   z-index: 4;
+  /* the study bar carries a ring and a name, so it keeps the full width */
+  left: 16px;
+  right: 16px;
 }
 
 .rv-lead {
   padding: 0 4px 12px;
 }
+/* the study's name in the twin's display face, Contralto at its small optical size, regular weight as the twin sets it */
+/* the study's section, a quiet tag before its name in the bar */
+.rv-section {
+  flex: none;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font: 600 12px/1 var(--v-text);
+  color: var(--v-ink-2);
+  background: #e6ebf8;
+}
 .rv-lead h2 {
   margin: 0;
-  font-family: var(--v-display);
-  font-size: 30px;
+  font-family: "contralto-small", "Contralto Small", var(--v-text);
+  font-size: 32px;
   font-weight: 400;
+  letter-spacing: -0.01em;
   line-height: 1.1;
-}
-.rv-lead-note {
-  margin: 2px 0 8px;
-  font-size: 14px;
-  color: var(--v-ink-2);
 }
 .rv-lead-row {
   display: flex;
@@ -171,7 +163,7 @@
 .rv-hero b {
   font-family: var(--v-num);
   font-size: 50px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--v-ink);
@@ -201,11 +193,11 @@
 }
 .rv-pill[data-tone="mon"] {
   color: var(--v-gold-ink);
-  background: #b27f0026;
+  background: #ffb60033;
 }
 .rv-pill[data-tone="alert"] {
-  color: #a82a12;
-  background: #d93a1e1f;
+  color: #9c4220;
+  background: #fce4da;
 }
 
 .rv-visits {
@@ -243,8 +235,8 @@
 }
 
 .rv-card {
-  margin-bottom: 12px;
-  padding: 14px 16px;
+  margin-bottom: var(--v-s-gap);
+  padding: var(--v-s-pad);
   border-radius: 20px;
   background: #fff;
   box-shadow: var(--v-shadow);
@@ -256,10 +248,11 @@
   gap: 10px;
   margin-bottom: 10px;
 }
+/* a panel's name in the card-title step of the app's scale, as every card title is */
 .rv-head h3 {
   margin: 0;
+  font: var(--v-t-card);
   font-size: 16px;
-  font-weight: 500;
 }
 .rv-sub {
   margin: 12px 0 6px;
@@ -283,6 +276,50 @@
 }
 .rv-count {
   font-size: 13px;
+  color: var(--v-ink-2);
+}
+
+/* a record in words: the clinician's line first, then label | entry rows on hairlines */
+.rv-facts-lead {
+  margin: 0 0 6px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--v-ink);
+  background: #f2f5fb;
+  text-wrap: pretty;
+}
+.rv-facts {
+  margin: 0;
+}
+.rv-facts > div {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--v-line);
+}
+.rv-facts > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 2px;
+}
+.rv-facts dt {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--v-ink-2);
+}
+.rv-facts dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--v-ink);
+  text-wrap: pretty;
+}
+.rv-facts > [data-empty] dd {
+  font-weight: 400;
   color: var(--v-ink-2);
 }
 
@@ -315,8 +352,17 @@
 .rv-cell[data-tone="mon"] > b {
   color: var(--v-gold-ink);
 }
-.rv-cells[style*="minmax(0, 1fr))"] .rv-cell > b:not(:has(em)) {
-  font-size: 20px;
+.rv-cell[data-word] > b {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  overflow-wrap: normal;
+  text-wrap: pretty;
+}
+.rv-cell[data-empty] > b {
+  font-weight: 400;
+  color: var(--v-ink-2);
 }
 
 .rv-range-wrap {
@@ -349,7 +395,7 @@
   background: var(--v-gold);
 }
 .rv-range[data-tone="alert"] b {
-  background: #d93a1e;
+  background: #d9774f;
 }
 .rv-ticks {
   position: relative;
@@ -405,7 +451,7 @@
   background: var(--v-gold);
 }
 .rv-lab-s i[data-tone="alert"] {
-  background: #d93a1e;
+  background: #d9774f;
 }
 .rv-lab-go {
   grid-area: g;
@@ -435,7 +481,7 @@
 }
 .rv-analyte > b em {
   margin-left: 3px;
-  font-size: 12px;
+  font-size: 13px;
   font-style: normal;
   color: var(--v-ink-2);
 }
@@ -450,7 +496,7 @@
   color: var(--v-gold-ink);
 }
 .rv-analyte[data-tone="alert"] > b {
-  color: #a82a12;
+  color: #9c4220;
 }
 
 .rv-find {
@@ -477,13 +523,18 @@
   font-size: 13px;
   color: var(--v-ink-2);
 }
+/* a z-score bar beside its finding */
+.rv-find > .rv-z {
+  flex: none;
+  width: 96px;
+}
 .rv-find > b {
   font-size: 16px;
   font-weight: 500;
   white-space: nowrap;
 }
 .rv-find > b[data-tone="alert"] {
-  color: #a82a12;
+  color: #9c4220;
 }
 .rv-find > b[data-tone="mon"] {
   color: var(--v-gold-ink);
@@ -549,7 +600,8 @@
   gap: 14px;
   margin-bottom: 14px;
 }
-.rv-ring {
+/* a share of a whole (body fat of body mass): its own name, so the study bar's segment ring cannot restyle it */
+.rv-share {
   width: 104px;
   height: 104px;
 }
@@ -593,7 +645,7 @@
 }
 .rv-ecg em {
   margin-left: 2px;
-  font-size: 12px;
+  font-size: 13px;
   font-style: normal;
   color: var(--v-ink-2);
 }
@@ -673,7 +725,7 @@
   background: #ffffffe0;
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
-  box-shadow: 0 14px 30px -14px #24365e99, 0 0 0 1px #203a851a;
+  box-shadow: 0 14px 30px -14px #24365e99, 0 0 0 1px #2639801a;
 }
 .rv-bar > button:not(.rv-bar-at) {
   flex: none;
@@ -688,49 +740,69 @@
   cursor: pointer;
 }
 .rv-bar > button:disabled {
-  color: #203a8540;
+  color: #26398040;
   cursor: default;
 }
 .rv-bar-at {
   flex: 1;
   min-width: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
+  padding: 0 4px;
   border: 0;
   background: none;
   cursor: pointer;
   font-family: var(--v-text);
   color: var(--v-ink);
+  text-align: left;
 }
-.rv-bar-at b {
-  font-size: 15px;
-  font-weight: 500;
+.rv-bar-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 0 6px;
+}
+.rv-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rv-bar-text b {
+  overflow: hidden;
+  font: 700 15px/1.15 var(--v-text);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.rv-bar-text small {
+  flex: none;
+  margin-left: auto;
+  font: 600 12px/1 var(--v-text);
   font-variant-numeric: tabular-nums;
-}
-.rv-bar-at small {
-  font-size: 13px;
-  font-weight: 400;
   color: var(--v-ink-2);
 }
-.rv-ticks-bar {
-  display: flex;
-  gap: 2px;
-  width: 100%;
-  max-width: 150px;
-}
-.rv-ticks-bar i {
-  flex: 1;
-  height: 4px;
+/* where the review stands: one thin line under the name, filled to the study in view */
+.rv-path {
+  position: relative;
+  display: block;
+  height: 3px;
+  overflow: hidden;
   border-radius: 2px;
-  background: #203a8526;
+  background: #2639801f;
 }
-.rv-ticks-bar i[data-on] {
+.rv-path i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 2px;
   background: var(--v-navy);
+  transition: width 0.35s var(--v-ease);
 }
-.rv-ticks-bar i[data-gap] {
-  margin-left: 3px;
+@media (prefers-reduced-motion: reduce) {
+  .rv-path i {
+    transition: none;
+  }
 }
 
 /* the library */
@@ -760,8 +832,9 @@
 .rv-list h2 {
   margin: 0;
   font-family: var(--v-display);
-  font-size: 30px;
-  font-weight: 400;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 .rv-list > header button {
   width: 44px;
@@ -820,11 +893,24 @@
   font-weight: 400;
   color: var(--v-ink-2);
 }
+/* a study outside its range says so in the review's own capsules: yellow to monitor, red to discuss */
+.rv-list-n small[data-tone="mon"],
+.rv-list-n small[data-tone="alert"] {
+  display: block;
+  width: fit-content;
+  margin-top: 4px;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
 .rv-list-n small[data-tone="mon"] {
   color: var(--v-gold-ink);
+  background: #ffb60033;
 }
 .rv-list-n small[data-tone="alert"] {
-  color: #a82a12;
+  color: #9c4220;
+  background: #fce4da;
 }
 .rv-list-v {
   flex: none;
@@ -840,4 +926,11 @@
 .rv-list svg {
   flex: none;
   color: var(--v-ink-3);
+}
+
+/* a status under a reading sits at its own width, not the cell's */
+.rv-cells .rv-pill {
+  justify-self: start;
+  width: fit-content;
+  margin-bottom: 4px;
 }

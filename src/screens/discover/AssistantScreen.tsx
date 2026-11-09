@@ -1,3 +1,4 @@
+import { EDITION } from "@/lib/edition";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Screen } from "@/components/Screen";
 import { Icon } from "@/components/Icon";
@@ -23,6 +24,8 @@ export function AssistantScreen() {
   const [historyOpen, setHistoryOpen] = useState(() => hashQuery().get("sheet") === "history");
   const scroller = useRef<HTMLDivElement>(null);
   const chat = st.chats.find((c) => c.id === st.current) ?? null;
+  // the redesign lays the page out as a column that fits any phone height; the capture replica keeps its fixed placement
+  const fit = EDITION !== "original";
 
   useEffect(() => {
     const q = hashQuery().get("ask");
@@ -51,7 +54,7 @@ export function AssistantScreen() {
 
   return (
     <Screen tabs bodyClassName="as-body" overlay={historyOpen && <AssistantHistory onClose={() => setHistoryOpen(false)} />}>
-      <div className="as-root">
+      <div className="as-root" data-fit={fit ? "" : undefined}>
       <div className="as-logo">
         <Icon name="PL_Logo" size={36} style={{ height: 24, color: "var(--c-navy)" }} />
       </div>
