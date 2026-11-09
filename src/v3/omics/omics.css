@@ -15,101 +15,221 @@
 .om-head {
   z-index: 3;
 }
-.om-title {
-  margin: 10px 4px 6px;
-  font: 700 34px/1.1 var(--v-display);
-  letter-spacing: -0.025em;
-}
-.om-coach {
-  margin: 0 4px 18px;
-}
-
-/* the overview card: layers, counts, then each study that carries a status */
-.om-ages {
-  width: 100%;
-  display: block;
-  padding: 16px 16px 6px;
-  border-radius: var(--v-r);
-  color: var(--v-ink);
-  background: var(--v-card);
-  transition: transform 0.18s var(--v-ease);
-}
-.om-ages:active,
-.om-item:active {
-  transform: scale(0.985);
-}
-.om-ages-h {
+/* the chips: everything first as a square mark, then one chip per study with its ring and its lead */
+.om-chips {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font: var(--v-t-note);
-  color: var(--v-ink-3);
-}
-.om-ages-h > span {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.om-ages-h b {
-  font: 650 19px/1.2 var(--v-text);
-  letter-spacing: -0.01em;
-  color: var(--v-ink);
-}
-.om-counts {
-  margin: 16px 0 10px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  font: var(--v-t-note);
+  margin: 6px -16px 0;
+  padding: 4px 16px 6px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.om-chips::-webkit-scrollbar {
+  display: none;
+}
+.om-chip {
+  flex: none;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 14px 0 10px;
+  border-radius: 16px;
+  color: var(--v-ink);
+  background: var(--v-fill);
+  scroll-snap-align: start;
+  scroll-margin-inline: 16px;
+  transition:
+    background 0.18s var(--v-ease),
+    box-shadow 0.18s var(--v-ease),
+    transform 0.18s var(--v-ease);
+}
+.om-chip:active {
+  transform: scale(0.96);
+}
+.om-chip[aria-pressed="true"] {
+  background: var(--v-card);
+  box-shadow: inset 0 0 0 1.5px var(--v-navy);
+}
+.om-chip-all {
+  width: 52px;
+  padding: 0;
+  justify-content: center;
   color: var(--v-ink-2);
 }
-.om-counts span {
+.om-chip-all[aria-pressed="true"] {
+  color: var(--v-navy);
+}
+.om-chip-t {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  white-space: nowrap;
+}
+.om-chip-t small {
+  font: 500 12px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.om-chip-t b {
+  font: 600 14.5px/1.2 var(--v-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* the ring: a track on the fill, the reading in the study's hue */
+.om-ring {
+  position: relative;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  color: var(--mid);
+}
+.om-ring > svg {
+  position: absolute;
+  inset: 0;
+}
+.om-ring-track {
+  stroke: var(--v-fill);
+}
+.om-ring-c {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.om-ring-c b {
+  font: 650 21px/1 var(--v-text);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+
+/* the headline: one sentence from the selected view, then its reason in grey */
+.om-title {
+  margin: 22px 4px 6px;
+  font: 700 28px/1.12 var(--v-display);
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+.om-sub {
+  margin: 0 4px 18px;
+  font: 400 17px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+  text-wrap: pretty;
+}
+
+/* a study card: name link, status, lead value and ring; two sub-readings; one sentence */
+.om-card {
+  margin-bottom: 12px;
+  padding: 14px 16px 0;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  color: var(--v-ink);
+}
+.om-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 14px;
+}
+.om-card-l {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.om-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  min-height: 28px;
+  margin: -4px 0 0;
+  font: 500 14px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.om-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 650 19px/1.2 var(--v-text);
+  letter-spacing: -0.01em;
+}
+/* the status mark: the card's only colour beside the ring, gold to monitor, green in range */
+.om-status[data-tone]::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--v-ok-ink);
+}
+.om-status[data-tone="mon"]::before,
+.om-status[data-tone="alert"]::before {
+  background: var(--v-gold);
+}
+.om-key {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-.om-counts b {
-  font: 650 26px/1.05 var(--v-text);
-  letter-spacing: -0.02em;
-  color: var(--v-ink);
-  font-variant-numeric: tabular-nums;
-}
-.om-lead {
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-top: 0.5px solid var(--v-line);
-  font: 400 15px var(--v-text);
-}
-.om-lead-n {
-  flex: 1;
-}
-.om-lead-v {
-  white-space: nowrap;
+.om-key small,
+.om-stats dt {
+  font: 500 13.5px/1.25 var(--v-text);
   color: var(--v-ink-3);
-  font-size: 13px;
 }
-.om-lead-v b {
-  font: 650 16px var(--v-text);
+.om-key strong {
+  font: 650 17px/1.2 var(--v-text);
   font-variant-numeric: tabular-nums;
-  color: var(--v-ink);
 }
-.om-lead em,
-.om-flag {
-  padding: 3px 9px;
-  border-radius: 10px;
-  font: 600 12px/1.2 var(--v-text);
-  font-style: normal;
-  color: var(--v-ok-ink);
-  background: var(--v-ok-pill);
+.om-ring-b {
+  flex: none;
+  border-radius: 50%;
+}
+.om-stats {
+  margin: 0;
+  padding: 12px 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 16px;
+  border-top: 0.5px solid var(--v-line);
+}
+.om-stats-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.om-stats div {
+  min-width: 0;
+}
+.om-stats dd {
+  margin: 2px 0 0;
+  font: 650 17px/1.2 var(--v-text);
+  font-variant-numeric: tabular-nums;
+}
+.om-stats .om-stat-sub {
+  margin-top: 1px;
+  font: 400 13.5px/1.3 var(--v-text);
+  color: var(--v-ink-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
-.om-lead[data-tone="mon"] em,
-.om-lead[data-tone="alert"] em,
-.om-flag {
-  color: var(--v-gold-ink);
-  background: var(--v-gold-pill);
+.om-insight {
+  margin: 0;
+  padding: 12px 0 14px;
+  border-top: 0.5px solid var(--v-line);
+  font: 400 15px/1.4 var(--v-text);
+  color: var(--v-ink);
+  text-wrap: pretty;
+}
+
+/* a study's own detail cards, set on the page's surface in both themes */
+.om-detail .rv-card {
+  background: var(--v-card);
+  color: var(--v-ink);
+}
+.om-detail {
+  margin-bottom: 12px;
 }
 
 .om-h {
@@ -197,4 +317,33 @@
   font: 500 14px var(--v-text);
   color: var(--v-ink-2);
   border: 1.5px dashed var(--v-line);
+}
+
+.om-item:active {
+  transform: scale(0.985);
+}
+
+/* study chips: the same glass as the twin's lens tabs, at rest and selected */
+.om-chip {
+  background: color-mix(in srgb, var(--v-card) 55%, transparent);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #fff 80%, transparent),
+    inset 0 1px 0 #ffffffcc,
+    0 4px 12px -10px #24365e40;
+}
+.om-chip[aria-pressed="true"] {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--v-card) 94%, transparent), color-mix(in srgb, var(--v-card) 68%, transparent));
+  box-shadow:
+    inset 0 0 0 1.5px color-mix(in srgb, var(--v-navy) 72%, transparent),
+    inset 0 1.5px 0 #ffffff,
+    0 8px 18px -12px #24365e73;
+}
+:root[data-theme="dark"] .om-chip {
+  box-shadow: inset 0 0 0 1px #ffffff1f;
+}
+:root[data-theme="dark"] .om-chip[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--v-card) 70%, transparent);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, #abb5d6 70%, transparent);
 }

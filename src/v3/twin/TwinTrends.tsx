@@ -30,7 +30,7 @@ const signed = (n: number) => {
  * Each study the member has every visit for becomes one chart, its own hue,
  * one point per visit; the rest are listed as measured once.
  */
-export function TwinTrends({ lens }: { lens: Lens }) {
+export function TwinTrends({ lens, span = true }: { lens: Lens; span?: boolean }) {
   const go = useGo();
   const regions = regionsOf(lens);
   const charted = regions.map((r) => ({ r, s: seriesOf(r) })).filter((x): x is { r: Region; s: number[] } => x.s !== null);
@@ -38,9 +38,9 @@ export function TwinTrends({ lens }: { lens: Lens }) {
 
   return (
     <section className="tw-trends" aria-label={`${LENS_LABEL[lens]} trends`}>
-      <p className="tw-trends-span">
+      {span && <p className="tw-trends-span">
         {VISITS.length} visits · {shortDate(FIRST.date)} to {shortDate(LAST.date)}
-      </p>
+      </p>}
 
       {charted.map(({ r, s }) => {
         const v = readingOf(r.id);

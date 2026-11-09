@@ -951,3 +951,11 @@
   width: fit-content;
   margin-bottom: 4px;
 }
+
+/* the study's name in the twin's serif display face, as the twin sets its titles */
+.rv-lead h2 {
+  font-family: "contralto-small", "Contralto Small", var(--v-text);
+  font-size: 34px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}

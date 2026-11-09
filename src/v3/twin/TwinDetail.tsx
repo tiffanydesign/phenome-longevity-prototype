@@ -29,6 +29,9 @@ function LensPanel({ lens, visit, past, onSelect }: { lens: Lens; visit: number;
   return (
     <>
       <div className="tw-body">
+        <header className="twl-sec">
+          <h3>Studies</h3>
+        </header>
         <ul className="tw-list">
           {regionsOf(lens).map((r) => {
             const v = readingOf(r.id, visit);
@@ -58,12 +61,12 @@ function LensPanel({ lens, visit, past, onSelect }: { lens: Lens; visit: number;
             );
           })}
         </ul>
-        <button className="tw-study" onClick={(e) => go("/v3/study/apose", { from: e.currentTarget })}>
+        <button className="two-plan twl-plan" onClick={(e) => go("/v3/study/apose", { from: e.currentTarget })}>
           <span>
-            Full review
+            <b>Your full review</b>
             <small>Every study, every visit</small>
           </span>
-          <Chevron size={16} />
+          <Chevron size={18} />
         </button>
       </div>
     </>

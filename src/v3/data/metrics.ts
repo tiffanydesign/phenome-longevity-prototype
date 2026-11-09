@@ -331,9 +331,18 @@ const DEVICE: Metric[] = [
   { id: "rhr", label: "Resting heart rate", value: "58", unit: "bpm", base: 59, swing: 2, ...ring("overnight"), status: "normal", delta: "−3 on yesterday", organ: "heart", tab: "vitals", field: "heart", chart: "line", band: [50, 64], note: "Within 3 bpm all week. Lower resting rates usually follow better recovery." },
   { id: "hr", label: "Heart rate", value: "72", unit: "bpm", base: 70, swing: 12, ...ring(), status: "normal", delta: "58–112 today", organ: "heart", tab: "vitals", field: "heart", chart: "line", band: [55, 100], note: "Daytime rate tracks your activity. The peak at 11:00 matches your walk." },
   { id: "hrv", label: "Heart rate variability", value: "48", unit: "ms", base: 46, swing: 5, ...ring("overnight"), status: "normal", delta: "+4 on yesterday", organ: "heart", tab: "vitals", field: "vitals", chart: "line", band: [40, 60], note: "Overnight mean. Your 7-day average is 46 ms, and this is the third night it has risen." },
+  // the ring's and band's own readings of what the clinic also measures: daily, kept apart from the visit rows of the same name
+  { id: "bpd", label: "Blood pressure", value: "118/76", unit: "mmHg", base: 118, swing: 6, ...band("this morning"), status: "normal", delta: "Within your usual range", organ: "natural", tab: "vitals", field: "lavender", chart: "line", band: [90, 130], note: "Morning reading from your band. Your 7-day average is 119/77 mmHg." },
+  { id: "spo2d", label: "Blood oxygen", value: "97", unit: "%", base: 97, swing: 1.4, ...ring("overnight"), status: "normal", delta: "Overnight average", organ: "natural", tab: "vitals", field: "teal", chart: "line", band: [95, 100], note: "Overnight average from your ring. It dipped below 94% for under a minute." },
+  { id: "respd", label: "Respiratory rate", value: "14", unit: "breaths/min", base: 14, swing: 1.2, ...ring("overnight"), status: "normal", delta: "Overnight average", organ: "natural", tab: "vitals", field: "sand", chart: "line", band: [12, 20], note: "Breaths per minute while you slept. Steady nights usually mean steady recovery." },
   { id: "capacity", label: "Capacity", value: "72", unit: "/ 100", base: 68, swing: 8, ...ring(), status: "normal", delta: "+6 on yesterday", organ: "heart", tab: "vitals", field: "capacity", chart: "line", band: [60, 85], note: "Recovery is keeping up with recent load. A good day to train or stay active." },
 
   { id: "sleep", label: "Sleep", value: "7:24", unit: "h", base: 7.2, swing: 0.6, decimals: 1, ...ring("last night"), status: "normal", delta: "24 min over goal", organ: "brain", tab: "sleep", field: "sleep", chart: "bars", band: [7, 9], note: "You fell asleep within 14 minutes and woke once." },
+  { id: "sleepscore", label: "Sleep score", value: "82", unit: "/ 100", base: 80, swing: 8, ...ring("last night"), status: "normal", delta: "+4 on yesterday", organ: "brain", tab: "sleep", field: "capacity", chart: "bars", band: [70, 100], note: "Your score combines how regular, efficient, long enough and restorative the night was." },
+  { id: "consistency", label: "Sleep consistency", value: "78", unit: "%", base: 76, swing: 8, ...ring("last night"), status: "normal", delta: "Bedtime within 25 min", organ: "brain", tab: "sleep", field: "teal", chart: "bars", band: [70, 100], note: "How close your bed and wake times are to your usual ones across the week." },
+  { id: "efficiency", label: "Sleep efficiency", value: "91", unit: "%", base: 89, swing: 4, ...ring("last night"), status: "normal", delta: "Awake 40 min in bed", organ: "brain", tab: "sleep", field: "rose", chart: "bars", band: [85, 100], note: "The share of time in bed you spent asleep." },
+  { id: "hoursneeds", label: "Hours vs needs", value: "96", unit: "%", base: 94, swing: 8, ...ring("last night"), status: "normal", delta: "7:24 of 7:40 needed", organ: "brain", tab: "sleep", field: "habit", chart: "bars", band: [90, 110], note: "How much you slept against what your recent load says you need." },
+  { id: "restorative", label: "Restorative sleep", value: "38", unit: "%", base: 36, swing: 5, ...ring("last night"), status: "normal", delta: "Deep and REM", organ: "brain", tab: "sleep", field: "vitals", chart: "bars", band: [30, 50], note: "Deep and REM sleep together, the stages that restore body and mind." },
   { id: "deep", label: "Deep sleep", value: "1:04", unit: "h", base: 1.1, swing: 0.2, decimals: 1, ...ring("last night"), status: "normal", delta: "15% of the night", organ: "brain", tab: "sleep", field: "lavender", chart: "bars", band: [1, 1.8], note: "Deep sleep came early in the night, as it should." },
   { id: "temp", label: "Skin temperature", value: "−0.2", unit: "°C", base: -0.1, swing: 0.2, decimals: 1, ...ring("last night"), status: "normal", delta: "Against your baseline", organ: "brain", tab: "sleep", field: "sand", chart: "line", band: [-0.4, 0.4], note: "Changes in skin temperature are linked to restful sleep. Yours moved normally overnight." },
 
@@ -355,19 +364,20 @@ export const metricsFor = (organ: string): Metric[] => LIST.filter((m) => m.orga
 /** The visits a clinic row's chart runs across, as the portal dates them. */
 export const visitLabels = (): string[] => VISITS.map((v) => visitDate(v));
 /** Demo series for the device and diary rows. Seeded per metric, so a chart reads the same on every open. */
-export type Range = "D" | "W" | "M";
-const POINTS: Record<Range, number> = { D: 24, W: 7, M: 30 };
+export type Range = "D" | "W" | "M" | "6M" | "Y";
+const POINTS: Record<Range, number> = { D: 24, W: 7, M: 30, "6M": 26, Y: 12 };
 
-export function seriesFor(m: Metric, range: Range): number[] {
-  let seed = [...(m.id + range)].reduce((s, c) => (s * 31 + c.charCodeAt(0)) >>> 0, 7);
+/** `page` steps back through earlier periods: 0 is the current one, 1 the one before. */
+export function seriesFor(m: Metric, range: Range, page = 0): number[] {
+  let seed = [...(m.id + range + page)].reduce((s, c) => (s * 31 + c.charCodeAt(0)) >>> 0, 7);
   const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 2 ** 32);
   const out = Array.from({ length: POINTS[range] }, (_, i) => {
     const wave = Math.sin((i / POINTS[range]) * Math.PI * 2 - 1.2) * m.swing * 0.5;
     return m.base + wave + (rnd() - 0.5) * m.swing;
   });
-  // the line must land on the number at the top of the page
+  // the current period's line must land on the number at the top of the page
   const now = currentValue(m);
-  if (Number.isFinite(now)) out[out.length - 1] = now;
+  if (page === 0 && Number.isFinite(now)) out[out.length - 1] = now;
   return out;
 }
 
@@ -378,14 +388,49 @@ function currentValue(m: Metric): number {
   return clock ? Number(clock[1]) + Number(clock[2]) / 60 : parseFloat(v);
 }
 
-export function rangeLabels(range: Range, count: number): string[] {
+/** The last day a chart reads to, `page` periods back from today. */
+function periodEnd(range: Range, page: number): Date {
+  const d = new Date();
+  if (range === "D") d.setDate(d.getDate() - page);
+  else if (range === "W") d.setDate(d.getDate() - 7 * page);
+  else if (range === "M") d.setDate(d.getDate() - 30 * page);
+  else if (range === "6M") d.setDate(d.getDate() - 182 * page);
+  else d.setFullYear(d.getFullYear() - page);
+  return d;
+}
+
+export function rangeLabels(range: Range, count: number, page = 0): string[] {
   if (range === "D") return Array.from({ length: count }, (_, i) => `${String(i).padStart(2, "0")}:00`);
-  const end = new Date(2026, 9, 30);
+  const end = periodEnd(range, page);
   return Array.from({ length: count }, (_, i) => {
     const d = new Date(end);
-    d.setDate(end.getDate() - (count - 1 - i));
+    const back = count - 1 - i;
+    if (range === "6M") {
+      d.setDate(end.getDate() - 7 * back);
+      return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+    }
+    if (range === "Y") {
+      d.setMonth(end.getMonth() - back);
+      return d.toLocaleDateString("en-GB", { month: "short", year: "2-digit" });
+    }
+    d.setDate(end.getDate() - back);
     return d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
   });
+}
+
+/** The period a chart shows, as its heading reads: "Today", "3 Nov - 9 Nov", "Nov 2025 - Oct 2026". */
+export function periodTitle(range: Range, page: number): string {
+  const end = periodEnd(range, page);
+  const fmt = (d: Date, o: Intl.DateTimeFormatOptions) => d.toLocaleDateString("en-GB", o);
+  if (range === "D") return page === 0 ? "Today" : page === 1 ? "Yesterday" : fmt(end, { weekday: "long", day: "numeric", month: "short" });
+  const start = new Date(end);
+  if (range === "W") start.setDate(end.getDate() - 6);
+  else if (range === "M") start.setDate(end.getDate() - 29);
+  else if (range === "6M") start.setDate(end.getDate() - 181);
+  else start.setMonth(end.getMonth() - 11);
+  const long = range === "6M" || range === "Y";
+  const o: Intl.DateTimeFormatOptions = long ? { month: "short", year: "numeric" } : { day: "numeric", month: "short" };
+  return `${fmt(start, o)} – ${fmt(end, o)}`;
 }
 
 /** "1,240" with thousands marked, as the cards print counts. */

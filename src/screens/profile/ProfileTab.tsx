@@ -142,6 +142,25 @@ export function ProfileTab({ initialScroll = 0, overlay, page = false }: { initi
           </section>
         )}
 
+        {/* the clinical edition keeps consultations here as well as on Home */}
+        {page && EDITION === "v3" && (
+          <section>
+            <h2 className="prf-tab-section">Clinic</h2>
+            <div className="prf-tab-card">
+              <button className="prf-tab-row" onClick={() => nav("/discover/consultations")}>
+                <span className="prf-tab-icon" aria-hidden>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3.5" y="5" width="17" height="15.5" rx="3" />
+                    <path d="M3.5 10h17M8 3v4M16 3v4M8.5 14.5l2 2 4-4" />
+                  </svg>
+                </span>
+                <span className="prf-tab-label">Consultations</span>
+                <IcArrowRight size={20} />
+              </button>
+            </div>
+          </section>
+        )}
+
         {SECTIONS.map((s) => (
           <section key={s.title}>
             <h2 className="prf-tab-section">{s.title}</h2>
@@ -163,6 +182,14 @@ export function ProfileTab({ initialScroll = 0, overlay, page = false }: { initi
           </span>
           <span className="prf-tab-label">Log Out</span>
         </button>
+
+        {/* the page closes on a quiet sign-off rather than on the last button */}
+        {EDITION === "v3" && (
+          <footer className="prf-tab-foot">
+            <Icon name="PL_Logo" size={28} style={{ height: 18, color: "var(--prf-section)" }} />
+            <span>Phenome Longevity</span>
+          </footer>
+        )}
       </div>
     </Screen>
   );

@@ -12,6 +12,9 @@
   --v-card-2: #f5f5f9;
   --v-fill: #7676801f;
   --v-glass: #ffffffb8;
+  /* the bottom bar: thinner glass, a bright rim on top and a soft lift under it */
+  --v-glass-bar: #ffffff73;
+  --v-glass-edge: 0 12px 30px -14px #24365e4d, inset 0 1px 0 #ffffffe6, inset 0 0 0 1px #ffffff99, 0 0 0 0.5px #26398014;
   /* text */
   --v-ink: #0b0d14;
   --v-ink-2: #5c5f6a;
@@ -36,7 +39,7 @@
   --v-shadow: none;
   --v-ease: cubic-bezier(0.16, 1, 0.3, 1);
   /* one family for everything: a neo-grotesk with optical sizes, numerals tabular where they line up */
-  --v-text: "Inter", "Inter Variable", -apple-system, "SF Pro Text", system-ui, sans-serif;
+  --v-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", "Inter", "Inter Variable", system-ui, sans-serif;
   --v-display: var(--v-text);
   --v-num: var(--v-text);
   --v-field: var(--v-bg);
@@ -61,6 +64,8 @@
   --v-card-2: #2c2c2e;
   --v-fill: #7676803d;
   --v-glass: #1c1c1ec7;
+  --v-glass-bar: #2c2c2e8c;
+  --v-glass-edge: 0 12px 30px -14px #0009, inset 0 1px 0 #ffffff26, inset 0 0 0 1px #ffffff14;
   --v-ink: #f5f5f7;
   --v-ink-2: #a8a8b0;
   --v-ink-3: #75757d;
@@ -278,11 +283,11 @@
   padding: 4px;
   display: flex;
   border-radius: 27px;
-  /* the bar is glass the cards show through, not a white slab */
-  background: var(--v-glass);
-  backdrop-filter: blur(14px) saturate(170%);
-  -webkit-backdrop-filter: blur(14px) saturate(170%);
-  box-shadow: 0 10px 26px -16px #24365e66, inset 0 0 0 1px #ffffffa6, 0 0 0 1px #2639800f;
+  /* the bar is clear glass the cards show through, not a white slab */
+  background: var(--v-glass-bar);
+  backdrop-filter: blur(22px) saturate(190%) brightness(1.04);
+  -webkit-backdrop-filter: blur(22px) saturate(190%) brightness(1.04);
+  box-shadow: var(--v-glass-edge);
 }
 .v2-nav-item {
   flex: 1;
@@ -316,10 +321,10 @@
   /* the same glass as the bar beside it, its mark in navy, so the cards under it never tint it */
   color: var(--v-navy);
   cursor: pointer;
-  background: var(--v-glass);
-  backdrop-filter: blur(14px) saturate(170%);
-  -webkit-backdrop-filter: blur(14px) saturate(170%);
-  box-shadow: 0 10px 26px -16px #24365e66, inset 0 0 0 1px #ffffffa6, 0 0 0 1px #2639800f;
+  background: var(--v-glass-bar);
+  backdrop-filter: blur(22px) saturate(190%) brightness(1.04);
+  -webkit-backdrop-filter: blur(22px) saturate(190%) brightness(1.04);
+  box-shadow: var(--v-glass-edge);
 }
 
 /* line at rest, solid when selected */

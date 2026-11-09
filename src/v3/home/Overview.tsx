@@ -1,12 +1,8 @@
-import { createContext, useContext, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { asset } from "@/lib/asset";
-import { metric, metricOn, seriesFor, STATUS_LABEL, type Metric, type Status } from "../data/metrics";
-import { usePrefs } from "@/lib/prefs";
-import { allLabs } from "../study/blocks";
-import { M, pick, visitDate, type Rec } from "../study/data";
+import { createContext, useContext, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { metric, metricOn, seriesFor, type Metric } from "../data/metrics";
+import { visitDate, VISITS } from "../study/data";
 import { LATEST } from "../twin/regions";
-import { HeroField, heroAt, useHero } from "../twin/HeroField";
-import type { HeroMap, Tint } from "../twin/field";
+import { TwinHero } from "../twin/TwinHero";
 import { CompareBars } from "../ui/charts";
 import { Chevron, IconAll, IconClose, IconGrip, IconResize } from "../ui/icons";
 import { Num } from "../ui/Num";
@@ -14,37 +10,20 @@ import { useGo } from "../ui/shell";
 import { SIZES, useBento } from "./bento";
 import { glyphOf, Kind, type GlyphName } from "../ui/glyphs";
 
-const BP = metric("bp");
 
-/* the device report, then what the clinic visit found, in the portal's words */
+/*
+ * The Today strip speaks only of what the ring, the band and the diary measured.
+ * Clinic and twin results never appear here: they live on the twin card and under Clinic visits.
+ */
 const SLIDES = [
   { text: "Your weekly report is ready. HRV is up 9% and sleep held steady.", cta: "See report", to: "/v3/home?tab=vitals" },
-  {
-    text: BP.status === "normal" ? `Your visit on ${visitDate(LATEST)} is on your twin, every result in its place.` : `Blood pressure read ${BP.value} at your visit on ${visitDate(LATEST)}, ${BP.delta.toLowerCase()}.`,
-    cta: "Open twin",
-    to: "/v3/twin?lens=vitals&organ=natural",
-  },
-  { text: `Your last clinic visit was ${visitDate(LATEST)}. Book the next one when it suits you.`, cta: "Book", to: "/v3/booking" },
+  { text: "Recovery is ahead of your load today. A good day to train or stay active.", cta: "See capacity", to: "/v3/metric/capacity" },
 ];
 
-const GOLD = "#ffb600";
-const NAVY = "#263980";
-
-/** The last visit's laboratory markers, by the laboratory's own flag: critical, outside its range, within it. */
-const RESULTS: { status: Status; count: number }[] = (() => {
-  const labs = allLabs(LATEST);
-  const flags = (Object.values(M.labs) as Rec[][]).flat().flatMap((p) => (pick(p.visits, LATEST)?.analytes ?? []) as Rec[]).map((a) => String(a.flag));
-  const critical = flags.filter((f) => f.startsWith("critical")).length;
-  return [
-    { status: "alert" as const, count: critical },
-    { status: "monitor" as const, count: labs.total - labs.inRange - critical },
-    { status: "normal" as const, count: labs.inRange },
-  ].filter((r) => r.count > 0);
-})();
 
 /** Each card's name, for the remove and add controls. */
 const CARD_NAME: Record<string, string> = {
-  twin: "Your twin",
+  twin: "Digital twin",
   activity: "Activity",
   sleep: "Sleep",
   capacity: "Capacity",
@@ -53,20 +32,22 @@ const CARD_NAME: Record<string, string> = {
   food: "Food",
   visits: "Clinic visits",
   habits: "Habits",
-  consult: "Book a visit",
-  store: "Store",
+  consult: "Your consultations",
+  games: "Cognitive games",
+  supplements: "Personalised supplements",
+  cgm: "Glucose monitoring",
 };
 
 /**
  * Home in the order a member asks their questions: how am I (the twin), how is
- * today (every reading, the body card among them), then the visit and the store.
+ * today (every reading, the body card among them), then the visit, consultations and games.
  * A card stays in its group; within it the member arranges.
  */
 const GROUPS: { id: string; title?: string; meta?: string; cards: string[] }[] = [
   { id: "hero", cards: ["twin"] },
   { id: "today", title: "Today", cards: ["activity", "sleep", "capacity", "workouts", "vitals", "food", "habits"] },
   { id: "visits", title: "Clinic visits", cards: ["visits"] },
-  { id: "more", title: "More", cards: ["consult", "store"] },
+  { id: "more", title: "More", cards: ["consult", "games", "supplements", "cgm"] },
 ];
 
 /** How many days back the Today cards read: 0 is today, up to the six days the week's series holds. */
@@ -84,63 +65,25 @@ function dayName(ago: number): { title: string; date: string } {
 
 /**
  * The day heading over the Today cards: the day by name at the left, and at the
- * right a small date capsule. Tapped, it opens the week as seven days under it,
- * oldest at the left and today at the right; the heading stays one line tall.
+ * right the date between two steps through the week, the day before on its left and the day after on its right.
  */
 function DayStep({ ago, onChange }: { ago: number; onChange: (ago: number) => void }) {
   const { title, date } = dayName(ago);
-  const [open, setOpen] = useState(false);
-  const root = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const close = (e: PointerEvent) => {
-      if (!root.current?.contains(e.target as Node)) setOpen(false);
-    };
-    const esc = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("pointerdown", close);
-    document.addEventListener("keydown", esc);
-    return () => {
-      document.removeEventListener("pointerdown", close);
-      document.removeEventListener("keydown", esc);
-    };
-  }, [open]);
-  const days = Array.from({ length: DAYS_BACK + 1 }, (_, i) => {
-    const back = DAYS_BACK - i;
-    const d = new Date();
-    d.setDate(d.getDate() - back);
-    return { back, letter: d.toLocaleDateString("en-GB", { weekday: "narrow" }), n: d.getDate(), full: d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" }) };
-  });
   return (
     <header className="v2-sec v2-day">
       <h3>{title}</h3>
-      <span className="v2-date" ref={root}>
-        <button className="v2-date-btn" data-past={ago > 0 ? "" : undefined} aria-haspopup="dialog" aria-expanded={open} aria-label={`${date}. Choose a day`} onClick={() => setOpen(!open)}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <rect x="3.5" y="5" width="17" height="15.5" rx="3.5" />
-            <path d="M3.5 10h17M8 3v4M16 3v4" />
-          </svg>
-          <span aria-live="polite">{date}</span>
-          <Chevron dir="down" size={13} />
+      <span className="v2-date" data-past={ago > 0 ? "" : undefined}>
+        <button aria-label="The day before" disabled={ago >= DAYS_BACK} onClick={() => onChange(ago + 1)}>
+          <Chevron dir="left" size={15} />
         </button>
-        {open && (
-          <div className="v2-week" role="dialog" aria-label="Choose a day">
-            {days.map((d) => (
-              <button
-                key={d.back}
-                aria-pressed={d.back === ago}
-                aria-label={d.full}
-                data-today={d.back === 0 ? "" : undefined}
-                onClick={() => {
-                  onChange(d.back);
-                  setOpen(false);
-                }}
-              >
-                <small>{d.letter}</small>
-                <b>{d.n}</b>
-              </button>
-            ))}
-          </div>
-        )}
+        <svg className="v2-date-mark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <rect x="3.5" y="5" width="17" height="15.5" rx="3.5" />
+          <path d="M3.5 10h17M8 3v4M16 3v4" />
+        </svg>
+        <span aria-live="polite">{date}</span>
+        <button aria-label="The day after" disabled={ago <= 0} onClick={() => onChange(ago - 1)}>
+          <Chevron size={15} />
+        </button>
       </span>
     </header>
   );
@@ -209,7 +152,7 @@ export function Overview({ editing, onEdit }: { editing: boolean; onEdit: (on: b
               }
             }}
           >
-            <Tile id={s.id} size={s.size} go={go} />
+            <Tile id={s.id} go={go} />
             {editing && bento.slots.length > 1 && (
               <button
                 className="v2-slot-remove"
@@ -343,10 +286,10 @@ function Report() {
   );
 }
 
-function Tile({ id, size, go }: { id: string; size: string; go: ReturnType<typeof useGo> }) {
+function Tile({ id, go }: { id: string; go: ReturnType<typeof useGo> }) {
   const open = (to: string) => (e: { currentTarget: HTMLElement }) => go(to, { from: e.currentTarget });
   const tiles: Record<string, () => ReactNode> = {
-    twin: () => <TwinTile size={size} onOpen={open("/v3/twin")} />,
+    twin: () => <TwinTile onOpen={open("/v3/twin")} />,
     capacity: () => <Stat m="capacity" onOpen={open("/v3/metric/capacity")} />,
     workouts: () => <Stat m="workouts" title="Workouts" field="rose" glyph="figure" onOpen={open("/v3/metric/workouts")} />,
     activity: () => <ActivityTile onOpen={open("/v3/metric/steps")} />,
@@ -356,22 +299,79 @@ function Tile({ id, size, go }: { id: string; size: string; go: ReturnType<typeo
     habits: () => <Stat m="habits" onOpen={open("/journal/habits")} />,
     visits: () => <VisitsTile onOpen={open("/v3/visits")} />,
     consult: () => (
-      <button className="v2-tile" data-field="lavender" onClick={open("/v3/booking")}>
-        <span className="v2-tile-t">Book your next visit</span>
-        <span className="v2-tile-s">Last visit {visitDate(LATEST)}</span>
-        <span className="v2-tile-go">
-          <Chevron />
-        </span>
-      </button>
+      <ServiceTile field="lavender" mark="consult" title="Your consultations" line="Manage and book your sessions" onOpen={open("/discover/consultations")} />
     ),
-    store: () => (
-      <button className="v2-tile v2-tile-store" data-field="sand" onClick={open("/v3/store")}>
-        <span className="v2-tile-t">Store</span>
-        <img src={asset("img/Phenome_Ring_Silver-metal_transparent.png")} alt="" />
-      </button>
-    ),
+    games: () => <ServiceTile field="teal" mark="games" title="Cognitive games" line="Short games that train memory and focus" onOpen={open("/discover/games")} />,
+    // two services on their way: shown with their marks, quieter, and not yet a way in
+    supplements: () => <ServiceTile field="food" mark="supplements" title="Supplements" line="Personalised to you after a short quiz" soon />,
+    cgm: () => <ServiceTile field="rose" mark="cgm" title="Glucose monitoring" line="A sensor that reads your glucose all day" soon />,
   };
   return <>{tiles[id]()}</>;
+}
+
+/** The marks of Home's services: rounded lines of the tab marks' weight, drawn on a 24 grid. */
+const SERVICE_MARK: Record<string, ReactNode> = {
+  // a calendar page with a tick: a session booked
+  consult: (
+    <>
+      <rect x="3.5" y="5" width="17" height="15.5" rx="3.5" />
+      <path d="M3.5 10h17M8 3v4M16 3v4" />
+      <path d="m9 15 2 2 4-4" />
+    </>
+  ),
+  // a puzzle piece: a small game for the mind
+  games: <path d="M10 4.5a2 2 0 1 1 4 0V6h3.5a1.5 1.5 0 0 1 1.5 1.5V11h-1.5a2 2 0 1 0 0 4H19v3.5a1.5 1.5 0 0 1-1.5 1.5H14v-1.5a2 2 0 1 0-4 0V20H6.5A1.5 1.5 0 0 1 5 18.5V15h1.5a2 2 0 1 0 0-4H5V7.5A1.5 1.5 0 0 1 6.5 6H10z" />,
+  // a capsule on the diagonal, its seam across the middle
+  supplements: (
+    <>
+      <path d="M8.6 19.9a4.3 4.3 0 0 1-6.1-6.1l6.8-6.8a4.3 4.3 0 0 1 6.1 6.1z" transform="translate(2.2 -1.4)" />
+      <path d="m8.1 9 6.1 6.1" transform="translate(2.2 -1.4)" />
+    </>
+  ),
+  // a round sensor with a reading trace through it
+  cgm: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M6.5 12.5h2.2l1.6-3 2.6 6 1.6-3h3" />
+    </>
+  ),
+};
+
+/**
+ * One of Home's services: its mark on a tinted disc in its own hue, a title,
+ * one line, and a way in. A service on its way keeps its mark at half strength
+ * and says so with a small pill instead of the arrow.
+ */
+function ServiceTile({ field, mark, title, line, onOpen, soon }: { field: string; mark: string; title: string; line: string; onOpen?: (e: { currentTarget: HTMLElement }) => void; soon?: boolean }) {
+  const body = (
+    <>
+      <span className="v2-svc-mark" aria-hidden>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+          {SERVICE_MARK[mark]}
+        </svg>
+      </span>
+      <span className="v2-svc-text">
+        <span className="v2-svc-t">{title}</span>
+        <span className="v2-svc-s">{line}</span>
+      </span>
+      {soon ? (
+        <span className="v2-svc-soon">Coming soon</span>
+      ) : (
+        <span className="v2-svc-go">
+          <Chevron size={16} />
+        </span>
+      )}
+    </>
+  );
+  return soon ? (
+    <div className="v2-svc" data-field={field} data-soon="" aria-disabled="true">
+      {body}
+    </div>
+  ) : (
+    <button className="v2-svc" data-field={field} onClick={onOpen}>
+      {body}
+    </button>
+  );
 }
 
 /** A reading's day-on-day change, when its note gives one ("+6 on yesterday"): today, the day before, and the scale's top. */
@@ -440,26 +440,79 @@ function Stat({ m, title, field, glyph, onOpen }: { m: string; title?: string; f
   );
 }
 
-/** The clinic's side of Home: the last visit, three of its readings with their change, and the way into every visit side by side. */
+/** The clinic's side of Home: the last visit, three of its readings with their path across visits, and the way into comparing them. */
 function VisitsTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) => void }) {
   const rows = ["bp", "weight", "bodyfat"].map((id) => metric(id));
   return (
     <button className="v2-tile v2-visits" data-field="plain" onClick={onOpen}>
-      <Kind name="heart">Visit {LATEST}, {visitDate(LATEST)}</Kind>
-      <span className="v2-visits-rows">
+      <Kind name="heart">
+        Visit {LATEST} · {visitDate(LATEST)}
+      </Kind>
+      <span className="v2-vcols">
         {rows.map((m) => (
-          <span key={m.id} className="v2-visits-row">
-            <small>{m.label}</small>
-            <b>
-              {m.value}
-              <em>{m.unit}</em>
-            </b>
-            <span>{m.delta}</span>
-          </span>
+          <VisitCol key={m.id} m={m} />
         ))}
       </span>
-      <span className="v2-visits-go">Compare visits</span>
+      <span className="v2-vfoot">
+        <span className="v2-vline" aria-label={`${VISITS.length} visits`}>
+          {VISITS.map((n) => (
+            <i key={n} data-on={n === LATEST ? "" : undefined} />
+          ))}
+          <small>{VISITS.length} visits</small>
+        </span>
+        <span className="v2-visits-go">
+          Compare visits
+          <Chevron size={14} />
+        </span>
+      </span>
     </button>
+  );
+}
+
+/** One reading of the visit: name, number, unit on its own line, its path across visits, and what changed. */
+function VisitCol({ m }: { m: Metric }) {
+  const s = m.scans ?? [];
+  const last = s[s.length - 1];
+  const prev = s[s.length - 2];
+  const diff = prev === undefined ? 0 : last - prev;
+  const flagged = m.status !== "normal";
+  return (
+    <span className="v2-vcol" data-field={m.field}>
+      <small>{m.label}</small>
+      <b>
+        <Num v={m.value} />
+      </b>
+      <em>{m.unit}</em>
+      <VisitTrace values={s} />
+      {flagged ? (
+        <span className="v2-vflag">{m.delta}</span>
+      ) : (
+        <span className="v2-vchange" data-dir={diff > 0 ? "up" : diff < 0 ? "down" : "flat"}>
+          <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden>
+            <path d="M5 1.5 9 8H1z" fill="currentColor" />
+          </svg>
+          {Math.abs(diff).toFixed(m.decimals ?? 0)} {m.unit}
+        </span>
+      )}
+    </span>
+  );
+}
+
+/** The reading at each visit as joined dots, the latest solid. */
+function VisitTrace({ values }: { values: number[] }) {
+  if (values.length < 2) return <span className="v2-vtrace" />;
+  const W = 90;
+  const H = 26;
+  const lo = Math.min(...values);
+  const hi = Math.max(...values);
+  const pts = values.map((v, i) => [4 + (i * (W - 8)) / (values.length - 1), hi === lo ? H / 2 : 4 + ((hi - v) * (H - 8)) / (hi - lo)]);
+  return (
+    <svg className="v2-vtrace" viewBox={`0 0 ${W} ${H}`} aria-hidden>
+      <polyline points={pts.map((p) => p.join(",")).join(" ")} fill="none" stroke="currentColor" strokeOpacity="0.35" strokeWidth="1.5" strokeLinejoin="round" />
+      {pts.map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r={i === pts.length - 1 ? 3.6 : 2.4} fill={i === pts.length - 1 ? "currentColor" : "var(--v-card)"} stroke="currentColor" strokeWidth="1.5" />
+      ))}
+    </svg>
   );
 }
 
@@ -484,131 +537,23 @@ function ActivityTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) 
 }
 
 /**
- * Where the figure sits in the stage: the body's axis at `axis` of the width, the
- * crown at `crown` of the height, one cell `cell` of the width. Seated by the body
- * rather than by its crop, so both sexes stand in the same place at the same pitch.
- * `cell` follows the bake's pitch (9 stage px a cell): change one, scale the other.
+ * The twin's door on Home: a small card that invites rather than reports. A bust
+ * on a pale sky disc, the twin's name and one line on what it is, and a way in.
+ * Results stay on the twin's own pages.
  */
-const HERO_SEAT = { axis: 0.5, crown: 0.07, cell: 0.00846 };
-/** The stage is 80 x 92, the leads are drawn in a 1000 x 1150 box over it. */
-const STAGE_ASPECT = 92 / 80;
-
-function heroBox(hero: HeroMap) {
-  const [a, b, , d] = hero.svg;
-  const cell = HERO_SEAT.cell;
-  const cellH = cell / STAGE_ASPECT;
-  return { left: HERO_SEAT.axis - (100 * a + b) * cell, top: HERO_SEAT.crown - d * cellH, width: hero.cols * cell, height: hero.rows * cellH };
-}
-
-/**
- * Where the tile's two readings land, in the viewer's SVG units: blood pressure
- * on the upper arm, where the cuff goes, and BMI on the belly.
- */
-const TILE_MARKS = {
-  bp: { at: [160, 150] as [number, number], radius: [8, 10] as [number, number] },
-  bmi: { at: [100, 186] as [number, number], radius: [20, 13] as [number, number] },
-};
-/** gold when the portal puts the reading outside its range, navy when within */
-const markColour = (m: Metric) => (m.status === "normal" ? NAVY : GOLD);
-
-/** Leaders start under each callout, run level, then drop onto their mark wherever the bake seated it. */
-function leads(hero: HeroMap) {
-  const box = heroBox(hero);
-  const end = (at: [number, number]) => {
-    const [fx, fy] = heroAt(hero, at);
-    return `${Math.round(1000 * (box.left + fx * box.width))},${Math.round(1150 * (box.top + fy * box.height))}`;
-  };
-  return [
-    { d: `M888,305 H730 L${end(TILE_MARKS.bp.at)}`, colour: markColour(metric("bp")) },
-    { d: `M112,543 H320 L${end(TILE_MARKS.bmi.at)}`, colour: markColour(metric("bmi")) },
-  ];
-}
-
-const heroStyle = (hero: HeroMap): CSSProperties => {
-  const box = heroBox(hero);
-  return { left: `${box.left * 100}%`, top: `${box.top * 100}%`, width: `${box.width * 100}%`, height: `${box.height * 100}%` };
-};
-
-/**
- * The twin's front door, and the one part of Home in the twin's own language:
- * the figure from the digital twin's home page with two readings from the last
- * visit on hairline leaders, and every laboratory marker from it as one dot in the results bar.
- */
-function TwinTile({ size, onOpen }: { size: string; onOpen: (e: { currentTarget: HTMLElement }) => void }) {
-  const bp = metric("bp");
-  const bmi = metric("bmi");
-  const tints = useMemo<Tint[]>(
-    () => [
-      { organ: TILE_MARKS.bp, color: markColour(bp), strength: bp.status === "normal" ? 0.5 : 1 },
-      { organ: TILE_MARKS.bmi, color: markColour(bmi), strength: bmi.status === "normal" ? 0.5 : 1 },
-    ],
-    [bp, bmi],
-  );
-  const hero = useHero(usePrefs().sex);
+function TwinTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) => void }) {
   return (
-    <button className="v2-twin-tile" data-size={size} onClick={onOpen}>
-      <span className="v2-twin-tile-stage">
-        {hero && (
-          <>
-            <HeroField
-              className="v2-twin-tile-field"
-              hero={hero}
-              tints={tints}
-              label={`Your twin, with blood pressure ${bp.delta.toLowerCase()} and BMI ${bmi.delta.toLowerCase()}`}
-              style={heroStyle(hero)}
-            />
-            <svg className="v2-twin-tile-lead" viewBox="0 0 1000 1150" aria-hidden>
-              {leads(hero).map((l) => (
-                <path key={l.d} d={l.d} fill="none" stroke={l.colour} strokeWidth="1" vectorEffect="non-scaling-stroke" />
-              ))}
-            </svg>
-          </>
-        )}
-        <Callout side="r" label={bp.label} value={bp.value} unit={bp.unit} />
-        <Callout side="l" label={bmi.label} value={bmi.value} unit={bmi.unit} />
+    <button className="v2-twin-entry" onClick={onOpen}>
+      <span className="v2-twin-entry-fig" aria-hidden>
+        <TwinHero readouts={false} />
       </span>
-      <span className="v2-twin-tile-head">
-        <span className="v2-twin-tile-t">Your twin</span>
-        <span className="v2-twin-tile-s">
-          Visit {LATEST}, {visitDate(LATEST)}
-        </span>
+      <span className="v2-twin-entry-text">
+        <span className="v2-twin-entry-t">Digital twin</span>
+        <span className="v2-twin-entry-s">Your body as your clinic reads it, visit by visit</span>
       </span>
-      <span className="v2-twin-tile-go">
+      <span className="v2-twin-entry-go">
         <Chevron />
       </span>
-      <span className="v2-results">
-        <span className="v2-results-bar" aria-hidden>
-          {RESULTS.map((r) => (
-            <span key={r.status} data-status={r.status} style={{ flexGrow: r.count }}>
-              {Array.from({ length: r.count }, (_, i) => (
-                <i key={i} />
-              ))}
-            </span>
-          ))}
-        </span>
-        <span className="v2-results-key">
-          {RESULTS.map((r) => (
-            <span key={r.status} data-status={r.status}>
-              <i aria-hidden />
-              {STATUS_LABEL[r.status]} <b>{r.count}</b>
-            </span>
-          ))}
-        </span>
-      </span>
     </button>
-  );
-}
-
-function Callout({ side, label, value, unit }: { side: "l" | "r"; label: string; value: string; unit: string }) {
-  return (
-    <span className="v2-callout" data-side={side}>
-      <small>{label}</small>
-      <span>
-        <b>
-          <Num v={value} />
-        </b>
-        <u>{unit}</u>
-      </span>
-    </span>
   );
 }

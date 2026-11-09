@@ -7,10 +7,13 @@ import { TwinField } from "./TwinField";
 import { COLS, ROWS, type Tint } from "./field";
 import { TwinDetail } from "./TwinDetail";
 import { TwinTrends } from "./TwinTrends";
+import { TwinOverview } from "./TwinOverview";
+import { IconTwin } from "../ui/icons";
 import { CheckpointMenu } from "./CheckpointMenu";
 import { atParam, CHECKPOINTS, clinicShort, viewFrom, type View } from "./checkpoints";
 import { IconLensBody, IconLensOmics, IconLensVitals } from "../ui/icons";
 import { LATEST, LENS_LABEL, LENS_ORDER, lensStatus, PINS, readingOf, REGIONS, regionsOf, toneOf, type Lens, type Pin, type Region } from "./regions";
+import { useDisplayFace } from "../ui/displayFace";
 import "./twin.css";
 
 const FIELD_W = 393;
@@ -51,11 +54,14 @@ const LENS_ICON: Record<Lens, (p: { size?: number }) => JSX.Element> = { vitals:
  * the member moves from body to number without changing place.
  */
 export function TwinScreen() {
+  useDisplayFace();
   const [params, setParams] = useSearchParams();
   const go = useGo();
   const back = useNavigate();
   const asked = params.get("lens") as Lens | null;
-  const lens: Lens = asked && LENS_ORDER.includes(asked) ? asked : "vitals";
+  // no lens asked for: the twin opens on its overview
+  const overview = !(asked && LENS_ORDER.includes(asked));
+  const lens: Lens = overview ? "vitals" : (asked as Lens);
   const organId = params.get("organ");
   const view = viewFrom(params.get("at"));
   const trends = view.kind === "trends";
@@ -65,8 +71,8 @@ export function TwinScreen() {
   const organ: Region | null = organId && !trends ? REGIONS[organId] ?? null : null;
 
   /** the URL for a lens, an organ and a view; the view rides along whatever else changes */
-  const query = useCallback((l: Lens, id: string | null, v: View) => {
-    const next = new URLSearchParams({ lens: l });
+  const query = useCallback((l: Lens | null, id: string | null, v: View) => {
+    const next = new URLSearchParams(l ? { lens: l } : {});
     if (id) next.set("organ", id);
     const at = atParam(v);
     if (at) next.set("at", at);
@@ -79,7 +85,7 @@ export function TwinScreen() {
   );
 
   // switching view keeps the lens; trends has no figure to hold an organ open on
-  const pickView = (v: View) => setParams(query(lens, v.kind === "trends" ? null : organId, v), { replace: true });
+  const pickView = (v: View) => setParams(query(overview ? null : lens, v.kind === "trends" ? null : organId, v), { replace: true });
 
   const tints = useMemo(() => {
     if (organ) return organ.map === "body" && !organ.whole ? [{ organ, color: colourOf(organ, visit, past), strength: 1 }] : NO_TINTS;
@@ -102,10 +108,13 @@ export function TwinScreen() {
   }, [organId]);
 
 
+  // every view with a figure opens on its sky, from the status bar down to the figure's title
+  const sky = !trends;
+
   return (
     <V2Screen nav={false}>
-      <div className="v2-veil tw-veil" data-at="status" data-on={scrolled ? "" : undefined} aria-hidden />
-      <div className="tw" ref={root} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
+      <div className="v2-veil tw-veil" data-at="status" data-on={scrolled ? "" : undefined} data-sky={sky ? (past ? "past" : "") : undefined} aria-hidden />
+      <div className="tw" ref={root} data-sky={sky ? (past ? "past" : "") : undefined} data-one={overview && !trends ? "" : undefined} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
         <header className="v2-top tw-top">
           <button className="v2-round tw-back" aria-label="Back" onClick={() => back(-1)}>
             <Chevron dir="left" size={20} />
@@ -139,8 +148,12 @@ export function TwinScreen() {
           the three lenses as tabs: a mark and a name, nothing to count. A lens with a
           study to look at carries one quiet dot; the numbers wait in the readings below.
         */}
-        <div className="tw-lens" role="tablist" aria-label="Twin lens" style={{ "--i": LENS_ORDER.indexOf(lens) } as CSSProperties}>
-          <i className="tw-lens-blob" aria-hidden />
+        <div className="tw-lens" role="tablist" aria-label="Twin lens">
+          <button role="tab" className="tw-lens-all" aria-selected={overview} aria-label="Overview" onClick={() => setParams(query(null, null, view), { replace: true })}>
+            <span className="tw-lens-mark" aria-hidden>
+              <IconTwin size={20} />
+            </span>
+          </button>
           {LENS_ORDER.map((l) => {
             const s = lensStatus(l, visit);
             const Mark = LENS_ICON[l];
@@ -148,7 +161,7 @@ export function TwinScreen() {
               <button
                 key={l}
                 role="tab"
-                aria-selected={l === lens}
+                aria-selected={!overview && l === lens}
                 aria-label={s.flagged ? `${LENS_LABEL[l]}, ${s.text}` : LENS_LABEL[l]}
                 onClick={() => setParams(query(l, null, view), { replace: true })}
               >
@@ -163,9 +176,21 @@ export function TwinScreen() {
         </div>
 
         {trends ? (
-          <TwinTrends key={lens} lens={lens} />
+          overview ? (
+            LENS_ORDER.map((l, i) => (
+              <div key={l} className="tw-trends-lens">
+                <h2 className="tw-trends-title">{LENS_LABEL[l]}</h2>
+                <TwinTrends lens={l} span={i === 0} />
+              </div>
+            ))
+          ) : (
+            <TwinTrends key={lens} lens={lens} />
+          )
+        ) : overview ? (
+          <TwinOverview visit={visit} past={past} onLens={(l) => setParams(query(l, null, view))} />
         ) : (
           <>
+            <div className="twl-sky" data-past={past ? "" : undefined}>
             <div className="tw-hero" data-past={past ? "" : undefined} style={{ height: FIELD_H * fit }}>
               <div className="tw-stage" data-organ={organ ? (organ.map === "body" ? "region" : "organ") : undefined} style={{ width: FIELD_W, height: FIELD_H, "--s": fit } as CSSProperties}>
                 <TwinField
@@ -179,6 +204,21 @@ export function TwinScreen() {
                 />
                 {!organ && PINS[lens].map((p) => <PinMark key={p.region} pin={p} visit={visit} onOpen={() => go(`/v3/study/${p.region}`)} />)}
               </div>
+            </div>
+
+            {/* the lens names itself where the figure fades, as the overview does */}
+            {!organ && (
+              <header className="two-head twl-head">
+                <span>
+                  <h2>{LENS_LABEL[lens]}</h2>
+                  {checkpoint && (
+                    <p>
+                      Visit {checkpoint.visit} · {checkpoint.date} · {clinicShort(checkpoint.clinic)}
+                    </p>
+                  )}
+                </span>
+              </header>
+            )}
             </div>
 
             <TwinDetail key={`${lens}/${organId ?? ""}/${visit}`} lens={lens} region={organ} visit={visit} past={past} onSelect={select} />

@@ -1,6 +1,5 @@
-import { allLabs } from "../study/blocks";
 import { STUDIES, type Section } from "../study/catalog";
-import { M, pick, trim, visitDate, VISITS, type Rec, type StudyView } from "../study/data";
+import { visitDate, VISITS, type StudyView } from "../study/data";
 import { viewOf } from "../study/panels";
 import type { Tone } from "../study/parts";
 import type { OrganId } from "../data/metrics";
@@ -140,33 +139,6 @@ const PIN_PLACES: Record<Lens, Pin[]> = {
 
 /** Only the pins whose study this member has results for. */
 export const PINS = Object.fromEntries(LENS_ORDER.map((l) => [l, PIN_PLACES[l].filter((p) => REGIONS[p.region])])) as Record<Lens, Pin[]>;
-
-/** The lens's headline, from the presentation's overview: the same blocks, the same numbers. */
-export function summaryOf(lens: Lens): { title: string; sub: string } {
-  const at = LATEST;
-  if (lens === "vitals") {
-    const labs = allLabs(at);
-    const v = pick(M.vitals, at);
-    return {
-      title: labs.inRange === labs.total ? `${labs.inRange} markers in range` : `${labs.inRange} of ${labs.total} markers in range`,
-      sub: `Resting heart ${v.pulseBpm} bpm · Blood pressure ${v.systolicBloodPressureMmhg}/${v.diastolicBloodPressureMmhg}`,
-    };
-  }
-  if (lens === "body") {
-    const c = pick(M.composition, at);
-    const b = pick(M.bone, at);
-    const s = pick(M.skin, at);
-    return {
-      title: `${trim(c.bodyFatPercent)}% body fat`,
-      sub: `Visceral fat ${c.visceralFatRating} · Bone T-score ${trim(Math.min(...b.sites.map((x: Rec) => x.tScore)))} · Skin lesions ${s.lesions.length}`,
-    };
-  }
-  const gut = pick(M.gut, at);
-  const pr = pick(M.proteomics, at);
-  // as the overview does, a layer not reported yet takes its cell with it
-  const cells = [pr && `Proteins ${pr.proteins}`, M.overview.metabolites > 0 && `Metabolites ${M.overview.metabolites}`, gut && `Gut species ${gut.richness}`].filter(Boolean);
-  return { title: `${M.overview.layers} molecular layers`, sub: cells.join(" · ") };
-}
 
 /** The lens a region sits under. */
 export const lensOf = (id: string): Lens => LENS_ORDER.find((l) => regionsOf(l).some((r) => r.id === id)) ?? "vitals";

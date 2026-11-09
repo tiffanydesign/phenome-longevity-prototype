@@ -31,46 +31,53 @@
 }
 
 /*
- * lens: the same segmented track as Home's tabs, one white blob sliding under
- * the selected lens, a small mark and name side by side. It scrolls with the page.
+ * lens: a row of separate chips, the overview first as a square mark, then one
+ * chip per lens with its mark and name. Clear glass at rest, so the sky or the
+ * page shows through; the selected chip turns solid with a navy edge.
  */
 .tw-lens {
-  --n: 3;
   position: relative;
   z-index: 2;
-  margin: 2px 16px 0;
-  height: 48px;
-  padding: 4px;
+  margin: 4px 16px 6px;
   display: flex;
-  border-radius: 24px;
-  background: var(--v-fill);
-}
-.tw-lens-blob {
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 4px;
-  width: calc((100% - 8px) / var(--n));
-  border-radius: 20px;
-  background: var(--v-card);
-  box-shadow: 0 2px 8px -3px #24365e40;
-  transform: translateX(calc(var(--i) * 100%));
-  transition: transform 0.36s var(--v-ease);
+  gap: 8px;
 }
 .tw-lens button {
   position: relative;
-  flex: 1;
+  flex: 1 1 0;
   min-width: 0;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  /* every lens in the brand navy: the tabs are a way in, not a reading, so they carry no category colour */
-  color: var(--v-ink-3);
-  transition: color 0.2s linear;
+  gap: 7px;
+  padding: 0 10px;
+  border-radius: 16px;
+  color: var(--v-ink-2);
+  background: color-mix(in srgb, var(--v-card) 58%, transparent);
+  backdrop-filter: blur(16px) saturate(170%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--v-card) 80%, transparent);
+  transition:
+    background 0.18s var(--v-ease),
+    box-shadow 0.18s var(--v-ease),
+    color 0.18s linear,
+    transform 0.18s var(--v-ease);
+}
+.tw-lens button:active {
+  transform: scale(0.96);
+}
+.tw-lens button.tw-lens-all {
+  flex: none;
+  width: 50px;
+  padding: 0;
 }
 .tw-lens button[aria-selected="true"] {
   color: var(--v-navy);
+  background: var(--v-card);
+  box-shadow:
+    inset 0 0 0 1.5px var(--v-navy),
+    0 6px 14px -10px #24365e66;
 }
 .tw-lens-mark {
   flex: none;
@@ -82,17 +89,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font: 600 14px/1 var(--v-text);
-  color: var(--v-ink-2);
-}
-.tw-lens button[aria-selected="true"] .tw-lens-t {
+  font: 600 14.5px/1 var(--v-text);
   color: var(--v-ink);
 }
 /* a lens with a study to look at: one small soft dot, no count, no words */
 .tw-lens-dot {
   position: absolute;
   top: 7px;
-  right: 10px;
+  right: 8px;
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -747,4 +751,593 @@
   font-size: 13px;
   font-weight: 400;
   color: var(--v-ink-2);
+}
+
+/* =====================================================================
+ * Overview: the twin's front page
+ * ===================================================================== */
+/* the sky the figure stands on: one flat colour from the status bar to the full review */
+.tw,
+.tw-veil {
+  --two-sky: color-mix(in srgb, #7fbcdc 24%, var(--v-card));
+}
+.tw[data-sky] {
+  background: var(--two-sky);
+}
+/* the overview is one screen: no scrolling, the figure takes whatever height is left */
+.tw[data-one] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.tw[data-one] > * {
+  flex: none;
+}
+.tw[data-one] > .two {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.two > .two-sky {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.two-sky > * {
+  flex: none;
+}
+.tw-veil[data-sky] {
+  background: var(--two-sky);
+}
+.two {
+  animation: tw-in 0.4s var(--v-ease) backwards;
+}
+.two-sky {
+  position: relative;
+  padding: 0 16px 18px;
+  border-radius: 0 0 32px 32px;
+  background: var(--two-sky);
+}
+/* the corners under the sky's rounded end show the page below, not more sky */
+.two {
+  background: var(--v-card);
+}
+.tw[data-sky="past"],
+.tw-veil[data-sky="past"] {
+  --two-sky: color-mix(in srgb, var(--v-navy) 9%, var(--v-card));
+}
+/* the figure has no panel of its own: it dissolves into the sky from the waist down */
+.two-hero {
+  position: relative;
+  margin: -6px -16px 0;
+  overflow: hidden;
+  flex: 1 1 0 !important;
+  min-height: 0;
+  max-height: 480px;
+  -webkit-mask-image: linear-gradient(#000 64%, transparent 98%);
+  mask-image: linear-gradient(#000 64%, transparent 98%);
+}
+.tw-hero-stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 80 / 92;
+}
+.two-hero .tw-hero-stage {
+  width: 112%;
+  margin-left: -6%;
+}
+.tw-hero-field {
+  position: absolute;
+}
+.tw-hero-lead {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* a readout: a small label over a light, large number, as the twin's own screens set them */
+.tw-readout {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 34%;
+  color: var(--v-navy);
+}
+/* seated where the leaders start: their level runs end 11.2% in from each side */
+.tw-readout[data-side="r"] {
+  right: 11.2%;
+  top: 14.4%;
+  align-items: flex-end;
+  text-align: right;
+}
+.tw-readout[data-side="l"] {
+  left: 11.2%;
+  top: 35%;
+}
+.tw-readout small {
+  font: 600 11.5px/1.2 var(--v-text);
+  letter-spacing: 0.04em;
+  color: #3f5183;
+}
+.tw-readout span {
+  white-space: nowrap;
+}
+.tw-readout b {
+  font: 300 32px/1.05 var(--v-num);
+  letter-spacing: -0.02em;
+}
+.tw-readout u {
+  margin-left: 3px;
+  font: 500 12px var(--v-text);
+  text-decoration: none;
+  color: #3f5183;
+}
+.two[data-past] .tw-readout {
+  color: var(--tw-past-ink);
+}
+
+/* the title sits where the figure fades, a round way into the body beside it */
+.two-head {
+  position: relative;
+  margin: -64px 4px 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.two-head h2 {
+  margin: 0;
+  font: 700 44px/1 var(--v-display);
+  letter-spacing: -0.035em;
+  color: var(--v-ink);
+}
+.two-head p {
+  margin: 8px 0 0;
+  font: 500 14px/1.3 var(--v-text);
+  color: color-mix(in srgb, var(--v-navy) 70%, var(--v-ink-2));
+}
+.two-open {
+  flex: none;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 2px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink);
+  background: color-mix(in srgb, var(--v-card) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 0 0 1px #ffffffb3, 0 6px 16px -10px #24365e59;
+}
+
+/* the way into the full review: a deep sky card, its lower edge taking up the figure's dots */
+.two-plan {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 96px;
+  padding: 18px 18px 22px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 24px;
+  text-align: left;
+  color: #fff;
+  background: #2f6aa6;
+  box-shadow: 0 14px 28px -20px #1d3f72;
+}
+:root[data-theme="dark"] .two-plan {
+  background: #2a5c92;
+}
+.two-plan::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 62%;
+  background-image: radial-gradient(circle, #a8d4f0 1.1px, transparent 1.4px);
+  background-size: 6px 6px;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath d='M0 40V30C22 30 34 12 56 14S84 30 100 4V40Z' fill='%23000'/%3E%3C/svg%3E"), linear-gradient(90deg, transparent 18%, #000 80%);
+  -webkit-mask-composite: source-in;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath d='M0 40V30C22 30 34 12 56 14S84 30 100 4V40Z' fill='%23000'/%3E%3C/svg%3E"), linear-gradient(90deg, transparent 18%, #000 80%);
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-composite: intersect;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.two-plan > * {
+  position: relative;
+  z-index: 1;
+}
+.two-plan > span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.two-plan b {
+  font: 600 20px/1.2 var(--v-text);
+  letter-spacing: -0.01em;
+}
+.two-plan small {
+  font: 400 14.5px/1.3 var(--v-text);
+  opacity: 0.82;
+}
+
+/* below the sky: the page in white */
+.two-rest {
+  padding: 22px 20px calc(24px + env(safe-area-inset-bottom));
+  background: var(--v-card);
+}
+.two-sec > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 0 14px;
+}
+.two-sec h3 {
+  margin: 0;
+  font: 600 26px/1.15 var(--v-text);
+  letter-spacing: -0.02em;
+}
+.two-sec header button {
+  font: 600 16px/1 var(--v-text);
+  color: var(--v-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
+}
+
+/* the results bar, laid out in flow rather than over a card */
+.tw-results {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tw-results-bar {
+  display: flex;
+  gap: 2px;
+  height: 18px;
+}
+.tw-results-bar > span {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--band);
+}
+.tw-results-bar > span:first-child {
+  border-radius: 7px 3px 3px 7px;
+}
+.tw-results-bar > span:last-child {
+  border-radius: 3px 7px 7px 3px;
+}
+.tw-results-bar i {
+  flex: none;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--dot);
+}
+.tw-results [data-status="alert"] {
+  --band: #c4572e;
+  --dot: #fce4da;
+  --key: #c4572e;
+}
+.tw-results [data-status="monitor"] {
+  --band: #ffb600;
+  --dot: #7a5600;
+  --key: #ffb600;
+}
+.tw-results [data-status="normal"] {
+  --band: #7fbcdc;
+  --dot: #263980;
+  --key: #4f96d1;
+}
+.tw-results-key {
+  display: flex;
+  gap: 22px;
+  font: 500 12.5px/1.2 var(--v-text);
+  letter-spacing: 0.06em;
+  color: var(--v-ink-2);
+}
+.tw-results-key span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.tw-results-key i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--key);
+}
+.tw-results-key b {
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--v-ink);
+}
+
+/* trends across all three areas, from the overview */
+.tw-trends-lens .tw-trends {
+  padding-bottom: 8px;
+}
+.tw-trends-lens:last-child .tw-trends {
+  padding-bottom: 120px;
+}
+.tw-trends-title {
+  margin: 18px 20px 0;
+  font: var(--v-t-section, 700 19px/1.2 var(--v-text));
+}
+
+:root[data-theme="dark"] .tw-readout {
+  color: #c3cdf2;
+}
+:root[data-theme="dark"] .tw-readout small,
+:root[data-theme="dark"] .tw-readout u {
+  color: #94a2cf;
+}
+
+/* =====================================================================
+ * Lenses: the overview's sky, with the lens's own readings on the figure
+ * ===================================================================== */
+.twl-sky {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 26px;
+  border-radius: 0 0 32px 32px;
+  background: var(--two-sky);
+  animation: tw-in 0.4s var(--v-ease) backwards;
+}
+/* the feet dissolve into the sky rather than into a grey ground */
+.twl-sky .tw-hero::after {
+  background: linear-gradient(to bottom, transparent, var(--two-sky) 82%);
+}
+.twl-head {
+  z-index: 2;
+  margin: -84px 20px 0;
+}
+/* a reading on the figure: clear glass over the sky, a small label over a light, large number */
+.twl-sky .tw-pin {
+  padding: 11px 24px 11px 13px;
+  gap: 3px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--v-card) 62%, transparent);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow:
+    inset 0 0 0 1px #ffffffb3,
+    0 10px 22px -16px #24365e66;
+}
+:root[data-theme="dark"] .twl-sky .tw-pin {
+  box-shadow: inset 0 0 0 1px #ffffff1f;
+}
+.twl-sky .tw-pin small {
+  letter-spacing: 0.02em;
+  color: #3f5183;
+}
+:root[data-theme="dark"] .twl-sky .tw-pin small {
+  color: var(--v-ink-2);
+}
+.twl-sky .tw-pin[data-flag] small {
+  color: var(--v-gold-ink);
+}
+.twl-sky .tw-pin b {
+  font: 300 28px/1.05 var(--v-num);
+  letter-spacing: -0.02em;
+}
+.twl-sky[data-past] .tw-pin b {
+  color: var(--tw-past-ink);
+}
+.twl-sky .tw-pin span svg {
+  top: 12px;
+  right: 11px;
+}
+/* under the sky the page is white; it reaches up behind the sky's rounded end */
+.tw[data-sky] .tw-detail {
+  margin-top: -32px;
+  padding: 58px 0 calc(40px + env(safe-area-inset-bottom));
+  background: var(--v-card);
+}
+.twl-sec {
+  margin: 0 0 4px;
+}
+.twl-sec h3 {
+  margin: 0;
+  font: 600 26px/1.15 var(--v-text);
+  letter-spacing: -0.02em;
+}
+.twl-plan {
+  margin-top: 22px;
+}
+
+/* the full review card is clipped to its own rounded shape, so its dot texture never shows a square
+   corner (Safari leaves masked children unclipped by border-radius alone); flat, no shadow under it */
+.two-plan {
+  clip-path: inset(0 round 24px);
+  -webkit-clip-path: inset(0 round 24px);
+  box-shadow: none;
+  isolation: isolate;
+}
+.two-plan::after {
+  border-radius: 0 0 24px 24px;
+}
+/* past the end of the page the ground stays white: sky only shows above, never as a block at the foot */
+.tw[data-sky]:not([data-one]) {
+  background: linear-gradient(var(--two-sky) 0 50%, var(--v-card) 50% 100%) fixed;
+}
+
+/* a long label wraps instead of running under the chevron; the chevron sits right of centre, mid-height */
+.twl-sky .tw-pin {
+  padding-right: 30px;
+}
+.twl-sky .tw-pin small {
+  align-items: flex-start;
+  white-space: normal;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+.twl-sky .tw-pin[data-flag] small::before {
+  margin-top: 3px;
+}
+.twl-sky .tw-pin em {
+  white-space: normal;
+  line-height: 1.2;
+}
+.twl-sky .tw-pin span svg {
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+/* the status bar over the twin: the same faint frosted veil as the rest of the app, in the page's own ground */
+.tw-veil {
+  height: calc(var(--status-h) + 28px);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--v-bg) 42%, transparent) 0,
+    color-mix(in srgb, var(--v-bg) 22%, transparent) var(--status-h),
+    transparent 100%
+  ) !important;
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+  -webkit-mask-image: linear-gradient(#000 0, #000 var(--status-h), transparent 100%);
+  mask-image: linear-gradient(#000 0, #000 var(--status-h), transparent 100%);
+}
+.tw-veil[data-sky] {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--two-sky) 42%, transparent) 0,
+    color-mix(in srgb, var(--two-sky) 22%, transparent) var(--status-h),
+    transparent 100%
+  ) !important;
+}
+
+/* overview proportions: the figure starts right under the tabs, the title sits a step smaller,
+   the review card is lower, and Results gets room to breathe at the foot */
+.two-hero .tw-hero-stage {
+  margin-top: -34px;
+}
+.two-head {
+  margin: -58px 4px 14px;
+}
+.two-head h2 {
+  font-size: 40px;
+}
+.two-head p {
+  margin-top: 6px;
+}
+.two-open {
+  width: 42px;
+  height: 42px;
+}
+.two-plan {
+  min-height: 78px;
+  padding: 14px 18px 16px 20px;
+  border-radius: 22px;
+  clip-path: inset(0 round 22px);
+  -webkit-clip-path: inset(0 round 22px);
+}
+.two-plan::after {
+  border-radius: 0 0 22px 22px;
+}
+.two-plan b {
+  font-size: 18px;
+}
+.two-plan small {
+  font-size: 14px;
+}
+.two-sky {
+  padding-bottom: 16px;
+}
+.two-rest {
+  padding: 24px 20px calc(30px + env(safe-area-inset-bottom));
+}
+.two-sec > header {
+  margin-bottom: 16px;
+}
+.two-sec h3 {
+  font-size: 24px;
+}
+.two-hero .tw-hero-stage {
+  width: 117%;
+  margin-left: -8.5%;
+  margin-top: -30px;
+}
+.two-hero {
+  -webkit-mask-image: linear-gradient(#000 74%, transparent 100%);
+  mask-image: linear-gradient(#000 74%, transparent 100%);
+}
+/* the half-length figure ends at the waist: cap its stage there and give the spare height to Results */
+.two-hero {
+  max-height: 410px;
+}
+.tw[data-one] .two > .two-sky {
+  flex: 0 1 auto;
+}
+.tw[data-one] .two > .two-rest {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tw[data-one] .two-hero {
+  flex: 0 1 410px !important;
+  min-height: 240px;
+}
+
+/* lens tabs: glass at rest and glass when selected; the selected one is brighter, lit from above,
+   with a translucent navy edge, so the sky still reads through it */
+.tw-lens button {
+  background: color-mix(in srgb, var(--v-card) 52%, transparent);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, #fff 75%, transparent),
+    inset 0 1px 0 #ffffffcc;
+}
+.tw-lens button[aria-selected="true"] {
+  color: var(--v-navy);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--v-card) 92%, transparent), color-mix(in srgb, var(--v-card) 64%, transparent));
+  box-shadow:
+    inset 0 0 0 1.5px color-mix(in srgb, var(--v-navy) 72%, transparent),
+    inset 0 1.5px 0 #ffffff,
+    0 8px 18px -12px #24365e73;
+}
+:root[data-theme="dark"] .tw-lens button {
+  box-shadow: inset 0 0 0 1px #ffffff1f;
+}
+:root[data-theme="dark"] .tw-lens button[aria-selected="true"] {
+  background: color-mix(in srgb, var(--v-card) 70%, transparent);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, #abb5d6 70%, transparent);
+}
+
+/* the twin's large titles return to its serif display face: Contralto, regular weight */
+.two-head h2,
+.twl-head h2,
+.tw-organ-head h2,
+.tw-trends-title {
+  font-family: "contralto-small", "Contralto Small", var(--v-text);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.two-head h2,
+.twl-head h2 {
+  font-size: 44px;
+  line-height: 1;
+}
+.tw-organ-head h2 {
+  font-size: 30px;
+}
+.tw-trends-title {
+  font-size: 26px;
+  line-height: 1.1;
 }

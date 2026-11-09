@@ -4,7 +4,7 @@ import { hexRgb, loadHero, type HeroMap, type Tint } from "./field";
 
 /** digitaltwin.html's Contour Fade: dot fill, and the ramp from open middle to inked contour */
 const FILL = 0.95;
-const RAMP = [hexRgb("#c8d9ef"), hexRgb("#33518f")];
+const BASE_RAMP = [hexRgb("#c8d9ef"), hexRgb("#33518f")];
 
 export function useHero(sex: Sex): HeroMap | null {
   const [hero, setHero] = useState<HeroMap | null>(null);
@@ -30,19 +30,22 @@ interface Props {
   label: string;
   className?: string;
   style?: CSSProperties;
+  /** the dot ramp, open middle to inked contour; a checkpoint passes a slate one */
+  ramp?: [string, string];
 }
 
 /**
  * Home's figure: the digital twin's home page body, half length and fading out
  * at the waist, drawn as one dot per cell so the Monitor regions can take gold.
  */
-export function HeroField({ hero, tints, label, className, style }: Props) {
+export function HeroField({ hero, tints, label, className, style, ramp }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const { cols, rows, cov, tone, svg } = hero;
+    const RAMP = ramp ? [hexRgb(ramp[0]), hexRgb(ramp[1])] : BASE_RAMP;
     const [a, b, c, d] = svg;
     // per-cell gold weight, strongest region wins, the same falloff as the twin's buildTints
     const w = new Float32Array(cols * rows);
@@ -111,7 +114,7 @@ export function HeroField({ hero, tints, label, className, style }: Props) {
     const ro = new ResizeObserver(draw);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [hero, tints]);
+  }, [hero, tints, ramp?.[0], ramp?.[1]]);
 
   return <canvas ref={ref} className={className} style={style} role="img" aria-label={label} />;
 }

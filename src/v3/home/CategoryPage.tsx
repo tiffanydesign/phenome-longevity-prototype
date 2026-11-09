@@ -16,11 +16,11 @@ const PAGES: Record<Exclude<Tab, "all">, Page> = {
   },
   sleep: {
     title: "Sleep",
-    cards: ["sleep", "deep", "temp"],
+    cards: ["sleepscore", "sleep", "deep", "consistency", "efficiency", "hoursneeds", "restorative", "temp"],
   },
   vitals: {
     title: "Heart",
-    cards: ["capacity", "rhr", "hr", "hrv"],
+    cards: ["capacity", "rhr", "hr", "hrv", "bpd", "spo2d", "respd"],
   },
   body: {
     title: "Body",

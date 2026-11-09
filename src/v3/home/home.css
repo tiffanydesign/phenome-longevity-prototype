@@ -459,10 +459,12 @@
   color: var(--v-navy);
 }
 .v2-slot[data-card="consult"][data-size="w"],
+.v2-slot[data-card="games"][data-size="w"],
 .v2-slot[data-card="store"][data-size="w"] {
   grid-row: span 1;
 }
-.v2-slot[data-card="consult"][data-size="w"] .v2-tile {
+.v2-slot[data-card="consult"][data-size="w"] .v2-tile,
+.v2-slot[data-card="games"][data-size="w"] .v2-tile {
   justify-content: center;
 }
 /* the store sits apart from the readings: sand at its palest, warm enough to set off the silver ring */
@@ -706,115 +708,44 @@
   font: var(--v-t-note);
   color: var(--v-ink-2);
 }
-/* the Today heading steps through the week: the date between two small arrows */
-/* the day heading: its name at the left, a small date capsule at the right that opens the week */
+/* the day heading: its name at the left; at the right the date between two plain steps */
 .v2-day {
   align-items: center;
 }
 .v2-date {
-  position: relative;
-}
-.v2-date-btn {
-  height: 32px;
-  padding: 0 10px 0 11px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  border-radius: 16px;
-  font: 600 13px/1 var(--v-text);
-  font-variant-numeric: tabular-nums;
-  color: var(--v-ink);
-  background: var(--v-card);
-  box-shadow: 0 0 0 0.5px var(--v-line);
-}
-.v2-date-btn svg {
-  color: var(--v-ink-3);
-}
-.v2-date-btn > svg:first-child {
-  color: var(--v-navy);
-}
-/* a day other than today: the capsule takes the brand's pale navy, so the cards are read as that day's */
-.v2-date-btn[data-past] {
-  color: var(--v-navy);
-  background: color-mix(in srgb, var(--v-navy) 11%, var(--v-card));
-  box-shadow: none;
-}
-.v2-week {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  z-index: 6;
-  display: grid;
-  grid-template-columns: repeat(7, 40px);
   gap: 2px;
-  padding: 6px;
-  border-radius: 18px;
-  background: var(--v-card);
-  box-shadow:
-    0 0 0 0.5px var(--v-line),
-    0 18px 40px -12px #0b0d1440;
-  transform-origin: top right;
-  animation: v2-week-in 0.2s var(--v-ease);
+  color: var(--v-ink-2);
 }
-@keyframes v2-week-in {
-  from {
-    opacity: 0;
-    transform: scale(0.94) translateY(-4px);
-  }
+.v2-date-mark {
+  margin: 0 5px 0 2px;
+  color: var(--v-navy);
 }
-@media (prefers-reduced-motion: reduce) {
-  .v2-week {
-    animation: none;
-  }
-}
-.v2-week button {
-  position: relative;
-  height: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  border-radius: 14px;
+.v2-date > span {
+  margin-right: 2px;
+  font: 600 14px/1 var(--v-text);
   color: var(--v-ink);
-}
-.v2-week button:active {
-  background: var(--v-card-2);
-}
-.v2-week small {
-  font: 600 11px/1 var(--v-text);
-  color: var(--v-ink-3);
-}
-.v2-week b {
-  font: 600 15px/1 var(--v-text);
   font-variant-numeric: tabular-nums;
 }
-/* today: a small navy dot under its number */
-.v2-week button[data-today]::after {
-  content: "";
-  position: absolute;
-  bottom: 4px;
-  width: 4px;
-  height: 4px;
+.v2-date button {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
-  background: var(--v-navy);
+  color: var(--v-navy);
+  transition: opacity 0.2s linear, background 0.15s linear;
 }
-.v2-week button[aria-pressed="true"] {
-  color: #fff;
-  background: var(--v-navy);
+.v2-date button:active {
+  background: var(--v-fill);
 }
-.v2-week button[aria-pressed="true"] small {
-  color: #ffffffb3;
+.v2-date button:disabled {
+  opacity: 0.25;
 }
-.v2-week button[aria-pressed="true"]::after {
-  background: #fff;
-}
-:root[data-theme="dark"] .v2-week button[aria-pressed="true"],
-:root[data-theme="dark"] .v2-week button[aria-pressed="true"] small {
-  color: #0b0d14;
-}
-:root[data-theme="dark"] .v2-week button[aria-pressed="true"]::after {
-  background: #0b0d14;
+/* a day other than today: the date takes the navy, so the cards read as that day's */
+.v2-date[data-past] > span {
+  color: var(--v-navy);
 }
 .v2-cat .v2-tip + .v2-group .v2-sec {
   margin-top: 20px;
@@ -1228,52 +1159,152 @@
   letter-spacing: -0.02em;
 }
 
-/* clinic visits on Home: the last visit, three of its readings, and the way into comparing them */
+/* clinic visits on Home: the last visit, three of its readings side by side, and the way into comparing them */
+/* three rows tall: the head, the three readings, and the foot all show in full */
+.v2-slot[data-card="visits"] {
+  grid-row: span 3;
+}
 .v2-visits {
   gap: 14px;
+  /* the card settles into a faint wash of the brand at its foot */
+  background: linear-gradient(180deg, var(--v-card) 55%, color-mix(in srgb, var(--v-navy) 6%, var(--v-card)));
 }
-.v2-visits-rows {
+.v2-vcols {
+  flex: 1;
+  min-height: 0;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 6px;
 }
-.v2-visits-row {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+/* each reading its own pale tile in its hue: name, number, unit, trace, change on the same baselines */
+.v2-visits .v2-vcol {
   min-width: 0;
+  display: grid;
+  grid-template-rows: auto auto auto minmax(30px, 1fr) auto;
+  align-content: start;
+  padding: 11px 9px 10px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--mid) 9%, var(--v-card));
+  text-align: left;
 }
-.v2-visits-row small {
-  font: 500 12px/1.2 var(--v-text);
-  color: var(--v-ink-2);
-  white-space: nowrap;
+.v2-vcol small {
   overflow: hidden;
+  font: 600 11.5px/1.2 var(--v-text);
+  letter-spacing: -0.01em;
+  color: color-mix(in srgb, var(--mid) 62%, var(--v-ink));
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
-.v2-visits-row b {
-  font: 650 20px/1 var(--v-text);
+.v2-vcol b {
+  margin-top: 8px;
+  font: 650 21px/1 var(--v-text);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: var(--v-ink);
+  white-space: nowrap;
 }
-.v2-visits-row em {
-  margin-left: 3px;
-  font: 500 11px/1 var(--v-text);
+.v2-vcol em {
+  margin-top: 3px;
+  font: 500 11.5px/1.2 var(--v-text);
   font-style: normal;
   color: var(--v-ink-3);
 }
-.v2-visits-row > span {
-  font: 500 11.5px/1.25 var(--v-text);
-  color: var(--v-ink-3);
+.v2-vtrace {
+  align-self: center;
+  width: 100%;
+  height: 26px;
+  color: var(--mid);
+}
+.v2-vchange,
+.v2-vflag {
+  justify-self: start;
+  max-width: 100%;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 11px;
+  font: 600 11.5px/1 var(--v-text);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.v2-vchange {
+  color: var(--v-ink-2);
+  background: color-mix(in srgb, var(--v-card) 70%, transparent);
+}
+.v2-vchange[data-dir="down"] svg {
+  transform: rotate(180deg);
+}
+.v2-vchange[data-dir="flat"] svg {
+  display: none;
+}
+.v2-vflag {
+  color: #7a5600;
+  background: #fff0cc;
+}
+:root[data-theme="dark"] .v2-vflag {
+  color: #ffd66b;
+  background: #3d300c;
+}
+/* the foot: every visit as a dot on one line, the latest solid, and the way into comparing them */
+.v2-vfoot {
+  width: 100%;
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 0.5px solid var(--v-line);
+}
+.v2-vline {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.v2-vline i {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--v-navy) 28%, var(--v-card));
+}
+.v2-vline i + i::before {
+  content: "";
+  position: absolute;
+  right: 7px;
+  top: 3px;
+  width: 10px;
+  height: 1px;
+  background: color-mix(in srgb, var(--v-navy) 22%, var(--v-card));
+}
+.v2-vline i[data-on] {
+  width: 9px;
+  height: 9px;
+  background: var(--v-navy);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-navy) 16%, var(--v-card));
+}
+.v2-vline i[data-on]::before {
+  top: 4px;
+}
+.v2-vline small {
+  margin-left: 4px;
+  font: 500 12.5px/1 var(--v-text);
+  color: var(--v-ink-2);
 }
 .v2-visits-go {
-  width: 100%;
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 0.5px solid var(--v-line);
-  font: 600 15px/1 var(--v-text);
-  color: var(--v-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 32px;
+  padding: 0 10px 0 14px;
+  border-radius: 16px;
+  font: 600 14px/1 var(--v-text);
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 9%, var(--v-card));
 }
 
 /* the week behind the number, between the name and the reading */
@@ -1285,4 +1316,179 @@
 }
 .v2-mini + .v2-tile-foot {
   margin-top: 0;
+}
+
+/* the twin's door on Home: one short row, a bust on a pale sky disc, two lines and a way in */
+.v2-slot[data-card="twin"][data-size="w"],
+.v2-slot[data-card="supplements"],
+.v2-slot[data-card="cgm"] {
+  grid-row: span 1;
+}
+.v2-twin-entry {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 52px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  overflow: hidden;
+  border-radius: var(--v-r);
+  text-align: left;
+  color: var(--v-ink);
+  background: var(--v-card);
+  transition: transform 0.18s var(--v-ease);
+}
+.v2-twin-entry:active {
+  transform: scale(0.98);
+}
+.v2-twin-entry-fig {
+  position: relative;
+  flex: none;
+  width: 62px;
+  height: 62px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: color-mix(in srgb, #7fbcdc 24%, var(--v-card));
+}
+/* cropped to head and shoulders */
+.v2-twin-entry-fig .tw-hero-stage {
+  width: 260%;
+  margin: -6px 0 0 -80%;
+}
+.v2-twin-entry-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.v2-twin-entry-t {
+  font: 600 17px/1.2 var(--v-text);
+  color: var(--v-navy);
+}
+.v2-twin-entry-s {
+  font: 400 13px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.v2-twin-entry-go {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  color: var(--v-navy);
+  background: var(--v-fill);
+}
+
+/* Home's services: a mark on a disc of its own hue, a title and one line, and a way in */
+.v2-slot[data-card="consult"][data-size="s"],
+.v2-slot[data-card="games"][data-size="s"] {
+  grid-row: span 2;
+}
+.v2-svc {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 16px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: var(--v-r);
+  text-align: left;
+  color: var(--v-ink);
+  background: var(--v-card);
+  transition: transform 0.18s var(--v-ease);
+}
+button.v2-svc:active {
+  transform: scale(0.98);
+}
+.v2-svc-mark {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  color: var(--mid);
+  background: color-mix(in srgb, var(--mid) 14%, var(--v-card));
+}
+.v2-svc-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.v2-svc-t {
+  font: 600 16px/1.2 var(--v-text);
+}
+.v2-svc-s {
+  overflow: hidden;
+  font: 400 13px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.v2-svc-go {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink-3);
+  background: var(--v-fill);
+}
+/* on its way: the mark at half strength, the title quieter, a pill in place of the arrow */
+.v2-svc[data-soon] {
+  background: color-mix(in srgb, var(--v-card) 60%, transparent);
+  box-shadow: inset 0 0 0 1px var(--v-line);
+}
+.v2-svc[data-soon] .v2-svc-mark {
+  opacity: 0.55;
+}
+.v2-svc[data-soon] .v2-svc-t {
+  color: var(--v-ink-2);
+}
+.v2-svc[data-soon] .v2-svc-s {
+  color: var(--v-ink-3);
+}
+.v2-svc-soon {
+  flex: none;
+  padding: 5px 9px;
+  border-radius: 10px;
+  font: 600 11.5px/1 var(--v-text);
+  color: var(--v-ink-2);
+  background: var(--v-fill);
+}
+
+/* once the page scrolls, content fades out under the status bar instead of running through it:
+   a light frosted veil across the status bar, then a soft falloff below it */
+.v2-head::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: -1;
+  height: calc(var(--status-h) + 36px);
+  pointer-events: none;
+  /* a veil, not a cover: content stays faintly visible through the status bar */
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--v-ground, var(--v-bg)) 42%, transparent) 0,
+    color-mix(in srgb, var(--v-ground, var(--v-bg)) 22%, transparent) var(--status-h),
+    transparent 100%
+  );
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+  -webkit-mask-image: linear-gradient(#000 0, #000 var(--status-h), transparent 100%);
+  mask-image: linear-gradient(#000 0, #000 var(--status-h), transparent 100%);
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+.v2-head[data-under]::before {
+  opacity: 1;
 }

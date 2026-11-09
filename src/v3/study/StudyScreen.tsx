@@ -4,6 +4,7 @@ import { HomeIndicator, StatusBar } from "@/components/PhoneFrame";
 import { asset } from "@/lib/asset";
 import { Chevron, IconClose } from "../ui/icons";
 import { useGo } from "../ui/shell";
+import { useDisplayFace } from "../ui/displayFace";
 import "../v2.css";
 import { STUDIES, studyIndex } from "./catalog";
 import { Hero, viewOf, visitDate, VISITS, VisitTrend } from "./panels";
@@ -45,6 +46,7 @@ function Progress({ index }: { index: number }) {
  * member walks the same nineteen studies with a swipe on the figure or the bar.
  */
 export function StudyScreen() {
+  useDisplayFace();
   const { code } = useParams();
   const nav = useNavigate();
   const go = useGo();

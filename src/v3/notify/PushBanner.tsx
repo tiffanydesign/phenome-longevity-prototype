@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { Glyph } from "../ui/glyphs";
 import { useGo } from "../ui/shell";
 import { notes, useNotes } from "./store";
 import "./notify.css";
@@ -46,9 +45,12 @@ export function PushBanner() {
           <strong>{banner.title}</strong>
           <span>{banner.body}</span>
         </span>
-        <span className="nt-mark">
-          <Glyph name={banner.glyph} size={16} />
-        </span>
+      </button>
+      {/* a way to close it straight away, top right */}
+      <button className="nt-banner-close" aria-label="Dismiss notification" onPointerDown={(e) => e.stopPropagation()} onClick={() => notes.dismiss()}>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" aria-hidden>
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
       </button>
     </div>
   );

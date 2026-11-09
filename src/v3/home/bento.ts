@@ -10,7 +10,7 @@ export interface Slot {
 
 /** Sizes a card may take, in the order the resize control steps through them. */
 export const SIZES: Record<string, Size[]> = {
-  twin: ["l", "w", "t"],
+  twin: ["w"],
   capacity: ["s", "w"],
   workouts: ["s", "w"],
   activity: ["s", "w"],
@@ -20,11 +20,13 @@ export const SIZES: Record<string, Size[]> = {
   food: ["s", "w"],
   habits: ["s", "w"],
   consult: ["w", "s"],
-  store: ["w", "s"],
+  games: ["w", "s"],
+  supplements: ["w"],
+  cgm: ["w"],
 };
 
 const DEFAULT: Slot[] = [
-  { id: "twin", size: "l" },
+  { id: "twin", size: "w" },
   { id: "activity", size: "s" },
   { id: "sleep", size: "s" },
   { id: "capacity", size: "s" },
@@ -34,10 +36,12 @@ const DEFAULT: Slot[] = [
   { id: "habits", size: "s" },
   { id: "visits", size: "w" },
   { id: "consult", size: "w" },
-  { id: "store", size: "w" },
+  { id: "games", size: "w" },
+  { id: "supplements", size: "w" },
+  { id: "cgm", size: "w" },
 ];
 
-const KEY = "phenome.v2.bento.7";
+const KEY = "phenome.v2.bento.10";
 
 function load(): Slot[] {
   try {
