@@ -3,7 +3,7 @@ import { Screen } from "@/components/Screen";
 import { NavHeader } from "@/components/NavHeader";
 import { createStore, useDataset, useOffline } from "@/lib/data";
 import { photo } from "@/lib/asset";
-import { CLINICAL_SECTIONS, TILE_UNITS, clinicalValues, type ClinicalSection, type ClinicalValue } from "@/data/insightsClinical";
+import { CLINICAL_SECTIONS, TILE_UNITS, clinicalAvailable, clinicalValues, type ClinicalSection, type ClinicalValue } from "@/data/insightsClinical";
 import { Pencil, PdfFile } from "./icons";
 import { FieldSheet, UploadNoticeSheet } from "./ClinicalSheets";
 import "./Clinical.css";
@@ -41,6 +41,7 @@ const today = () => new Date().toISOString().slice(0, 10);
  */
 export function ClinicalScreen() {
   const base = useDataset(clinicalValues);
+  const available = useDataset(clinicalAvailable);
   const typed = entered.use();
   const offline = useOffline();
   const [overlay, setOverlay] = useState<Overlay>(readDeepLink);
@@ -54,6 +55,18 @@ export function ClinicalScreen() {
         <div className="cli-empty">
           <ClipboardGlyph />
           <span>No data available</span>
+        </div>
+      </Screen>
+    );
+  }
+
+  if (!available) {
+    return (
+      <Screen header={header} statusTone="light">
+        <div className="cli-empty cli-none">
+          <ClipboardGlyph />
+          <b>No clinical data yet</b>
+          <span>Your clinical results are not available here yet. Once they are, you can review and add to them on this page.</span>
         </div>
       </Screen>
     );

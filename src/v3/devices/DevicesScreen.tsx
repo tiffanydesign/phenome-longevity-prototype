@@ -1,12 +1,9 @@
 import { Icon } from "@/components/Icon";
 import { Chevron } from "../ui/icons";
 import { BackBar, useGo, V2Screen } from "../ui/shell";
+import { PAIRED } from "./paired";
 import "./devices.css";
 
-const PAIRED = [
-  { name: "Phenome Ring", icon: "ring_icon", battery: 68, synced: "Synced 2 min ago", reads: "Heart, sleep, oxygen, temperature" },
-  { name: "Phenome Band", icon: "band_icon", battery: 41, synced: "Synced 14 min ago", reads: "Steps, activity, calories, blood pressure" },
-];
 
 const SETTINGS = [
   { title: "Wearing hand", value: "Left" },

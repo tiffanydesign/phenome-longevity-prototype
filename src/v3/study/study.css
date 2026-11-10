@@ -35,18 +35,6 @@
   inset: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: #26398052 transparent;
-}
-.rv-page::-webkit-scrollbar {
-  width: 4px;
-}
-.rv-page::-webkit-scrollbar-thumb {
-  border-radius: 2px;
-  background: #26398052;
-}
-.rv-page::-webkit-scrollbar-track {
-  margin: calc(var(--status-h) + 60px) 0 104px;
 }
 
 .rv-stage {
@@ -217,34 +205,6 @@
   background: #fce4da;
 }
 
-.rv-visits {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin: 0 0 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.rv-visits button {
-  flex: none;
-  min-height: 36px;
-  padding: 0 11px;
-  border-radius: 18px;
-  font-size: 13px;
-  color: var(--v-ink-2);
-}
-.rv-visits button[aria-selected="true"] {
-  color: #fff;
-  font-weight: 500;
-  background: var(--v-navy);
-}
-.rv-visits span {
-  margin-left: auto;
-  flex: none;
-  padding-left: 6px;
-  font-size: 13px;
-  color: var(--v-ink-2);
-}
 .rv-when {
   margin: 0 4px 12px;
   font-size: 13px;
@@ -862,6 +822,42 @@
   color: var(--v-navy);
   background: #fff;
 }
+/* which visit the review reads from, newest first, under the sheet's title */
+.rv-list-visits {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  padding: 4px 16px 10px;
+}
+.rv-list-visits button {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 10px 10px;
+  border-radius: 14px;
+  background: #fff;
+  text-align: left;
+}
+.rv-list-visits b {
+  font: 600 14px/1.1 var(--v-text);
+  color: var(--v-ink);
+  white-space: nowrap;
+}
+.rv-list-visits small {
+  font: 500 11.5px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+  white-space: nowrap;
+}
+.rv-list-visits button[aria-checked="true"] {
+  background: var(--v-navy);
+}
+.rv-list-visits button[aria-checked="true"] b,
+.rv-list-visits button[aria-checked="true"] small {
+  color: #fff;
+}
 .rv-list-body {
   flex: 1;
   min-height: 0;
@@ -958,4 +954,126 @@
   font-size: 34px;
   font-weight: 400;
   letter-spacing: -0.01em;
+}
+
+/* which visit the page reads from: the sheet behind the list button changes it */
+.rv-lead-visit {
+  margin: 0 0 6px;
+  font: 500 13px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.rv-trend-box {
+  flex: none;
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+.rv-trend-box .rv-trend {
+  margin: 0;
+}
+.rv-trend-box small {
+  font: 500 11.5px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* the visit at a glance: areas as bands on hairlines, every reading a way into its study */
+.rv-glance {
+  padding-bottom: 6px;
+}
+.rv-glance-area + .rv-glance-area {
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--v-line);
+}
+.rv-glance-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0 2px;
+  font: 600 13px/1.2 var(--v-text);
+  color: var(--v-navy);
+}
+.rv-glance-name span {
+  font-weight: 500;
+  color: var(--v-ink-3);
+}
+.rv-glance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 8px;
+}
+.rv-glance-r {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 3px;
+  margin: 0 -8px;
+  padding: 8px 8px 10px;
+  border-radius: 12px;
+  text-align: left;
+  color: inherit;
+  transition: background-color 0.15s;
+}
+button.rv-glance-r:active {
+  background: #f2f5fb;
+}
+.rv-glance-l svg {
+  flex: none;
+  margin-left: -3px;
+  color: var(--v-ink-3);
+}
+.rv-glance-l {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--v-ink-2);
+  white-space: nowrap;
+}
+.rv-glance-l i {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffb600;
+}
+.rv-glance-l i[data-tone="alert"] {
+  background: #c4572e;
+}
+.rv-glance-r b {
+  font-family: var(--v-num);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+  white-space: nowrap;
+}
+.rv-glance-r b[data-tone="mon"] {
+  color: var(--v-gold-ink);
+}
+.rv-glance-r b[data-tone="alert"] {
+  color: #9c4220;
+}
+.rv-glance-r b em {
+  margin-left: 4px;
+  font-family: var(--v-text);
+  font-size: 13px;
+  font-style: normal;
+  color: var(--v-ink-2);
+}
+
+/* what is not on record, said once and quietly */
+.rv-quiet {
+  margin: 2px 0 0;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--v-ink-2);
+}
+/* a list after label rows keeps its distance */
+.rv-facts + .rv-sub {
+  margin-top: 16px;
 }

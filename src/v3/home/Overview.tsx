@@ -1,24 +1,17 @@
-import { createContext, useContext, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { metric, metricOn, seriesFor, type Metric } from "../data/metrics";
+import { createContext, useContext, useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import { metricOn, type Metric } from "../data/metrics";
 import { visitDate, VISITS } from "../study/data";
-import { LATEST } from "../twin/regions";
 import { TwinHero } from "../twin/TwinHero";
-import { CompareBars } from "../ui/charts";
-import { Chevron, IconAll, IconClose, IconGrip, IconResize } from "../ui/icons";
+import { Chevron, IconAll, IconGrip, IconResize } from "../ui/icons";
 import { Num } from "../ui/Num";
 import { useGo } from "../ui/shell";
 import { SIZES, useBento } from "./bento";
+import { CheckIn } from "./CheckIn";
+import { bookingDay, bookingLabel, bookingTime, useBooking } from "@/data/booking-store";
+import { shortOf, useToday } from "../habits/plan";
+import "../habits/habits.css";
+import { Gauge, HabitStops, HeartRange, HourBars, Hypnogram, MacroBar, WorkoutRings } from "./glance";
 import { glyphOf, Kind, type GlyphName } from "../ui/glyphs";
-
-
-/*
- * The Today strip speaks only of what the ring, the band and the diary measured.
- * Clinic and twin results never appear here: they live on the twin card and under Clinic visits.
- */
-const SLIDES = [
-  { text: "Your weekly report is ready. HRV is up 9% and sleep held steady.", cta: "See report", to: "/v3/home?tab=vitals" },
-  { text: "Recovery is ahead of your load today. A good day to train or stay active.", cta: "See capacity", to: "/v3/metric/capacity" },
-];
 
 
 /** Each card's name, for the remove and add controls. */
@@ -30,12 +23,9 @@ const CARD_NAME: Record<string, string> = {
   workouts: "Workouts",
   vitals: "Heart",
   food: "Food",
-  visits: "Clinic visits",
   habits: "Habits",
   consult: "Your consultations",
   games: "Cognitive games",
-  supplements: "Personalised supplements",
-  cgm: "Glucose monitoring",
 };
 
 /**
@@ -44,10 +34,9 @@ const CARD_NAME: Record<string, string> = {
  * A card stays in its group; within it the member arranges.
  */
 const GROUPS: { id: string; title?: string; meta?: string; cards: string[] }[] = [
-  { id: "hero", cards: ["twin"] },
   { id: "today", title: "Today", cards: ["activity", "sleep", "capacity", "workouts", "vitals", "food", "habits"] },
-  { id: "visits", title: "Clinic visits", cards: ["visits"] },
-  { id: "more", title: "More", cards: ["consult", "games", "supplements", "cgm"] },
+  { id: "clinic", title: "Clinic", cards: ["twin"] },
+  { id: "more", title: "More", cards: ["consult", "games"] },
 ];
 
 /** How many days back the Today cards read: 0 is today, up to the six days the week's series holds. */
@@ -111,6 +100,7 @@ export function Overview({ editing, onEdit }: { editing: boolean; onEdit: (on: b
 
   return (
     <div className="v2-all">
+      <CheckIn />
       {GROUPS.map((g) => {
         const slots = bento.slots.filter((s) => g.cards.includes(s.id));
         if (!slots.length) return null;
@@ -127,7 +117,6 @@ export function Overview({ editing, onEdit }: { editing: boolean; onEdit: (on: b
                 </header>
               )
             )}
-            {g.id === "today" && ago === 0 && <Report />}
             <DayAgo.Provider value={g.id === "today" ? ago : 0}>
             <div className="v2-bento" data-intro={intro ? "" : undefined} data-editing={editing ? "" : undefined}>
               {/* rendered in a fixed order and placed with CSS order: moving the node would drop pointer capture mid-drag */}
@@ -187,6 +176,7 @@ export function Overview({ editing, onEdit }: { editing: boolean; onEdit: (on: b
               ))}
             </div>
             </DayAgo.Provider>
+            {g.id === "clinic" && <VisitEntries onOpen={(v, el) => go(`/v3/twin?at=${v}`, { from: el })} />}
           </section>
         );
       })}
@@ -225,88 +215,105 @@ export function Overview({ editing, onEdit }: { editing: boolean; onEdit: (on: b
   );
 }
 
-const HIDDEN_KEY = "phenome.v2.report.hidden";
-
-function readHidden(): string[] {
-  try {
-    return JSON.parse(localStorage.getItem(HIDDEN_KEY) ?? "[]");
-  } catch {
-    return [];
-  }
-}
-
-/** The member's messages, one at a time. Each can be closed, and once all are closed the strip goes. */
-function Report() {
-  const go = useGo();
-  const [at, setAt] = useState(0);
-  const [hidden, setHidden] = useState(readHidden);
-  const ref = useRef<HTMLDivElement>(null);
-  const shown = SLIDES.filter((s) => !hidden.includes(s.text));
-  if (!shown.length) return null;
-  const dismiss = () => {
-    const next = [...hidden, shown[Math.min(at, shown.length - 1)].text];
-    setHidden(next);
-    setAt((i) => Math.max(0, Math.min(i, shown.length - 2)));
-    try {
-      localStorage.setItem(HIDDEN_KEY, JSON.stringify(next));
-    } catch {
-      /* private mode: closed for this visit only */
-    }
-  };
-  return (
-    <div className="v2-report">
-      <button className="v2-report-close" aria-label="Close this message" onClick={dismiss}>
-        <IconClose />
-      </button>
-      <div
-        className="v2-report-track"
-        ref={ref}
-        onScroll={(e) => setAt(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}
-      >
-        {shown.map((s) => (
-          <button key={s.text} onClick={() => go(s.to)}>
-            {s.text}
-            <span>{s.cta}</span>
-          </button>
-        ))}
-      </div>
-      <div className="v2-report-dots">
-        {shown.length > 1 && shown.map((s, i) => (
-          <button
-            key={s.text}
-            aria-label={`Message ${i + 1} of ${shown.length}`}
-            aria-current={i === at ? "true" : undefined}
-            onClick={() => ref.current?.scrollTo({ left: i * ref.current.clientWidth, behavior: "smooth" })}
-          >
-            <i />
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function Tile({ id, go }: { id: string; go: ReturnType<typeof useGo> }) {
   const open = (to: string) => (e: { currentTarget: HTMLElement }) => go(to, { from: e.currentTarget });
   const tiles: Record<string, () => ReactNode> = {
     twin: () => <TwinTile onOpen={open("/v3/twin")} />,
     capacity: () => <Stat m="capacity" onOpen={open("/v3/metric/capacity")} />,
-    workouts: () => <Stat m="workouts" title="Workouts" field="rose" glyph="figure" onOpen={open("/v3/metric/workouts")} />,
+    workouts: () => <Stat m="workouts" title="Workouts" field="rose" glyph="dumbbell" onOpen={open("/v3/metric/workouts")} />,
     activity: () => <ActivityTile onOpen={open("/v3/metric/steps")} />,
     sleep: () => <Stat m="sleep" onOpen={open("/v3/metric/sleep")} />,
     vitals: () => <Stat m="rhr" title="Heart" onOpen={open("/v3/metric/rhr")} />,
     food: () => <Stat m="diet" onOpen={open("/v3/metric/diet")} />,
-    habits: () => <Stat m="habits" onOpen={open("/journal/habits")} />,
-    visits: () => <VisitsTile onOpen={open("/v3/visits")} />,
-    consult: () => (
-      <ServiceTile field="lavender" mark="consult" title="Your consultations" line="Manage and book your sessions" onOpen={open("/discover/consultations")} />
-    ),
+    habits: () => <HabitsTile onOpen={open("/v3/habits")} />,
+    consult: () => <ConsultTile open={open} />,
     games: () => <ServiceTile field="teal" mark="games" title="Cognitive games" line="Short games that train memory and focus" onOpen={open("/discover/games")} />,
-    // two services on their way: shown with their marks, quieter, and not yet a way in
-    supplements: () => <ServiceTile field="food" mark="supplements" title="Supplements" line="Personalised to you after a short quiz" soon />,
-    cgm: () => <ServiceTile field="rose" mark="cgm" title="Glucose monitoring" line="A sensor that reads your glucose all day" soon />,
   };
   return <>{tiles[id]()}</>;
+}
+
+/**
+ * Consultations on Home. Nothing booked: the service, to book one. A session
+ * booked: the session itself, its date as a calendar leaf, an Upcoming badge and
+ * how far off it is; it opens the booking's preview.
+ */
+function ConsultTile({ open }: { open: (to: string) => (e: { currentTarget: HTMLElement }) => void }) {
+  const b = useBooking();
+  if (!b) return <ServiceTile field="lavender" mark="consult" title="Your consultations" line="Book a session with your clinician" onOpen={open("/v3/consultations")} />;
+  const d = bookingDay(b);
+  return (
+    <ServiceTile
+      field="lavender"
+      mark="consult"
+      title={bookingLabel(b)}
+      badge="Upcoming"
+      line={`${d.weekdayLong} ${d.num} ${d.monthLong}  ${bookingTime(b)}`}
+      onOpen={open("/v3/consultation")}
+    />
+  );
+}
+
+/** How many habits the card shows by name; past that, the last place says how many more. */
+const HABIT_SLOTS = 6;
+
+/**
+ * Today's habits from the plan, each a stop in the card's green: dashed while
+ * waiting, solid with a tick once done, so the card reads the same with two
+ * habits or twenty. Up to six show;
+ * a longer plan shows five and a "+n" for the rest, the ones still to do first.
+ * No plan yet: one invitation to make one.
+ */
+function HabitsTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) => void }) {
+  const { all } = useToday();
+  const done = all.filter((t) => t.done).length;
+  // still to do before done, so a long plan shows what is left
+  const order = all.length > HABIT_SLOTS ? [...all].sort((x, y) => Number(x.done) - Number(y.done)) : all;
+  const shown = all.length > HABIT_SLOTS ? order.slice(0, HABIT_SLOTS - 1) : order;
+  const more = all.length - shown.length;
+  return (
+    <button className="v2-tile v2-tile-habits" data-field="habit" onClick={onOpen}>
+      <span className="v2-tile-head">
+        <Kind name={glyphOf("habits")}>Habits</Kind>
+        {all.length > 0 && (
+          <span className="v2-tile-count">
+            {done} of {all.length} today
+          </span>
+        )}
+      </span>
+      {all.length === 0 ? (
+        <span className="v2-habits-empty">
+          <span className="v2-habits-plus" aria-hidden>
+            +
+          </span>
+          <span>
+            <b>Plan your day</b>
+            <small>Pick a few habits to keep</small>
+          </span>
+        </span>
+      ) : (
+        <span className="v2-habits" role="img" aria-label={`${done} of ${all.length} habits done today`}>
+          {shown.map((t) => (
+            <span key={t.h.id} className="v2-habit">
+              <i className="v2-habit-dot" data-on={t.done ? "" : undefined}>
+                {t.done && (
+                  <svg viewBox="0 0 12 12" width="15" height="15" aria-hidden>
+                    <path d="M2.5 6.3 5 8.7 9.6 3.6" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+              </i>
+              <small>{shortOf(t.h)}</small>
+            </span>
+          ))}
+          {more > 0 && (
+            <span className="v2-habit">
+              <span className="v2-habit-more">+{more}</span>
+              <small>More</small>
+            </span>
+          )}
+        </span>
+      )}
+    </button>
+  );
 }
 
 /** The marks of Home's services: rounded lines of the tab marks' weight, drawn on a 24 grid. */
@@ -321,20 +328,6 @@ const SERVICE_MARK: Record<string, ReactNode> = {
   ),
   // a puzzle piece: a small game for the mind
   games: <path d="M10 4.5a2 2 0 1 1 4 0V6h3.5a1.5 1.5 0 0 1 1.5 1.5V11h-1.5a2 2 0 1 0 0 4H19v3.5a1.5 1.5 0 0 1-1.5 1.5H14v-1.5a2 2 0 1 0-4 0V20H6.5A1.5 1.5 0 0 1 5 18.5V15h1.5a2 2 0 1 0 0-4H5V7.5A1.5 1.5 0 0 1 6.5 6H10z" />,
-  // a capsule on the diagonal, its seam across the middle
-  supplements: (
-    <>
-      <path d="M8.6 19.9a4.3 4.3 0 0 1-6.1-6.1l6.8-6.8a4.3 4.3 0 0 1 6.1 6.1z" transform="translate(2.2 -1.4)" />
-      <path d="m8.1 9 6.1 6.1" transform="translate(2.2 -1.4)" />
-    </>
-  ),
-  // a round sensor with a reading trace through it
-  cgm: (
-    <>
-      <circle cx="12" cy="12" r="8.5" />
-      <path d="M6.5 12.5h2.2l1.6-3 2.6 6 1.6-3h3" />
-    </>
-  ),
 };
 
 /**
@@ -342,7 +335,7 @@ const SERVICE_MARK: Record<string, ReactNode> = {
  * one line, and a way in. A service on its way keeps its mark at half strength
  * and says so with a small pill instead of the arrow.
  */
-function ServiceTile({ field, mark, title, line, onOpen, soon }: { field: string; mark: string; title: string; line: string; onOpen?: (e: { currentTarget: HTMLElement }) => void; soon?: boolean }) {
+function ServiceTile({ field, mark, title, line, badge, onOpen, soon }: { field: string; mark: string; title: string; line: string; badge?: string; onOpen?: (e: { currentTarget: HTMLElement }) => void; soon?: boolean }) {
   const body = (
     <>
       <span className="v2-svc-mark" aria-hidden>
@@ -351,6 +344,7 @@ function ServiceTile({ field, mark, title, line, onOpen, soon }: { field: string
         </svg>
       </span>
       <span className="v2-svc-text">
+        {badge && <span className="v2-svc-badge">{badge}</span>}
         <span className="v2-svc-t">{title}</span>
         <span className="v2-svc-s">{line}</span>
       </span>
@@ -374,59 +368,25 @@ function ServiceTile({ field, mark, title, line, onOpen, soon }: { field: string
   );
 }
 
-/** A reading's day-on-day change, when its note gives one ("+6 on yesterday"): today, the day before, and the scale's top. */
-function dayOnDay(row: Metric): { today: number; before: number; max: number } | null {
-  const hit = /^([+−-])(\d+(?:\.\d+)?) on (?:yesterday|the day before)$/.exec(row.delta);
-  const today = Number(row.value.replace(",", ""));
-  if (!hit || Number.isNaN(today)) return null;
-  const change = Number(hit[2]) * (hit[1] === "+" ? 1 : -1);
-  const top = Number(/\/\s*([\d,]+)/.exec(row.unit)?.[1]?.replace(",", "")) || Math.max(today, today - change) * 1.15;
-  return { today, before: today - change, max: top };
-}
-
-/**
- * The week behind a card's number, drawn small in the category colour: bars
- * for what adds up through a day, a line for what is a level. The day shown
- * is solid, the others faint.
- */
-function MiniWeek({ m, ago }: { m: Metric; ago: number }) {
-  if (m.chart === "scan" || !m.swing || m.when === "this week") return null;
-  const week = seriesFor(m, "W");
-  const lo = Math.min(...week) * (m.chart === "bars" ? 0 : 0.96);
-  const hi = Math.max(...week);
-  const h = (v: number) => 6 + ((v - lo) / Math.max(1e-6, hi - lo)) * 30;
-  const now = week.length - 1 - ago;
-  if (m.chart === "bars")
-    return (
-      <svg className="v2-mini" viewBox="0 0 140 40" preserveAspectRatio="none" aria-hidden>
-        {week.map((v, i) => (
-          <rect key={i} x={i * 20 + 3} y={40 - h(v)} width="14" height={h(v)} rx="4" fill="var(--mid)" opacity={i === now ? 1 : 0.22} />
-        ))}
-      </svg>
-    );
-  const pts = week.map((v, i) => `${i * 22 + 4},${40 - h(v)}`);
-  return (
-    <svg className="v2-mini" viewBox="0 0 140 40" preserveAspectRatio="none" aria-hidden>
-      <polyline points={pts.join(" ")} fill="none" stroke="var(--mid)" strokeWidth="2.2" strokeLinejoin="round" strokeLinecap="round" opacity="0.35" vectorEffect="non-scaling-stroke" />
-      <circle cx={now * 22 + 4} cy={40 - h(week[now])} r="3.6" fill="var(--mid)" />
-    </svg>
-  );
+/** The one chart each Today card draws, chosen by what the reading is made of. */
+function Glance({ id, row, ago }: { id: string; row: Metric; ago: number }) {
+  if (id === "sleep") return <Hypnogram ago={ago} />;
+  if (id === "capacity") return <Gauge m={row} />;
+  if (id === "workouts") return <WorkoutRings m={row} />;
+  if (id === "rhr") return <HeartRange m={row} ago={ago} />;
+  if (id === "diet") return <MacroBar m={row} />;
+  if (id === "habits") return <HabitStops m={row} />;
+  return null;
 }
 
 /** A reading's card. `field` and `art` override the metric's own where Home needs every card to differ from its neighbours. */
 function Stat({ m, title, field, glyph, onOpen }: { m: string; title?: string; field?: string; glyph?: GlyphName; onOpen: (e: { currentTarget: HTMLElement }) => void }) {
   const ago = useContext(DayAgo);
   const row = metricOn(m, ago);
-  const against = dayOnDay(row);
   return (
     <button className="v2-tile" data-field={field ?? row.field} onClick={onOpen}>
       <Kind name={glyph ?? glyphOf(m)}>{title ?? row.label}</Kind>
-      <MiniWeek m={row} ago={ago} />
-      {against && (
-        <span className="v2-tile-compare">
-          <CompareBars today={against.today} before={against.before} max={against.max} />
-        </span>
-      )}
+      <Glance id={m} row={row} ago={ago} />
       <span className="v2-tile-foot">
         <span className="v2-tile-v">
           <b>
@@ -434,85 +394,27 @@ function Stat({ m, title, field, glyph, onOpen }: { m: string; title?: string; f
           </b>{" "}
           {row.unit.replace(" kcal", "")}
         </span>
-        <span className="v2-tile-s">{row.delta}</span>
       </span>
     </button>
   );
 }
 
-/** The clinic's side of Home: the last visit, three of its readings with their path across visits, and the way into comparing them. */
-function VisitsTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) => void }) {
-  const rows = ["bp", "weight", "bodyfat"].map((id) => metric(id));
+/**
+ * The clinic's side of Home: one small entry per visit, newest first. Each opens
+ * the twin as it stood at that visit; the readings themselves stay on the twin.
+ */
+function VisitEntries({ onOpen }: { onOpen: (visit: number, el: HTMLElement) => void }) {
+  const latest = VISITS[VISITS.length - 1];
   return (
-    <button className="v2-tile v2-visits" data-field="plain" onClick={onOpen}>
-      <Kind name="heart">
-        Visit {LATEST} · {visitDate(LATEST)}
-      </Kind>
-      <span className="v2-vcols">
-        {rows.map((m) => (
-          <VisitCol key={m.id} m={m} />
+    // up to four share the row; past four the row scrolls sideways, the next one peeking at the edge
+    <div className="v2-visit-row" data-many={VISITS.length > 4 ? "" : undefined} aria-label="Clinic visits">
+        {[...VISITS].reverse().map((v) => (
+          <button key={v} className="v2-visit" data-latest={v === latest ? "" : undefined} onClick={(e) => onOpen(v, e.currentTarget)}>
+            <b>Visit {v}</b>
+            <small>{visitDate(v)}</small>
+          </button>
         ))}
-      </span>
-      <span className="v2-vfoot">
-        <span className="v2-vline" aria-label={`${VISITS.length} visits`}>
-          {VISITS.map((n) => (
-            <i key={n} data-on={n === LATEST ? "" : undefined} />
-          ))}
-          <small>{VISITS.length} visits</small>
-        </span>
-        <span className="v2-visits-go">
-          Compare visits
-          <Chevron size={14} />
-        </span>
-      </span>
-    </button>
-  );
-}
-
-/** One reading of the visit: name, number, unit on its own line, its path across visits, and what changed. */
-function VisitCol({ m }: { m: Metric }) {
-  const s = m.scans ?? [];
-  const last = s[s.length - 1];
-  const prev = s[s.length - 2];
-  const diff = prev === undefined ? 0 : last - prev;
-  const flagged = m.status !== "normal";
-  return (
-    <span className="v2-vcol" data-field={m.field}>
-      <small>{m.label}</small>
-      <b>
-        <Num v={m.value} />
-      </b>
-      <em>{m.unit}</em>
-      <VisitTrace values={s} />
-      {flagged ? (
-        <span className="v2-vflag">{m.delta}</span>
-      ) : (
-        <span className="v2-vchange" data-dir={diff > 0 ? "up" : diff < 0 ? "down" : "flat"}>
-          <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden>
-            <path d="M5 1.5 9 8H1z" fill="currentColor" />
-          </svg>
-          {Math.abs(diff).toFixed(m.decimals ?? 0)} {m.unit}
-        </span>
-      )}
-    </span>
-  );
-}
-
-/** The reading at each visit as joined dots, the latest solid. */
-function VisitTrace({ values }: { values: number[] }) {
-  if (values.length < 2) return <span className="v2-vtrace" />;
-  const W = 90;
-  const H = 26;
-  const lo = Math.min(...values);
-  const hi = Math.max(...values);
-  const pts = values.map((v, i) => [4 + (i * (W - 8)) / (values.length - 1), hi === lo ? H / 2 : 4 + ((hi - v) * (H - 8)) / (hi - lo)]);
-  return (
-    <svg className="v2-vtrace" viewBox={`0 0 ${W} ${H}`} aria-hidden>
-      <polyline points={pts.map((p) => p.join(",")).join(" ")} fill="none" stroke="currentColor" strokeOpacity="0.35" strokeWidth="1.5" strokeLinejoin="round" />
-      {pts.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r={i === pts.length - 1 ? 3.6 : 2.4} fill={i === pts.length - 1 ? "currentColor" : "var(--v-card)"} stroke="currentColor" strokeWidth="1.5" />
-      ))}
-    </svg>
+    </div>
   );
 }
 
@@ -522,7 +424,7 @@ function ActivityTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) 
   return (
     <button className="v2-tile" data-field="activity" onClick={onOpen}>
       <Kind name="flame">Activity</Kind>
-      <MiniWeek m={steps} ago={ago} />
+      <HourBars m={steps} ago={ago} />
       <span className="v2-tile-foot">
         <span className="v2-tile-v">
           <b>
@@ -530,7 +432,6 @@ function ActivityTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) 
           </b>{" "}
           {steps.unit}
         </span>
-        <span className="v2-tile-s">{steps.delta}</span>
       </span>
     </button>
   );

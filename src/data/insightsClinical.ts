@@ -48,6 +48,9 @@ export interface ClinicalValue {
   date: string;
 }
 
+/** Whether this member has clinical data behind the form; the captured app always shows the form. */
+export const clinicalAvailable: DataPair<boolean> = { real: true, demo: true };
+
 export const clinicalValues: DataPair<Record<string, ClinicalValue>> = {
   real: {},
   // DEMO

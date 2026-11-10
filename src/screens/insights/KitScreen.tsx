@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Screen } from "@/components/Screen";
 import { photo } from "@/lib/asset";
 import { useDataset } from "@/lib/data";
-import { KITS, kitStatus } from "@/data/insights";
+import { kitSlides, kitStatus } from "@/data/insights";
 import { ArchiveBox, ArrowBack, ArrowRight, Chevron } from "./icons";
 import "./Kit.css";
 
@@ -14,8 +14,10 @@ import "./Kit.css";
 export function KitScreen({ kind: kindProp }: { kind?: string }) {
   const params = useParams();
   const kind = kindProp ?? params.kind ?? "genome";
-  const slides = KITS[kind] ?? KITS.genome;
-  const status = useDataset(kitStatus);
+  const kits = useDataset(kitSlides);
+  const slides = kits[kind] ?? kits.genome;
+  const all = useDataset(kitStatus);
+  const status = all.byKind?.[kind] ?? all;
   // Prototype deep-link for tests/compare: ?slide=N (1-based).
   const [i, setI] = useState(() => Math.max(0, Number(new URLSearchParams(window.location.hash.split("?")[1] ?? "").get("slide") ?? 1) - 1));
   const nav = useNavigate();
@@ -23,6 +25,7 @@ export function KitScreen({ kind: kindProp }: { kind?: string }) {
   const multi = slides.length > 1;
   const go = (n: number) => setI(Math.max(0, Math.min(slides.length - 1, n)));
   const slide = slides[i];
+  const shown = slide.status ?? status;
 
   return (
     <Screen
@@ -85,17 +88,17 @@ export function KitScreen({ kind: kindProp }: { kind?: string }) {
         <div className="kit-card" data-dots={multi || undefined}>
           <div className="kit-visit">
             <span>Visit</span>
-            <b>{status.visit}</b>
+            <b>{shown.visit}</b>
           </div>
           <div className="kit-status">
             <span>Status</span>
-            <span className="kit-pill">{status.status}</span>
+            <span className="kit-pill">{shown.status}</span>
           </div>
-          <div className="kit-msg">{status.message}</div>
+          <div className="kit-msg">{shown.message}</div>
         </div>
 
         <button className="kit-cta" onClick={() => nav(slide.report)}>
-          View Report <ArrowRight size={22} />
+          {slide.cta ?? "View Report"} <ArrowRight size={22} />
         </button>
       </div>
     </Screen>

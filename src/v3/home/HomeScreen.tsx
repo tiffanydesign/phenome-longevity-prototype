@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { BrandBar, followHead, V2Screen } from "../ui/shell";
+import { BrandBar, followHead, HeadBlur, V2Screen } from "../ui/shell";
 import type { Tab } from "../data/metrics";
 import type { GlyphName } from "../ui/glyphs";
 import { IconAll, IconTabActivity, IconTabFood, IconTabHeart, IconTabSleep } from "../ui/icons";
@@ -16,11 +16,11 @@ type DailyTab = Exclude<Tab, "body">;
  * clinic readings live under Clinic visits.
  */
 const TABS: { id: DailyTab; label: string; glyph: GlyphName; field: string }[] = [
-  { id: "all", label: "Summary", glyph: "spark", field: "plain" },
+  { id: "all", label: "Overview", glyph: "spark", field: "plain" },
+  { id: "vitals", label: "Vitals", glyph: "heart", field: "heart" },
+  { id: "food", label: "Nutrition", glyph: "fork", field: "food" },
   { id: "activity", label: "Activity", glyph: "flame", field: "activity" },
   { id: "sleep", label: "Sleep", glyph: "moon", field: "sleep" },
-  { id: "vitals", label: "Heart", glyph: "heart", field: "heart" },
-  { id: "food", label: "Food", glyph: "fork", field: "food" },
 ];
 
 /** How far the brand bar and the tab track travel before both are gone: bar 52, tabs 48 and their gaps. */
@@ -89,6 +89,7 @@ export function HomeScreen() {
   return (
     <V2Screen>
       <div className="v2-head" ref={head}>
+        <HeadBlur />
         {/*
           the brand mark at the left scrolls away with the page; the two round
           buttons at the right stay, gathered on a glass capsule once cards pass under them
@@ -143,7 +144,7 @@ export function HomeScreen() {
   );
 }
 
-/** Each tab's mark; Summary keeps its own four tiles, one filled and the rest to come. */
+/** Each tab's mark; Overview keeps its own four tiles, one filled and the rest to come. */
 const TAB_MARK: Record<DailyTab, () => JSX.Element> = {
   all: IconAll,
   activity: IconTabActivity,

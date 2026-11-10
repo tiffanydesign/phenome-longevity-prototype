@@ -23,7 +23,9 @@ export type GlyphName =
   | "bone"
   | "dna"
   | "bell"
-  | "spark";
+  | "spark"
+  | "bolt"
+  | "dumbbell";
 
 const PATHS: Record<GlyphName, ReactNode> = {
   flame: <path d="M12.6 2.5c.4 3.1 2.2 4.6 3.7 6.2 1.6 1.7 2.7 3.6 2.7 6.1A7 7 0 0 1 12 21.8a7 7 0 0 1-7-7c0-2.4 1-4.3 2.6-5.8.3 1.7 1 2.8 2.2 3.4-.3-3.6.8-6.9 2.8-9.9z" />,
@@ -49,6 +51,18 @@ const PATHS: Record<GlyphName, ReactNode> = {
   bone: <path d="M7.2 3a2.9 2.9 0 0 1 2.7 3.9l7.2 7.2a2.9 2.9 0 1 1 1.9 5.4 2.9 2.9 0 1 1-5.4-1.9l-7.2-7.2A2.9 2.9 0 1 1 4.5 5a2.9 2.9 0 0 1 2.7-2z" />,
   dna: <path d="M7 2.5a1 1 0 0 1 1 1c0 2.3 1.5 3.8 3.4 5.1l.6.4.6-.4C14.5 7.3 16 5.8 16 3.5a1 1 0 1 1 2 0c0 3.3-2.1 5.3-4.3 6.8C15.9 11.8 18 13.8 18 17v3.5a1 1 0 1 1-2 0V17c0-.3 0-.7-.1-1H8.1c-.1.3-.1.7-.1 1v3.5a1 1 0 1 1-2 0V17c0-3.2 2.1-5.2 4.3-6.7C8.1 8.8 6 6.8 6 3.5a1 1 0 0 1 1-1zm5 9.1c-1 .7-2.1 1.5-2.9 2.4h5.8c-.8-.9-1.9-1.7-2.9-2.4z" />,
   bell: <path d="M12 2.5a1.5 1.5 0 0 1 1.5 1.5v.5a6 6 0 0 1 4.5 5.8v3.4l1.6 2.6c.4.7-.1 1.7-.9 1.7H5.3c-.8 0-1.3-1-.9-1.7L6 13.7v-3.4a6 6 0 0 1 4.5-5.8V4A1.5 1.5 0 0 1 12 2.5zM9.5 19h5a2.5 2.5 0 0 1-5 0z" />,
+  // capacity: energy in hand, a bolt with softened corners
+  bolt: <path d="M13.9 2.6c.5.2.8.8.6 1.3L12.9 9.6h5.3c.9 0 1.4 1 .9 1.7l-7.6 10.1c-.6.8-1.9.2-1.6-.8l1.6-5.9H6.2c-.9 0-1.4-1-.9-1.7l7.4-10.1c.3-.4.8-.5 1.2-.3z" />,
+  // workouts: a dumbbell, two plates a side on a short bar
+  dumbbell: (
+    <>
+      <rect x="2.5" y="9" width="3" height="6" rx="1.5" />
+      <rect x="6" y="5.5" width="4" height="13" rx="2" />
+      <rect x="9.5" y="10.8" width="5" height="2.4" rx="1" />
+      <rect x="14" y="5.5" width="4" height="13" rx="2" />
+      <rect x="18.5" y="9" width="3" height="6" rx="1.5" />
+    </>
+  ),
   spark: <path d="M10 3.5c.5 3.9 2.6 6 6.5 6.5-3.9.5-6 2.6-6.5 6.5-.5-3.9-2.6-6-6.5-6.5 3.9-.5 6-2.6 6.5-6.5zm8 10c.3 2 1.3 3 3.3 3.3-2 .3-3 1.3-3.3 3.3-.3-2-1.3-3-3.3-3.3 2-.3 3-1.3 3.3-3.3z" />,
 };
 
@@ -65,12 +79,12 @@ export const METRIC_GLYPH: Record<string, GlyphName> = {
   steps: "steps",
   activity: "flame",
   kcal: "flame",
-  workouts: "figure",
+  workouts: "dumbbell",
   distance: "route",
   sleep: "moon",
   deep: "waves",
   temp: "thermo",
-  capacity: "gauge",
+  capacity: "bolt",
   rhr: "heart",
   hrv: "pulse",
   bp: "heart",

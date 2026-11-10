@@ -1341,3 +1341,14 @@
   font-size: 26px;
   line-height: 1.1;
 }
+
+/* a lens title sits on the page gutter, in line with Studies below it */
+.two-head.twl-head {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* the full review card is flat colour: no dot texture */
+.two-plan::after {
+  content: none;
+}

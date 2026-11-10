@@ -6,6 +6,8 @@ import { CLINICS, CONSULT_TYPES, DURATIONS, PRICE, TIMEZONE, type ConsultTypeId 
 import { Clock, Globe, PersonPin, Pin, Radio, Route, Timer, Video } from "./icons";
 import { BookingDateTime } from "./BookingDateTime";
 import { longDate, slotLabel, wallNow } from "./bookingTime";
+import { EDITION } from "@/lib/edition";
+import { bookingActions } from "@/data/booking-store";
 import "./Booking.css";
 
 const TYPE_ICON: Record<ConsultTypeId, ReactNode> = {
@@ -128,7 +130,17 @@ export function BookingScreen() {
               </div>
               <div className="bk-review-price">{PRICE}</div>
             </div>
-            <button className="bk-continue" onClick={() => setDone(true)}>
+            <button
+              className="bk-continue"
+              onClick={() => {
+                setDone(true);
+                // the clinical edition keeps the booking: Home shows it as upcoming and opens its preview
+                if (EDITION === "v3" && type && clinic) {
+                  bookingActions.book({ type, clinicId: clinic, day, start: slot, minutes: duration, price: PRICE, timezone: TIMEZONE });
+                  window.setTimeout(() => nav("/v3/consultation", { replace: true }), 900);
+                }
+              }}
+            >
               Confirm booking
             </button>
           </>

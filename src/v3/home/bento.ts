@@ -16,32 +16,26 @@ export const SIZES: Record<string, Size[]> = {
   activity: ["s", "w"],
   sleep: ["s", "w"],
   vitals: ["s", "w"],
-  visits: ["w"],
   food: ["s", "w"],
   habits: ["s", "w"],
   consult: ["w", "s"],
   games: ["w", "s"],
-  supplements: ["w"],
-  cgm: ["w"],
 };
 
 const DEFAULT: Slot[] = [
-  { id: "twin", size: "w" },
   { id: "activity", size: "s" },
   { id: "sleep", size: "s" },
   { id: "capacity", size: "s" },
   { id: "workouts", size: "s" },
   { id: "vitals", size: "s" },
   { id: "food", size: "s" },
-  { id: "habits", size: "s" },
-  { id: "visits", size: "w" },
+  { id: "habits", size: "w" },
+  { id: "twin", size: "w" },
   { id: "consult", size: "w" },
   { id: "games", size: "w" },
-  { id: "supplements", size: "w" },
-  { id: "cgm", size: "w" },
 ];
 
-const KEY = "phenome.v2.bento.10";
+const KEY = "phenome.v2.bento.12";
 
 function load(): Slot[] {
   try {

@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { usePrefs } from "./prefs";
+import { EDITION, type Edition } from "./edition";
 
 /**
  * Every module's mock data is a pair:
@@ -12,8 +13,24 @@ export interface DataPair<T> {
   demo: T;
 }
 
+/*
+ * A redesign can read a screen it shares with the captured app from its own
+ * member instead: the shared screen keeps calling useDataset, and the edition
+ * that registered a reading gets that one. The captured app never registers any.
+ */
+const READINGS = new Map<Edition, WeakMap<object, () => unknown>>();
+
+/** Gives `pair`'s screens `read()` in `edition`, whatever the data switch says. */
+export function readAs<T>(edition: Edition, pair: DataPair<T>, read: () => T) {
+  if (!READINGS.has(edition)) READINGS.set(edition, new WeakMap());
+  READINGS.get(edition)!.set(pair, read);
+}
+
 export function useDataset<T>(pair: DataPair<T>): T {
-  return usePrefs().data === "demo" ? pair.demo : pair.real;
+  const mode = usePrefs().data;
+  const read = READINGS.get(EDITION)?.get(pair);
+  if (read) return read() as T;
+  return mode === "demo" ? pair.demo : pair.real;
 }
 
 export function useOffline(): boolean {

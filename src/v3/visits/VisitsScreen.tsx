@@ -3,7 +3,7 @@ import { metric, type Metric } from "../data/metrics";
 import { trim, visitDate, VISITS } from "../study/data";
 import { CHECKPOINTS, clinicShort } from "../twin/checkpoints";
 import { Chevron } from "../ui/icons";
-import { BackBar, useGo, V2Screen } from "../ui/shell";
+import { BackBar, BlurLayers, useGo, V2Screen } from "../ui/shell";
 import { CompareSheet } from "./CompareSheet";
 import { RangeBar } from "./RangeBar";
 import { at, decimalsOf, shortDate, verdictOf, VERDICT_LABEL, type Verdict } from "./verdict";
@@ -118,7 +118,9 @@ export function VisitsScreen() {
 
   return (
     <V2Screen nav={false}>
-      <div className="v2-veil vs-veil" data-at="status" aria-hidden />
+      <div className="v2-veil vs-veil" data-at="status" aria-hidden>
+        <BlurLayers />
+      </div>
       <div className="vs scroll">
         <header className="vs-bar">
           <BackBar />

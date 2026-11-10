@@ -108,29 +108,28 @@ export function StudyScreen() {
         <section className="rv-body" aria-label={study.name}>
           <div className="rv-lead">
             {/* the study's name in the twin's display face; its section rides in the bar below */}
+            {!view.single && (
+              <p className="rv-lead-visit">
+                Visit {visit} · {visitDate(visit)}
+              </p>
+            )}
             <h2>{study.name}</h2>
             <div className="rv-lead-row">
               <div>
                 <Hero value={view.value} unit={view.unit} flagged={view.flagged} />
                 {view.label && <p className="rv-lead-label">{view.label}</p>}
               </div>
-              {view.trend && <VisitTrend values={view.trend} at={view.at ?? 0} />}
+              {view.trend && (
+                <span className="rv-trend-box">
+                  <VisitTrend values={view.trend} at={view.at ?? 0} />
+                  <small>Across {view.trend.length} visits</small>
+                </span>
+              )}
             </div>
             {view.status && <Pill tone={view.tone ?? ""}>{view.status}</Pill>}
           </div>
 
-          {view.single ? (
-            <p className="rv-when">Recorded once, {view.single}</p>
-          ) : (
-            <div className="rv-visits" role="tablist" aria-label="Visit">
-              {VISITS.map((v) => (
-                <button key={v} role="tab" aria-selected={v === visit} onClick={() => setVisit(v)}>
-                  Visit {v}
-                </button>
-              ))}
-              <span>{visitDate(visit)}</span>
-            </div>
-          )}
+          {view.single && <p className="rv-when">Recorded once, {view.single}</p>}
 
           {view.cards}
         </section>
@@ -141,7 +140,7 @@ export function StudyScreen() {
           <IconClose />
         </button>
         <span />
-        <button className="rv-top-list" aria-label="All studies" onClick={() => setListOpen(true)}>
+        <button className="rv-top-list" aria-label="All studies and visits" onClick={() => setListOpen(true)}>
           <i />
           <i />
           <i />
@@ -171,7 +170,7 @@ export function StudyScreen() {
         </nav>
       </div>
 
-      {listOpen && <StudyList at={index} visit={visit} onClose={() => setListOpen(false)} />}
+      {listOpen && <StudyList at={index} visit={visit} onVisit={setVisit} onClose={() => setListOpen(false)} />}
       <HomeIndicator />
     </div>
   );

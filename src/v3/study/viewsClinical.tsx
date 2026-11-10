@@ -1,5 +1,5 @@
 import { allLabs, labTotals, Labs } from "./blocks";
-import { STUDIES } from "./catalog";
+import { AtThisVisit } from "./overview";
 import { IN, M, pick, placeOf, series, trim, VISITS, words, type Rec, type StudyView } from "./data";
 import { Bullets, Card, Cells, Facts, Finding, Heartbeat, Note, Parts, Pill, Range, Ring, type Tone } from "./parts";
 
@@ -13,6 +13,25 @@ function labStudy(study: string, visit: number): StudyView {
     ...(t.outside ? IN("mon", `${t.outside} outside range`) : IN("ok", "All in range")),
     cards: <Labs study={study} visit={visit} />,
   };
+}
+
+/** The history in words: what is on record as label and entry; what is not, said once in a quiet line. */
+function History({ h }: { h: Rec }) {
+  const rows = [
+    { label: "Chief concerns", list: h.chiefConcerns as string[], none: "" },
+    { label: "Conditions", list: h.conditions as string[], none: "conditions" },
+    { label: "Medication", list: h.medications as string[], none: "medication" },
+    { label: "Allergies", list: h.allergies as string[], none: "allergies" },
+  ];
+  const kept = rows.filter((r) => r.list.length);
+  const none = rows.filter((r) => !r.list.length && r.none).map((r) => r.none);
+  const said = none.length > 1 ? `${none.slice(0, -1).join(", ")} or ${none[none.length - 1]}` : none[0];
+  return (
+    <>
+      {kept.length > 0 && <Facts items={kept.map((r) => ({ label: r.label, value: r.list.join(", ") }))} />}
+      {said && <p className="rv-quiet">No {said} on record.</p>}
+    </>
+  );
 }
 
 export const CLINICAL: Record<string, (visit: number) => StudyView> = {
@@ -36,41 +55,53 @@ export const CLINICAL: Record<string, (visit: number) => StudyView> = {
       at: placeOf(M.vitals, visit),
       cards: (
         <>
-          <Card title="Vitals">
-            <Cells items={[{ label: "Resting heart", value: v.pulseBpm, unit: "bpm" }, { label: "Blood pressure", value: `${v.systolicBloodPressureMmhg}/${v.diastolicBloodPressureMmhg}` }, { label: "Studies", value: STUDIES.length }]} />
-          </Card>
-          <Card title="Body">
-            <Cells
-              items={[
-                { label: "Body fat", value: trim(c.bodyFatPercent), unit: "%" },
-                { label: "Visceral fat", value: c.visceralFatRating },
-                { label: "Bone T-score", value: trim(Math.min(...b.sites.map((x: Rec) => x.tScore))) },
-                { label: "Skin lesions", value: s.lesions.length },
-              ]}
-            />
-          </Card>
-          <Card title="Omics">
-            <Cells items={[{ label: "Molecular layers", value: M.overview.layers }, { label: "Proteins", value: pr?.proteins }, { label: "Metabolites", value: M.overview.metabolitesAt[String(visit)] || null }, { label: "Gut species", value: gut?.richness }]} />
-          </Card>
+          <AtThisVisit
+            visit={visit}
+            areas={[
+              {
+                name: "Vitals",
+                readings: [
+                  { label: "Blood pressure", value: `${v.systolicBloodPressureMmhg}/${v.diastolicBloodPressureMmhg}`, unit: "mmHg", study: "natural" },
+                  { label: "Resting heart", value: v.pulseBpm, unit: "bpm", study: "heart" },
+                ],
+              },
+              {
+                name: "Body",
+                readings: [
+                  { label: "Body fat", value: trim(c.bodyFatPercent), unit: "%", study: "composition" },
+                  { label: "Visceral fat", value: c.visceralFatRating, study: "composition" },
+                  { label: "Bone T-score", value: trim(Math.min(...b.sites.map((x: Rec) => x.tScore))), study: "skeletal" },
+                  { label: "Skin lesions", value: s.lesions.length, study: "dermatology" },
+                ],
+              },
+              {
+                name: "Omics",
+                meta: `${M.overview.layers} molecular layers`,
+                readings: [
+                  { label: "Proteins", value: pr?.proteins, study: "proteomics" },
+                  { label: "Metabolites", value: M.overview.metabolitesAt[String(visit)] || null, study: "metabolomics" },
+                  { label: "Gut species", value: gut?.richness, study: "guthealth" },
+                ],
+              },
+            ]}
+          />
           <Card title="Patient history" aside={<span className="rv-count">{h.date}</span>}>
-            <Facts
-              items={[
-                ...(h.chiefConcerns.length ? [{ label: "Chief concerns", value: h.chiefConcerns.join(", ") }] : []),
-                { label: "Conditions", value: h.conditions.join(", ") || "None recorded" },
-                { label: "Medication", value: h.medications.join(", ") || "None recorded" },
-                { label: "Allergies", value: h.allergies.join(", ") || "None recorded" },
-              ]}
-            />
+            <History h={h} />
           </Card>
           <Card title="Diagnostic ultrasound">
             {us.studies.map((s: Rec) => (
-              <Finding key={s.region} tone="" title={s.region} detail={s.finding} />
+              <Finding key={s.region} tone={/^no /i.test(s.finding) ? "ok" : ""} title={s.region} detail={s.finding} />
             ))}
             <Note>{us.impression}</Note>
           </Card>
           <Card title="GP examination">
             <Facts lead={gp.clinicalImpression} items={gp.findings} />
-            <Bullets items={gp.recommendations} />
+            {gp.recommendations.length > 0 && (
+              <>
+                <p className="rv-sub">Recommended</p>
+                <Bullets items={gp.recommendations} />
+              </>
+            )}
           </Card>
         </>
       ),

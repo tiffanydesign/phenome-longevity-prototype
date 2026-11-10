@@ -58,9 +58,7 @@
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }
-.v2-pager::-webkit-scrollbar,
-.v2-page::-webkit-scrollbar,
-.v2-report-track::-webkit-scrollbar {
+.v2-pager::-webkit-scrollbar {
   display: none;
 }
 .v2-page {
@@ -69,80 +67,8 @@
   overflow-y: auto;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  scrollbar-width: none;
   /* starts under the frosted bar (status 44 + title 58 + tabs 50), so cards scroll up behind it */
   padding: calc(var(--status-h) + 122px) 16px 112px;
-}
-
-/* ---------- report strip ---------- */
-.v2-report {
-  position: relative;
-  margin-bottom: 12px;
-  border-radius: var(--v-r);
-  /* a message, quieter than the tiles: white, held by a hairline of the brand navy */
-  background: var(--v-card);
-  box-shadow: none;
-}
-.v2-report-track {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-.v2-report-track button {
-  flex: 0 0 100%;
-  padding: 15px 44px 13px 18px;
-  scroll-snap-align: start;
-  font: 700 15px/1.34 var(--v-text);
-  text-wrap: pretty;
-}
-.v2-report-track button span {
-  display: block;
-  margin-top: 10px;
-  min-height: 20px;
-  text-align: right;
-  color: var(--v-navy);
-}
-/* closes the message in view */
-.v2-report-close {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  z-index: 1;
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--v-ink-3);
-}
-.v2-report-close svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* round dots, each its own button: 8px to see, 28px to hit */
-.v2-report-dots {
-  position: absolute;
-  left: 8px;
-  bottom: 9px;
-  display: flex;
-}
-.v2-report-dots button {
-  width: 22px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-}
-.v2-report-dots i {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #26398033;
-  transition: background 0.24s linear;
-}
-.v2-report-dots [aria-current] i {
-  background: var(--v-navy);
 }
 
 /* ---------- bento ---------- */
@@ -386,64 +312,6 @@
   from {
     stroke-dasharray: 0 100;
   }
-}
-/* day-on-day comparison: on a wide card it fills the left column between the name and the number */
-.v2-tile-compare {
-  display: none;
-  position: relative;
-  width: 52%;
-  margin-top: 14px;
-}
-.v2-slot[data-size="w"] .v2-tile-compare {
-  display: block;
-}
-/* and the mark grows into the right column, centred on the card's height */
-.v2-slot[data-size="w"] .v2-tile:has(.v2-tile-compare) .v2-glyph {
-  top: 50%;
-  right: 18px;
-  width: 132px;
-  height: 132px;
-  transform: translateY(-50%);
-}
-.v2-compare {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.v2-compare-row {
-  display: grid;
-  grid-template-columns: 62px 1fr;
-  align-items: center;
-  gap: 6px;
-}
-.v2-compare-row small {
-  font: 600 11px/1 var(--v-text);
-  color: var(--fg-2);
-}
-.v2-compare-bar {
-  display: block;
-}
-.v2-compare-bar i {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  height: 20px;
-  padding: 0 8px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  background: var(--v-fill);
-}
-.v2-compare-row[data-now] .v2-compare-bar i {
-  background: var(--mid);
-}
-.v2-compare-bar b {
-  font: 700 12px/1 var(--v-text);
-  font-variant-numeric: tabular-nums;
-  color: var(--fg);
-}
-.v2-compare-row[data-now] .v2-compare-bar b {
-  color: #fff;
 }
 .v2-tile-go {
   position: absolute;
@@ -747,7 +615,7 @@
 .v2-date[data-past] > span {
   color: var(--v-navy);
 }
-.v2-cat .v2-tip + .v2-group .v2-sec {
+.v2-cat .v2-verdict + .v2-group .v2-sec {
   margin-top: 20px;
 }
 /* a reading as a compact card: name, then the number as the largest thing, then its change */
@@ -820,46 +688,56 @@
   background: var(--v-gold-pill);
 }
 
-
-/* ---------- the tab's tip: one sentence, an optional history, closed with a cross or a swipe ---------- */
-.v2-tip {
-  position: relative;
-  margin: 4px 0 14px;
-  padding: 16px 18px 12px;
+/* ---------- the top of every tab: the verdict, then the week it rests on ---------- */
+.v2-verdict {
+  margin: 4px 4px 4px;
+}
+/* three steps, each one level quieter: where you are, the answer, why */
+.v2-verdict-title {
+  margin: 0 0 10px;
+  font: var(--v-t-section);
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+}
+.v2-verdict > h2 {
+  margin: 0;
+  font: 650 19px/1.25 var(--v-text);
+  letter-spacing: -0.015em;
+  /* the answer in the tab's own colour, the one its selected mark wears */
+  color: color-mix(in srgb, var(--mid) 86%, var(--v-ink));
+  text-wrap: balance;
+}
+.v2-verdict > p {
+  margin: 6px 0 0;
+  font: 400 16px/1.42 var(--v-text);
+  letter-spacing: -0.005em;
+  color: var(--v-ink-2);
+  text-wrap: pretty;
+  max-width: 34em;
+}
+.v2-trend {
+  margin: 18px -4px 0;
+  padding: 14px 16px 10px;
   border-radius: var(--v-r);
   background: var(--v-card);
   color: var(--v-ink);
-  box-shadow: none;
-  touch-action: pan-y;
-  transition:
-    transform 0.22s var(--v-ease),
-    opacity 0.22s linear;
 }
-.v2-tip-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--v-ink-2);
-  background: var(--v-fill);
+.v2-trend > header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 6px;
 }
-.v2-tip-close svg {
-  width: 14px;
-  height: 14px;
+.v2-trend h3 {
+  margin: 0;
+  font: 600 15px/1.2 var(--v-text);
+  color: color-mix(in srgb, var(--mid) 72%, var(--v-ink));
 }
-.v2-tip-text {
-  margin: 0 34px 0 0;
-  font: 600 16px/1.35 var(--v-text);
-  letter-spacing: -0.01em;
-  color: var(--v-ink);
+.v2-trend > header span {
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-3);
 }
-.v2-tip-title {
-  margin: 14px 0 4px;
-  font: 700 13px/1.2 var(--v-text);
+.v2-trend .v2-history {
   color: var(--mid);
 }
 .v2-history {
@@ -880,7 +758,6 @@
 .v2-home-group[aria-label="Your twin"] {
   margin-top: var(--v-s-gap);
 }
-
 
 /* =====================================================================
  * Clinical edition: a fixed bar, reading chips, and cards that carry
@@ -1159,163 +1036,65 @@
   letter-spacing: -0.02em;
 }
 
-/* clinic visits on Home: the last visit, three of its readings side by side, and the way into comparing them */
-/* three rows tall: the head, the three readings, and the foot all show in full */
-.v2-slot[data-card="visits"] {
-  grid-row: span 3;
-}
-.v2-visits {
-  gap: 14px;
-  /* the card settles into a faint wash of the brand at its foot */
-  background: linear-gradient(180deg, var(--v-card) 55%, color-mix(in srgb, var(--v-navy) 6%, var(--v-card)));
-}
-.v2-vcols {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
+/* clinic visits on Home: one small entry per visit, newest first, the latest in navy */
+.v2-visit-row {
+  margin-top: var(--v-s-gap, 8px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--v-s-gap, 8px);
 }
-/* each reading its own pale tile in its hue: name, number, unit, trace, change on the same baselines */
-.v2-visits .v2-vcol {
+.v2-visit-row[data-many] {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 16px;
+  margin-inline: -16px;
+  padding-inline: 16px;
+  scrollbar-width: none;
+}
+.v2-visit-row[data-many]::-webkit-scrollbar {
+  display: none;
+}
+.v2-visit-row[data-many] > .v2-visit {
+  /* three and a bit across, so the row shows there is more */
+  flex: 0 0 calc((100% - 3 * var(--v-s-gap, 8px)) / 3.6);
+  scroll-snap-align: start;
+}
+.v2-visit {
   min-width: 0;
-  display: grid;
-  grid-template-rows: auto auto auto minmax(30px, 1fr) auto;
-  align-content: start;
-  padding: 11px 9px 10px;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--mid) 9%, var(--v-card));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 12px 10px;
+  border-radius: 16px;
+  background: var(--v-card);
   text-align: left;
+  transition: transform 0.15s;
 }
-.v2-vcol small {
-  overflow: hidden;
-  font: 600 11.5px/1.2 var(--v-text);
-  letter-spacing: -0.01em;
-  color: color-mix(in srgb, var(--mid) 62%, var(--v-ink));
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.v2-visit:active {
+  transform: scale(0.97);
 }
-.v2-vcol b {
-  margin-top: 8px;
-  font: 650 21px/1 var(--v-text);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.025em;
+.v2-visit b {
+  font: 650 15px/1.1 var(--v-text);
+  letter-spacing: -0.015em;
   color: var(--v-ink);
   white-space: nowrap;
 }
-.v2-vcol em {
-  margin-top: 3px;
-  font: 500 11.5px/1.2 var(--v-text);
-  font-style: normal;
+.v2-visit small {
+  font: 500 12px/1.2 var(--v-text);
   color: var(--v-ink-3);
-}
-.v2-vtrace {
-  align-self: center;
-  width: 100%;
-  height: 26px;
-  color: var(--mid);
-}
-.v2-vchange,
-.v2-vflag {
-  justify-self: start;
-  max-width: 100%;
-  overflow: hidden;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  height: 22px;
-  padding: 0 8px;
-  border-radius: 11px;
-  font: 600 11.5px/1 var(--v-text);
   white-space: nowrap;
-  text-overflow: ellipsis;
 }
-.v2-vchange {
-  color: var(--v-ink-2);
-  background: color-mix(in srgb, var(--v-card) 70%, transparent);
-}
-.v2-vchange[data-dir="down"] svg {
-  transform: rotate(180deg);
-}
-.v2-vchange[data-dir="flat"] svg {
-  display: none;
-}
-.v2-vflag {
-  color: #7a5600;
-  background: #fff0cc;
-}
-:root[data-theme="dark"] .v2-vflag {
-  color: #ffd66b;
-  background: #3d300c;
-}
-/* the foot: every visit as a dot on one line, the latest solid, and the way into comparing them */
-.v2-vfoot {
-  width: 100%;
-  padding-top: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  border-top: 0.5px solid var(--v-line);
-}
-.v2-vline {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.v2-vline i {
-  position: relative;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--v-navy) 28%, var(--v-card));
-}
-.v2-vline i + i::before {
-  content: "";
-  position: absolute;
-  right: 7px;
-  top: 3px;
-  width: 10px;
-  height: 1px;
-  background: color-mix(in srgb, var(--v-navy) 22%, var(--v-card));
-}
-.v2-vline i[data-on] {
-  width: 9px;
-  height: 9px;
+.v2-visit[data-latest] {
   background: var(--v-navy);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-navy) 16%, var(--v-card));
 }
-.v2-vline i[data-on]::before {
-  top: 4px;
+.v2-visit[data-latest] b,
+.v2-visit[data-latest] small {
+  color: #fff;
 }
-.v2-vline small {
-  margin-left: 4px;
-  font: 500 12.5px/1 var(--v-text);
-  color: var(--v-ink-2);
-}
-.v2-visits-go {
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  height: 32px;
-  padding: 0 10px 0 14px;
-  border-radius: 16px;
-  font: 600 14px/1 var(--v-text);
-  color: var(--v-navy);
-  background: color-mix(in srgb, var(--v-navy) 9%, var(--v-card));
-}
-
-/* the week behind the number, between the name and the reading */
-.v2-mini {
-  display: block;
-  width: 100%;
-  height: 40px;
-  margin: auto 0 12px;
-}
-.v2-mini + .v2-tile-foot {
-  margin-top: 0;
+.v2-visit[data-latest] small {
+  opacity: 0.75;
 }
 
 /* the twin's door on Home: one short row, a bust on a pale sky disc, two lines and a way in */
@@ -1466,29 +1245,125 @@ button.v2-svc:active {
   background: var(--v-fill);
 }
 
-/* once the page scrolls, content fades out under the status bar instead of running through it:
-   a light frosted veil across the status bar, then a soft falloff below it */
-.v2-head::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  z-index: -1;
-  height: calc(var(--status-h) + 36px);
-  pointer-events: none;
-  /* a veil, not a cover: content stays faintly visible through the status bar */
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--v-ground, var(--v-bg)) 42%, transparent) 0,
-    color-mix(in srgb, var(--v-ground, var(--v-bg)) 22%, transparent) var(--status-h),
-    transparent 100%
-  );
-  backdrop-filter: blur(2.5px);
-  -webkit-backdrop-filter: blur(2.5px);
-  -webkit-mask-image: linear-gradient(#000 0, #000 var(--status-h), transparent 100%);
-  mask-image: linear-gradient(#000 0, #000 var(--status-h), transparent 100%);
-  opacity: 0;
-  transition: opacity 0.2s linear;
+/* day-on-day comparison bars, used on the Capacity page */
+.v2-compare {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
-.v2-head[data-under]::before {
-  opacity: 1;
+.v2-compare-row {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  align-items: center;
+  gap: 6px;
+}
+.v2-compare-row small {
+  font: 600 11px/1 var(--v-text);
+  color: var(--fg-2);
+}
+.v2-compare-bar {
+  display: block;
+}
+.v2-compare-bar i {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 20px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: var(--v-fill);
+}
+.v2-compare-row[data-now] .v2-compare-bar i {
+  background: var(--mid);
+}
+.v2-compare-bar b {
+  font: 700 12px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+.v2-compare-row[data-now] .v2-compare-bar b {
+  color: #fff;
+}
+
+
+/* the devices button: the latest-synced wearable's own mark inside a ring that
+   fills with its battery; a bolt sits in a gap at the top while it charges */
+.v2-dev-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+.v2-dev-ring circle {
+  fill: none;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+.v2-dev-track {
+  stroke: color-mix(in srgb, var(--v-ink) 14%, transparent);
+}
+.v2-dev-arc {
+  stroke: #34c759;
+  transition: stroke-dasharray 0.4s ease;
+}
+.v2-dev[data-low] .v2-dev-arc {
+  stroke: #ff3b30;
+}
+/* the bolt is drawn upright, so it turns back against the ring's rotation */
+.v2-dev-bolt {
+  fill: var(--v-ink);
+  transform: rotate(90deg);
+  transform-origin: 19px 19px;
+}
+.v2-dev[data-full] .v2-dev-bolt {
+  fill: #34c759;
+}
+
+/* a service with something booked: a small green badge above its title */
+.v2-svc-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 18px;
+  margin-bottom: 1px;
+  padding: 0 7px 0 6px;
+  border-radius: 9px;
+  font: 650 11px/1 var(--v-text);
+  color: #1d7a3e;
+  background: color-mix(in srgb, #34c759 16%, var(--v-card));
+}
+.v2-svc-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34c759;
+}
+:root[data-theme="dark"] .v2-svc-badge {
+  color: #6be08f;
+}
+.v2-svc-text .v2-svc-t {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* the booked card's date line runs a little longer: its gaps tighten so the time stays whole */
+.v2-svc:has(.v2-svc-badge) {
+  gap: 10px;
+  padding-right: 14px;
+}
+.v2-svc:has(.v2-svc-badge) .v2-svc-s {
+  font-size: 12.5px;
+  letter-spacing: -0.005em;
+}
+
+/* Today's cards carry a chart and one number, no line under it, so their rows run shorter */
+.v2-home-group[aria-label="Today"] .v2-bento {
+  grid-auto-rows: 76px;
 }

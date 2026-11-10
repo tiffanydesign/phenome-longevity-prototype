@@ -238,6 +238,74 @@ const [newbornEntry] = of("omics.newborn_screening");
 const newborn = screened(screeningFindings(table(newbornEntry, ["familyrisk_newborn_newborn_monogenic", "familyrisk_newborn_monogenic", "newborn_monogenic"])));
 const newbornCarrier = screeningFindings(table(newbornEntry, ["familyrisk_newborn_newborn_carrier_status"], true)).length;
 
+/* the genome's report lists, for the app's own genetic report screens (conditions, drugs, traits, screening) */
+const lead = (v, n = 360) => {
+  const t = String(v ?? "").replace(/\s+/g, " ").trim();
+  if (t.length <= n) return t;
+  const cut = t.slice(0, n);
+  const end = cut.lastIndexOf(". ");
+  return end > n / 2 ? cut.slice(0, end + 1) : `${cut.trimEnd()}…`;
+};
+const firstId = (v) => String(v ?? "").split("&").find((x) => /^rs\d+/.test(x)) ?? null;
+const words = (v) => (has(v) ? String(v).replace(/_/g, " ") : null);
+const RANKED = ["very_important", "important", "noteworthy"];
+const PHARMA = { vip: "vip", high: "high", low: "low" };
+const screenRows = (rows) =>
+  screeningFindings(rows).map((r) => ({
+    disease: r.disease || r.genes,
+    gene: r.genes ?? null,
+    variant: r.hgvsc ?? null,
+    zygosity: r.zygosity ?? null,
+    inheritance: r.localized?.inheritanceMeaning ?? r.inheritance ?? null,
+    classification: words(r.acmg_classification),
+    message: r.message ?? null,
+  }));
+const genetics = {
+  conditions: inheritance
+    .filter((r) => RANKED.includes(String(r.importance_code ?? "").toLowerCase()))
+    .sort((a, b) => RANKED.indexOf(a.importance_code) - RANKED.indexOf(b.importance_code))
+    .map((r) => ({
+      importance: r.importance_code,
+      disease: r.localized?.disease || r.disease,
+      gene: r.symbol || r.genes,
+      variant: r.hgvsc ?? null,
+      inheritance: r.localized?.inheritance || r.inheritances || null,
+      rsid: firstId(r.existing_variation),
+      zygosity: r.localized?.zygosity || r.zygosity || null,
+      classification: words(r.acmg_classification),
+      category: r.localized?.category || r.category || null,
+      riskFactors: lead(r.localized?.riskFactors, 900),
+      lifestyle: lead(r.localized?.lifestyle, 900),
+      epidemiology: lead(r.localized?.epidemiology, 900),
+    })),
+  drugs: table(genomeEntry, ["genomics_pharmaco"])
+    .filter((r) => PHARMA[String(r.importance_code ?? "").toLowerCase()])
+    .sort((a, b) => (numeric(b.score) ?? 0) - (numeric(a.score) ?? 0))
+    .map((r) => ({
+      importance: PHARMA[String(r.importance_code).toLowerCase()],
+      drug: r.localized?.drug || r.drug_s,
+      gene: r.gene,
+      genotype: r.pharma_genotype || r.genotype,
+      category: r.phenotype_category,
+      rsid: has(r.rsid) ? r.rsid : null,
+      evidence: r.level_of_evidence ?? null,
+      modifiers: r.level_modifiers ?? null,
+      annotation: lead(r.localized?.annotation || r.annotation_text, 400),
+    })),
+  traits: table(genomeEntry, ["genomics_traits"]).map((r) => ({
+    name: r.localized?.name || r.traits_name,
+    category: r.localized?.category || r.category,
+    gene: r.genes,
+    genotype: r.patient_genotypes,
+    level: numeric(r.traitReference?.score),
+    summary: lead(r.localized?.levelText || r.genotype_description, 260),
+    description: lead(r.localized?.description || r.description, 420),
+  })),
+  carrier: screenRows(table(carrierEntry, ["familyrisk_carrier_carrier_screening", "familyrisk_carrier_screening", "carrier_screening"])),
+  newborn: screenRows(table(newbornEntry, ["familyrisk_newborn_newborn_monogenic", "familyrisk_newborn_monogenic", "newborn_monogenic"])),
+  newbornCarrier: screenRows(table(newbornEntry, ["familyrisk_newborn_newborn_carrier_status"], true)),
+};
+
 const RISK = { ELEVATED: "Elevated", MILDLY_ELEVATED: "Mildly elevated" };
 const domainWords = (v) => String(v ?? "").split("_").filter(Boolean).map(human).join(" / ");
 const [gpgsEntry] = of("omics.gpgs");
@@ -262,7 +330,7 @@ function microbiome(code, mode) {
     const phyla = table(e, [t.top])
       .slice(0, 5)
       .sort((a, b) => (numeric(b.patient_value) ?? 0) - (numeric(a.patient_value) ?? 0))
-      .map((r) => ({ name: taxon(refs.bacteria[String(r.bacteria_id)]), value: Number(r.patient_value) }));
+      .map((r) => ({ name: taxon(refs.bacteria[String(r.bacteria_id)]), value: Number(r.patient_value), flag: r.flag ?? null }));
     const scores = table(e, [t.sum])
       .map((r) => {
         const ref = refs.diseases?.[String(r.disease_id)];
@@ -281,6 +349,8 @@ function microbiome(code, mode) {
       // the low scores lowest first, or the lowest one when none is low
       lowest: (low.length ? low : scores).slice(0, low.length ? 3 : 1),
       low,
+      // every condition score, lowest first: the app's report reads the whole list
+      scores,
     };
   });
 }
@@ -312,6 +382,56 @@ const transcriptome = of("omics.transcriptome").map((e) => {
   if (cells.length > 5) cells = cells.slice(0, 4).concat([{ name: "Others", value: cells.slice(4).reduce((n, c) => n + c.value, 0) }]);
   return { ...stamp(e), predicted: numeric(report.biological_age_predicted), chronological: numeric(report.biological_age_chronological), gap: numeric(report.biological_age_gap), signals, cells };
 });
+
+/* the latest transcriptome as the app's own report screen reads it: the three estimates, the disease axes, the immune cells against their reference */
+const transcriptomeReport = (() => {
+  const e = of("omics.transcriptome").at(-1);
+  if (!e) return null;
+  const r = single(e, ["transcriptome_reports"]);
+  const risks = table(e, ["transcriptome_disease_risks"]);
+  const order = ["high", "moderate", "low"];
+  const top = risks.map((x) => String(x.confidence ?? "").toLowerCase()).sort((a, b) => order.indexOf(a) - order.indexOf(b))[0] ?? null;
+  const row = single(e, ["transcriptome_cell_proportions"]);
+  const refs = e.references?.cellTypes ?? {};
+  const refOf = (k) => Object.entries(refs).find(([key]) => key.toLowerCase() === k.toLowerCase())?.[1] ?? {};
+  let shortlist = [];
+  try {
+    shortlist = JSON.parse(r.disease_top3_shortlist_json ?? "[]");
+  } catch {
+    shortlist = [];
+  }
+  return {
+    date: day(takenAt(e)),
+    age: { predicted: numeric(r.biological_age_predicted), chronological: numeric(r.biological_age_chronological), gap: numeric(r.biological_age_gap), percentile: numeric(r.biological_age_percentile), missing: numeric(r.biological_age_missing_genes) },
+    bmi: { predicted: numeric(r.bmi_predicted), percentile: numeric(r.bmi_percentile), missing: numeric(r.bmi_missing_genes) },
+    smoking: { probability: numeric(r.smoking_probability), percentile: numeric(r.smoking_percentile), call: r.smoking_call ?? null, missing: numeric(r.smoking_missing_genes) },
+    disease: {
+      healthy: numeric(r.disease_healthy_score),
+      genes: numeric(r.disease_genes_used),
+      missing: numeric(r.disease_missing_genes),
+      axes: risks.length,
+      highest: top ? human(top) : null,
+      shortlist,
+      signals: risks.filter((x) => ["high", "moderate"].includes(String(x.confidence ?? "").toLowerCase())).map((x) => ({ name: x.disease, confidence: human(x.confidence) })),
+    },
+    cells: Object.keys(row)
+      .filter((k) => k !== "sourceRow" && k !== "localized" && numeric(row[k]) !== null)
+      .map((k) => {
+        const ref = refOf(k);
+        const loc = row.localized?.[k] ?? ref.localized ?? {};
+        return {
+          key: k,
+          name: loc.name || human(k),
+          pct: Number(row[k]) * 100,
+          low: numeric(ref.lowerBoundPct),
+          high: numeric(ref.upperBoundPct),
+          definition: lead(loc.definition, 520),
+          analysis: { low: lead(loc.analysisLow, 420), normal: lead(loc.analysisNormal, 420), high: lead(loc.analysisHigh, 420) },
+          lifestyle: { low: lead(loc.lifestyleLow, 420), normal: lead(loc.lifestyleNormal, 420), high: lead(loc.lifestyleHigh, 420) },
+        };
+      }),
+  };
+})();
 
 const SYSTEMS = [
   ["circulatory", "Circulatory system", "Heart and blood vessels"],
@@ -430,11 +550,13 @@ const member = {
   carrier,
   newborn,
   newbornCarrier,
+  genetics,
   gpgs,
   gut,
   oral,
   vaginal,
   transcriptome,
+  transcriptomeReport,
   proteomics,
   metabolomics,
   overview,

@@ -157,6 +157,16 @@
   color: var(--c-text-2);
 }
 
+/* no reports at all: the same layout as the error, with a centred message */
+.rep-none {
+  padding: 220px 32px 0;
+  text-align: center;
+}
+.rep-none-text {
+  margin-top: 14px;
+  text-align: center;
+}
+
 /* ---------- dark ---------- */
 :root[data-theme="dark"] .rep-hero,
 :root[data-theme="dark"] .rep-row {

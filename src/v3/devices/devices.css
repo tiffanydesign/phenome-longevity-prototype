@@ -4,7 +4,6 @@
   overflow-y: auto;
   padding: var(--status-h) 16px 48px;
   background: var(--v-bg);
-  scrollbar-width: none;
 }
 .dv-lead {
   margin: 4px 4px 0;

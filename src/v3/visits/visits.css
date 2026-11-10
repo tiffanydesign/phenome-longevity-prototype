@@ -8,24 +8,6 @@
   overflow-y: auto;
   padding: 0 16px calc(48px + env(safe-area-inset-bottom));
   background: var(--v-bg);
-  scrollbar-width: none;
-}
-.vs::-webkit-scrollbar {
-  display: none;
-}
-/* the status bar: a light frosted veil, the page stays faintly visible under the clock */
-.vs-veil {
-  height: calc(var(--status-h) + 28px);
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--v-bg) 42%, transparent) 0,
-    color-mix(in srgb, var(--v-bg) 22%, transparent) var(--status-h),
-    transparent 100%
-  );
-  backdrop-filter: blur(2.5px);
-  -webkit-backdrop-filter: blur(2.5px);
-  -webkit-mask-image: linear-gradient(#000 0, #000 var(--status-h), transparent 100%);
-  mask-image: linear-gradient(#000 0, #000 var(--status-h), transparent 100%);
 }
 .vs-bar {
   padding-top: calc(var(--status-h) + 6px);
@@ -636,3 +618,4 @@
   font-variant-numeric: tabular-nums;
   color: var(--v-ink-2);
 }
+

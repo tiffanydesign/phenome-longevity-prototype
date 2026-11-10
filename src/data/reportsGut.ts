@@ -43,6 +43,8 @@ export interface GutFinding {
 }
 
 export interface GutReport {
+  /** the page title; the captured app only ever names the gut report */
+  title?: string;
   intro: string;
   score: number;
   scoreLabel: string;
@@ -195,3 +197,5 @@ const report: GutReport = {
 };
 
 export const gutData: DataPair<GutReport> = { real: report, demo: report };
+/** The captured app opens the gut report from its oral kit too, so the oral pair starts as the same report. */
+export const oralData: DataPair<GutReport> = { real: report, demo: report };

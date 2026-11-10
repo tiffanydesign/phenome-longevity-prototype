@@ -144,6 +144,9 @@ export function TwinScreen() {
           </div>
         )}
 
+        {/* trends compares visits across every lens at once, so it has no lens tabs */}
+        {!trends && (
+          <>
         {/*
           the three lenses as tabs: a mark and a name, nothing to count. A lens with a
           study to look at carries one quiet dot; the numbers wait in the readings below.
@@ -175,17 +178,11 @@ export function TwinScreen() {
           })}
         </div>
 
+          </>
+        )}
+
         {trends ? (
-          overview ? (
-            LENS_ORDER.map((l, i) => (
-              <div key={l} className="tw-trends-lens">
-                <h2 className="tw-trends-title">{LENS_LABEL[l]}</h2>
-                <TwinTrends lens={l} span={i === 0} />
-              </div>
-            ))
-          ) : (
-            <TwinTrends key={lens} lens={lens} />
-          )
+          <TwinTrends />
         ) : overview ? (
           <TwinOverview visit={visit} past={past} onLens={(l) => setParams(query(l, null, view))} />
         ) : (

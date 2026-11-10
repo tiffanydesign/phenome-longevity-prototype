@@ -110,9 +110,22 @@ export const REPORT_TITLES: Record<string, string> = {
   newborn: "Newborn Screening",
 };
 
+export interface ScreeningFinding {
+  disease: string;
+  gene: string | null;
+  variant: string | null;
+  zygosity: string | null;
+  inheritance: string | null;
+  classification: string | null;
+}
+
 export interface ScreeningSummary {
   intro: string;
   total: number;
+  /** what the screen found; the captured account has none, so the page shows All Clear */
+  findings?: ScreeningFinding[];
+  /** the summary's count label */
+  totalLabel?: string;
 }
 
 /** capture: genome_report/top — the test account has no newborn findings. */
@@ -120,3 +133,6 @@ export const newbornData: DataPair<ScreeningSummary> = {
   real: { intro: "Early detection screening identifies genetic conditions that can be treated or managed when caught early in life.", total: 0 },
   demo: { intro: "Early detection screening identifies genetic conditions that can be treated or managed when caught early in life.", total: 0 },
 };
+
+/** The captured app renders its carrier report with the newborn summary, so it starts as the same data. */
+export const carrierData: DataPair<ScreeningSummary> = { real: newbornData.real, demo: newbornData.demo };

@@ -2,7 +2,7 @@ import { metric, STATUS_LABEL, type Tab } from "../data/metrics";
 import { glyphOf, Kind } from "../ui/glyphs";
 import { Num } from "../ui/Num";
 import { useGo } from "../ui/shell";
-import { TipCard } from "./TipCard";
+import { TabVerdict } from "./TabVerdict";
 
 interface Page {
   title: string;
@@ -19,7 +19,7 @@ const PAGES: Record<Exclude<Tab, "all">, Page> = {
     cards: ["sleepscore", "sleep", "deep", "consistency", "efficiency", "hoursneeds", "restorative", "temp"],
   },
   vitals: {
-    title: "Heart",
+    title: "Vitals",
     cards: ["capacity", "rhr", "hr", "hrv", "bpd", "spo2d", "respd"],
   },
   body: {
@@ -27,7 +27,7 @@ const PAGES: Record<Exclude<Tab, "all">, Page> = {
     cards: ["weight", "bmi", "bodyfat", "visceral", "bone", "skin"],
   },
   food: {
-    title: "Food",
+    title: "Nutrition",
     cards: ["diet", "habits"],
   },
 };
@@ -43,8 +43,7 @@ export function CategoryPage({ tab }: { tab: Exclude<Tab, "all"> }) {
   const page = PAGES[tab];
   return (
     <div className="v2-cat">
-      <h2>{page.title}</h2>
-      <TipCard tab={tab} />
+      <TabVerdict tab={tab as Exclude<Tab, "all" | "body">} />
       {groupsOf(page.cards).map((g) => (
         <section key={g.id} className="v2-group" aria-label={g.title}>
           <header className="v2-sec">
@@ -77,7 +76,7 @@ function MetricCard({ id }: { id: string }) {
   const m = metric(id);
   const flagged = m.status !== "normal";
   return (
-    <button className="v2-card" data-field={m.field} data-flag={flagged ? "" : undefined} onClick={(e) => go(`/v3/metric/${m.id}`, { from: e.currentTarget })}>
+    <button className="v2-card" data-field={m.field} data-flag={flagged ? "" : undefined} onClick={(e) => go(m.id === "habits" ? "/v3/habits" : `/v3/metric/${m.id}`, { from: e.currentTarget })}>
       <Kind name={glyphOf(m.id)}>{m.label}</Kind>
       <span className="v2-card-v">
         <b>

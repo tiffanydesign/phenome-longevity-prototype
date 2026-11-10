@@ -3,10 +3,10 @@ import { asset } from "@/lib/asset";
 import { Chevron, IconClose } from "../ui/icons";
 import { Num } from "../ui/Num";
 import { SECTIONS, STUDIES } from "./catalog";
-import { viewOf } from "./panels";
+import { viewOf, visitDate, VISITS } from "./panels";
 
-/** The presentation's library: the same four sections, each study with its result on the row. */
-export function StudyList({ at, visit, onClose }: { at: number; visit: number; onClose: () => void }) {
+/** The presentation's library: the visit it reads from, then the same four sections, each study with its result on the row. */
+export function StudyList({ at, visit, onVisit, onClose }: { at: number; visit: number; onVisit: (v: number) => void; onClose: () => void }) {
   const nav = useNavigate();
   return (
     <div className="rv-list" role="dialog" aria-label="All studies">
@@ -16,6 +16,14 @@ export function StudyList({ at, visit, onClose }: { at: number; visit: number; o
           <IconClose />
         </button>
       </header>
+      <div className="rv-list-visits" role="radiogroup" aria-label="Visit">
+        {[...VISITS].reverse().map((v) => (
+          <button key={v} role="radio" aria-checked={v === visit} onClick={() => onVisit(v)}>
+            <b>Visit {v}</b>
+            <small>{visitDate(v)}</small>
+          </button>
+        ))}
+      </div>
       <div className="rv-list-body">
         {SECTIONS.map((section) => (
           <section key={section}>

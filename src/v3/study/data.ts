@@ -56,6 +56,8 @@ export interface StudyView {
   /** one record only: the visit control has nothing to step through */
   single?: string;
   cards: ReactNode;
+  /** the cards Omics shows: the test's own findings, without the body-level views the twin owns */
+  omicsCards?: ReactNode;
 }
 
 export const IN = (tone: Tone = "ok", text = "In range") => ({ tone, status: text });

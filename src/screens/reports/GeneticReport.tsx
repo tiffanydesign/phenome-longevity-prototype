@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Screen } from "@/components/Screen";
 import { useDataset } from "@/lib/data";
-import { geneticHubData, newbornData, REPORT_TITLES, type HubPage } from "@/data/reports";
+import { carrierData, geneticHubData, newbornData, REPORT_TITLES, type HubPage } from "@/data/reports";
 import { ArrowRight, Chevron, RIcon } from "./parts/RIcon";
 import { usePdfFlow } from "./parts/PdfFlow";
 import { ReportHeader } from "./parts/ReportHeader";
@@ -24,7 +24,7 @@ export function GeneticReportScreen() {
       header={<ReportHeader title={title} fileIcon={summary} onPdf={pdf.open} />}
       overlay={pdf.overlay}
     >
-      {summary ? <ScreeningSummary /> : <GeneticHub />}
+      {summary ? <ScreeningSummary kind={report === "carrier" ? "carrier" : "newborn"} /> : <GeneticHub />}
     </Screen>
   );
 }
@@ -115,9 +115,10 @@ function HubCard({ p }: { p: HubPage }) {
 }
 
 /** Newborn / carrier screening summary — capture: genome_report/top (empty account: All Clear). */
-function ScreeningSummary() {
-  const d = useDataset(newbornData);
+function ScreeningSummary({ kind }: { kind: "newborn" | "carrier" }) {
+  const d = useDataset(kind === "carrier" ? carrierData : newbornData);
   const [query, setQuery] = useState("");
+  const found = (d.findings ?? []).filter((f) => !query || `${f.disease} ${f.gene ?? ""}`.toLowerCase().includes(query.toLowerCase()));
   return (
     <div className="ns">
       <div className="ns-intro">
@@ -138,13 +139,41 @@ function ScreeningSummary() {
       <div className="ns-summary">
         <h3>Screening Summary</h3>
         <b>{d.total}</b>
-        <span>Total Screened</span>
+        <span>{d.totalLabel ?? "Total Screened"}</span>
       </div>
+      {d.findings?.length ? (
+        <div className="ns-list">
+          {found.map((f) => (
+            <section key={`${f.disease}-${f.variant}`} className="ns-find">
+              <b>{f.disease}</b>
+              <dl>
+                {(
+                  [
+                    ["Gene", f.gene],
+                    ["Variant", f.variant],
+                    ["Zygosity", f.zygosity],
+                    ["Classification", f.classification],
+                  ] as const
+                )
+                  .filter(([, v]) => v)
+                  .map(([k, v]) => (
+                    <div key={k}>
+                      <dt>{k}</dt>
+                      <dd>{v}</dd>
+                    </div>
+                  ))}
+              </dl>
+              {f.inheritance && <p>{f.inheritance}</p>}
+            </section>
+          ))}
+        </div>
+      ) : (
       <div className="ns-clear">
         <RIcon name="search_big" />
         <h3>All Clear</h3>
         <p>No significant findings were detected in the newborn screening analysis.</p>
       </div>
+      )}
     </div>
   );
 }

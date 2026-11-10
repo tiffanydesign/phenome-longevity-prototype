@@ -1,0 +1,239 @@
+/* ---------- trends: pick the visits, then one line per study through them ---------- */
+.tt {
+  padding-top: 4px;
+}
+.tt-head {
+  padding: 10px 4px 0;
+}
+.tt-head-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tt-head h2 {
+  margin: 0;
+  font: 400 30px/1.05 "contralto-small", "Contralto Small", var(--v-text);
+  letter-spacing: -0.01em;
+}
+.tt-head p {
+  margin: 6px 0 0;
+  font: 500 14px/1.3 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-2);
+  transition: color 0.2s;
+}
+.tt-head p[data-nudge] {
+  color: #c4572e;
+}
+.tt-all {
+  flex: none;
+  font: 600 14px/1 var(--v-text);
+  color: var(--v-navy);
+}
+/* the visits as capsules: flat, no frame and no shadow; chosen ones in navy. The row
+   stays in reach on a band of the page's own ground while the charts scroll under it */
+.tt-pick {
+  position: sticky;
+  top: var(--status-h);
+  z-index: 3;
+  margin: 10px -16px 4px;
+  padding: 8px 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 6px;
+  background: var(--v-bg);
+}
+.tt-visit {
+  min-width: 0;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border-radius: 25px;
+  color: var(--v-ink-2);
+  background: var(--v-fill);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.tt-visit:active {
+  transform: scale(0.96);
+}
+.tt-visit[aria-pressed="true"] {
+  color: #fff;
+  background: var(--v-navy);
+}
+:root[data-theme="dark"] .tt-visit[aria-pressed="true"] {
+  color: #0b0d14;
+}
+.tt-visit b {
+  font: 650 14px/1 var(--v-text);
+  white-space: nowrap;
+}
+.tt-visit small {
+  font: 500 11.5px/1 var(--v-text);
+  white-space: nowrap;
+  opacity: 0.72;
+}
+.tt-visit[data-nudge] {
+  animation: tt-nudge 0.36s ease;
+}
+@keyframes tt-nudge {
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+.tt .tw-trends-title {
+  margin: 22px 4px 10px;
+}
+.tt-why {
+  margin: -4px 4px 10px;
+  font: 400 15px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+.tt .tw-why {
+  font-weight: 400;
+  color: var(--v-ink-2);
+  line-height: 1.35;
+}
+/* under each chart, the picked visits' own numbers, oldest first */
+.tt-cols {
+  margin-top: 10px;
+  padding-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: 8px;
+  border-top: 0.5px solid var(--v-line);
+}
+.tt-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.tt-col small {
+  font: 500 11.5px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.tt-col b {
+  font: 600 15px/1.1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tt-col[data-latest] b {
+  color: var(--v-ink);
+}
+
+/* Trends: the visit tabs in the Omics chips' manner. A mark at the left, the visit's
+   name small and grey over its date in bold. At rest a soft light fill; chosen, white
+   with a navy ring and a faint shadow, the mark filled with a tick. */
+.tt .tt-pick {
+  gap: 8px;
+}
+.tt .tt-visit {
+  height: 52px;
+  padding: 0 6px 0 9px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 7px;
+  border-radius: 16px;
+  color: var(--v-ink);
+  background: color-mix(in srgb, var(--v-card) 60%, var(--v-bg));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--v-ink) 6%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition:
+    background 0.18s var(--v-ease),
+    box-shadow 0.18s var(--v-ease),
+    transform 0.18s var(--v-ease);
+}
+.tt .tt-visit[aria-pressed="true"] {
+  background: var(--v-card);
+  box-shadow:
+    inset 0 0 0 1.5px var(--v-navy),
+    0 6px 14px -8px #24365e40;
+}
+.tt-tick {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: transparent;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--v-ink) 22%, transparent);
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+}
+.tt .tt-visit[aria-pressed="true"] .tt-tick {
+  color: #fff;
+  background: var(--v-navy);
+  box-shadow: none;
+}
+.tt-visit-t {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.tt .tt-visit-t small {
+  font: 500 11.5px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+  opacity: 1;
+  white-space: nowrap;
+}
+.tt .tt-visit-t b {
+  font: 650 14px/1.15 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+  white-space: nowrap;
+}
+:root[data-theme="dark"] .tt .tt-visit {
+  background: var(--v-card-2);
+  box-shadow: none;
+}
+:root[data-theme="dark"] .tt .tt-visit[aria-pressed="true"] {
+  background: var(--v-card);
+  box-shadow: inset 0 0 0 1.5px #abb5d6;
+}
+:root[data-theme="dark"] .tt .tt-visit[aria-pressed="true"] .tt-tick {
+  color: #0b0d14;
+}
+
+/* no tick: the ring and the colour say which visits are in; the two lines sit centred and never overflow */
+.tt .tt-visit {
+  min-width: 0;
+  padding: 0 4px;
+  justify-content: center;
+  overflow: hidden;
+}
+.tt .tt-visit-t {
+  align-items: center;
+  max-width: 100%;
+}
+.tt .tt-visit-t small {
+  font: 500 12px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.tt .tt-visit-t b {
+  font: 600 14.5px/1.15 var(--v-text);
+  color: var(--v-ink-2);
+}
+.tt .tt-visit[aria-pressed="true"] .tt-visit-t small {
+  color: color-mix(in srgb, var(--v-navy) 65%, var(--v-ink-3));
+}
+.tt .tt-visit[aria-pressed="true"] .tt-visit-t b {
+  color: var(--v-navy);
+}
+:root[data-theme="dark"] .tt .tt-visit[aria-pressed="true"] .tt-visit-t b {
+  color: var(--v-ink);
+}
+
+/* the visit row scrolls with the page; it does not stay pinned under the status bar */
+.tt .tt-pick {
+  position: static;
+}

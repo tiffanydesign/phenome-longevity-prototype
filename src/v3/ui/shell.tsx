@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 import { flushSync } from "react-dom";
-import { NavLink, useLocation, useNavigate, type NavigateOptions } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useSearchParams, type NavigateOptions } from "react-router-dom";
 import { HomeIndicator, StatusBar } from "@/components/PhoneFrame";
 import { PushBanner } from "../notify/PushBanner";
 import { useNotes } from "../notify/store";
 import { Icon } from "@/components/Icon";
 import { Chevron, IconAgent, IconHome, IconOmics, IconStore } from "./icons";
+import { LATEST_DEVICE } from "../devices/paired";
 import "../v2.css";
 
 /**
@@ -131,14 +132,51 @@ export function followHead(el: HTMLElement | null, top: number, travel: number, 
   el.toggleAttribute("data-under", top > 4);
 }
 
+/* ring geometry: the arc runs clockwise from twelve o'clock; while charging a
+   gap is held open at the top for the bolt */
+const R = 16.5;
+const GAP = 16;
+
 export function DevicesButton() {
   const go = useGo();
+  const [params] = useSearchParams();
+  const d = LATEST_DEVICE;
+  // ?battery=NN&charging=1 previews the other states
+  const qb = Number(params.get("battery"));
+  const level = Math.max(0, Math.min(100, params.has("battery") && !Number.isNaN(qb) ? qb : d.battery));
+  const charging = params.has("charging") ? params.get("charging") === "1" : d.charging;
+  const full = level >= 100;
+  const low = level <= 20 && !charging;
+  const start = charging ? GAP / 2 : 0;
+  const end = charging ? Math.max(start, Math.min(level, 100 - GAP / 2)) : level;
+  const state = charging ? (full ? "Fully charged" : "Charging") : `${level}%`;
   return (
-    <button className="v2-round" aria-label="Devices" onClick={() => go("/v3/devices")}>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
-        <rect x="7" y="2.5" width="10" height="19" rx="5" />
-        <path d="M12 7.5v3" />
+    <button
+      className="v2-round v2-dev"
+      data-low={low ? "" : undefined}
+      data-charging={charging ? "" : undefined}
+      data-full={full ? "" : undefined}
+      aria-label={`Devices. ${d.name} battery ${level}%${charging ? `, ${state.toLowerCase()}` : ""}`}
+      onClick={() => go("/v3/devices")}
+    >
+      <svg className="v2-dev-ring" viewBox="0 0 38 38" aria-hidden>
+        <circle
+          className="v2-dev-track"
+          cx="19" cy="19" r={R} pathLength={100}
+          strokeDasharray={charging ? `${100 - GAP} ${GAP}` : undefined}
+          strokeDashoffset={charging ? -start : undefined}
+        />
+        {end > start && (
+          <circle
+            className="v2-dev-arc"
+            cx="19" cy="19" r={R} pathLength={100}
+            strokeDasharray={`${end - start} ${100 - (end - start)}`}
+            strokeDashoffset={-start}
+          />
+        )}
+        {charging && <path className="v2-dev-bolt" d="M19.9 0.6 15.9 6.4h2.8l-1.2 4.6 4-5.8h-2.8z" />}
       </svg>
+      <Icon name={d.icon} size={17} />
     </button>
   );
 }
@@ -164,5 +202,27 @@ export function BackBar({ title, onBack, tone, right }: { title?: string; onBack
       {title && <h1>{title}</h1>}
       {right}
     </header>
+  );
+}
+
+/** The five stacked blur layers of the status-bar veil (styles in v2.css). */
+export function BlurLayers() {
+  return (
+    <>
+      <i />
+      <i />
+      <i />
+      <i />
+      <i />
+    </>
+  );
+}
+
+/** The status-bar veil for a head that scrolls away: shown once the page passes under it. */
+export function HeadBlur() {
+  return (
+    <span className="v2-blur" aria-hidden>
+      <BlurLayers />
+    </span>
   );
 }

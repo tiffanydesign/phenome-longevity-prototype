@@ -1,3 +1,5 @@
+import "./ui/scrollReveal";
+import "./reports";
 import { BookingScreen } from "@/screens/discover/BookingScreen";
 import { AssistantScreen } from "@/screens/discover/AssistantScreen";
 import { StoreScreen } from "@/screens/store/StoreScreen";
@@ -12,6 +14,9 @@ import { VisitsScreen } from "./visits/VisitsScreen";
 import { ProfileScreen } from "./profile/ProfileScreen";
 import { StudyScreen } from "./study/StudyScreen";
 import { TwinScreen } from "./twin/TwinScreen";
+import { ConsultScreen } from "./consult/ConsultScreen";
+import { ConsultationsScreen } from "./consult/ConsultationsScreen";
+import { HabitsScreen } from "./habits/HabitsScreen";
 
 const group = "Clinical edition";
 
@@ -29,5 +34,10 @@ export const routes: ScreenRoute[] = [
   { path: "/v3/add-device", element: <AddDeviceScreen />, title: "Add device", group },
   { path: "/v3/assistant", element: <AssistantScreen />, title: "Longevity AI", group },
   { path: "/v3/store", element: <StoreScreen />, title: "Store", group },
+  { path: "/v3/habits", element: <HabitsScreen />, title: "Habits", group },
+  { path: "/v3/consultations", element: <ConsultationsScreen />, title: "Consultations", group },
+  // the shared address opens the same list in this edition
+  { path: "/discover/consultations", element: <ConsultationsScreen />, title: "Consultations (shared address)", group },
+  { path: "/v3/consultation", element: <ConsultScreen />, title: "Upcoming consultation", group },
   { path: "/v3/booking", element: <BookingScreen />, title: "Book a visit", group },
 ];

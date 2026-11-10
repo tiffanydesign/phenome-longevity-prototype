@@ -160,22 +160,17 @@ export const IconInsights = () => (
 );
 
 /**
- * The assistant: a working spark rather than a chat bubble. One large
- * four-pointed star with a smaller one beside it and a point of light, filled.
- */
-/**
- * Longevity AI: a conversation, with the spark of the assistant breaking out of
- * its top corner. The bubble is open where the spark sits, so the two read as one mark.
+ * Longevity AI: a soft four-pointed spark held in an open ring. The ring is the
+ * care that keeps going; it opens at the upper right, where a small spark escapes.
  */
 export const IconAgent = ({ size = 26 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-    <path d="M20.5 12v2.8a3.2 3.2 0 0 1-3.2 3.2h-6.1L7 21.2V18h-.3a3.2 3.2 0 0 1-3.2-3.2V8.2A3.2 3.2 0 0 1 6.7 5h5.8" />
-    <path fill="currentColor" stroke="none" d="M18 1.6l1.05 2.85 2.85 1.05-2.85 1.05L18 9.4l-1.05-2.85-2.85-1.05 2.85-1.05z" />
-    <circle cx="8.6" cy="11.5" r="1.1" fill="currentColor" stroke="none" />
-    <circle cx="12" cy="11.5" r="1.1" fill="currentColor" stroke="none" />
-    <circle cx="15.4" cy="11.5" r="1.1" fill="currentColor" stroke="none" />
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <path d="M21.18 10.04A9.5 9.5 0 1 1 14.46 3.32" />
+    <path fill="currentColor" stroke="none" d="M12 6.4c.55 3.3 2.65 5.4 5.95 5.95-3.3.55-5.4 2.65-5.95 5.95-.55-3.3-2.65-5.4-5.95-5.95 3.3-.55 5.4-2.65 5.95-5.95z" />
+    <path fill="currentColor" stroke="none" d="M18.7 3.5l.6 1.65 1.65.6-1.65.6-.6 1.65-.6-1.65-1.65-.6 1.65-.6z" />
   </svg>
 );
+
 
 /*
  * Home's tab marks: rounded lines of one weight, a flame, a moon with

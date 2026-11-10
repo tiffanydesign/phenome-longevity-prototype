@@ -1,15 +1,17 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
+import { Gauge, HeartRange, HourBars, Hypnogram, MacroBar, WorkoutRings } from "../home/glance";
+import "../home/glance.css";
 import { CapacityDetail } from "./CapacityDetail";
 import { GoalSheet, goalOf, GOALS, useGoals } from "./goals";
 import { useParams } from "react-router-dom";
 import { metric as baseMetric, metricsFor, periodTitle, rangeLabels, seriesFor, SOURCE_LABEL, STATUS_LABEL, visitLabels, type Range } from "../data/metrics";
 import { ICON, lensOf, readingOf, REGIONS } from "../twin/regions";
 import { TrendChart } from "../ui/charts";
-import { Glyph, glyphOf } from "../ui/glyphs";
+import { Glyph, glyphOf, type GlyphName } from "../ui/glyphs";
 import { OrganIcon } from "../ui/OrganIcon";
 import { Chevron } from "../ui/icons";
 import { Num } from "../ui/Num";
-import { BackBar, useGo, V2Screen } from "../ui/shell";
+import { BackBar, BlurLayers, useGo, V2Screen } from "../ui/shell";
 import "./metric.css";
 
 const RANGES: { id: Range; label: string }[] = [
@@ -37,6 +39,20 @@ const ACTIONS: Record<string, { label: string; to: string; primary?: boolean }[]
     { label: "Log a meal", to: "/journal/diet", primary: true },
     { label: "Snap a meal", to: "/journal/diet/camera" },
   ],
+};
+
+/**
+ * The Home card each daily reading opens from: the same name, hue, mark and
+ * chart, so the page reads as that card grown large. The chart sits first, under
+ * the number, before any history.
+ */
+const FROM_CARD: Record<string, { title: string; field?: string; glyph?: GlyphName; span: string; glance: (m: ReturnType<typeof baseMetric>) => ReactNode }> = {
+  steps: { title: "Activity", span: "Today", glance: (m) => <HourBars m={m} ago={0} /> },
+  sleep: { title: "Sleep", span: "Last night", glance: () => <Hypnogram ago={0} /> },
+  capacity: { title: "Capacity", span: "Today", glance: (m) => <Gauge m={m} /> },
+  workouts: { title: "Workouts", field: "rose", glyph: "dumbbell", span: "This week", glance: (m) => <WorkoutRings m={m} /> },
+  rhr: { title: "Heart", span: "Today", glance: (m) => <HeartRange m={m} ago={0} /> },
+  diet: { title: "Food", span: "Today", glance: (m) => <MacroBar m={m} /> },
 };
 
 /** Clinic and omics readings belong to the twin; everything else is a daily reading from a device or the diary. */
@@ -72,11 +88,14 @@ export function MetricScreen() {
   const actions = ACTIONS[m.id] ?? [];
 
   const statusWord = STATUS_LABEL[m.status];
+  const card = FROM_CARD[m.id];
 
   return (
     <V2Screen nav={false}>
-      <div className="v2-veil mx-veil" data-at="status" aria-hidden />
-      <div className="mx scroll" data-field={m.field}>
+      <div className="v2-veil mx-veil" data-at="status" aria-hidden>
+        <BlurLayers />
+      </div>
+      <div className="mx scroll" data-field={card?.field ?? m.field}>
         {/* a round glass way back, and the goal beside it when the reading has one */}
         <header className="mx-bar">
           <BackBar />
@@ -93,8 +112,8 @@ export function MetricScreen() {
         {/* the reading named in its own hue, the number large, then one plain sentence of what it means */}
         <section className="mx-hero" style={{ viewTransitionName: "v2-hero" }}>
           <p className="mx-eyebrow">
-            <Glyph name={glyphOf(m.id)} size={18} />
-            {m.label}
+            <Glyph name={card?.glyph ?? glyphOf(m.id)} size={18} />
+            {card?.title ?? m.label}
           </p>
           <div className="mx-value">
             <b>
@@ -110,6 +129,14 @@ export function MetricScreen() {
             {SOURCE_LABEL[m.source]}, {m.when}
           </p>
         </section>
+
+        {/* the Home card's own chart, grown large: the thread from the card to this page */}
+        {card && (
+          <section className="mx-today" aria-label={`${card.title}, ${card.span.toLowerCase()}`}>
+            <h2>{card.span}</h2>
+            {card.glance(m)}
+          </section>
+        )}
 
         {actions.length > 0 && (
           <div className="mx-actions">
@@ -133,6 +160,7 @@ export function MetricScreen() {
             </>
           ) : (
             <>
+              <h2 className="mx-h mx-h-history">History</h2>
               <div className="mx-seg" role="tablist" style={{ "--i": RANGES.findIndex((r) => r.id === range) } as React.CSSProperties}>
                 <i aria-hidden />
                 {RANGES.map((r) => (

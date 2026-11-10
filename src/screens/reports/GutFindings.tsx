@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Screen } from "@/components/Screen";
 import { NavHeader } from "@/components/NavHeader";
 import { useDataset } from "@/lib/data";
-import { gutData, type GutFinding, type GutReport } from "@/data/reportsGut";
+import { gutData, oralData, type GutFinding, type GutReport } from "@/data/reportsGut";
 import { RIcon } from "./parts/RIcon";
 import "./GutFindings.css";
 
@@ -12,8 +12,8 @@ import "./GutFindings.css";
  * TODO(fidelity): only the diversity section was captured; other sections fall back to their
  * hub rows rendered as finding cards without range bars.
  */
-export function GutFindingsScreen() {
-  const d = useDataset(gutData);
+export function GutFindingsScreen({ kind = "gut" }: { kind?: "gut" | "oral" }) {
+  const d = useDataset(kind === "oral" ? oralData : gutData);
   const { section = "diversity" } = useParams();
   const page = d.findings[section] ?? fallback(d, section);
   return (

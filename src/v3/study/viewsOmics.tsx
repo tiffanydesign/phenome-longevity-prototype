@@ -97,6 +97,24 @@ export const OMICS: Record<string, (visit: number) => StudyView> = {
     const p = pick(M.proteomics, visit);
     const flagged = (p.systems as Rec[]).filter((s) => s.status !== "typical").sort((a, b) => (a.status === "high" ? -1 : 0) - (b.status === "high" ? -1 : 0));
     const typical = p.systems.length - flagged.length;
+    const highlights = (
+      <>
+        {p.highlights.length > 0 && (
+          <Card title="Report highlights">
+            {p.highlights.map((h: Rec) => (
+              <div className="rv-score" key={h.name}>
+                <Gauge score={h.score} tier={h.tier} />
+                <span>
+                  {h.name}
+                  <small>{h.when}</small>
+                </span>
+              </div>
+            ))}
+            <Note>Scores show how closely your proteins resemble those of people with each condition. They are not a diagnosis.</Note>
+          </Card>
+        )}
+      </>
+    );
     return {
       value: `${typical}`,
       unit: `of ${p.systems.length}`,
@@ -112,22 +130,11 @@ export const OMICS: Record<string, (visit: number) => StudyView> = {
               <Finding key={s.code} tone={s.status === "high" ? "alert" : "mon"} title={s.name} />
             ))}
           </Card>
-          {p.highlights.length > 0 && (
-            <Card title="Report highlights">
-              {p.highlights.map((h: Rec) => (
-                <div className="rv-score" key={h.name}>
-                  <Gauge score={h.score} tier={h.tier} />
-                  <span>
-                    {h.name}
-                    <small>{h.when}</small>
-                  </span>
-                </div>
-              ))}
-              <Note>Scores show how closely your proteins resemble those of people with each condition. They are not a diagnosis.</Note>
-            </Card>
-          )}
+          {highlights}
         </>
       ),
+      // the body-systems wheel reads the body, so it stays on the twin; Omics keeps the protein findings
+      omicsCards: highlights,
     };
   },
 

@@ -20,6 +20,12 @@ export function ReportsScreen() {
           <p className="rep-error-text">{REPORTS_OFFLINE_ERROR}</p>
           <p className="rep-error-sub">Your reports will appear here when ready</p>
         </div>
+      ) : list.length === 0 ? (
+        <div className="rep-error rep-none">
+          <Folder size={62} />
+          <p className="rep-error-text rep-none-text">No reports yet</p>
+          <p className="rep-error-sub">There are no PDF reports for you yet. They will appear here once your clinician or the lab shares one.</p>
+        </div>
       ) : (
         <div className="rep">
           <div className="rep-hero">
