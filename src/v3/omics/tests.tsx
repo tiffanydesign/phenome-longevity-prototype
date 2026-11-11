@@ -229,6 +229,30 @@ export function markSeen(topic: string) {
   listeners.forEach((l) => l());
 }
 
+/** The review panel's switch: the demo's fresh tabs new again, or every tab opened. */
+export function setOmicsNew(fresh: boolean, topics: string[]) {
+  seen = null;
+  try {
+    localStorage.removeItem(SEEN_KEY);
+  } catch {
+    // storage blocked
+  }
+  if (!fresh) {
+    seen = Object.fromEntries(topics.map((t) => [t, newestOf(testsOf(t))?.run.key ?? ""]));
+    try {
+      localStorage.setItem(SEEN_KEY, JSON.stringify(seen));
+    } catch {
+      // storage blocked
+    }
+  }
+  listeners.forEach((l) => l());
+}
+
+/** Whether any tab still shows a new-results dot. */
+export function useAnyUnseen(topics: string[]): boolean {
+  return useUnseen(topics).size > 0;
+}
+
 /** Which tabs have a newest run the member has not opened yet. */
 export function useUnseen(topics: string[]): Set<string> {
   const map = useSyncExternalStore(
