@@ -50,7 +50,7 @@ const FROM_CARD: Record<string, { title: string; field?: string; glyph?: GlyphNa
   steps: { title: "Activity", span: "Today", glance: (m) => <HourBars m={m} ago={0} /> },
   sleep: { title: "Sleep", span: "Last night", glance: () => <Hypnogram ago={0} /> },
   capacity: { title: "Capacity", span: "Today", glance: (m) => <Gauge m={m} /> },
-  workouts: { title: "Workouts", field: "rose", glyph: "dumbbell", span: "This week", glance: (m) => <WorkoutRings m={m} /> },
+  workouts: { title: "Workouts", field: "rose", glyph: "dumbbell", span: "Today", glance: (m) => <WorkoutRings m={m} /> },
   rhr: { title: "Heart", span: "Today", glance: (m) => <HeartRange m={m} ago={0} /> },
   diet: { title: "Food", span: "Today", glance: (m) => <MacroBar m={m} /> },
 };

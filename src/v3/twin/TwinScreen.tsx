@@ -21,12 +21,12 @@ const FIELD_H = (FIELD_W / COLS) * ROWS;
 const MONITOR = "#ffb600";
 const ALERT = "#c4572e";
 const LIVE = "#263980";
-const PAST = "#6b7799";
 
 /** A region in the colour of its study's status at a visit: gold to monitor, the portal's red to discuss. */
-const colourOf = (r: Region, visit: number, past: boolean) => {
+const colourOf = (r: Region, visit: number) => {
   const tone = toneOf(readingOf(r.id, visit));
-  return tone === "alert" ? ALERT : tone === "mon" ? MONITOR : past ? PAST : LIVE;
+  // a past visit wears the same colours as live; the band at the top says which visit it is
+  return tone === "alert" ? ALERT : tone === "mon" ? MONITOR : LIVE;
 };
 const flagged = (r: Region, visit: number) => {
   const tone = toneOf(readingOf(r.id, visit));
@@ -37,10 +37,10 @@ const flagged = (r: Region, visit: number) => {
  * What each lens paints on the figure: its organs. A study of the whole body paints
  * nothing, since its reach is wider than the figure; its pin and row carry its status.
  */
-function lensTints(lens: Lens, visit: number, past: boolean): Tint[] {
+function lensTints(lens: Lens, visit: number): Tint[] {
   return regionsOf(lens)
     .filter((organ) => !organ.whole)
-    .map((organ) => ({ organ, color: colourOf(organ, visit, past), strength: flagged(organ, visit) ? 1 : 0.5 }));
+    .map((organ) => ({ organ, color: colourOf(organ, visit), strength: flagged(organ, visit) ? 1 : 0.5 }));
 }
 
 const NO_TINTS: Tint[] = [];
@@ -88,9 +88,9 @@ export function TwinScreen() {
   const pickView = (v: View) => setParams(query(overview ? null : lens, v.kind === "trends" ? null : organId, v), { replace: true });
 
   const tints = useMemo(() => {
-    if (organ) return organ.map === "body" && !organ.whole ? [{ organ, color: colourOf(organ, visit, past), strength: 1 }] : NO_TINTS;
-    return lensTints(lens, visit, past);
-  }, [lens, organ, visit, past]);
+    if (organ) return organ.map === "body" && !organ.whole ? [{ organ, color: colourOf(organ, visit), strength: 1 }] : NO_TINTS;
+    return lensTints(lens, visit);
+  }, [lens, organ, visit]);
   const checkpoint = CHECKPOINTS.find((c) => c.visit === visit);
 
   // the figure is drawn for a 393 screen; a real phone scales it to its own width
@@ -113,8 +113,8 @@ export function TwinScreen() {
 
   return (
     <V2Screen nav={false}>
-      <div className="v2-veil tw-veil" data-at="status" data-on={scrolled ? "" : undefined} data-sky={sky ? (past ? "past" : "") : undefined} aria-hidden />
-      <div className="tw" ref={root} data-sky={sky ? (past ? "past" : "") : undefined} data-one={overview && !trends ? "" : undefined} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
+      <div className="v2-veil tw-veil" data-at="status" data-on={scrolled ? "" : undefined} data-sky={sky ? "" : undefined} aria-hidden />
+      <div className="tw" ref={root} data-sky={sky ? "" : undefined} data-one={overview && !trends ? "" : undefined} onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 0)}>
         <header className="v2-top tw-top">
           <button className="v2-round tw-back" aria-label="Back" onClick={() => back(-1)}>
             <Chevron dir="left" size={20} />
@@ -187,15 +187,14 @@ export function TwinScreen() {
           <TwinOverview visit={visit} past={past} onLens={(l) => setParams(query(l, null, view))} />
         ) : (
           <>
-            <div className="twl-sky" data-past={past ? "" : undefined}>
-            <div className="tw-hero" data-past={past ? "" : undefined} style={{ height: FIELD_H * fit }}>
+            <div className="twl-sky">
+            <div className="tw-hero" style={{ height: FIELD_H * fit }}>
               <div className="tw-stage" data-organ={organ ? (organ.map === "body" ? "region" : "organ") : undefined} style={{ width: FIELD_W, height: FIELD_H, "--s": fit } as CSSProperties}>
                 <TwinField
                   className="tw-field"
                   map={organ?.map ?? "body"}
                   tints={tints}
                   focus={organ}
-                  past={past}
                   marks={organ?.id === "dermatology" || (lens === "body" && !organ)}
                   label={organ ? `${organ.name}, close up` : past ? `Your twin at visit ${visit}, ${LENS_LABEL[lens]} lens` : `Your twin, ${LENS_LABEL[lens]} lens`}
                 />

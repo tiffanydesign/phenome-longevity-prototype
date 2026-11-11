@@ -104,7 +104,7 @@ export function CheckpointMenu({ view, onPick }: { view: View; onPick: (v: View)
               <b>Trends</b>
               <small>{HAS_TRENDS ? `Charts across all ${CHECKPOINTS.length} visits` : "After your second visit"}</small>
             </span>
-            {view.kind === "trends" ? <IconCheck /> : <Chevron size={16} />}
+            {view.kind === "trends" && <IconCheck />}
           </button>
         </div>
       )}

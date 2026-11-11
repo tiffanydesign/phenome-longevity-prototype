@@ -7,7 +7,8 @@ import { useGo } from "../ui/shell";
 import { useDisplayFace } from "../ui/displayFace";
 import "../v2.css";
 import { STUDIES, studyIndex } from "./catalog";
-import { Hero, viewOf, visitDate, VISITS, VisitTrend } from "./panels";
+import { Hero, viewOf, VISITS } from "./panels";
+import { AcrossVisits, VisitMenu } from "./reviewChrome";
 import { Pill } from "./parts";
 import { StudyList } from "./StudyList";
 import "./study.css";
@@ -62,6 +63,12 @@ export function StudyScreen() {
     page.current?.scrollTo({ top: 0 });
   }, [study.code]);
 
+  // another visit: the page reads from it, back at its top
+  const pickVisit = (v: number) => {
+    setVisit(v);
+    page.current?.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const step = (d: number) => {
     const next = STUDIES[index + d];
     if (next) nav(`/v3/study/${next.code}`, { replace: true });
@@ -107,31 +114,18 @@ export function StudyScreen() {
 
         <section className="rv-body" aria-label={study.name}>
           <div className="rv-lead">
-            {/* the study's name in the twin's display face; its section rides in the bar below */}
-            {!view.single && (
-              <p className="rv-lead-visit">
-                Visit {visit} · {visitDate(visit)}
-              </p>
-            )}
+            {/* the study's name in the twin's display face; the visit it reads from sits at the top right */}
             <h2>{study.name}</h2>
-            <div className="rv-lead-row">
-              <div>
-                <Hero value={view.value} unit={view.unit} flagged={view.flagged} />
-                {view.label && <p className="rv-lead-label">{view.label}</p>}
-              </div>
-              {view.trend && (
-                <span className="rv-trend-box">
-                  <VisitTrend values={view.trend} at={view.at ?? 0} />
-                  <small>Across {view.trend.length} visits</small>
-                </span>
-              )}
-            </div>
+            <Hero value={view.value} unit={view.unit} flagged={view.flagged} />
+            {view.label && <p className="rv-lead-label">{view.label}</p>}
             {view.status && <Pill tone={view.tone ?? ""}>{view.status}</Pill>}
           </div>
 
           {view.single && <p className="rv-when">Recorded once, {view.single}</p>}
 
           {view.cards}
+
+          <AcrossVisits code={study.code} visit={visit} onPick={pickVisit} />
         </section>
       </div>
 
@@ -139,12 +133,7 @@ export function StudyScreen() {
         <button aria-label="Close review" onClick={close}>
           <IconClose />
         </button>
-        <span />
-        <button className="rv-top-list" aria-label="All studies and visits" onClick={() => setListOpen(true)}>
-          <i />
-          <i />
-          <i />
-        </button>
+        <VisitMenu visit={visit} onPick={pickVisit} />
       </header>
 
       <div className="v2-nav">
@@ -152,16 +141,26 @@ export function StudyScreen() {
           <button aria-label="Previous study" disabled={index === 0} onClick={() => step(-1)}>
             <Chevron dir="left" size={22} />
           </button>
-          <button className="rv-bar-at" onClick={() => setListOpen(true)} aria-label={`Study ${index + 1} of ${STUDIES.length}: ${study.name}. Show all studies`}>
+          {/* the study's name over where the review stands; the contents mark at the end opens the list of every study */}
+          <button className="rv-bar-at" aria-haspopup="dialog" onClick={() => setListOpen(true)} aria-label={`Study ${index + 1} of ${STUDIES.length}: ${study.name}. Show contents`}>
             <span className="rv-bar-text">
               <span className="rv-bar-row">
-                {study.section !== "Baseline" && <span className="rv-section">{study.section}</span>}
                 <b>{study.name}</b>
+              </span>
+              <span className="rv-bar-row rv-bar-prog">
+                <Progress index={index} />
                 <small>
                   {index + 1} / {STUDIES.length}
                 </small>
               </span>
-              <Progress index={index} />
+            </span>
+            <span className="rv-bar-toc" aria-hidden>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                <circle cx="5" cy="6.5" r="1.4" fill="currentColor" stroke="none" />
+                <circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none" />
+                <circle cx="5" cy="17.5" r="1.4" fill="currentColor" stroke="none" />
+                <path d="M9.5 6.5H19M9.5 12H19M9.5 17.5h6" />
+              </svg>
             </span>
           </button>
           <button aria-label="Next study" disabled={index === STUDIES.length - 1} onClick={() => step(1)}>
@@ -170,7 +169,7 @@ export function StudyScreen() {
         </nav>
       </div>
 
-      {listOpen && <StudyList at={index} visit={visit} onVisit={setVisit} onClose={() => setListOpen(false)} />}
+      {listOpen && <StudyList at={index} visit={visit} onClose={() => setListOpen(false)} />}
       <HomeIndicator />
     </div>
   );

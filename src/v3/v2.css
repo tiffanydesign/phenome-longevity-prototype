@@ -596,3 +596,27 @@ html[data-vt="sheet"]::view-transition-image-pair(v2-hero) {
   top: 0;
   z-index: 4 !important;
 }
+
+/*
+ * The status-bar veil without backdrop blur. A blur layer that touches the
+ * screen's edges samples past them, and on a phone that shows up as dark
+ * smudges in the two top corners once the page scrolls under it. The veil is
+ * the ground colour alone, thinning out downward, so nothing outside the
+ * screen is ever pulled in.
+ */
+.v2-blur > i,
+.v2-veil > i {
+  display: none;
+}
+.v2-blur,
+.v2-veil.mx-veil[data-at],
+.v2-veil.vs-veil[data-at] {
+  height: calc(var(--status-h) + 56px);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--veil-c) 94%, transparent) 0,
+    color-mix(in srgb, var(--veil-c) 88%, transparent) var(--status-h),
+    color-mix(in srgb, var(--veil-c) 38%, transparent) calc(var(--status-h) + 28px),
+    transparent 100%
+  ) !important;
+}

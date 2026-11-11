@@ -49,6 +49,20 @@ img {
   max-width: 100%;
 }
 
+/*
+ * Every other scroller keeps a slim bar that stays out of sight until the
+ * page moves, then fades back a moment after it stops (see lib/scrollbars).
+ * :where keeps this at zero weight, so a scroller that hides its bar for good
+ * still does.
+ */
+:where(*) {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+:where([data-scrolling]) {
+  scrollbar-color: rgba(60, 70, 100, 0.34) transparent;
+}
+
 /* Scrollable screen body without visible scrollbars (matches native). */
 .scroll {
   overflow-y: auto;

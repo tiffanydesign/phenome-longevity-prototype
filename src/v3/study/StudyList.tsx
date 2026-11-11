@@ -3,27 +3,24 @@ import { asset } from "@/lib/asset";
 import { Chevron, IconClose } from "../ui/icons";
 import { Num } from "../ui/Num";
 import { SECTIONS, STUDIES } from "./catalog";
-import { viewOf, visitDate, VISITS } from "./panels";
+import { viewOf, visitDate } from "./panels";
 
-/** The presentation's library: the visit it reads from, then the same four sections, each study with its result on the row. */
-export function StudyList({ at, visit, onVisit, onClose }: { at: number; visit: number; onVisit: (v: number) => void; onClose: () => void }) {
+/** The review's contents: the four sections, each study with its result at the visit in view. The visit itself is chosen at the top right. */
+export function StudyList({ at, visit, onClose }: { at: number; visit: number; onClose: () => void }) {
   const nav = useNavigate();
   return (
     <div className="rv-list" role="dialog" aria-label="All studies">
       <header>
-        <h2>Your review</h2>
+        <span>
+          <h2>Contents</h2>
+          <small>
+            Visit {visit} · {visitDate(visit)}
+          </small>
+        </span>
         <button aria-label="Close" onClick={onClose}>
           <IconClose />
         </button>
       </header>
-      <div className="rv-list-visits" role="radiogroup" aria-label="Visit">
-        {[...VISITS].reverse().map((v) => (
-          <button key={v} role="radio" aria-checked={v === visit} onClick={() => onVisit(v)}>
-            <b>Visit {v}</b>
-            <small>{visitDate(v)}</small>
-          </button>
-        ))}
-      </div>
       <div className="rv-list-body">
         {SECTIONS.map((section) => (
           <section key={section}>

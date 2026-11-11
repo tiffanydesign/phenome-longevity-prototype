@@ -1,0 +1,210 @@
+/* ---------- comparing two runs of one kit test ---------- */
+.kc {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: 0 16px calc(40px + env(safe-area-inset-bottom));
+  background: var(--v-bg);
+  color: var(--v-ink);
+}
+.kc-bar {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  padding-top: calc(var(--status-h) + 6px);
+}
+.kc-bar .v2-back button {
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink);
+  background: color-mix(in srgb, var(--v-card) 80%, transparent);
+  box-shadow: inset 0 0 0 1px #ffffffb3, 0 6px 16px -10px #24365e40;
+}
+
+.kc-hero {
+  padding: 18px 4px 0;
+}
+.kc-eyebrow {
+  margin: 0 0 6px;
+  font: 600 14px/1.2 var(--v-text);
+  color: var(--v-navy);
+}
+.kc-hero h1 {
+  margin: 0;
+  font: 700 34px/1.1 var(--v-text);
+  letter-spacing: -0.025em;
+}
+.kc-lead {
+  margin: 10px 0 0;
+  font: 400 16px/1.45 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* the two runs: a white card each, an arrow between */
+.kc-runs {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 8px;
+}
+.kc-run {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: var(--v-card);
+}
+.kc-run small {
+  font: 600 12px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.kc-run b,
+.kc-run select {
+  font: 650 16px/1.2 var(--v-text);
+  letter-spacing: -0.01em;
+  color: var(--v-ink);
+}
+.kc-run select {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+}
+.kc-run span {
+  font: 400 12.5px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.kc-arrow {
+  align-self: center;
+  color: var(--v-ink-3);
+}
+
+.kc-sum {
+  margin: 26px 4px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.kc-sum b {
+  font: 650 19px/1.25 var(--v-text);
+  letter-spacing: -0.015em;
+}
+.kc-toggle {
+  flex: none;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 15px;
+  font: 600 13px/1 var(--v-text);
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 10%, var(--v-card));
+}
+
+.kc-group h2 {
+  margin: 20px 4px 8px;
+  font: 600 13px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.kc-list {
+  margin: 0;
+  padding: 0 14px;
+  list-style: none;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+}
+.kc-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 13px 0;
+}
+.kc-list li + li {
+  border-top: 0.5px solid var(--v-line);
+}
+.kc-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 600 15.5px/1.25 var(--v-text);
+  letter-spacing: -0.01em;
+}
+.kc-name em {
+  height: 20px;
+  padding: 0 7px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 10px;
+  font: 650 11px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 10%, var(--v-card));
+}
+.kc-list li[data-same] .kc-name {
+  color: var(--v-ink-2);
+  font-weight: 500;
+}
+.kc-pair {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+}
+.kc-to {
+  color: var(--v-ink-3);
+}
+.kc-v {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 14px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.kc-v i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34c759;
+}
+.kc-v[data-tone="watch"] i {
+  background: #ffb600;
+}
+.kc-v[data-tone="flag"] i {
+  background: #e0603f;
+}
+.kc-v[data-none] {
+  color: var(--v-ink-3);
+}
+.kc-list li[data-same] .kc-v {
+  color: var(--v-ink-2);
+}
+.kc-note {
+  margin: 20px 4px 0;
+  font: 400 13px/1.4 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* on the kit page: the second way in, under View Report, outlined in navy */
+.kit-compare {
+  margin-top: 12px;
+  width: 171.7px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--c-navy, #263980);
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+:root[data-theme="dark"] .kit-compare {
+  color: #c9d3ff;
+}

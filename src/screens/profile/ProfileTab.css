@@ -215,3 +215,9 @@
   letter-spacing: 0.02em;
   color: var(--prf-section);
 }
+
+/* clinical edition: one fixed column for the row marks, so labels start on one line whatever the mark's size */
+:root[data-ver="v3"] .prf-tab-icon {
+  flex: none;
+  width: 26px;
+}

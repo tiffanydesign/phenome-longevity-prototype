@@ -45,7 +45,7 @@ export const DEFAULT_PLAN: Habit[] = [
   { id: "vitamins", short: "Vitamins", name: "Morning vitamins", detail: "Vitamin D3 · Omega-3 · Magnesium", kind: "once", part: "morning", days: EVERY_DAY, checkIn: true, field: "food", mark: "pill" },
   { id: "water", short: "Water", name: "Water", detail: "A glass at a time, across the day", kind: "count", goal: 8, unit: ["glass", "glasses"], part: "anytime", days: EVERY_DAY, checkIn: true, field: "vitals", mark: "drop" },
   { id: "mobility", short: "Mobility", name: "Five minutes of mobility", detail: "Hips, spine and shoulders", kind: "once", part: "afternoon", days: EVERY_DAY, checkIn: true, field: "activity", mark: "stretch", source: "band" },
-  { id: "meals", short: "Meals", name: "Log your meals", detail: "A photo or a few words", kind: "count", goal: 3, unit: ["meal", "meals"], part: "anytime", days: EVERY_DAY, checkIn: true, field: "lavender", mark: "meal", source: "food" },
+  { id: "meals", short: "Meals", name: "Log your meals", detail: "A photo or a few words", kind: "count", goal: 3, unit: ["meal", "meals"], part: "anytime", days: EVERY_DAY, checkIn: false, field: "lavender", mark: "meal", source: "food" },
   { id: "read", short: "Read", name: "Read for 20 minutes", detail: "Away from screens", kind: "once", part: "evening", days: WEEKDAYS, checkIn: true, field: "capacity", mark: "book" },
   { id: "screens", short: "Screens", name: "Screens off by 22:30", detail: "An hour before bed", kind: "once", part: "evening", days: EVERY_DAY, checkIn: false, field: "sleep", mark: "screen" },
 ];
@@ -96,7 +96,18 @@ function writeJSON(key: string, v: unknown) {
   }
 }
 
-let plan: Habit[] = readJSON(PLAN_KEY, DEFAULT_PLAN);
+/** Plans saved before meals left the check-in: take meals out of Small wins once. */
+const MEALS_OFF_KEY = "phenome.v3.plan.mealsOff";
+function loadPlan(): Habit[] {
+  const saved = readJSON(PLAN_KEY, DEFAULT_PLAN);
+  if (readJSON(MEALS_OFF_KEY, false)) return saved;
+  writeJSON(MEALS_OFF_KEY, true);
+  const next = saved.map((h) => (h.id === "meals" ? { ...h, checkIn: false } : h));
+  if (next !== saved) writeJSON(PLAN_KEY, next);
+  return next;
+}
+
+let plan: Habit[] = loadPlan();
 let log: DayLog = readJSON(LOG_KEY(), { done: {}, taps: {} });
 let logDay = localDay();
 const listeners = new Set<() => void>();

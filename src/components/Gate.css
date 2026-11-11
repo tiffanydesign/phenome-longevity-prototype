@@ -1,0 +1,111 @@
+.gate {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background: #eef0f5;
+  font-family: var(--f-text, system-ui, sans-serif);
+  color: #1b2340;
+}
+.gate-card {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 28px 28px;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(20, 30, 60, 0.06), 0 18px 40px -18px rgba(20, 30, 60, 0.22);
+}
+.gate-card[data-wrong] {
+  animation: gate-shake 0.42s;
+}
+@keyframes gate-shake {
+  20%,
+  60% {
+    transform: translateX(-7px);
+  }
+  40%,
+  80% {
+    transform: translateX(7px);
+  }
+}
+.gate-lock {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: #263980;
+  background: #e8ebf5;
+}
+.gate h1 {
+  margin: 20px 0 6px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.gate-card > p:not(.gate-msg) {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: #5b6380;
+}
+.gate-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #5b6380;
+}
+.gate-field input {
+  height: 50px;
+  padding: 0 16px;
+  border: 1.5px solid #dde1ec;
+  border-radius: 14px;
+  font: 600 18px/1 inherit;
+  letter-spacing: 0.2em;
+  color: #1b2340;
+  background: #f7f8fb;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.gate-field input:focus {
+  border-color: #263980;
+  background: #fff;
+}
+.gate-field input[aria-invalid="true"] {
+  border-color: #c4572e;
+}
+.gate-msg {
+  min-height: 20px;
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #c4572e;
+}
+.gate-card button {
+  height: 50px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 25px;
+  font: 600 16px/1 inherit;
+  color: #fff;
+  background: #263980;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.gate-card button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.gate-card button:not(:disabled):active {
+  transform: scale(0.98);
+}
+@media (prefers-reduced-motion: reduce) {
+  .gate-card[data-wrong] {
+    animation: none;
+  }
+}

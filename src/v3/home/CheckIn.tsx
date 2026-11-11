@@ -1,109 +1,60 @@
 import { useEffect, useRef, useState } from "react";
 import { useGo } from "../ui/shell";
 import { HabitMark } from "../habits/HabitMark";
-import { PARTS, planActions, shortOf, unitFor, useToday, type HabitToday } from "../habits/plan";
+import { PARTS, planActions, unitFor, useToday, type HabitToday } from "../habits/plan";
+import { WinDeck } from "./WinDeck";
 import "../habits/habits.css";
 import "./checkin.css";
 
 /*
- * The daily check-in reads the member's habits; it holds no list of its own.
- * What it asks, and when:
+ * Small wins: the habits Home asks about today, as a stack of cards to swipe
+ * through. It reads the member's plan and holds no list of its own.
  *  - only habits on today's plan with "Ask in daily check-in" switched on;
  *  - a habit is due once its part of the day has begun (morning 05:00,
  *    afternoon 12:00, evening 17:00; any-time habits all day) and stays due
- *    until done, so a missed morning item is still there at lunch;
- *  - Home shows one due habit at a time, one-off items before counts; "Later"
- *    moves on to the next one without logging anything;
- *  - count habits (water, meals) log one at a time and stay until the goal;
+ *    until done;
  *  - anything a device or the food log already knows is ticked for the member;
- *  - the ring opens the whole day, with undo and the way to the plan.
+ *  - the heading sits above the stack with the day's progress, which opens
+ *    the whole list with undo;
+ *  - when nothing is left to do now, a short word of praise plays and the
+ *    whole module folds away. It comes back the next day, or when the next
+ *    part of the day brings something new.
  */
 
-/** The day's progress as a small ring. */
-function Progress({ done, total }: { done: number; total: number }) {
+/**
+ * The day's progress as a ring cut into one arc per habit. Arcs fill clockwise
+ * from the top, one after another, each in the hue of the habit it stands for.
+ */
+function Progress({ items: all }: { items: HabitToday[] }) {
+  const items = [...all.filter((t) => t.done), ...all.filter((t) => !t.done)];
   const R = 9;
   const C = 2 * Math.PI * R;
+  const n = Math.max(items.length, 1);
+  const gap = n > 1 ? 2.2 : 0;
+  const seg = C / n - gap;
   return (
-    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden className="ck-prog">
-      <circle cx="12" cy="12" r={R} />
-      {done > 0 && <circle cx="12" cy="12" r={R} data-fill="" strokeDasharray={`${(C * done) / Math.max(total, 1)} ${C}`} transform="rotate(-90 12 12)" />}
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden className="wn-prog">
+      {items.map((t, i) => (
+        <circle
+          key={t.h.id}
+          cx="12"
+          cy="12"
+          r={R}
+          data-field={t.h.field}
+          data-on={t.done ? "" : undefined}
+          strokeDasharray={`${seg} ${C - seg}`}
+          strokeDashoffset={-(C / n) * i}
+          transform="rotate(-90 12 12)"
+        />
+      ))}
     </svg>
   );
 }
 
-/** The habit due now, in one row, with the one action it needs. */
-function DueRow({ t, onLink }: { t: HabitToday; onLink: (to: string, el: HTMLElement) => void }) {
-  const { h } = t;
-  const [leaving, setLeaving] = useState(false);
-  const finish = (value: string) => {
-    setLeaving(true);
-    window.setTimeout(() => planActions.answer(h.id, value), 220);
-  };
-  const line = h.kind === "count" ? `${t.count} of ${t.goal} ${unitFor(h, t.goal)}` : h.detail ?? PARTS[h.part].label;
-  return (
-    <div className="ck-row" data-field={h.field} data-leaving={leaving ? "" : undefined}>
-      <div className="ck-row-top">
-        <HabitMark mark={h.mark} field={h.field} size={34} />
-        <span className="ck-text">
-          <b>{h.name}</b>
-          {h.kind === "count" ? (
-            <span className="ck-progress">
-              <small>{line}</small>
-              <span className="ck-segs" aria-hidden style={{ "--n": t.goal } as React.CSSProperties}>
-                {Array.from({ length: t.goal }, (_, n) => (
-                  <i key={n} data-on={n < t.count ? "" : undefined} />
-                ))}
-              </span>
-            </span>
-          ) : (
-            h.kind !== "choice" && <small>{line}</small>
-          )}
-        </span>
-        {h.kind === "once" && (
-          <button className="ck-go" onClick={() => finish("Done")}>
-            Done
-          </button>
-        )}
-        {h.kind === "count" && (
-          <span className="ck-step">
-            {t.count > 0 && !t.by && (
-              <button className="ck-minus" aria-label={`Take back one ${unitFor(h, 1)}`} onClick={() => planActions.undo(h.id)}>
-                <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden>
-                  <path d="M6 12h12" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
-                </svg>
-              </button>
-            )}
-            <button className="ck-go" onClick={(e) => (h.source === "food" ? onLink("/v3/metric/diet", e.currentTarget) : planActions.tap(h.id))}>
-              {h.source === "food" ? "Log" : "+1"}
-            </button>
-          </span>
-        )}
-      </div>
-      {h.kind === "choice" && (
-        <div className="ck-chips">
-          {h.options!.map((o) => (
-            <button key={o} className="ck-chip" onClick={() => finish(o)}>
-              {o}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
+/** The confetti: pieces in the day's habit hues, thrown out round a circle. */
+const PIECES = 16;
 
-/** "this evening", "this afternoon": when a part of the day comes round. */
-const partWhen = (p: HabitToday["h"]["part"]) => (p === "morning" ? "tomorrow morning" : p === "afternoon" ? "this afternoon" : p === "evening" ? "this evening" : "later");
-
-/** The confetti: one piece per habit hue, thrown out round a circle. */
-const PIECES = 14;
-
-/**
- * The moment the last habit is ticked: a tick drawn in a ring, pieces in the
- * day's habit colours bursting out from it, one line of praise. Then the card
- * folds away for the rest of the day.
- */
-function Celebration({ fields, total }: { fields: string[]; total: number }) {
+function Celebration({ fields, title, line }: { fields: string[]; title: string; line: string }) {
   return (
     <div className="ck-party" role="status">
       <span className="ck-burst" aria-hidden>
@@ -121,13 +72,24 @@ function Celebration({ fields, total }: { fields: string[]; total: number }) {
         </svg>
       </span>
       <span className="ck-party-t">
-        <b>All done for today</b>
-        <small>
-          {total} of {total} habits · see you tomorrow
-        </small>
+        <b>{title}</b>
+        <small>{line}</small>
       </span>
     </div>
   );
+}
+
+/** "this evening", "this afternoon": when a part of the day comes round. */
+const partWhen = (p: HabitToday["h"]["part"]) => (p === "morning" ? "tomorrow morning" : p === "afternoon" ? "this afternoon" : p === "evening" ? "this evening" : "later");
+
+/** The hour, kept fresh so a new part of the day can bring the module back without a reload. */
+function useHour(): number {
+  const [hour, setHour] = useState(() => new Date().getHours());
+  useEffect(() => {
+    const id = window.setInterval(() => setHour(new Date().getHours()), 60_000);
+    return () => window.clearInterval(id);
+  }, []);
+  return hour;
 }
 
 type Phase = "live" | "party" | "closing" | "gone";
@@ -135,134 +97,133 @@ type Phase = "live" | "party" | "closing" | "gone";
 export function CheckIn() {
   const go = useGo();
   const { asked } = useToday();
-  const [list, setList] = useState(false);
-  const [skip, setSkip] = useState(0);
-  const hour = new Date().getHours();
-  const plan = (el: HTMLElement) => go("/v3/habits", { from: el });
+  const hour = useHour();
+  const [open, setOpen] = useState(false);
+  const [order, setOrder] = useState<string[]>([]);
 
-  // all done already when Home opens: nothing to show. All done just now: celebrate, then fold away.
-  const waitingCount = asked.filter((t) => !t.done).length;
-  const allDone = asked.length > 0 && waitingCount === 0;
-  const [phase, setPhase] = useState<Phase>(() => (allDone ? "gone" : "live"));
-  const before = useRef(waitingCount);
+  const done = asked.filter((t) => t.done);
+  const waiting = asked.filter((t) => !t.done);
+  const later = waiting.filter((t) => hour < PARTS[t.h.part].from);
+  // due now, one-off items before counts, then the member's own "later" order
+  const rank = (id: string) => {
+    const i = order.indexOf(id);
+    return i < 0 ? -1 : i;
+  };
+  const due = waiting
+    .filter((t) => hour >= PARTS[t.h.part].from)
+    .sort((a, b) => rank(a.h.id) - rank(b.h.id) || Number(a.h.kind === "count") - Number(b.h.kind === "count"));
+
+  // nothing to do now when Home opens: the module stays away. Emptied just now: praise, then fold away.
+  const [phase, setPhase] = useState<Phase>(() => (due.length === 0 ? "gone" : "live"));
+  const before = useRef(due.length);
   useEffect(() => {
     const was = before.current;
-    before.current = waitingCount;
-    if (waitingCount > 0) {
+    before.current = due.length;
+    if (due.length > 0) {
       setPhase("live");
       return;
     }
-    if (was === 0 || asked.length === 0) return;
+    if (was === 0) return;
     setPhase("party");
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const fold = window.setTimeout(() => setPhase("closing"), reduce ? 1600 : 2400);
-    const gone = window.setTimeout(() => setPhase("gone"), reduce ? 1700 : 2900);
+    const fold = window.setTimeout(() => setPhase("closing"), reduce ? 1600 : 2600);
+    const gone = window.setTimeout(() => setPhase("gone"), reduce ? 1700 : 3150);
     return () => {
       window.clearTimeout(fold);
       window.clearTimeout(gone);
     };
-  }, [waitingCount, asked.length]);
+  }, [due.length]);
 
-  if (phase === "gone" && allDone) return null;
-  if (phase === "party" || phase === "closing") {
-    return (
-      <div className="ck-fold" data-closing={phase === "closing" ? "" : undefined}>
-        <section className="ck" aria-label="Daily check-in">
-          <Celebration fields={asked.map((t) => t.h.field)} total={asked.length} />
-        </section>
-      </div>
-    );
-  }
+  // the stack as it stands, with this one moved to the back
+  const toBack = (id: string) => setOrder([...due.map((t) => t.h.id).filter((x) => x !== id), id]);
 
-  if (asked.length === 0) {
-    return (
-      <section className="ck ck-empty" aria-label="Daily check-in">
-        <span className="ck-text">
-          <b>Plan your day</b>
-          <small>Pick a few habits and Home will check in on them.</small>
-        </span>
-        <button className="ck-go" onClick={(e) => plan(e.currentTarget)}>
-          Set up
-        </button>
-      </section>
-    );
-  }
+  if (asked.length === 0) return null;
 
-  const done = asked.filter((t) => t.done);
-  const waiting = asked.filter((t) => !t.done);
-  // due now: its part of the day has begun; one-off items before counts, which run all day
-  const due = waiting.filter((t) => hour >= PARTS[t.h.part].from).sort((a, b) => Number(a.h.kind === "count") - Number(b.h.kind === "count"));
-  const later = waiting.filter((t) => hour < PARTS[t.h.part].from);
-  const now = due.length ? due[skip % due.length] : null;
-
-  return (
-    <section className="ck" aria-label="Daily check-in">
-      <header className="ck-head">
-        <h3>Daily check-in</h3>
-        {!list && due.length > 1 && (
-          <button className="ck-later" onClick={() => setSkip(skip + 1)}>
-            Later
-          </button>
+  const allDone = waiting.length === 0;
+  // what counts today so far: done, or its part of the day has begun; later parts join as they start
+  const started = asked.filter((t) => t.done || hour >= PARTS[t.h.part].from);
+  const clear = started.length > 0 && started.every((t) => t.done);
+  const head = (
+    <header className="v2-sec wn-head">
+      <h3>Small wins for you</h3>
+      <button
+        className="wn-count"
+        data-clear={clear ? "" : undefined}
+        aria-expanded={open}
+        aria-label={`${clear ? "All done" : `${done.length} of ${started.length} done`} today. ${open ? "Hide" : "Show"} the list`}
+        onClick={() => setOpen(!open)}
+      >
+        {clear ? (
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden className="wn-tick">
+            <circle cx="12" cy="12" r="11" />
+            <path d="m7.4 12.4 3.1 3.1 6.1-6.7" />
+          </svg>
+        ) : (
+          <Progress items={started} />
         )}
-        <button className="ck-count" aria-expanded={list} aria-label={`${done.length} of ${asked.length} done. ${list ? "Hide" : "Show"} all`} onClick={() => setList(!list)}>
-          <Progress done={done.length} total={asked.length} />
-          {done.length}/{asked.length}
-        </button>
-      </header>
+        <span key={clear ? "clear" : done.length}>{clear ? "All done" : `${done.length} of ${started.length}`}</span>
+        <svg className="wn-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+    </header>
+  );
 
-      {list ? (
-        <>
-          <ul className="ck-list">
-            {asked.map((t) => (
-              <li key={t.h.id}>
-                <HabitMark mark={t.h.mark} field={t.h.field} done={t.done} size={30} />
-                <span className="ck-text">
-                  <b>{t.h.name}</b>
-                  <small>
-                    {t.by ??
-                      (t.h.kind === "count"
-                        ? `${t.count} of ${t.goal} ${unitFor(t.h, t.goal)}`
-                        : t.answer && t.answer !== "Done"
-                          ? t.answer
-                          : t.done
-                            ? "Done"
-                            : hour < PARTS[t.h.part].from
-                              ? `From ${String(PARTS[t.h.part].from).padStart(2, "0")}:00`
-                              : "Not yet")}
-                  </small>
-                </span>
-                {!t.by && t.count > 0 && (
-                  <button className="ck-undo" onClick={() => planActions.undo(t.h.id)}>
-                    Undo
-                  </button>
-                )}
-              </li>
-            ))}
-          </ul>
-          <button className="ck-plan" onClick={(e) => plan(e.currentTarget)}>
-            Edit plan in Habits
-          </button>
-        </>
-      ) : now ? (
-        <DueRow key={now.h.id} t={now} onLink={(to, el) => go(to, { from: el })} />
-      ) : (
-        <div className="ck-row ck-clear">
-          <div className="ck-row-top">
-            {waiting.length === 0 ? <HabitMark mark="sun" field="activity" done size={34} /> : <HabitMark mark={later[0].h.mark} field={later[0].h.field} size={34} />}
-            <span className="ck-text">
-              <b>{waiting.length === 0 ? "All done for today" : "Nothing due right now"}</b>
-              <small>
-                {waiting.length === 0
-                  ? `${done
-                      .filter((t) => t.by)
-                      .map((t) => shortOf(t.h))
-                      .join(" and ") || "Everything"} ${done.some((t) => t.by) ? "synced for you · " : "logged · "}see you tomorrow`
-                  : `Next: ${later[0].h.name}, ${partWhen(later[0].h.part)}`}
-              </small>
-            </span>
+  // the praise folds away under the heading; the heading stays, so the list and undo are still in reach
+  const party = phase === "party" || phase === "closing";
+  return (
+    <section className="wn-mod" aria-label="Small wins">
+      {head}
+      <div className="wn-drawer" data-open={open ? "" : undefined}>
+        <div>
+          <div className="wn-list-card">
+            <ul className="ck-list">
+              {asked.map((t) => (
+                <li key={t.h.id}>
+                  <HabitMark mark={t.h.mark} field={t.h.field} done={t.done} size={30} />
+                  <span className="ck-text">
+                    <b>{t.h.name}</b>
+                    <small>
+                      {t.by ??
+                        (t.h.kind === "count"
+                          ? `${t.count} of ${t.goal} ${unitFor(t.h, t.goal)}`
+                          : t.answer && t.answer !== "Done"
+                            ? t.answer
+                            : t.done
+                              ? "Done"
+                              : hour < PARTS[t.h.part].from
+                                ? `From ${String(PARTS[t.h.part].from).padStart(2, "0")}:00`
+                                : "Not yet")}
+                    </small>
+                  </span>
+                  {!t.by && t.count > 0 && (
+                    <button className="ck-undo" onClick={() => planActions.undo(t.h.id)}>
+                      Undo
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <button className="ck-plan" onClick={(e) => go("/v3/habits", { from: e.currentTarget })}>
+              Edit plan in Habits
+            </button>
+          </div>
+        </div>
+      </div>
+      {party && !open && (
+        <div className="ck-fold" data-closing={phase === "closing" ? "" : undefined}>
+          <div className="wn-fold-in">
+            <div className="wn-party">
+              <Celebration
+                fields={asked.map((t) => t.h.field)}
+                title={allDone ? "Good job" : "Good job, all done for now"}
+                line={allDone ? `All ${asked.length} small wins done · see you tomorrow` : `Next: ${later[0]?.h.name ?? "more"}, ${later[0] ? partWhen(later[0].h.part) : "later"}`}
+              />
+            </div>
           </div>
         </div>
       )}
+      {!open && due.length > 0 && <WinDeck due={due} onLater={toBack} onFood={(el) => go("/v3/metric/diet", { from: el })} />}
     </section>
   );
 }

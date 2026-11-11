@@ -177,8 +177,11 @@ export function MacroBar({ m }: { m: Metric }) {
       <span className="gl-macro-key">
         {parts.map((p) => (
           <span key={p.name} data-part={p.name}>
-            <i />
-            {p.name} <b>{Math.round((eaten * p.share) / p.per)} g</b>
+            <em>
+              <i />
+              {p.name}
+            </em>
+            <b>{Math.round((eaten * p.share) / p.per)} g</b>
           </span>
         ))}
       </span>
@@ -209,35 +212,38 @@ export function HabitStops({ m }: { m: Metric }) {
   );
 }
 
-/** Two rings for the week's training: sessions against the weekly goal outside, active minutes inside. */
+/** A day's workout read two ways, each ring its own pink: time moving outside, energy spent inside. */
+export function workoutDay(m: Metric) {
+  const minutes = num(m.value);
+  return [
+    { k: "time", label: "Time", v: minutes, goal: 45, unit: "min" },
+    { k: "kcal", label: "Calories", v: Math.round(minutes * 6.4), goal: 300, unit: "kcal" },
+  ];
+}
+
 export function WorkoutRings({ m }: { m: Metric }) {
-  const sessions = num(m.value);
-  const minutes = num(m.delta);
-  const GOAL_SESSIONS = 4;
-  const GOAL_MIN = 150;
-  const ring = (r: number, share: number, cls: string) => {
-    const C = 2 * Math.PI * r;
-    const s = Math.max(0, Math.min(1, share));
-    return (
-      <g className={cls}>
-        <circle cx="30" cy="30" r={r} data-track="" />
-        {s > 0 && <circle cx="30" cy="30" r={r} strokeDasharray={`${C * s} ${C}`} transform="rotate(-90 30 30)" />}
-      </g>
-    );
-  };
+  const rings = workoutDay(m);
+  const R = [24.5, 14.5];
   return (
-    <span className="gl gl-rings" role="img" aria-label={`${sessions} of ${GOAL_SESSIONS} sessions, ${minutes} of ${GOAL_MIN} active minutes this week`}>
+    <span className="gl gl-rings" role="img" aria-label={rings.map((r) => `${r.label} ${r.v} of ${r.goal} ${r.unit}`).join(", ")}>
       <svg viewBox="0 0 60 60" width="60" height="60" aria-hidden>
-        {ring(25, sessions / GOAL_SESSIONS, "gl-ring-a")}
-        {ring(15.5, minutes / GOAL_MIN, "gl-ring-b")}
+        {rings.map((r, i) => {
+          const C = 2 * Math.PI * R[i];
+          const s = Math.max(0, Math.min(1, r.v / r.goal));
+          return (
+            <g key={r.k} data-ring={r.k}>
+              <circle cx="30" cy="30" r={R[i]} data-track="" />
+              {s > 0 && <circle cx="30" cy="30" r={R[i]} strokeDasharray={`${C * s} ${C}`} transform="rotate(-90 30 30)" />}
+            </g>
+          );
+        })}
       </svg>
       <span className="gl-rings-key">
-        <span data-k="a">
-          <b>{sessions}</b> of {GOAL_SESSIONS}
-        </span>
-        <span data-k="b">
-          <b>{minutes}</b> min
-        </span>
+        {rings.map((r) => (
+          <span key={r.k} data-ring={r.k}>
+            <b>{r.v.toLocaleString("en-GB")}</b> {r.unit}
+          </span>
+        ))}
       </span>
     </span>
   );

@@ -330,11 +330,17 @@ export const IconLensVitals = ({ size = 20 }: { size?: number }) => (
   </Line>
 );
 
-/** Body lens: the figure standing, arms a little out, as the twin stands. */
+/** Body lens: the figure in outline, standing arms a little out as the twin stands, the head solid. */
 export const IconLensBody = ({ size = 20 }: { size?: number }) => (
   <Line size={size}>
-    <circle cx="12" cy="4.6" r="2.2" fill="currentColor" stroke="none" />
-    <path strokeWidth="2" d="M12 8.6v6.2M12 9.4 7.2 13M12 9.4l4.8 3.6M12 14.8l-2.6 5.6M12 14.8l2.6 5.6" />
+    <circle cx="12" cy="4.3" r="2.25" fill="currentColor" stroke="none" />
+    <path
+      strokeWidth="1.7"
+      strokeLinejoin="round"
+      fill="currentColor"
+      fillOpacity="0.14"
+      d="M11 7.8h2c1.2 0 2 .3 2.5 1l3 6.4a.8.8 0 0 1-1.4.8l-2.4-4.3.1 3-.5 5.7a.8.8 0 0 1-.8.8h-.6a.8.8 0 0 1-.8-.8L12 15.8l-.1 4.6a.8.8 0 0 1-.8.8h-.6a.8.8 0 0 1-.8-.8l-.5-5.7.1-3-2.4 4.3a.8.8 0 0 1-1.4-.8l3-6.4c.5-.7 1.3-1 2.5-1z"
+    />
   </Line>
 );
 

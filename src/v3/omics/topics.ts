@@ -62,7 +62,8 @@ function genomics(): Omit<Topic, "id" | "name" | "field" | "glyph"> {
   const tone = toneOf(v);
   const total = g.veryImportant + g.important + g.noteworthy;
   return {
-    chip: tone === "ok" || !tone ? "Clear" : `${v.value} to discuss`,
+    // the chip names what is there, calmly; how much of it matters is the card's to say
+    chip: total ? plural(total, "finding") : "Nothing flagged",
     tone,
     status: v.status ?? v.label ?? "",
     key: { label: "Sequenced", value: g.date },
@@ -110,7 +111,7 @@ function proteomics(): Omit<Topic, "id" | "name" | "field" | "glyph"> {
   const typical = systems.length - flagged.length;
   const top = (p.highlights as Rec[])[0];
   return {
-    chip: `${typical} of ${systems.length}`,
+    chip: `${typical} of ${systems.length} typical`,
     tone: toneOf(readingOf("proteomics")),
     status: readingOf("proteomics").status ?? "",
     key: { label: "Body systems typical", value: `${typical} of ${systems.length}` },
@@ -118,8 +119,8 @@ function proteomics(): Omit<Topic, "id" | "name" | "field" | "glyph"> {
     stats: [
       { label: "Proteins", value: fmt(p.proteins), sub: "Measured" },
       flagged.length
-        ? { label: "To discuss", value: plural(flagged.length, "system"), sub: flagged[0].name }
-        : { label: "To discuss", value: "None", sub: "Every system typical" },
+        ? { label: "To review", value: plural(flagged.length, "system"), sub: flagged[0].name }
+        : { label: "To review", value: "None", sub: "Every system typical" },
     ],
     insight: top ? `Closest resemblance: ${short(top.name)}, ${top.score} of 100. A resemblance, not a diagnosis.` : "Every body system reads typical.",
     title: flagged.length === 0 ? "Every system looks typical" : typical > flagged.length ? "Most systems look typical" : "Systems to talk through",

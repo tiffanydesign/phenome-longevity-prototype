@@ -421,3 +421,369 @@
   color: var(--v-ink-2);
   text-wrap: pretty;
 }
+
+/* ---------- each omics study: its own mark on a tile of its hue; untested in grey with the way to buy ---------- */
+.om-kit {
+  --om-tile: color-mix(in srgb, var(--mid) 14%, var(--v-card));
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  color: var(--mid);
+  background: var(--om-tile);
+}
+.om-kit-row {
+  min-height: 60px;
+}
+/* a real kit box: the photo sits on white with a hairline, whatever the theme */
+.om-kit-photo {
+  overflow: hidden;
+  background: #fff;
+  box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--v-ink) 14%, transparent);
+}
+.om-kit-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.06);
+}
+[data-untested] .om-kit-photo img {
+  opacity: 0.55;
+  filter: grayscale(1);
+}
+.om-kit-row .om-item-t b {
+  font: 600 15.5px/1.25 var(--v-text);
+  letter-spacing: -0.01em;
+}
+.om-kit-row[data-untested] .om-kit {
+  --om-tile: var(--v-fill);
+  color: var(--v-ink-3);
+}
+.om-kit-row[data-untested] .om-item-t b {
+  color: var(--v-ink-3);
+}
+.om-buy {
+  flex: none;
+  height: 30px;
+  padding: 0 13px;
+  border-radius: 15px;
+  font: 600 13px/1 var(--v-text);
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 10%, var(--v-card));
+  transition: transform 0.15s;
+}
+.om-buy:active {
+  transform: scale(0.95);
+}
+
+/* ---------- new results: a blue dot in the chip's corner (red and yellow already mean "review" and "monitor") ---------- */
+.om-chip {
+  position: relative;
+}
+.om-chip-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2f7cf6;
+  box-shadow: 0 0 0 2px var(--v-card);
+}
+.om-chip-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: om-ping 1.6s 0.4s 2 ease-out;
+  opacity: 0;
+}
+@keyframes om-ping {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+.om-new {
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 8px;
+  font: 650 11px/1.4 var(--v-text);
+  font-style: normal;
+  color: #fff;
+  background: #2f7cf6;
+}
+
+/* ---------- which test the tab shows: kit, date and how it was taken, above its results ---------- */
+.om-pk {
+  margin: 18px 0 0;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  overflow: hidden;
+}
+.om-pk-main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  text-align: left;
+  color: var(--v-ink);
+}
+.om-pk .om-kit {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+}
+.om-pk-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.om-pk-text small {
+  display: flex;
+  align-items: center;
+  font: 600 12px/1.3 var(--v-text);
+  color: color-mix(in srgb, var(--mid) 75%, var(--v-ink));
+}
+.om-pk-text b {
+  font: 650 17px/1.25 var(--v-text);
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.om-pk-text > span {
+  font: 400 13px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.om-pk-change {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 11px 0 13px;
+  border-radius: 16px;
+  font: 600 13px/1 var(--v-text);
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 9%, var(--v-card));
+}
+.om-pk-main:active .om-pk-change {
+  transform: scale(0.96);
+}
+.om-pk-compare {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px 0 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 0.5px solid var(--v-line);
+  font: 600 13.5px/1 var(--v-text);
+  color: var(--v-navy);
+}
+
+/* sport-style readings in a card: name at left, level with its dot at right */
+.om-lv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  font: 500 15px/1.25 var(--v-text);
+}
+.om-lv + .om-lv {
+  border-top: 0.5px solid var(--v-line);
+}
+.om-lv b {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 14px/1 var(--v-text);
+}
+.om-lv b i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34c759;
+}
+.om-lv[data-tone="mon"] b i {
+  background: #ffb600;
+}
+.om-lv[data-tone="alert"] b i {
+  background: #c4572e;
+}
+.om-lv:not([data-tone]) b {
+  color: var(--v-ink-3);
+}
+.om-lv:not([data-tone]) b i {
+  background: var(--v-fill);
+}
+
+/* ---------- the sheet of every kit and run ---------- */
+.om-sheet {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.om-sheet-scrim {
+  position: absolute;
+  inset: 0;
+  background: #0b0d1440;
+  animation: om-fade 0.25s linear;
+}
+@keyframes om-fade {
+  from {
+    opacity: 0;
+  }
+}
+.om-sheet-panel {
+  position: relative;
+  max-height: 82%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 28px 28px 0 0;
+  background: var(--v-bg);
+  padding-bottom: env(safe-area-inset-bottom);
+  animation: om-rise 0.36s var(--v-ease);
+}
+@keyframes om-rise {
+  from {
+    transform: translateY(40%);
+    opacity: 0.4;
+  }
+}
+.om-sheet-panel > header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 16px 10px 20px;
+}
+.om-sheet-panel h2 {
+  margin: 0;
+  font: 700 22px/1.2 var(--v-text);
+  letter-spacing: -0.02em;
+}
+.om-sheet-panel > header button {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink-2);
+  background: var(--v-fill);
+}
+.om-sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 16px 28px;
+}
+.om-sheet-kit {
+  margin-bottom: 10px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  overflow: hidden;
+}
+.om-sheet-kit-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+.om-sheet-kit-head > span:not(.om-kit) {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.om-sheet-kit-head b {
+  font: 650 15.5px/1.25 var(--v-text);
+}
+.om-sheet-kit-head small {
+  font: 400 12.5px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.om-sheet-kit[data-untested] .om-kit {
+  --om-tile: var(--v-fill);
+  color: var(--v-ink-3);
+}
+.om-sheet-kit[data-untested] b {
+  color: var(--v-ink-3);
+}
+.om-sheet-runs button {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 8px 66px;
+  border-top: 0.5px solid var(--v-line);
+  text-align: left;
+  color: var(--v-ink);
+}
+.om-sheet-runs button[aria-checked="true"] {
+  background: color-mix(in srgb, var(--v-navy) 5%, var(--v-card));
+}
+.om-sheet-runs button > span {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.om-sheet-runs b {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 15px/1.2 var(--v-text);
+}
+.om-sheet-runs em {
+  padding: 1px 7px;
+  border-radius: 8px;
+  font: 600 11px/1.4 var(--v-text);
+  font-style: normal;
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 10%, transparent);
+}
+.om-sheet-runs small {
+  font: 400 12.5px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.om-sheet-runs svg {
+  flex: none;
+  color: var(--v-navy);
+}
+@media (prefers-reduced-motion: reduce) {
+  .om-chip-dot::after,
+  .om-sheet-panel,
+  .om-sheet-scrim {
+    animation: none;
+  }
+}
+
+/* the test picker sits right under the headline; the headline's line follows it */
+.om-title + .om-pk {
+  margin-top: 12px;
+}
+.om-sub-after {
+  margin-top: 14px;
+}

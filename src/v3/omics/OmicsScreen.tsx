@@ -1,16 +1,18 @@
-import { asset } from "@/lib/asset";
 import { useDataset } from "@/lib/data";
 import { insightsTab } from "@/data/insights";
 import { Glyph } from "../ui/glyphs";
 import { Chevron } from "../ui/icons";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { BrandBar, followHead, HeadBlur, useGo, V2Screen } from "../ui/shell";
 import { TopicCard, type Go } from "./TopicCard";
 import { readingOf } from "../twin/regions";
 import { TOPICS, type Topic } from "./topics";
 import { MarkAll, OmicsMark } from "./marks";
-import { GET, SOURCE_LABEL, portfolio, type Source } from "./portfolio";
+import { portfolio, type PortfolioRow } from "./portfolio";
+import { KIT_FIELD, KitMark } from "./kitMarks";
+import { KitPicker } from "./KitPicker";
+import { contentOf, markSeen, pickOf, testsOf, useUnseen } from "./tests";
 import "../home/home.css";
 import "../study/study.css";
 import "./omics.css";
@@ -19,89 +21,63 @@ import "./omics.css";
 const LEAD =
   "Your genetic makeup and other biological factors provide insights into your well-being, as well as the microbial composition on and inside your body.";
 
-/* the kits we have product photos for, cut out of their white ground; the
-   studies with no kit of their own carry a photo from the site's science pages */
-const KIT_THUMB: Record<string, string> = { Genome: "genome", Gut: "gut", Oral: "oral" };
-const PHOTO_THUMB: Record<string, string> = {
-  Vaginal: "vaginal",
-  Proteome: "proteome",
-  Transcriptome: "transcriptome",
-  Metabolome: "metabolome",
-  Lipidome: "lipidome",
-};
-const thumbOf = (title: string): { src: string; photo?: boolean } | undefined => {
-  const word = title.split(" ")[0];
-  if (KIT_THUMB[word]) return { src: asset(`photos/insights/thumb/kit_${KIT_THUMB[word]}.png`) };
-  if (PHOTO_THUMB[word]) return { src: asset(`photos/insights/thumb/hub_${PHOTO_THUMB[word]}.jpg`), photo: true };
-  return undefined;
-};
-
-/** Each portfolio card's colour, taken from the study it opens when there is one. */
-function fieldOf(title: string): string {
-  const word = title.split(" ")[0].toLowerCase().slice(0, 4);
-  return TOPICS.find((t) => t.name.toLowerCase().startsWith(word))?.field ?? "teal";
-}
-
 /** A grouped row: mark, name and line, an optional count, chevron. */
-function Row({ field, glyph, thumb, title, sub, count, off, source, get, onClick }: { field?: string; glyph?: Parameters<typeof Glyph>[0]["name"]; thumb?: { src: string; photo?: boolean }; title: string; sub: string; count?: number; off?: boolean; source?: Source; get?: Source; onClick?: Go }) {
-  const lead = thumb ? (
-    <span className="om-thumb" data-photo={thumb.photo ? "" : undefined}>
-      <img src={thumb.src} alt="" loading="lazy" />
-    </span>
-  ) : (
-    glyph && (
-      <span className="om-mark">
-        <Glyph name={glyph} size={17} />
-      </span>
-    )
-  );
-  const name = (
-    <span className="om-item-t">
-      <b>
-        {title}
-        {source && <i className="om-src">{SOURCE_LABEL[source]}</i>}
-      </b>
-      <small>{sub}</small>
-    </span>
-  );
-  // no result yet: the row says how to get one, and taking it goes there
-  if (get)
-    return (
-      <button className="om-item om-item-off" data-field={field} onClick={(e) => onClick?.(e.currentTarget)}>
-        {lead}
-        {name}
-        <em className="om-get">{GET[get].label}</em>
-      </button>
-    );
-  if (!onClick)
-    return (
-      <div className="om-item om-item-off" data-field={field} aria-disabled="true">
-        {lead}
-        <span className="om-item-t">
-          <b>{title}</b>
-          <small>{sub}</small>
-        </span>
-      </div>
-    );
+function Row({ field, glyph, title, sub, count, onClick }: { field?: string; glyph?: Parameters<typeof Glyph>[0]["name"]; title: string; sub: string; count?: number; onClick: Go }) {
   return (
-    <button className={`om-item${off ? " om-item-off" : ""}`} data-field={field} onClick={(e) => onClick(e.currentTarget)}>
-      {lead}
-      {name}
+    <button className="om-item" data-field={field} onClick={(e) => onClick(e.currentTarget)}>
+      {glyph && (
+        <span className="om-mark">
+          <Glyph name={glyph} size={17} />
+        </span>
+      )}
+      <span className="om-item-t">
+        <b>{title}</b>
+        <small>{sub}</small>
+      </span>
       {count !== undefined && <em className="om-count">{count}</em>}
       <Chevron size={13} />
     </button>
   );
 }
 
-/** The portfolio rows each study's tab gathers: the tests that read the same molecules. */
-const KITS_OF: Record<string, string[]> = {
-  genomics: ["Genome"],
-  transcriptomics: ["Transcriptome"],
-  proteomics: ["Proteome"],
-  metabolomics: ["Metabolome", "Lipidome"],
-  guthealth: ["Gut", "Vaginal"],
-  oralhealth: ["Oral"],
-};
+/**
+ * One omics study. Tested: its mark in its hue and its name, opening its report.
+ * Not tested yet: mark and name in grey, and the way to get the kit in the chevron's place.
+ */
+function KitRow({ k, go }: { k: PortfolioRow; go: ReturnType<typeof useGo> }) {
+  const word = k.title.split(" ")[0];
+  if (!k.to)
+    return (
+      <div className="om-item om-kit-row" data-untested="" data-field={KIT_FIELD[word]}>
+        <KitMark name={word} />
+        <span className="om-item-t">
+          <b>{k.title}</b>
+        </span>
+        <button className="om-buy" onClick={(e) => go("/v3/store", { from: e.currentTarget })}>
+          Buy kit
+        </button>
+      </div>
+    );
+  return (
+    <button className="om-item om-kit-row" data-field={KIT_FIELD[word]} onClick={(e) => go(k.to!, { from: e.currentTarget })}>
+      <KitMark name={word} />
+      <span className="om-item-t">
+        <b>{k.title}</b>
+      </span>
+      <Chevron size={13} />
+    </button>
+  );
+}
+
+/** The two rows every reports list opens with: the PDFs and the clinical data. */
+function ReportRows({ count, go }: { count: number; go: ReturnType<typeof useGo> }) {
+  return (
+    <>
+      <Row field="capacity" glyph="scale" title="Generated PDF reports" sub="From your clinician and the labs" count={count} onClick={() => go("/insights/reports")} />
+      <Row field="lavender" glyph="heart" title="Clinical insights" sub="Analyse your clinical data" onClick={() => go("/insights/clinical")} />
+    </>
+  );
+}
 
 /** What each test reads, in one plain line: the sample and the molecules. */
 const READS: Record<string, string> = {
@@ -132,6 +108,7 @@ export function OmicsScreen() {
     const next = new URLSearchParams(params);
     if (id) next.set("topic", id);
     else next.delete("topic");
+    next.delete("test");
     setParams(next, { replace: true });
   };
 
@@ -144,19 +121,16 @@ export function OmicsScreen() {
     row.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
   }, [topic?.id]);
 
-  const kitRow = (k: (typeof kits)[number]) => (
-    <Row
-      key={k.title}
-      field={k.to ? fieldOf(k.title) : undefined}
-      glyph="dna"
-      thumb={thumbOf(k.title)}
-      title={k.title}
-      sub={k.sub}
-      source={k.source}
-      get={k.to ? undefined : k.source}
-      onClick={(el) => go(k.to ?? GET[k.source].to, { from: el })}
-    />
-  );
+  const unseen = useUnseen(TOPICS.map((t) => t.id));
+  // a tab's dot clears once the member moves on from it, so the "New" mark is still there while they read
+  const lastTopic = useRef<string | undefined>(undefined);
+  useEffect(() => {
+    if (lastTopic.current && lastTopic.current !== topic?.id) markSeen(lastTopic.current);
+    lastTopic.current = topic?.id;
+  }, [topic?.id]);
+
+  const tested = kits.filter((k) => k.to);
+  const untested = kits.filter((k) => !k.to);
 
   return (
     <V2Screen>
@@ -175,7 +149,8 @@ export function OmicsScreen() {
             </span>
           </button>
           {TOPICS.map((t) => (
-            <button key={t.id} className="om-chip" data-field={t.field} aria-pressed={topic?.id === t.id} onClick={() => pickTopic(t.id)}>
+            <button key={t.id} className="om-chip" data-field={t.field} data-new={unseen.has(t.id) ? "" : undefined} aria-pressed={topic?.id === t.id} aria-label={unseen.has(t.id) ? `${t.name}, new results` : undefined} onClick={() => pickTopic(t.id)}>
+              {unseen.has(t.id) && <i className="om-chip-dot" aria-hidden />}
               <OmicsMark id={t.id} />
               <span className="om-chip-t">
                 <small>{t.name}</small>
@@ -186,29 +161,31 @@ export function OmicsScreen() {
         </div>
 
         {topic ? (
-          <TestView t={topic} rows={kits.filter((k) => KITS_OF[topic.id]?.includes(k.title.split(" ")[0])).map(kitRow)} go={go} />
+          <TestView key={topic.id} t={topic} fresh={unseen.has(topic.id)} reportCount={ins.reportCount} go={go} />
         ) : (
           <>
             <h1 className="om-title">Your health data</h1>
             <p className="om-sub">{LEAD}</p>
 
-            {/* the original Insights page, in order: reports and clinical insights, the omics portfolio, then results */}
-            {/* the portal export holds no PDFs and no clinical form data yet: the rows stay, and their pages say so */}
+            {/* what the member has: reports, clinical data and every study they have results for; then the studies still to try */}
+            <h2 className="om-h">Reports and insights</h2>
             <div className="om-list">
-              <Row field="capacity" glyph="scale" title="Generated PDF reports" sub="No reports yet" onClick={() => go("/insights/reports")} />
-              <Row field="lavender" glyph="heart" title="Clinical insights" sub="No clinical data yet" onClick={() => go("/insights/clinical")} />
-            </div>
-
-            <h2 className="om-h">Omics portfolio</h2>
-            <div className="om-list">{kits.map(kitRow)}</div>
-
-            <h2 className="om-h">Results</h2>
-            <div className="om-list">
-              {/* the clinic runs these at a visit; none is in the portal yet */}
-              {ins.results.map((k) => (
-                <Row key={k.title} title={k.title} sub={k.to ? k.sub : "Run at the clinic"} get={k.to ? undefined : "clinic"} onClick={() => go(k.to ?? GET.clinic.to)} />
+              <ReportRows count={ins.reportCount} go={go} />
+              {tested.map((k) => (
+                <KitRow key={k.title} k={k} go={go} />
               ))}
             </div>
+
+            {untested.length > 0 && (
+              <>
+                <h2 className="om-h">Not tested yet</h2>
+                <div className="om-list">
+                  {untested.map((k) => (
+                    <KitRow key={k.title} k={k} go={go} />
+                  ))}
+                </div>
+              </>
+            )}
           </>
         )}
       </div>
@@ -221,38 +198,49 @@ export function OmicsScreen() {
  * Proteomics alone leaves out its body-systems wheel, which reads the body and
  * so lives on the twin; the body-level view of any test is one row away.
  */
-function TestView({ t, rows, go }: { t: Topic; rows: ReactNode[]; go: ReturnType<typeof useGo> }) {
-  const v = readingOf(t.id);
+function TestView({ t, fresh, reportCount, go }: { t: Topic; fresh: boolean; reportCount: number; go: ReturnType<typeof useGo> }) {
+  const [params, setParams] = useSearchParams();
+  const kits = testsOf(t.id);
+  const at = pickOf(kits, params.get("test"));
   const bodyLevel = t.id === "proteomics";
+  // the dot was showing when the tab opened: the newest run keeps its "New" mark while the member is here
+  const [wasFresh] = useState(fresh);
+  const choose = (key: string) => {
+    const next = new URLSearchParams(params);
+    next.set("test", key);
+    setParams(next, { replace: true });
+  };
   return (
     <>
       <h1 className="om-title">{bodyLevel ? t.name : t.title}</h1>
-      <p className="om-sub">{bodyLevel ? READS[t.id] : t.support}</p>
+      {/* which test the page reads, straight under the headline; what it says follows */}
+      {at && <KitPicker topic={t.id} kits={kits} at={at} fresh={wasFresh} onPick={choose} />}
+      <p className="om-sub om-sub-after">{bodyLevel ? READS[t.id] : t.support}</p>
 
-      {bodyLevel ? (
-        <section className="om-find" data-field={t.field}>
-          <p className="om-find-k">
-            <OmicsMark id={t.id} size={18} />
-            What it found
-          </p>
-          <b className="om-find-v">{t.status}</b>
-          <p className="om-find-t">{t.insight}</p>
-        </section>
-      ) : (
-        <TopicCard t={t} go={go} />
-      )}
+      {/* the summary reads the newest test; an earlier one goes straight to its own results */}
+      {(!at || at.newest) &&
+        (bodyLevel ? (
+          <section className="om-find" data-field={t.field}>
+            <p className="om-find-k">
+              <OmicsMark id={t.id} size={18} />
+              What it found
+            </p>
+            <b className="om-find-v">{t.status}</b>
+            <p className="om-find-t">{t.insight}</p>
+          </section>
+        ) : (
+          <TopicCard t={t} go={go} />
+        ))}
 
-      <h2 className="om-h">In detail</h2>
+      <h2 className="om-h">{at?.newest === false ? `Results · ${at.run.date}` : "In detail"}</h2>
       <div className="om-detail" data-field={t.field}>
-        {v.omicsCards ?? v.cards}
+        {at ? contentOf(t.id, at) : (readingOf(t.id).omicsCards ?? readingOf(t.id).cards)}
       </div>
 
-      {rows.length > 0 && (
-        <>
-          <h2 className="om-h">Reports</h2>
-          <div className="om-list">{rows}</div>
-        </>
-      )}
+      <h2 className="om-h">Reports and insights</h2>
+      <div className="om-list">
+        <ReportRows count={reportCount} go={go} />
+      </div>
 
       <h2 className="om-h">On your body</h2>
       <div className="om-list">

@@ -10,15 +10,15 @@ import type { Lens } from "./regions";
  * into the full review closes the sky, and every laboratory marker follows as
  * one bar. Everything here is from the clinic; daily readings stay on Home.
  */
-export function TwinOverview({ visit, past, onLens }: { visit: number; past: boolean; onLens: (l: Lens) => void }) {
+export function TwinOverview({ visit, onLens }: { visit: number; past?: boolean; onLens: (l: Lens) => void }) {
   const go = useGo();
   const checkpoint = CHECKPOINTS.find((c) => c.visit === visit);
 
   return (
-    <section className="two" data-past={past ? "" : undefined} aria-label="Twin overview">
+    <section className="two" aria-label="Twin overview">
       <div className="two-sky">
         <div className="two-hero">
-          <TwinHero visit={visit} past={past} />
+          <TwinHero visit={visit} />
         </div>
 
         <header className="two-head">

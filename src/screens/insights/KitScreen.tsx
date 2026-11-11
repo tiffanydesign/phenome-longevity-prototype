@@ -5,6 +5,8 @@ import { photo } from "@/lib/asset";
 import { useDataset } from "@/lib/data";
 import { kitSlides, kitStatus } from "@/data/insights";
 import { ArchiveBox, ArrowBack, ArrowRight, Chevron } from "./icons";
+import { EDITION } from "@/lib/edition";
+import { canCompare } from "@/v3/kits/history";
 import "./Kit.css";
 
 /**
@@ -100,6 +102,12 @@ export function KitScreen({ kind: kindProp }: { kind?: string }) {
         <button className="kit-cta" onClick={() => nav(slide.report)}>
           {slide.cta ?? "View Report"} <ArrowRight size={22} />
         </button>
+        {/* clinical edition: a second way in when this test has been run more than once */}
+        {EDITION === "v3" && canCompare(kind, slide.title) && (
+          <button className="kit-compare" onClick={() => nav(`/v3/kit/${kind}/compare?test=${encodeURIComponent(slide.title)}`)}>
+            Compare results
+          </button>
+        )}
       </div>
     </Screen>
   );

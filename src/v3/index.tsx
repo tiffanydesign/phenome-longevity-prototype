@@ -17,6 +17,7 @@ import { TwinScreen } from "./twin/TwinScreen";
 import { ConsultScreen } from "./consult/ConsultScreen";
 import { ConsultationsScreen } from "./consult/ConsultationsScreen";
 import { HabitsScreen } from "./habits/HabitsScreen";
+import { KitCompareScreen } from "./kits/KitCompareScreen";
 
 const group = "Clinical edition";
 
@@ -39,5 +40,6 @@ export const routes: ScreenRoute[] = [
   // the shared address opens the same list in this edition
   { path: "/discover/consultations", element: <ConsultationsScreen />, title: "Consultations (shared address)", group },
   { path: "/v3/consultation", element: <ConsultScreen />, title: "Upcoming consultation", group },
+  { path: "/v3/kit/:kind/compare", element: <KitCompareScreen />, title: "Compare kit results", group },
   { path: "/v3/booking", element: <BookingScreen />, title: "Book a visit", group },
 ];

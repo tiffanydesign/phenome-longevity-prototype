@@ -5,6 +5,73 @@ import { AgeDial, Card, Finding, Gauge, Note, Parts, Pill, Wheel, ZRange } from 
 /** A count in the portal's words: "1 finding", "2 findings", or the words for none. */
 const count = (n: number, one: string, none = `No ${one}s`) => (n === 0 ? none : n === 1 ? `1 ${one}` : `${n} ${one}s`);
 
+/* each genomic test's own card, so a page can show one test's results on their own */
+export function GenomeCard() {
+  const g = M.genome;
+  return (
+    <Card title="Genome">
+      {g.veryImportant > 0 && <Finding tone="alert" title="Immediate attention needed" value={g.veryImportant} />}
+      {g.important > 0 && <Finding tone="mon" title="Monitor closely" value={g.important} />}
+      {g.noteworthy > 0 && <Finding tone="" title="For your information" value={g.noteworthy} />}
+      {g.lead && <Note>{g.lead}</Note>}
+    </Card>
+  );
+}
+
+export function CarrierCard() {
+  return (
+    <Card title="Carrier screening" aside={<Pill tone={M.carrier.length ? "alert" : "ok"}>{count(M.carrier.length, "finding", "No findings")}</Pill>}>
+      {M.carrier.map((f: Rec) => (
+        <Finding key={f.disease} tone="alert" title={f.disease} detail={f.gene} />
+      ))}
+    </Card>
+  );
+}
+
+export function NewbornCard() {
+  return (
+    <Card title="Newborn screening" aside={<Pill tone={M.newborn.length ? "alert" : "ok"}>{count(M.newborn.length, "finding", "No findings")}</Pill>}>
+      {M.newborn.map((f: Rec, i: number) => (
+        <Finding key={i} tone="alert" title={f.disease} detail={f.gene} />
+      ))}
+      <Note>{M.newbornCarrier ? `Carrier for ${count(M.newbornCarrier, "screened condition")}` : "Not a carrier for any screened condition"}</Note>
+    </Card>
+  );
+}
+
+export function GpgsCard() {
+  return (
+    <Card title="GPGS" aside={M.gpgs.domains.length ? <Pill tone={M.gpgs.domains.some((d: Rec) => d.level === "Elevated") ? "alert" : "mon"}>{`${M.gpgs.domains.length} elevated`}</Pill> : <Pill tone="ok">None elevated</Pill>}>
+      {M.gpgs.domains.map((d: Rec) => (
+        <Finding key={d.name} tone={d.level === "Elevated" ? "alert" : "mon"} title={d.name} detail={d.level}>
+          <ZRange z={d.z} tone={d.level === "Elevated" ? "alert" : "mon"} />
+        </Finding>
+      ))}
+      {M.gpgs.closest && <Note>{`Closest resemblance: ${M.gpgs.closest.name}, ${Math.round(M.gpgs.closest.probability * 100)}%`}</Note>}
+    </Card>
+  );
+}
+
+/** One metabolomics sample at one visit: what was measured, the most abundant first. */
+export function MetabPanelCard({ name, visit }: { name: string; visit: number }) {
+  const panel = (M.metabolomics as Rec[]).find((m) => m.name === name);
+  if (!panel) return null;
+  const rec = pick(panel.visits, visit);
+  return (
+    <Card title={name} aside={<span className="rv-count">{rec.measured} measured</span>}>
+      <h4 className="rv-sub">Most abundant</h4>
+      {rec.top.map((t: Rec) => (
+        <div className="rv-rank" key={t.name}>
+          <span>{t.name}</span>
+          <i>
+            <b style={{ width: `${Math.max(4, t.share * 100)}%` }} />
+          </i>
+        </div>
+      ))}
+    </Card>
+  );
+}
+
 export const OMICS: Record<string, (visit: number) => StudyView> = {
   genomics() {
     const g = M.genome;
@@ -17,31 +84,10 @@ export const OMICS: Record<string, (visit: number) => StudyView> = {
       single: g.date,
       cards: (
         <>
-          <Card title="Genome">
-            {g.veryImportant > 0 && <Finding tone="alert" title="Immediate attention needed" value={g.veryImportant} />}
-            {g.important > 0 && <Finding tone="mon" title="Monitor closely" value={g.important} />}
-            {g.noteworthy > 0 && <Finding tone="" title="For your information" value={g.noteworthy} />}
-            {g.lead && <Note>{g.lead}</Note>}
-          </Card>
-          <Card title="Carrier screening" aside={<Pill tone={M.carrier.length ? "alert" : "ok"}>{count(M.carrier.length, "finding", "No findings")}</Pill>}>
-            {M.carrier.map((f: Rec) => (
-              <Finding key={f.disease} tone="alert" title={f.disease} detail={f.gene} />
-            ))}
-          </Card>
-          <Card title="Newborn screening" aside={<Pill tone={M.newborn.length ? "alert" : "ok"}>{count(M.newborn.length, "finding", "No findings")}</Pill>}>
-            {M.newborn.map((f: Rec, i: number) => (
-              <Finding key={i} tone="alert" title={f.disease} detail={f.gene} />
-            ))}
-            <Note>{M.newbornCarrier ? `Carrier for ${count(M.newbornCarrier, "screened condition")}` : "Not a carrier for any screened condition"}</Note>
-          </Card>
-          <Card title="GPGS" aside={M.gpgs.domains.length ? <Pill tone={M.gpgs.domains.some((d: Rec) => d.level === "Elevated") ? "alert" : "mon"}>{`${M.gpgs.domains.length} elevated`}</Pill> : <Pill tone="ok">None elevated</Pill>}>
-            {M.gpgs.domains.map((d: Rec) => (
-              <Finding key={d.name} tone={d.level === "Elevated" ? "alert" : "mon"} title={d.name} detail={d.level}>
-                <ZRange z={d.z} tone={d.level === "Elevated" ? "alert" : "mon"} />
-              </Finding>
-            ))}
-            {M.gpgs.closest && <Note>{`Closest resemblance: ${M.gpgs.closest.name}, ${Math.round(M.gpgs.closest.probability * 100)}%`}</Note>}
-          </Card>
+          <GenomeCard />
+          <CarrierCard />
+          <NewbornCard />
+          <GpgsCard />
         </>
       ),
     };
@@ -121,7 +167,7 @@ export const OMICS: Record<string, (visit: number) => StudyView> = {
       label: "body systems look typical",
       trend: M.proteomics.map((r: Rec) => r.systems.filter((s: Rec) => s.status === "typical").length),
       at: placeOf(M.proteomics, visit),
-      ...(flagged.length ? IN(flagged.some((s) => s.status === "high") ? "alert" : "mon", `${flagged.length} to discuss`) : IN("ok", "All look typical")),
+      ...(flagged.length ? IN(flagged.some((s) => s.status === "high") ? "alert" : "mon", `${flagged.length} to review`) : IN("ok", "All look typical")),
       cards: (
         <>
           <Card title="ProteoRisk">
@@ -147,17 +193,7 @@ export const OMICS: Record<string, (visit: number) => StudyView> = {
       cards: (
         <>
           {runs.map((r: Rec) => (
-            <Card key={r.name} title={r.name} aside={<span className="rv-count">{r.rec.measured} measured</span>}>
-              <h4 className="rv-sub">Most abundant</h4>
-              {r.rec.top.map((t: Rec) => (
-                <div className="rv-rank" key={t.name}>
-                  <span>{t.name}</span>
-                  <i>
-                    <b style={{ width: `${Math.max(4, t.share * 100)}%` }} />
-                  </i>
-                </div>
-              ))}
-            </Card>
+            <MetabPanelCard key={r.name} name={r.name} visit={visit} />
           ))}
           <Note>Ranked within this sample only.</Note>
         </>

@@ -25,7 +25,7 @@ const CARD_NAME: Record<string, string> = {
   food: "Food",
   habits: "Habits",
   consult: "Your consultations",
-  games: "Cognitive games",
+  games: "Cognitive data",
 };
 
 /**
@@ -227,7 +227,7 @@ function Tile({ id, go }: { id: string; go: ReturnType<typeof useGo> }) {
     food: () => <Stat m="diet" onOpen={open("/v3/metric/diet")} />,
     habits: () => <HabitsTile onOpen={open("/v3/habits")} />,
     consult: () => <ConsultTile open={open} />,
-    games: () => <ServiceTile field="teal" mark="games" title="Cognitive games" line="Short games that train memory and focus" onOpen={open("/discover/games")} />,
+    games: () => <ServiceTile field="teal" mark="games" title="Cognitive data" line="Memory and focus, test by test" onOpen={open("/discover/games")} />,
   };
   return <>{tiles[id]()}</>;
 }
@@ -257,10 +257,10 @@ function ConsultTile({ open }: { open: (to: string) => (e: { currentTarget: HTML
 const HABIT_SLOTS = 6;
 
 /**
- * Today's habits from the plan, each a stop in the card's green: dashed while
- * waiting, solid with a tick once done, so the card reads the same with two
- * habits or twenty. Up to six show;
- * a longer plan shows five and a "+n" for the rest, the ones still to do first.
+ * Today's habits from the plan as a short two-column list: a green stop
+ * (dashed while waiting, solid with a tick once done), the habit's name, and
+ * for a count habit how far it has got. Up to six show; a longer plan shows
+ * five and a "+n" for the rest, the ones still to do first.
  * No plan yet: one invitation to make one.
  */
 function HabitsTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) => void }) {
@@ -275,8 +275,14 @@ function HabitsTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) =>
       <span className="v2-tile-head">
         <Kind name={glyphOf("habits")}>Habits</Kind>
         {all.length > 0 && (
-          <span className="v2-tile-count">
-            {done} of {all.length} today
+          <span className="v2-tile-count v2-hcount" data-all={done === all.length ? "" : undefined} aria-label={`${done} of ${all.length} done today`}>
+            <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden>
+              <circle cx="8" cy="8" r="6" data-track="" />
+              {done > 0 && <circle cx="8" cy="8" r="6" strokeDasharray={`${(done / all.length) * 37.7} 37.7`} transform="rotate(-90 8 8)" />}
+            </svg>
+            <span aria-hidden>
+              <b>{done}</b>/{all.length}
+            </span>
           </span>
         )}
       </span>
@@ -291,23 +297,28 @@ function HabitsTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) =>
           </span>
         </span>
       ) : (
-        <span className="v2-habits" role="img" aria-label={`${done} of ${all.length} habits done today`}>
+        <span className="v2-hlist" role="list" aria-label={`${done} of ${all.length} habits done today`}>
           {shown.map((t) => (
-            <span key={t.h.id} className="v2-habit">
+            <span role="listitem" key={t.h.id} data-done={t.done ? "" : undefined}>
               <i className="v2-habit-dot" data-on={t.done ? "" : undefined}>
                 {t.done && (
-                  <svg viewBox="0 0 12 12" width="15" height="15" aria-hidden>
-                    <path d="M2.5 6.3 5 8.7 9.6 3.6" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  <svg viewBox="0 0 12 12" aria-hidden>
+                    <path d="M2.5 6.3 5 8.7 9.6 3.6" fill="none" stroke="#fff" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 )}
               </i>
-              <small>{shortOf(t.h)}</small>
+              <span className="v2-hlist-t">{shortOf(t.h)}</span>
+              {t.h.kind === "count" && !t.done && (
+                <span className="v2-hlist-n">
+                  {t.count}/{t.goal}
+                </span>
+              )}
             </span>
           ))}
           {more > 0 && (
-            <span className="v2-habit">
-              <span className="v2-habit-more">+{more}</span>
-              <small>More</small>
+            <span role="listitem" className="v2-hlist-more">
+              <i>+{more}</i>
+              <span className="v2-hlist-t">More today</span>
             </span>
           )}
         </span>
@@ -409,7 +420,19 @@ function VisitEntries({ onOpen }: { onOpen: (visit: number, el: HTMLElement) => 
     // up to four share the row; past four the row scrolls sideways, the next one peeking at the edge
     <div className="v2-visit-row" data-many={VISITS.length > 4 ? "" : undefined} aria-label="Clinic visits">
         {[...VISITS].reverse().map((v) => (
-          <button key={v} className="v2-visit" data-latest={v === latest ? "" : undefined} onClick={(e) => onOpen(v, e.currentTarget)}>
+          <button
+            key={v}
+            className="v2-visit"
+            data-latest={v === latest ? "" : undefined}
+            aria-label={`Visit ${v}, ${visitDate(v)}${v === latest ? ", latest" : ""}`}
+            onClick={(e) => onOpen(v, e.currentTarget)}
+          >
+            {v === latest && (
+              <em className="v2-visit-tag" aria-hidden>
+                <i />
+                Latest
+              </em>
+            )}
             <b>Visit {v}</b>
             <small>{visitDate(v)}</small>
           </button>
