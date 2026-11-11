@@ -1,0 +1,281 @@
+/* ---------- notification centre ---------- */
+.nt {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: var(--status-h) 16px 48px;
+  background: var(--v-bg);
+}
+.nt-filter .nt-all {
+  margin-left: auto;
+  height: 34px;
+  white-space: nowrap;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  font: 600 14px/1 var(--v-text);
+  color: var(--v-navy);
+}
+
+/* the filter: three chips, the selected one solid navy, an unread count inside */
+.nt-filter {
+  display: flex;
+  gap: 6px;
+  margin: 4px 0 6px;
+}
+.nt-filter button {
+  height: 34px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 17px;
+  font: 600 14px/1 var(--v-text);
+  color: var(--v-ink-2);
+  background: var(--v-card);
+  box-shadow: 0 0 0 0.5px var(--v-line);
+  transition: background 0.2s linear, color 0.2s linear;
+}
+.nt-filter button[aria-selected="true"] {
+  color: #fff;
+  background: var(--v-navy);
+  box-shadow: none;
+}
+:root[data-theme="dark"] .nt-filter button[aria-selected="true"] {
+  color: #0b0d14;
+}
+.nt-filter i {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  font: 700 11px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 12%, transparent);
+}
+.nt-filter button[aria-selected="true"] i {
+  color: var(--v-navy);
+  background: #fff;
+}
+
+/* groups by day, each note its own card */
+.nt-group h2 {
+  margin: 22px 4px 8px;
+  font: var(--v-t-section, 700 19px/1.2 var(--v-text));
+  letter-spacing: -0.01em;
+}
+.nt-group ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.nt-row {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px 15px 14px;
+  border-radius: 20px;
+  text-align: left;
+  transition: transform 0.16s var(--v-ease);
+}
+/* the row carries a colour field for its mark only; the card itself stays white */
+.nt-row[data-field] {
+  background: var(--v-card);
+}
+.nt-row:active {
+  transform: scale(0.985);
+}
+.nt-mark {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--mid);
+  background: color-mix(in srgb, var(--mid) 14%, transparent);
+}
+.nt-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.nt-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 12.5px/1.3 var(--v-text);
+  color: var(--v-ink-3);
+}
+.nt-meta b {
+  font-weight: 600;
+  color: var(--v-ink-2);
+}
+.nt-row .nt-meta b {
+  color: var(--mid);
+}
+.nt-row .nt-meta b::after {
+  content: "·";
+  margin-left: 6px;
+  color: var(--v-ink-3);
+  font-weight: 500;
+}
+.nt-dot {
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--v-navy);
+}
+.nt-text strong {
+  font: 600 15px/1.3 var(--v-text);
+  color: var(--v-ink);
+}
+.nt-row .nt-text strong {
+  font: 500 16px/1.3 var(--v-text);
+  color: var(--v-ink);
+}
+.nt-row[data-unread] strong {
+  font-weight: 650;
+}
+.nt-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font: 400 14px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+.nt-row:not([data-unread]) .nt-body {
+  color: var(--v-ink-3);
+}
+
+/* nothing under this filter */
+.nt-empty {
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  font: 400 14px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+.nt-empty b {
+  margin-top: 6px;
+  font: 600 16px/1.3 var(--v-text);
+  color: var(--v-ink);
+}
+.nt-empty-mark {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-navy);
+  background: var(--v-card);
+}
+
+.nt-foot {
+  margin: 28px 8px 0;
+  text-align: center;
+}
+.nt-foot p {
+  margin: 0;
+  font: var(--v-t-note);
+  color: var(--v-ink-3);
+}
+.nt-test {
+  margin-top: 10px;
+  padding: 8px 12px;
+  font: 600 13px/1 var(--v-text);
+  color: var(--v-navy);
+}
+
+/* ---------- the banner a push arrives as ---------- */
+.nt-banner {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: calc(var(--status-h) + 2px);
+  z-index: 80;
+  border-radius: 24px;
+  background: var(--v-glass);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: 0 18px 40px -18px #0000005c, 0 0 0 0.5px var(--v-line);
+  animation: nt-drop 0.5s var(--v-ease) both;
+  touch-action: none;
+}
+@keyframes nt-drop {
+  from {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+}
+.nt-banner-body {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 12px 14px;
+}
+.nt-banner-app {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 0 0 0.5px #0000001f;
+}
+.nt-banner-app img {
+  width: 24px;
+  height: 24px;
+}
+.nt-banner .nt-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nt-banner {
+    animation: none;
+  }
+}
+
+/* the close button: a small round glass cross in the banner's top-right corner */
+.nt-banner-body {
+  padding-right: 44px;
+}
+.nt-banner-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink-2);
+  background: color-mix(in srgb, var(--v-ink) 8%, transparent);
+}
+/* a larger invisible target than the drawn circle */
+.nt-banner-close::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+}
+.nt-banner-close:active {
+  transform: scale(0.9);
+}

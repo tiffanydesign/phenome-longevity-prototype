@@ -1,3 +1,4 @@
+import { EDITION } from "@/lib/edition";
 import { useNavigate } from "react-router-dom";
 import { Screen } from "@/components/Screen";
 import { Icon } from "@/components/Icon";
@@ -10,10 +11,12 @@ import "./InsightsTab.css";
 export function InsightsTab() {
   const d = useDataset(insightsTab);
   const nav = useNavigate();
+  // the capture shows its status icons white on white; the redesign shows them
+  const redesign = EDITION !== "original";
 
   return (
     // Status icons are white-on-white here too (capture tab_insights/top shows only the battery pill).
-    <Screen tabs statusTone="light" header={<InsightsLogo />}>
+    <Screen tabs statusTone={redesign ? undefined : "light"} header={<InsightsLogo />}>
       <div className="ins">
         <h1 className="ins-h1">Your Health Data</h1>
         <p className="ins-lead">

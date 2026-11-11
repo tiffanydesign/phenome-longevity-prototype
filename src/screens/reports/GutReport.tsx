@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Screen } from "@/components/Screen";
 import { Ring } from "@/components/Charts";
 import { useDataset } from "@/lib/data";
-import { gutData, type GutSection } from "@/data/reportsGut";
+import { gutData, oralData, type GutSection } from "@/data/reportsGut";
 import { Chevron, RIcon } from "./parts/RIcon";
 import { Dots } from "./parts/Pager";
 import { usePdfFlow } from "./parts/PdfFlow";
@@ -12,9 +12,9 @@ import "./GutReport.css";
 
 const PAGE_W = 354;
 
-/** Gut report hub — /insights/gut/report. Captures: gut_report/top, scroll_1, scroll_2. */
-export function GutReportScreen() {
-  const d = useDataset(gutData);
+/** Gut report hub — /insights/gut/report (and /insights/oral/report). Captures: gut_report/top, scroll_1, scroll_2. */
+export function GutReportScreen({ kind = "gut" }: { kind?: "gut" | "oral" }) {
+  const d = useDataset(kind === "oral" ? oralData : gutData);
   const nav = useNavigate();
   const pdf = usePdfFlow();
   const ref = useRef<HTMLDivElement>(null);
@@ -22,7 +22,7 @@ export function GutReportScreen() {
   const sec = d.sections[page];
 
   return (
-    <Screen header={<ReportHeader title="Gut Health Analysis" onPdf={pdf.open} />} overlay={pdf.overlay}>
+    <Screen header={<ReportHeader title={d.title ?? "Gut Health Analysis"} onPdf={pdf.open} />} overlay={pdf.overlay}>
       <div className="gu">
         <div className="gu-intro">
           <span className="gu-intro-icon">
@@ -43,7 +43,7 @@ export function GutReportScreen() {
             </Ring>
           </div>
           {d.sections.map((s) => (
-            <SectionCard key={s.id} s={s} onAll={() => nav(`/insights/gut/findings/${s.id}`)} />
+            <SectionCard key={s.id} s={s} onAll={() => nav(`/insights/${kind}/findings/${s.id}`)} />
           ))}
         </section>
 
@@ -55,7 +55,7 @@ export function GutReportScreen() {
           onScroll={() => ref.current && setPage(Math.round(ref.current.scrollLeft / PAGE_W))}
         >
           {d.sections.map((s) => (
-            <DetailPage key={s.id} s={s} onAll={() => nav(`/insights/gut/findings/${s.id}`)} />
+            <DetailPage key={s.id} s={s} onAll={() => nav(`/insights/${kind}/findings/${s.id}`)} />
           ))}
         </div>
         <Dots count={d.sections.length} index={page} onPick={(i) => ref.current?.scrollTo({ left: i * PAGE_W, behavior: "smooth" })} />

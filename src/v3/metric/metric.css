@@ -1,0 +1,570 @@
+/* =====================================================================
+ * A reading's own page: the number and its chart stand on the page itself,
+ * labels carry the reading's hue, values are set bold in ink, words in grey
+ * ===================================================================== */
+.mx {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding-bottom: calc(48px + env(safe-area-inset-bottom));
+  background: var(--v-bg);
+  /* the reading's hue, mixed toward ink wherever it is set as text */
+  --mx-ink: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+}
+
+/* the bar: round glass buttons; the page's name is the hue label below, not a title here */
+.mx-bar {
+  position: relative;
+  z-index: 2;
+  padding: calc(var(--status-h) + 6px) 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mx-bar .v2-back button,
+.mx-round {
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink);
+  background: color-mix(in srgb, var(--v-card) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 0 0 1px #ffffffb3, 0 6px 16px -10px #24365e40;
+}
+:root[data-theme="dark"] .mx-bar .v2-back button,
+:root[data-theme="dark"] .mx-round {
+  box-shadow: inset 0 0 0 1px #ffffff1f;
+}
+.mx-bar .v2-back button:active,
+.mx-round:active {
+  transform: scale(0.94);
+}
+
+/* hero: hue label, a large bold number, then what it means in plain grey words */
+.mx-hero {
+  padding: 22px 20px 0;
+  animation: mx-in 0.45s var(--v-ease) backwards;
+}
+@keyframes mx-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.mx-eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 600 17px/1.2 var(--v-text);
+  color: var(--mx-ink);
+}
+.mx-eyebrow svg {
+  color: var(--mid);
+}
+.mx-value {
+  margin-top: 6px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: var(--v-ink-2);
+}
+.mx-value b {
+  font: 700 64px/1 var(--v-num);
+  letter-spacing: -0.04em;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.mx-value span {
+  font: 600 19px/1 var(--v-text);
+  letter-spacing: -0.01em;
+}
+.mx-sub {
+  margin: 12px 0 0;
+  font: 500 19px/1.35 var(--v-text);
+  letter-spacing: -0.01em;
+  color: var(--v-ink-2);
+  text-wrap: pretty;
+}
+.mx-sub em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--v-ink);
+}
+.mx-sub em[data-status="monitor"] {
+  color: var(--v-gold-ink);
+}
+.mx-sub em[data-status="alert"] {
+  color: #c4572e;
+}
+.mx-src {
+  margin: 4px 0 0;
+  font: 400 14px/1.3 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* the diary's way in, under the number: one solid action, one white one */
+.mx-actions {
+  display: flex;
+  gap: 10px;
+  padding: 20px 20px 0;
+}
+.mx-actions button {
+  flex: 1;
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: 24px;
+  text-align: center;
+  font: 600 16px/1 var(--v-text);
+  color: var(--v-ink);
+  background: var(--v-card);
+}
+.mx-actions button[data-primary] {
+  color: #fff;
+  background: var(--v-navy);
+}
+:root[data-theme="dark"] .mx-actions button[data-primary] {
+  color: #0b0d14;
+}
+.mx-actions button:active {
+  transform: scale(0.97);
+}
+
+/* section headlines: large and bold, the way the page talks in sections */
+.mx-h {
+  margin: 0 0 12px;
+  font: 700 26px/1.15 var(--v-text);
+  letter-spacing: -0.025em;
+  color: var(--v-ink);
+  text-wrap: balance;
+}
+
+/* the chart's stage: no panel, the page's own ground */
+.mx-stage {
+  padding: 28px 20px 0;
+  animation: mx-in 0.5s var(--v-ease) 0.05s backwards;
+}
+.mx-foot {
+  margin: 12px 0 0;
+  font: 400 15px/1.45 var(--v-text);
+  color: var(--v-ink-2);
+}
+.mx-seg {
+  position: relative;
+  height: 38px;
+  margin-bottom: 14px;
+  padding: 3px;
+  display: flex;
+  border-radius: 19px;
+  background: color-mix(in srgb, var(--v-ink) 7%, transparent);
+}
+.mx-seg i {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc((100% - 6px) / 5);
+  border-radius: 16px;
+  background: var(--v-card);
+  box-shadow: 0 1px 4px #0000001a;
+  transform: translateX(calc(var(--i) * 100%));
+  transition: transform 0.32s var(--v-ease);
+}
+.mx-seg button {
+  position: relative;
+  flex: 1;
+  text-align: center;
+  font: 500 14px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.mx-seg button[aria-selected="true"] {
+  color: var(--v-ink);
+  font-weight: 600;
+}
+.v2-chart svg,
+.v2-cohort svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: pan-y;
+  cursor: crosshair;
+}
+.v2-chart-read {
+  font-family: var(--v-text);
+  font-size: 13px;
+  font-weight: 500;
+  fill: #fff;
+}
+.v2-chart-axis {
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+/* the period in three numbers: a ruled list with dashed lines, hue label left, value right */
+.mx-stats {
+  margin: 18px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+.mx-stats > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--v-ink) 16%, transparent);
+}
+.mx-stats > div:last-child {
+  border-bottom: 0;
+}
+.mx-stats dt {
+  font: 600 16px/1.2 var(--v-text);
+  color: var(--mx-ink);
+}
+.mx-stats dd {
+  margin: 0;
+  font: 700 19px/1.2 var(--v-num);
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.mx-stats dd small {
+  font: 500 14px var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* a headline and a plain sentence: what the number means */
+.mx-about {
+  padding: 40px 20px 0;
+}
+.mx-about p {
+  margin: 0;
+  font: 400 19px/1.42 var(--v-text);
+  letter-spacing: -0.01em;
+  color: var(--v-ink-2);
+  text-wrap: pretty;
+}
+.mx-about b {
+  font-weight: 600;
+  color: var(--v-ink);
+}
+.mx-block {
+  padding: 40px 20px 0;
+}
+.mx-card {
+  padding: 18px;
+  border-radius: 26px;
+  background: var(--v-card);
+}
+
+/* readings as a two-column grid: hue label with a chevron, a bold value, a grey word under it */
+.mx-related {
+  padding: 40px 20px 0;
+}
+.mx-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 16px;
+}
+.mx-read {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  text-align: left;
+  --mx-ink: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+}
+.mx-read small {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font: 600 16px/1.2 var(--v-text);
+  color: var(--mx-ink);
+}
+.mx-read small svg {
+  flex: none;
+  color: var(--v-ink-3);
+}
+.mx-read b {
+  font: 700 22px/1.15 var(--v-num);
+  letter-spacing: -0.015em;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.mx-read b u {
+  font: 600 15px var(--v-text);
+  text-decoration: none;
+  color: var(--v-ink);
+}
+.mx-read > span {
+  font: 400 15px/1.25 var(--v-text);
+  color: var(--v-ink-2);
+}
+.mx-read:active {
+  opacity: 0.6;
+}
+
+/* the twin link closes a clinic page: one white row, the organ mark doing the talking */
+.mx-twin {
+  width: calc(100% - 40px);
+  min-height: 64px;
+  margin: 36px 20px 0;
+  padding: 12px 16px 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 22px;
+  color: var(--v-ink);
+  background: var(--v-card);
+  text-align: left;
+}
+.mx-twin > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+.mx-twin b {
+  display: block;
+  font: 600 16px/1.2 var(--v-text);
+}
+.mx-twin small {
+  display: block;
+  margin-top: 3px;
+  font-size: 14px;
+  color: var(--v-ink-2);
+}
+.mx-twin > svg {
+  flex: none;
+  color: var(--v-ink-3);
+}
+
+/* the period under the range control: the dates on show, one step back or forward */
+.mx-period {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 8px;
+}
+.mx-period > span {
+  font: 600 14px/1.2 var(--v-text);
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.mx-period button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-navy);
+}
+.mx-period button:active {
+  background: var(--v-fill);
+}
+.mx-period button:disabled {
+  opacity: 0.25;
+}
+
+/* the goal sheet: from the bottom, one number, two steps, one action */
+.mx-sheet-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: flex-end;
+  background: #0b0d1440;
+  animation: mx-fade 0.2s linear;
+}
+@keyframes mx-fade {
+  from {
+    opacity: 0;
+  }
+}
+.mx-sheet {
+  width: 100%;
+  padding: 10px 20px calc(24px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  border-radius: 28px 28px 0 0;
+  background: var(--v-card);
+  animation: mx-rise 0.32s var(--v-ease);
+}
+@keyframes mx-rise {
+  from {
+    transform: translateY(100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mx-sheet,
+  .mx-sheet-scrim {
+    animation: none;
+  }
+}
+.mx-sheet-grab {
+  width: 36px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--v-fill);
+}
+.mx-sheet h2 {
+  margin: 4px 0 0;
+  font: 600 17px/1.2 var(--v-text);
+}
+.mx-sheet-step {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mx-sheet-step > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mx-sheet-step b {
+  font: 600 44px/1 var(--v-num);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.mx-sheet-step small {
+  margin-top: 4px;
+  font: 500 14px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.mx-sheet-step button {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  font: 500 26px/1 var(--v-text);
+  color: var(--v-navy);
+  background: var(--v-fill);
+}
+.mx-sheet-step button:disabled {
+  opacity: 0.3;
+}
+.mx-sheet-save {
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;
+  font: 600 16px/1 var(--v-text);
+  color: #fff;
+  background: var(--v-navy);
+}
+:root[data-theme="dark"] .mx-sheet-save {
+  color: #0b0d14;
+}
+.mx-sheet-cancel {
+  font: 600 15px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mx-hero,
+  .mx-stage {
+    animation: none;
+  }
+}
+
+/* a label that wraps keeps its chevron right after the last word */
+.mx-read small {
+  display: block;
+}
+.mx-read small svg {
+  display: inline-block;
+  margin-left: 2px;
+  vertical-align: -1px;
+}
+
+
+/* ---------- the Home card's chart, grown large, under the hero ---------- */
+.mx-today {
+  margin: 18px 16px 0;
+  padding: 16px 18px 6px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  animation: mx-in 0.45s 0.05s var(--v-ease) backwards;
+}
+.mx-today > h2 {
+  margin: 0 0 14px;
+  font: 600 15px/1.2 var(--v-text);
+  color: var(--mx-ink);
+}
+.mx-today .gl {
+  margin: 0 0 12px;
+}
+.mx-today .gl-hours-bars {
+  height: 120px;
+  gap: 3px;
+}
+.mx-today .gl-hours-bars i {
+  border-radius: 3px 3px 0 0;
+}
+.mx-today .gl-axis i {
+  font-size: 11px;
+}
+.mx-today .gl-night-lanes {
+  height: 128px;
+  background: repeating-linear-gradient(to bottom, transparent 0 31.5px, var(--v-line) 31.5px 32px);
+}
+.mx-today .gl-night-lanes i {
+  border-radius: 4px;
+}
+.mx-today .gl-night-key {
+  display: grid;
+  grid-template-rows: repeat(4, 32px);
+  font: 600 12px/32px var(--v-text);
+}
+.mx-today .gl-night-key i {
+  font-style: normal;
+  color: var(--stage);
+}
+.mx-today .gl-gauge,
+.mx-today .gl-rings {
+  gap: 22px;
+}
+.mx-today .gl-gauge svg,
+.mx-today .gl-rings svg {
+  width: 132px;
+  height: 132px;
+  margin: 0;
+}
+.mx-today .gl-gauge-word {
+  font-size: 19px;
+  font-weight: 650;
+}
+.mx-today .gl-rings-key {
+  gap: 12px;
+}
+.mx-today .gl-rings-key span {
+  font-size: 15px;
+}
+.mx-today .gl-rings-key span::before {
+  width: 10px;
+  height: 10px;
+}
+.mx-today .gl-rings-key b {
+  font-size: 22px;
+}
+.mx-today .gl-range-plot {
+  height: 132px;
+}
+.mx-today .gl-range-cap {
+  border-radius: 5px;
+}
+.mx-today .gl-macro-track {
+  height: 18px;
+  border-radius: 9px;
+}
+.mx-today .gl-macro-key {
+  font-size: 14px;
+  gap: 10px 18px;
+}
+.mx-h-history {
+  margin: 0 4px 12px;
+}

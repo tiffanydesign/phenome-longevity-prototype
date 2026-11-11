@@ -95,6 +95,10 @@ export interface KitSlide {
   /** photos/insights/<image>; null = grey placeholder circle (transcriptome) */
   image: string | null;
   report: string;
+  /** the button's words; "View Report" when absent */
+  cta?: string;
+  /** this slide's own status, when it differs from its kit's */
+  status?: { visit: number | string; status: string; message: string };
 }
 
 export const KITS: Record<string, KitSlide[]> = {
@@ -113,7 +117,12 @@ export interface KitStatus {
   visit: number;
   status: string;
   message: string;
+  /** one kit's own status, when kits differ; the captured app shows one for all */
+  byKind?: Record<string, Omit<KitStatus, "byKind">>;
 }
+
+/** The kit pages' slides as a pair, so a redesign can point a kit at its own report. */
+export const kitSlides: DataPair<Record<string, KitSlide[]>> = { real: KITS, demo: KITS };
 
 export const kitStatus: DataPair<KitStatus> = {
   real: { visit: 1, status: "Ready", message: "Your results are ready to view." },

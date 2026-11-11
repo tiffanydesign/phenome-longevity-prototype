@@ -317,3 +317,47 @@
   font-size: 14px;
   line-height: 20px;
 }
+
+/* findings under the summary, when the screen found any */
+.ns-list {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+}
+.ns-find {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 0 0 1px #e6e8ef;
+}
+.ns-find > b {
+  font-size: 15px;
+  font-weight: var(--fw-bold);
+  color: var(--c-text);
+}
+.ns-find dl {
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+.ns-find dl div {
+  display: flex;
+  gap: 10px;
+  font-size: 12.5px;
+}
+.ns-find dt {
+  flex: none;
+  width: 92px;
+  color: var(--c-text-2);
+}
+.ns-find dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--c-text);
+}
+.ns-find p {
+  margin-top: 10px;
+  font-size: 12.5px;
+  line-height: 18px;
+  color: var(--c-text-2);
+}

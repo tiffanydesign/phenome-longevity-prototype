@@ -118,3 +118,13 @@
     display: none;
   }
 }
+
+/* phones: an invisible strip over the drawn status bar, listening for the three taps that reopen the launcher */
+.pf-status-hit {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: var(--status-h, 44px);
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+}

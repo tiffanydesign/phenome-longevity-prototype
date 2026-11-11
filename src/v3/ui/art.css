@@ -1,0 +1,38 @@
+/* card marks (Art.tsx): flat paper in three tones, white, the field's hue, a pale tint of it */
+.v2-art {
+  --art-a: #fff;
+  --art-b: var(--mid);
+  --art-c: color-mix(in srgb, var(--mid) 60%, #fff);
+  overflow: visible;
+}
+[data-field="sleep"] .v2-art {
+  --art-b: #c9ceff;
+  --art-c: #5e5ce6;
+}
+
+.art-a {
+  fill: var(--art-a);
+}
+.art-b {
+  fill: var(--art-b);
+}
+.art-c {
+  fill: var(--art-c);
+}
+.art-a-line,
+.art-b-line,
+.art-c-line {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.art-a-line {
+  stroke: var(--art-a);
+}
+.art-b-line {
+  stroke: var(--art-b);
+}
+.art-c-line {
+  stroke: var(--art-c);
+}

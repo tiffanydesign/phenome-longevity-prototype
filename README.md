@@ -77,3 +77,18 @@ The captures come from the owner's test account. Before publishing:
 - the internal API host in an offline error was replaced with `api.example.com`;
 - excluded entirely (see `.gitignore`): PDF report pages (a person's name / date of birth),
   the in-app camera viewfinder (live room feed), and booking states that reveal the device location.
+
+## Redesign (`#/v2/home`)
+
+A redesign of the app around the digital twin lives beside the replica, under `src/v2/`. The replica's routes are untouched.
+
+- **Structure:** icon tabs and swipeable pages on Home, a floating pill with a round AI button at the bottom, profile top right, cards that can be dragged and resized (long-press, or the ⋮ menu).
+- **Navigation:** Home, Twin, Omics. Vitals, Body and Food are Home tabs because they change daily. Omics changes between scans, so it has its own destination. Store moved to a Home card.
+- **Twin:** one figure with three lenses (Vitals, Body, Omics), the same three categories the data is filed under. Entry points: the Twin tab, the Home tile, "See it on your twin" on every metric, and Omics.
+- **Data link:** `src/v2/data/metrics.ts` is one table in which every number names its organ, source and status. Cards, charts and body regions all read from it.
+- **Figure:** `scripts/bake-twin.mjs` runs the Digital Twin's tone pass and halftone numbers over the GLB models and writes one pixel per dot to `public/assets/twin/`. The app draws those dots on a canvas, so data can move them. Rerun it only if a model changes (it needs a `phenome-digital-twin` checkout).
+
+- **Full review** (`#/v2/study/apose`): the clinic portal's 19-study presentation for a phone. Open it from "Full review" on the Twin tab, an organ's panel, or Omics. Figure on top, panel as a sheet, swipe or use the bottom bar to move between studies, Visit 1 to 4 steps through records. Reading rules follow the portal's `clinic-room-display.js`.
+- **Review data and films:** `src/v2/study/member.json` is the portal's synthetic test member with names, ids and contact details removed. `public/assets/twin/study/` holds recordings of the room display's own camera flights, taken at double width and cropped to the subject, so the phone runs no WebGL scene.
+
+Twin, Home and Omics use demo data; the Full review uses the synthetic test member, so the two do not match yet. Light theme only for now.

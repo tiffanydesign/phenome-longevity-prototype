@@ -19,5 +19,7 @@ export const routes: ScreenRoute[] = [
   r("/insights/genetic/:report", "Genetic report hub", <GeneticReportScreen />),
   r("/insights/gut/report", "Gut report", <GutReportScreen />),
   r("/insights/gut/findings/:section", "Gut findings", <GutFindingsScreen />),
+  r("/insights/oral/report", "Oral report", <GutReportScreen kind="oral" />),
+  r("/insights/oral/findings/:section", "Oral findings", <GutFindingsScreen kind="oral" />),
   r("/insights/transcriptome/report", "Transcriptome report", <TranscriptomeScreen />),
 ];

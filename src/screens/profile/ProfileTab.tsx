@@ -1,11 +1,14 @@
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import { EDITION } from "@/lib/edition";
 import { Screen } from "@/components/Screen";
 import { Icon } from "@/components/Icon";
 import { Modal } from "@/components/Overlay";
 import { Button } from "@/components/Controls";
 import { useDataset } from "@/lib/data";
 import { profileData } from "@/data/profile";
+import { ChevronLeft } from "@/components/NavHeader";
+import { useNotes } from "@/v3/notify/store";
 import {
   IcArrowRight,
   IcBox,
@@ -64,13 +67,20 @@ const SECTIONS: { title: string; rows: Row[] }[] = [
   },
 ];
 
+/** The redesign's devices, listed in the account as one more section. */
+const DEVICES = [
+  { label: "Phenome Ring", icon: "ring_icon" },
+  { label: "Phenome Band", icon: "band_icon" },
+];
+
 /**
  * Profile tab — capture: tab_profile/top, tab_profile/scroll_1, dark_tab_profile/top.
  * `initialScroll` / `overlay` let the Privacy Policy route render this tab underneath its sheet.
  */
-export function ProfileTab({ initialScroll = 0, overlay }: { initialScroll?: number; overlay?: ReactNode }) {
+export function ProfileTab({ initialScroll = 0, overlay, page = false }: { initialScroll?: number; overlay?: ReactNode; page?: boolean }) {
   const d = useDataset(profileData);
   const nav = useNavigate();
+  const base = EDITION === "v3" ? "/v3" : "/v2";
   const [logout, setLogout] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -84,9 +94,9 @@ export function ProfileTab({ initialScroll = 0, overlay }: { initialScroll?: num
 
   return (
     <Screen
-      tabs
-      statusTone="light"
-      header={<ProfileLogo />}
+      tabs={!page}
+      statusTone={page ? undefined : "light"}
+      header={<ProfileLogo onBack={page ? () => nav(-1) : undefined} bell={page && EDITION === "v3" ? () => nav("/v3/notifications") : undefined} />}
       overlay={
         <>
           {overlay}
@@ -107,6 +117,49 @@ export function ProfileTab({ initialScroll = 0, overlay }: { initialScroll?: num
           </span>
           <IcArrowRight size={22} />
         </button>
+
+        {page && (
+          <section>
+            <h2 className="prf-tab-section">Devices</h2>
+            <div className="prf-tab-card">
+              {DEVICES.map((d) => (
+                <div key={d.label} className="prf-tab-row">
+                  <span className="prf-tab-icon">
+                    <Icon name={d.icon} size={22} />
+                  </span>
+                  <span className="prf-tab-label">{d.label}</span>
+                  <span className="prf-tab-on">Connected</span>
+                </div>
+              ))}
+              <button className="prf-tab-row" onClick={() => nav(`${base}/add-device`)}>
+                <span className="prf-tab-icon prf-tab-plus" aria-hidden>
+                  +
+                </span>
+                <span className="prf-tab-label">Add Device</span>
+                <IcArrowRight size={20} />
+              </button>
+            </div>
+          </section>
+        )}
+
+        {/* the clinical edition keeps consultations here as well as on Home */}
+        {page && EDITION === "v3" && (
+          <section>
+            <h2 className="prf-tab-section">Clinic</h2>
+            <div className="prf-tab-card">
+              <button className="prf-tab-row" onClick={() => nav("/discover/consultations")}>
+                <span className="prf-tab-icon" aria-hidden>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3.5" y="5" width="17" height="15.5" rx="3" />
+                    <path d="M3.5 10h17M8 3v4M16 3v4M8.5 14.5l2 2 4-4" />
+                  </svg>
+                </span>
+                <span className="prf-tab-label">Consultations</span>
+                <IcArrowRight size={20} />
+              </button>
+            </div>
+          </section>
+        )}
 
         {SECTIONS.map((s) => (
           <section key={s.title}>
@@ -129,16 +182,45 @@ export function ProfileTab({ initialScroll = 0, overlay }: { initialScroll?: num
           </span>
           <span className="prf-tab-label">Log Out</span>
         </button>
+
+        {/* the page closes on a quiet sign-off rather than on the last button */}
+        {EDITION === "v3" && (
+          <footer className="prf-tab-foot">
+            <Icon name="PL_Logo" size={28} style={{ height: 18, color: "var(--prf-section)" }} />
+            <span>Phenome Longevity</span>
+          </footer>
+        )}
       </div>
     </Screen>
   );
 }
 
-function ProfileLogo() {
+function ProfileLogo({ onBack, bell }: { onBack?: () => void; bell?: () => void }) {
   return (
     <div className="prf-tab-logo">
+      {onBack && (
+        <button className="prf-tab-back" aria-label="Back" onClick={onBack}>
+          <ChevronLeft />
+        </button>
+      )}
       <Icon name="PL_Logo" size={36} style={{ height: 24, color: "var(--prf-logo)" }} />
+      {bell && <ProfileBell onOpen={bell} />}
     </div>
+  );
+}
+
+/** The clinical edition keeps notifications behind the profile: a bell at its top right, with the unread count. */
+function ProfileBell({ onOpen }: { onOpen: () => void }) {
+  const { list } = useNotes();
+  const unread = list.filter((n) => !n.read).length;
+  return (
+    <button className="prf-tab-bell" aria-label={unread ? `Notifications, ${unread} unread` : "Notifications"} onClick={onOpen}>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z" />
+        <path d="M10 20.5a2 2 0 0 0 4 0" />
+      </svg>
+      {unread > 0 && <i>{unread}</i>}
+    </button>
   );
 }
 

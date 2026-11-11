@@ -1,0 +1,1383 @@
+/* The figure's field is the room display's own; the film carries it, so the screen does too. */
+/* the review is the clinic's presentation on its pale sky: it keeps the light palette in both themes */
+.rv {
+  --v-card: #ffffff;
+  --v-card-2: #f5f5f9;
+  --v-fill: #7676801f;
+  --v-glass: #ffffffb8;
+  --v-ink: #0b0d14;
+  --v-ink-2: #5c5f6a;
+  --v-ink-3: #8a8d97;
+  --v-line: #3c3c4324;
+  --v-navy: #263980;
+  --v-deep: #1a2a66;
+  --v-accent: #263980;
+  --v-gold-ink: #7a5600;
+  --v-gold-pill: #fff0cc;
+  --v-ok-ink: #2f6b11;
+  --v-ok-pill: #e4f3d9;
+  color-scheme: light;
+  overflow: clip;
+  background: #f2f5fb;
+  color: var(--v-ink);
+}
+.rv .pf-status,
+.rv-top {
+  z-index: 3;
+}
+
+/*
+ * One page, one scroll: the film opens it and fades into the panels, and the
+ * scrollbar on the right is the only one there is.
+ */
+.rv-page {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.rv-stage {
+  position: relative;
+  aspect-ratio: 394 / 520;
+  touch-action: pan-y;
+  user-select: none;
+}
+.rv-film {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #e6f0f8;
+  /* a fade into the page, never a hard edge: a transparency mask, as the twin's own crop.
+     It is gone by 80%, so the study's name and number below sit on clean ground, not on dots */
+  -webkit-mask-image: linear-gradient(#000 45%, transparent 80%);
+  mask-image: linear-gradient(#000 45%, transparent 80%);
+}
+.rv-film img,
+.rv-film video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rv-film img {
+  opacity: 0;
+  transition: opacity 0.26s linear;
+}
+.rv-film img[data-on] {
+  opacity: 1;
+}
+
+.rv-top {
+  position: absolute;
+  top: calc(var(--status-h) + 4px);
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.rv-top button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-navy);
+  /* solid white with a hairline, so the two buttons stay distinct over the film and over a card scrolled beneath them */
+  background: #fff;
+  box-shadow:
+    0 0 0 1px #2639801f,
+    0 6px 16px -8px #24365e66;
+}
+.rv-top-list {
+  align-content: center;
+  gap: 3px;
+}
+.rv-top-list i {
+  width: 16px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+/* the panels pick up where the film fades, a little over it */
+.rv-body {
+  position: relative;
+  margin-top: -64px;
+  padding: 0 16px 128px;
+}
+.rv-body::-webkit-scrollbar,
+.rv-list-body::-webkit-scrollbar {
+  display: none;
+}
+.rv::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 98px;
+  z-index: 3;
+  pointer-events: none;
+  background: #f2f5fb;
+}
+.rv .v2-nav {
+  z-index: 4;
+  /* the study bar carries a ring and a name, so it keeps the full width */
+  left: 16px;
+  right: 16px;
+}
+
+.rv-lead {
+  padding: 0 4px 12px;
+}
+/* the study's section, a quiet tag before its name in the bar */
+.rv-section {
+  flex: none;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font: 600 12px/1 var(--v-text);
+  color: var(--v-ink-2);
+  background: #e6ebf8;
+}
+.rv-lead h2 {
+  margin: 0;
+  font-family: var(--v-display);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.rv-lead-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rv-lead-label {
+  margin: 2px 0 8px;
+  font-size: 14px;
+  color: var(--v-ink-2);
+}
+.rv-hero {
+  margin: 0;
+  font-size: 15px;
+  color: var(--v-ink-2);
+}
+.rv-hero b {
+  font-family: var(--v-num);
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.rv-hero [data-out] {
+  color: var(--v-gold-ink);
+}
+.rv-trend {
+  flex: none;
+  margin-bottom: 8px;
+}
+
+.rv-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--v-ink-2);
+  background: #e6e9f2;
+}
+.rv-pill[data-tone="ok"] {
+  color: #2f6313;
+  background: #509b2126;
+}
+.rv-pill[data-tone="mon"] {
+  color: var(--v-gold-ink);
+  background: #ffb60033;
+}
+.rv-pill[data-tone="alert"] {
+  color: #9c4220;
+  background: #fce4da;
+}
+
+.rv-when {
+  margin: 0 4px 12px;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+
+.rv-card {
+  margin-bottom: var(--v-s-gap);
+  padding: var(--v-s-pad);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: var(--v-shadow);
+}
+.rv-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+/* a panel's name in the card-title step of the app's scale, as every card title is */
+.rv-head h3 {
+  margin: 0;
+  font: var(--v-t-card);
+  font-size: 16px;
+}
+.rv-sub {
+  margin: 12px 0 6px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--v-ink-2);
+}
+.rv-note {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--v-ink-2);
+  text-wrap: pretty;
+}
+.rv-detail {
+  display: block;
+  margin-top: 3px;
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--v-ink-2);
+}
+.rv-count {
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+
+/* a record in words: the clinician's line first, then label | entry rows on hairlines */
+.rv-facts-lead {
+  margin: 0 0 6px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--v-ink);
+  background: #f2f5fb;
+  text-wrap: pretty;
+}
+.rv-facts {
+  margin: 0;
+}
+.rv-facts > div {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--v-line);
+}
+.rv-facts > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 2px;
+}
+.rv-facts dt {
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--v-ink-2);
+}
+.rv-facts dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--v-ink);
+  text-wrap: pretty;
+}
+.rv-facts > [data-empty] dd {
+  font-weight: 400;
+  color: var(--v-ink-2);
+}
+
+.rv-cells {
+  display: grid;
+  gap: 14px 16px;
+}
+.rv-cells + .rv-cells {
+  margin-top: 14px;
+}
+.rv-cell > span {
+  display: block;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.rv-cell > b {
+  display: block;
+  margin-top: 3px;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.rv-cell > b em {
+  margin-left: 4px;
+  font-size: 13px;
+  font-style: normal;
+  color: var(--v-ink-2);
+}
+.rv-cell[data-tone="mon"] > b {
+  color: var(--v-gold-ink);
+}
+.rv-cell[data-word] > b {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.35;
+  overflow-wrap: normal;
+  text-wrap: pretty;
+}
+.rv-cell[data-empty] > b {
+  font-weight: 400;
+  color: var(--v-ink-2);
+}
+
+.rv-range-wrap {
+  margin-top: 8px;
+}
+.rv-range {
+  position: relative;
+  height: 6px;
+  border-radius: 3px;
+  background: #e6e9f2;
+}
+.rv-range i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 3px;
+  background: #509b2159;
+}
+.rv-range b {
+  position: absolute;
+  top: -3px;
+  width: 6px;
+  height: 12px;
+  margin-left: -3px;
+  border-radius: 3px;
+  background: #417e1b;
+  box-shadow: 0 0 0 2px #fff;
+}
+.rv-range[data-tone="mon"] b {
+  background: var(--v-gold);
+}
+.rv-range[data-tone="alert"] b {
+  background: #d9774f;
+}
+.rv-ticks {
+  position: relative;
+  height: 18px;
+  margin-top: 4px;
+}
+.rv-ticks span {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: var(--v-ink-2);
+}
+
+.rv-lab + .rv-lab {
+  border-top: 1px solid var(--v-line);
+}
+.rv-lab > button {
+  width: 100%;
+  min-height: 52px;
+  display: grid;
+  grid-template-columns: 1fr auto 16px;
+  grid-template-areas: "n c g" "s s g";
+  align-items: center;
+  gap: 4px 8px;
+  padding: 8px 0;
+}
+.rv-lab-n {
+  grid-area: n;
+  font-size: 15px;
+}
+.rv-lab-c {
+  grid-area: c;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.rv-lab-c[data-tone="mon"] {
+  color: var(--v-gold-ink);
+  font-weight: 500;
+}
+.rv-lab-s {
+  grid-area: s;
+  display: flex;
+  gap: 3px;
+}
+.rv-lab-s i {
+  flex: 1;
+  max-width: 28px;
+  height: 6px;
+  border-radius: 3px;
+  background: #5aa82c;
+}
+.rv-lab-s i[data-tone="mon"] {
+  background: var(--v-gold);
+}
+.rv-lab-s i[data-tone="alert"] {
+  background: #d9774f;
+}
+.rv-lab-go {
+  grid-area: g;
+  color: var(--v-ink-3);
+  transform: rotate(90deg);
+  transition: transform 0.24s var(--v-ease);
+}
+.rv-lab-go[data-open] {
+  transform: rotate(-90deg);
+}
+.rv-analytes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+  padding: 4px 0 14px;
+}
+.rv-analyte > span {
+  display: block;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.rv-analyte > b {
+  display: block;
+  margin-top: 2px;
+  font-size: 18px;
+  font-weight: 400;
+}
+.rv-analyte > b em {
+  margin-left: 3px;
+  font-size: 13px;
+  font-style: normal;
+  color: var(--v-ink-2);
+}
+.rv-analyte[data-word] {
+  grid-column: span 2;
+}
+.rv-analyte[data-word] > b {
+  font-size: 15px;
+  line-height: 1.35;
+}
+.rv-analyte[data-tone="mon"] > b {
+  color: var(--v-gold-ink);
+}
+.rv-analyte[data-tone="alert"] > b {
+  color: #9c4220;
+}
+
+.rv-find {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+.rv-mark {
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+.rv-find-t {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.3;
+}
+.rv-find-t small {
+  display: block;
+  margin-top: 1px;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+/* a z-score bar beside its finding */
+.rv-find > .rv-z {
+  flex: none;
+  width: 96px;
+}
+.rv-find > b {
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.rv-find > b[data-tone="alert"] {
+  color: #9c4220;
+}
+.rv-find > b[data-tone="mon"] {
+  color: var(--v-gold-ink);
+}
+.rv-bullets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  line-height: 1.35;
+}
+.rv-bullets li {
+  position: relative;
+  padding: 3px 0 3px 18px;
+}
+.rv-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 11px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #a9b5d9;
+}
+
+.rv-parts-bar {
+  display: flex;
+  gap: 2px;
+  height: 12px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.rv-parts ul {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.rv-parts li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 14px;
+}
+.rv-parts li i {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+}
+.rv-parts li span {
+  flex: 1;
+  min-width: 0;
+}
+.rv-parts li b {
+  font-weight: 500;
+}
+.rv-figure {
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+/* a share of a whole (body fat of body mass): its own name, so the study bar's segment ring cannot restyle it */
+.rv-share {
+  width: 104px;
+  height: 104px;
+}
+.rv-dial {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto;
+}
+.rv-meter {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 5px;
+}
+.rv-meter i {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #e6e9f2;
+}
+.rv-meter i[data-on] {
+  background: var(--v-navy);
+}
+.rv-ecg {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.rv-ecg svg {
+  display: block;
+  width: 100%;
+}
+.rv-ecg span {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.rv-ecg b {
+  font-size: 18px;
+  font-weight: 400;
+}
+.rv-ecg em {
+  margin-left: 2px;
+  font-size: 13px;
+  font-style: normal;
+  color: var(--v-ink-2);
+}
+.rv-wheel {
+  position: relative;
+  width: 232px;
+  margin: 0 auto 8px;
+}
+.rv-wheel svg {
+  display: block;
+  width: 100%;
+}
+.rv-wheel figcaption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.rv-wheel b {
+  font-size: 22px;
+  font-weight: 400;
+}
+.rv-wheel small {
+  max-width: 96px;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--v-ink-2);
+}
+.rv-score {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 15px;
+  line-height: 1.3;
+}
+.rv-gauge {
+  flex: none;
+  width: 56px;
+}
+.rv-score small {
+  display: block;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.rv-rank {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+  font-size: 14px;
+}
+.rv-rank i {
+  height: 6px;
+  border-radius: 3px;
+  background: #e6e9f2;
+}
+.rv-rank b {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: #435ba1;
+}
+
+/* bottom bar: the nav's silhouette, driving the studies instead */
+.rv-bar {
+  flex: 1;
+  height: 66px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  border-radius: 33px;
+  background: #ffffffe0;
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  box-shadow: 0 14px 30px -14px #24365e99, 0 0 0 1px #2639801a;
+}
+.rv-bar > button:not(.rv-bar-at) {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: var(--v-navy);
+  background: none;
+  cursor: pointer;
+}
+.rv-bar > button:disabled {
+  color: #26398040;
+  cursor: default;
+}
+.rv-bar-at {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--v-text);
+  color: var(--v-ink);
+  text-align: left;
+}
+.rv-bar-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 0 6px;
+}
+.rv-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rv-bar-text b {
+  overflow: hidden;
+  font: 700 15px/1.15 var(--v-text);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.rv-bar-text small {
+  flex: none;
+  margin-left: auto;
+  font: 600 12px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-2);
+}
+/* where the review stands: one thin line under the name, filled to the study in view */
+.rv-path {
+  position: relative;
+  display: block;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #2639801f;
+}
+.rv-path i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 2px;
+  background: var(--v-navy);
+  transition: width 0.35s var(--v-ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  .rv-path i {
+    transition: none;
+  }
+}
+
+/* the library */
+.rv-list {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  padding-top: calc(var(--status-h) + 6px);
+  background: #f2f5fb;
+  animation: rv-up 0.38s var(--v-ease);
+}
+@keyframes rv-up {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+}
+.rv-list > header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px 8px 20px;
+}
+.rv-list h2 {
+  margin: 0;
+  font-family: var(--v-display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.rv-list > header button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-navy);
+  background: #fff;
+}
+/* which visit the review reads from, newest first, under the sheet's title */
+.rv-list-visits {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  padding: 4px 16px 10px;
+}
+.rv-list-visits button {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 10px 10px;
+  border-radius: 14px;
+  background: #fff;
+  text-align: left;
+}
+.rv-list-visits b {
+  font: 600 14px/1.1 var(--v-text);
+  color: var(--v-ink);
+  white-space: nowrap;
+}
+.rv-list-visits small {
+  font: 500 11.5px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+  white-space: nowrap;
+}
+.rv-list-visits button[aria-checked="true"] {
+  background: var(--v-navy);
+}
+.rv-list-visits button[aria-checked="true"] b,
+.rv-list-visits button[aria-checked="true"] small {
+  color: #fff;
+}
+.rv-list-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 16px 40px;
+  scrollbar-width: none;
+}
+.rv-list h3 {
+  margin: 14px 4px 6px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--v-ink-2);
+}
+.rv-list section button {
+  width: 100%;
+  min-height: 68px;
+  margin-bottom: 8px;
+  padding: 6px 12px 6px 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 18px;
+  background: #fff;
+}
+.rv-list section button[aria-current] {
+  box-shadow: inset 0 0 0 2px var(--v-navy);
+}
+.rv-list img {
+  flex: none;
+  width: 52px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 13px;
+  background: #dfe6f3;
+}
+.rv-list-n {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 500;
+}
+.rv-list-n small {
+  display: block;
+  margin-top: 1px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--v-ink-2);
+}
+/* a study outside its range says so in the review's own capsules: yellow to monitor, red to discuss */
+.rv-list-n small[data-tone="mon"],
+.rv-list-n small[data-tone="alert"] {
+  display: block;
+  width: fit-content;
+  margin-top: 4px;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.rv-list-n small[data-tone="mon"] {
+  color: var(--v-gold-ink);
+  background: #ffb60033;
+}
+.rv-list-n small[data-tone="alert"] {
+  color: #9c4220;
+  background: #fce4da;
+}
+.rv-list-v {
+  flex: none;
+  font-size: 12px;
+  color: var(--v-ink-2);
+}
+.rv-list-v b {
+  font-family: var(--v-num);
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--v-ink);
+}
+.rv-list svg {
+  flex: none;
+  color: var(--v-ink-3);
+}
+
+/* a status under a reading sits at its own width, not the cell's */
+.rv-cells .rv-pill {
+  justify-self: start;
+  width: fit-content;
+  margin-bottom: 4px;
+}
+
+/* the study's name in the twin's serif display face, as the twin sets its titles */
+.rv-lead h2 {
+  font-family: "contralto-small", "Contralto Small", var(--v-text);
+  font-size: 34px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* which visit the page reads from: the sheet behind the list button changes it */
+.rv-lead-visit {
+  margin: 0 0 6px;
+  font: 500 13px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.rv-trend-box {
+  flex: none;
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+.rv-trend-box .rv-trend {
+  margin: 0;
+}
+.rv-trend-box small {
+  font: 500 11.5px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* the visit at a glance: areas as bands on hairlines, every reading a way into its study */
+.rv-glance {
+  padding-bottom: 6px;
+}
+.rv-glance-area + .rv-glance-area {
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--v-line);
+}
+.rv-glance-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0 2px;
+  font: 600 13px/1.2 var(--v-text);
+  color: var(--v-navy);
+}
+.rv-glance-name span {
+  font-weight: 500;
+  color: var(--v-ink-3);
+}
+.rv-glance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 8px;
+}
+.rv-glance-r {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 3px;
+  margin: 0 -8px;
+  padding: 8px 8px 10px;
+  border-radius: 12px;
+  text-align: left;
+  color: inherit;
+  transition: background-color 0.15s;
+}
+button.rv-glance-r:active {
+  background: #f2f5fb;
+}
+.rv-glance-l svg {
+  flex: none;
+  margin-left: -3px;
+  color: var(--v-ink-3);
+}
+.rv-glance-l {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--v-ink-2);
+  white-space: nowrap;
+}
+.rv-glance-l i {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffb600;
+}
+.rv-glance-l i[data-tone="alert"] {
+  background: #c4572e;
+}
+.rv-glance-r b {
+  font-family: var(--v-num);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+  white-space: nowrap;
+}
+.rv-glance-r b[data-tone="mon"] {
+  color: var(--v-gold-ink);
+}
+.rv-glance-r b[data-tone="alert"] {
+  color: #9c4220;
+}
+.rv-glance-r b em {
+  margin-left: 4px;
+  font-family: var(--v-text);
+  font-size: 13px;
+  font-style: normal;
+  color: var(--v-ink-2);
+}
+
+/* what is not on record, said once and quietly */
+.rv-quiet {
+  margin: 2px 0 0;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--v-ink-2);
+}
+/* a list after label rows keeps its distance */
+.rv-facts + .rv-sub {
+  margin-top: 16px;
+}
+
+/* ---------- the visit the review reads from: a white capsule at the top right with its menu ---------- */
+.rv-vm {
+  position: relative;
+}
+.rv-top .rv-vm-btn {
+  width: auto;
+  height: 44px;
+  padding: 0 12px 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 22px;
+  text-align: left;
+}
+.rv-vm-btn > span {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.rv-vm-btn b {
+  font: 650 14px/1.1 var(--v-text);
+  color: var(--v-ink);
+}
+.rv-vm-btn small {
+  font: 500 11.5px/1.1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.rv-vm-btn svg {
+  color: var(--v-ink-3);
+  transition: transform 0.25s var(--v-ease);
+}
+.rv-vm-btn[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+.rv-vm-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 10;
+  width: 280px;
+  padding: 6px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px var(--v-line),
+    0 18px 40px -12px #0b0d1440;
+  transform-origin: top right;
+  animation: rv-vm-in 0.22s var(--v-ease);
+}
+@keyframes rv-vm-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+}
+.rv-vm-head {
+  margin: 6px 10px 4px;
+  font: 600 12px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.rv-top .rv-vm-item {
+  width: 100%;
+  height: auto;
+  min-height: 54px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 12px;
+  text-align: left;
+  color: var(--v-ink);
+  background: none;
+  box-shadow: none;
+}
+.rv-top .rv-vm-item[aria-checked="true"],
+.rv-top .rv-vm-item:active {
+  background: #f2f5fb;
+}
+.rv-vm-item > svg {
+  flex: none;
+  color: var(--v-navy);
+}
+.rv-vm-lead {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 650 14px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-2);
+  background: var(--v-fill);
+}
+.rv-vm-item[aria-checked="true"] .rv-vm-lead {
+  color: #fff;
+  background: var(--v-navy);
+}
+.rv-vm-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rv-vm-text b {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 15px/1.2 var(--v-text);
+}
+.rv-vm-text em {
+  padding: 1px 7px;
+  border-radius: 8px;
+  font: 600 11px/1.4 var(--v-text);
+  font-style: normal;
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 12%, transparent);
+}
+.rv-vm-text small {
+  font: 400 12.5px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* ---------- bottom bar: the name with a chevron that opens the contents, the page count beside the progress ---------- */
+.rv-bar-text {
+  gap: 9px;
+}
+.rv-bar-row {
+  min-width: 0;
+}
+.rv-bar-text b {
+  flex: 0 1 auto;
+  font-size: 16px;
+}
+.rv-bar-toc {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 9%, transparent);
+  transition: transform 0.2s var(--v-ease), background 0.2s;
+}
+.rv-bar-at:active .rv-bar-toc {
+  transform: scale(0.92);
+  background: color-mix(in srgb, var(--v-navy) 16%, transparent);
+}
+.rv-bar-prog {
+  gap: 10px;
+}
+.rv-bar-prog .rv-path {
+  flex: 1;
+}
+.rv-bar-prog small {
+  margin-left: 0;
+  min-width: 34px;
+  text-align: right;
+}
+
+/* the contents sheet: its title and the visit it reads from */
+.rv-list > header > span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.rv-list > header small {
+  font: 500 13px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* the lead: the study's name, its number and what the number is, with no visit line above */
+.rv-lead h2 {
+  margin-top: 0;
+}
+
+/* ---------- across your visits: the shape, then one column per visit, the one in view marked ---------- */
+.rv-across .rv-head small {
+  font: 500 12.5px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.rv-across {
+  position: relative;
+}
+.rv-across-sum {
+  margin: 4px 0 0;
+  font: 500 13px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.rv-across-sum b {
+  font-weight: 650;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.rv-across-plot {
+  position: relative;
+  margin-top: 4px;
+}
+.rv-across-plot svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.rv-across-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.rv-across-pt {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+.rv-across-pt i {
+  position: absolute;
+  left: -4.5px;
+  top: -4.5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #a9b5d9;
+  box-shadow: 0 0 0 2px var(--v-card, #fff);
+}
+.rv-across-pt[data-tone="mon"] i {
+  background: #ffb600;
+}
+.rv-across-pt[data-tone="alert"] i {
+  background: #c4572e;
+}
+.rv-across-pt[data-on] i {
+  left: -6.5px;
+  top: -6.5px;
+  width: 13px;
+  height: 13px;
+  background: var(--v-navy);
+  box-shadow: 0 0 0 3px var(--v-card, #fff), 0 0 0 5px color-mix(in srgb, var(--v-navy) 18%, transparent);
+}
+.rv-across-pt em {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  transform: translateX(-50%);
+  padding: 2px 6px;
+  border-radius: 8px;
+  font: 600 11.5px/1.2 var(--v-text);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--v-ink-2);
+  background: var(--v-card, #fff);
+}
+.rv-across-pt[data-on] em {
+  bottom: 13px;
+  color: var(--v-navy);
+}
+.rv-across-cols {
+  margin-top: 8px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+.rv-across-cols button {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 2px;
+  border-radius: 12px;
+  text-align: center;
+  transition: background 0.2s;
+}
+.rv-across-cols button[aria-checked="true"] {
+  background: #f2f5fb;
+}
+.rv-across-cols small {
+  font: 500 11.5px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.rv-across-cols b {
+  font: 600 17px/1.15 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.rv-across-cols button[aria-checked="true"] b,
+.rv-across-cols button[aria-checked="true"] small {
+  color: var(--v-navy);
+}
+.rv-across-cols button[data-tone="mon"] b {
+  color: var(--v-gold-ink);
+}
+.rv-across-cols button[data-tone="alert"] b {
+  color: #9c4220;
+}
+.rv-across-cols span {
+  font: 400 11.5px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+}

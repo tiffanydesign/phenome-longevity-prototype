@@ -1,0 +1,265 @@
+.mx {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.mx::-webkit-scrollbar {
+  display: none;
+}
+.mx-head {
+  position: relative;
+  padding: calc(var(--status-h) + 2px) 20px 20px;
+  overflow: hidden;
+  border-radius: 0 0 28px 28px;
+  background: var(--f);
+  color: var(--fg);
+}
+/* the status bar takes the header's own colour, solid, so what scrolls under the clock is simply covered */
+.v2-veil[data-field] {
+  background: var(--f);
+}
+.mx-head .v2-back[data-tone="light"] {
+  color: var(--fg);
+}
+.mx-art {
+  position: absolute;
+  top: 26px;
+  right: -22px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+/* steps: the walker at full strength, in the Activity tile's own colours (plain field, navy walker) */
+.mx-art[data-art="walk"] {
+  top: calc(var(--status-h) + 8px);
+  right: 14px;
+  opacity: 1;
+}
+.mx-value {
+  position: relative;
+  margin-top: 18px;
+  font-size: 16px;
+  color: var(--fg-2);
+}
+.mx-value b {
+  font-family: var(--v-num);
+  font-size: 62px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+.mx-delta {
+  position: relative;
+  margin: 12px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  font: 600 14px/1.2 var(--v-text);
+}
+.mx-delta em {
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--v-ink);
+  background: #fff;
+}
+.mx-delta em[data-status="monitor"] {
+  color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
+}
+/* the source is the quietest part of the line, set off by a dot */
+.mx-source {
+  font-weight: 500;
+  color: var(--fg-2);
+}
+.mx-source::before {
+  content: "·";
+  margin-right: 10px;
+}
+.mx-body {
+  padding: 0 var(--v-s-gutter) 44px;
+}
+.mx-body .mx-sec-first {
+  margin-top: 22px;
+}
+.mx-panel {
+  padding: 14px 14px 12px;
+  border-radius: var(--v-r);
+  background: var(--v-solid);
+  box-shadow: var(--v-shadow);
+}
+.mx-panel h2 {
+  margin: 2px 2px 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.mx-foot {
+  margin: 10px 2px 2px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--v-ink-2);
+}
+.mx-seg {
+  position: relative;
+  height: 40px;
+  margin-bottom: 10px;
+  padding: 3px;
+  display: flex;
+  border-radius: 20px;
+  background: #e6ecf6;
+}
+.mx-seg i {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc((100% - 6px) / 3);
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: var(--v-shadow);
+  transform: translateX(calc(var(--i) * 100%));
+  transition: transform 0.32s var(--v-ease);
+}
+.mx-seg button {
+  position: relative;
+  flex: 1;
+  text-align: center;
+  font-size: 14px;
+  color: var(--v-ink-2);
+}
+.mx-seg button[aria-selected="true"] {
+  color: var(--v-ink);
+  font-weight: 500;
+}
+.v2-chart svg,
+.v2-cohort svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: pan-y;
+  cursor: crosshair;
+}
+.v2-chart-read {
+  font-family: var(--v-text);
+  font-size: 13px;
+  font-weight: 500;
+  fill: #fff;
+}
+.v2-chart-axis {
+  margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.mx-stats {
+  margin: 12px 0 2px;
+  padding-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--v-line);
+}
+.mx-stats dt {
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.mx-stats dd {
+  margin: 2px 0 0;
+  font-family: var(--v-num);
+  font-size: 20px;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+}
+.mx-note {
+  margin: 0 4px;
+  font: var(--v-t-body);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+/* the twin link closes the page: one quiet row, the organ mark doing the talking */
+.mx-twin {
+  width: 100%;
+  min-height: 60px;
+  margin-top: var(--v-s-section);
+  padding: 10px 14px 10px 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 16px;
+  color: var(--v-ink);
+  background: var(--v-solid);
+  box-shadow: var(--v-shadow);
+  text-align: left;
+}
+.mx-twin > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+.mx-twin b {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+}
+.mx-twin small {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.mx-twin > svg {
+  flex: none;
+  color: var(--v-ink-2);
+}
+/* the header carries the same flat object as the metric's card on Home */
+.mx-art[data-art="glyph"] {
+  top: calc(var(--status-h) + 4px);
+  right: 6px;
+  opacity: 1;
+}
+.mx-art[data-art="glyph"] .v2-glyph {
+  position: static;
+  width: 132px;
+  height: 132px;
+}
+.mx-related {
+  margin-top: 0;
+}
+.mx-related button {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 15px;
+  border-bottom: 1px solid var(--v-line);
+}
+/* each reading's label in its own field's hue, so the list reads by colour before by word */
+/* related readings: neutral names, each marked by a small dot in its own colour */
+.mx-related-dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--mid);
+}
+.mx-related button > span:nth-of-type(1) {
+  flex: 1;
+  font-weight: 600;
+  color: var(--v-ink);
+}
+.mx-related-v {
+  font-size: 13px;
+  color: var(--v-ink-2);
+}
+.mx-related-v b {
+  font-family: var(--v-num);
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--v-ink);
+}

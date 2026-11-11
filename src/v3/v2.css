@@ -1,0 +1,622 @@
+/*
+ * Phenome redesign, clinical edition. Hierarchy comes from type, space and
+ * grouping, not from colour: white cards on a grouped grey ground (black and
+ * graphite in dark mode), one text face, and colour kept for the data itself
+ * (a category's mark, its chart, a status). Navy is the brand's accent.
+ * Gold still means Monitor and nothing else.
+ */
+:root {
+  /* surfaces */
+  --v-bg: #f2f2f7;
+  --v-card: #ffffff;
+  --v-card-2: #f5f5f9;
+  --v-fill: #7676801f;
+  --v-glass: #ffffffb8;
+  /* the bottom bar: clear glass with a lit rim; light catches the top edge, the bottom edge sits in a faint shade */
+  --v-glass-bar: #ffffff47;
+  --v-glass-edge: 0 10px 28px -12px #0b0d1440, 0 1px 3px #0b0d140d, 0 0 0 0.5px #0b0d1412, inset 0 0 0 1.5px #ffffffb3, inset 0 1.5px 1px #ffffff, inset 0 -1px 1.5px #0b0d140a;
+  --v-glass-sel: #7676801f;
+  /* the scroll indicator: a hairline pill in pale brand blue */
+  --v-scroll: #26398052;
+  /* text */
+  --v-ink: #0b0d14;
+  --v-ink-2: #5c5f6a;
+  --v-ink-3: #8a8d97;
+  --v-line: #3c3c4324;
+  /* brand */
+  --v-navy: #263980;
+  --v-deep: #1a2a66;
+  --v-blue: #3a6df0;
+  --v-accent: var(--v-navy);
+  /* status: the clinic portal's warning pair, gold marks and brown words; green for in range */
+  --v-gold: #ffb600;
+  --v-gold-ink: #7a5600;
+  --v-gold-wash: #ffb60033;
+  --v-gold-pill: #fff0cc;
+  --v-ok-ink: #2f6b11;
+  --v-ok-pill: #e4f3d9;
+  --v-alert: #e5484d;
+  --v-solid: var(--v-card);
+  --v-r: 22px;
+  --v-r-sm: 14px;
+  --v-shadow: none;
+  --v-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* one family for everything: a neo-grotesk with optical sizes, numerals tabular where they line up */
+  --v-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "SF Pro", "Inter", "Inter Variable", system-ui, sans-serif;
+  --v-display: var(--v-text);
+  --v-num: var(--v-text);
+  --v-field: var(--v-bg);
+  /* type scale: large title, title, section, card name, body, note; nothing under 12 */
+  --v-t-title: 700 30px/1.1 var(--v-display);
+  --v-t-head: 700 24px/1.15 var(--v-display);
+  --v-t-section: 650 20px/1.2 var(--v-display);
+  --v-t-card: 600 15px/1.2 var(--v-text);
+  --v-t-body: 400 16px/1.4 var(--v-text);
+  --v-t-note: 500 13px/1.3 var(--v-text);
+  --v-t-value: 650 30px/1 var(--v-display);
+  /* spacing on an 8 grid */
+  --v-s-gutter: 16px;
+  --v-s-section: 32px;
+  --v-s-gap: 10px;
+  --v-s-pad: 16px;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --v-bg: #000000;
+  --v-card: #1c1c1e;
+  --v-card-2: #2c2c2e;
+  --v-fill: #7676803d;
+  --v-glass: #1c1c1ec7;
+  --v-glass-bar: #2c2c2e66;
+  --v-glass-edge: 0 10px 28px -12px #000a, 0 0 0 0.5px #ffffff14, inset 0 0 0 1px #ffffff1f, inset 0 1.5px 1px #ffffff33;
+  --v-glass-sel: #ffffff1f;
+  --v-scroll: #abb5d680;
+  --v-ink: #f5f5f7;
+  --v-ink-2: #a8a8b0;
+  --v-ink-3: #75757d;
+  --v-line: #ffffff1f;
+  --v-navy: #8fa3ff;
+  --v-deep: #b7c3ff;
+  --v-blue: #5e8bff;
+  --v-gold-ink: #ffcf5c;
+  --v-gold-pill: #4a3a10;
+  --v-gold-wash: #ffb60029;
+  --v-ok-ink: #8fd16a;
+  --v-ok-pill: #1f3a14;
+  color-scheme: dark;
+}
+
+.v2 {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--v-field);
+  color: var(--v-ink);
+  font-family: var(--v-text);
+  font-feature-settings: "cv11", "ss03";
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+}
+.v2 :where(button) {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+.v2 button:focus-visible,
+.v2 a:focus-visible,
+.v2-nav a:focus-visible,
+.v2-nav button:focus-visible {
+  outline: 2px solid var(--v-navy);
+  outline-offset: 2px;
+}
+.v2 ::selection {
+  background: #26398033;
+}
+
+/*
+ * colour fields: one tinted tile per category.
+ * Each field starts from its category colour (--mid: charts, marks, the
+ * object's second tone); the tile is that hue at OKLCH lightness 0.85 and the
+ * text the same hue at 0.31 (8:1 or better), so the set reads as one family.
+ * Sleep alone is a night tile in indigo with white text.
+ */
+/*
+ * Category fields. Every card is the same surface; a category shows only in
+ * its mark, its name and its chart (--mid). --f/--fg/--fg-2 keep their names
+ * so cards built on them pick up the neutral surface in both themes.
+ */
+[data-field] {
+  --f: var(--v-card);
+  --fg: var(--v-ink);
+  --fg-2: var(--v-ink-2);
+  --mid: var(--v-navy);
+  --c-accent: var(--mid);
+  --s1: var(--v-card);
+  --s2: var(--mid);
+  --s3: var(--fg);
+}
+[data-field="capacity"] {
+  --mid: #3478f6;
+}
+[data-field="vitals"] {
+  --mid: #32ade6;
+}
+[data-field="body"] {
+  --mid: #af52de;
+}
+[data-field="habit"] {
+  --mid: #30b39d;
+}
+[data-field="activity"] {
+  --mid: #fa6431;
+}
+[data-field="food"] {
+  --mid: #e68c2c;
+}
+[data-field="heart"] {
+  --mid: #fa3c5a;
+}
+[data-field="rose"] {
+  --mid: #e0559a;
+}
+[data-field="lavender"] {
+  --mid: #7d7aff;
+}
+[data-field="teal"] {
+  --mid: #30b0c7;
+}
+[data-field="sand"] {
+  --mid: #a2845e;
+}
+[data-field="mist"] {
+  --mid: var(--v-navy);
+}
+[data-field="sleep"] {
+  --mid: #5e5ce6;
+}
+[data-field="plain"] {
+  --mid: var(--v-navy);
+}
+
+/* organ mark (ui/OrganIcon.tsx): the organ's hue as line and as a pale disc behind it */
+.v2-organ-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 18%, var(--v-card));
+}
+
+/* ---------- top of every tab root ---------- */
+/*
+ * The bar is glass: content scrolls up behind the title and tabs and shows
+ * through blurred. The blur itself thins out over its
+ * last 28px, so there is no white band and no hard line where it ends.
+ */
+.v2-veil {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 1;
+  pointer-events: none;
+  /* the ground itself, solid with a clean edge: content passes under it as under any app's status bar, with no fade or shadow */
+  background: var(--v-ground, var(--v-bg));
+}
+/* Home: the bar scrolls away, so only the status bar stays covered */
+.v2-veil[data-at="status"] {
+  z-index: 3;
+  height: var(--status-h);
+}
+.v2-top,
+.v2-tabs {
+  z-index: 2;
+}
+.v2-top {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: calc(var(--status-h) + 8px) 12px 6px 20px;
+}
+.v2-top h1 {
+  flex: 1;
+  margin: 0;
+  font: var(--v-t-title);
+  letter-spacing: -0.01em;
+}
+.v2-avatar {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+}
+.v2-avatar::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: var(--v-navy);
+}
+.v2-avatar > :not(i) {
+  position: relative;
+}
+.v2-avatar i {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #eb4e3d;
+  box-shadow: 0 0 0 2px #fff;
+}
+.v2-iconbtn {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+.v2-iconbtn[aria-pressed="true"] {
+  background: var(--v-solid);
+  color: var(--v-navy);
+}
+
+/* ---------- bottom bar ---------- */
+.v2-nav {
+  position: absolute;
+  left: 34px;
+  right: 34px;
+  bottom: 26px;
+  z-index: 40;
+  display: flex;
+  gap: 6px;
+  font-family: var(--v-text);
+}
+.v2-nav-pill {
+  flex: 1;
+  height: 54px;
+  padding: 4px;
+  display: flex;
+  border-radius: 27px;
+  /* the bar is clear glass the cards show through, not a white slab */
+  background: var(--v-glass-bar);
+  backdrop-filter: blur(9px) saturate(185%) brightness(1.08);
+  -webkit-backdrop-filter: blur(9px) saturate(185%) brightness(1.08);
+  box-shadow: var(--v-glass-edge);
+}
+.v2-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 23px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--v-ink-2);
+  text-decoration: none;
+  transition: background 0.24s linear, color 0.24s linear;
+}
+.v2-nav-item.active {
+  /* a soft grey lens under the selected tab, as the system bar draws it; navy and the filled icon carry the rest */
+  --knock: transparent;
+  background: var(--v-glass-sel);
+  color: var(--v-navy);
+  font-weight: 700;
+}
+.v2-nav-ai {
+  flex: none;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  /* the same glass as the bar beside it, its mark in navy, so the cards under it never tint it */
+  color: var(--v-navy);
+  cursor: pointer;
+  background: var(--v-glass-bar);
+  backdrop-filter: blur(9px) saturate(185%) brightness(1.08);
+  -webkit-backdrop-filter: blur(9px) saturate(185%) brightness(1.08);
+  box-shadow: var(--v-glass-edge);
+}
+
+/* line at rest, solid when selected */
+.ic-fill {
+  transition: fill 0.2s linear;
+}
+.ic-dot {
+  fill: currentColor;
+  stroke: none;
+}
+[aria-selected="true"] svg,
+.v2-nav-item.active svg {
+  stroke-width: 2.3;
+}
+[aria-selected="true"] .ic-fill,
+.v2-nav-item.active .ic-fill {
+  fill: currentColor;
+}
+[aria-selected="true"] .ic-knock,
+.v2-nav-item.active .ic-knock {
+  stroke: var(--knock, #fff);
+}
+
+/* ---------- shared ---------- */
+.v2-back {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+}
+.v2-back[data-tone="light"] {
+  color: #fff;
+}
+.v2-back button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  margin-left: -8px;
+}
+/* a detail page's title in the page-title step, above its group headings, as every page title is */
+.v2-back h1 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font: var(--v-t-title);
+  letter-spacing: -0.025em;
+}
+.v2-pillbtn {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 22px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--v-navy);
+  background: var(--v-solid);
+  box-shadow: var(--v-shadow);
+  transition: transform 0.18s var(--v-ease);
+}
+.v2-pillbtn[data-solid] {
+  color: #fff;
+  background: var(--v-navy);
+}
+.v2-pillbtn:active {
+  transform: scale(0.96);
+}
+[data-status] {
+  font-style: normal;
+}
+.v2-p {
+  margin: 0;
+  font-style: normal;
+}
+
+/* ---------- screen to screen ---------- */
+/* the old screen holds still underneath while the new one fades in over it, so the ground never shows through */
+/*
+ * own fade, normal blend: the browser's default also animates mix-blend-mode to plus-lighter,
+ * which adds the opaque old screen to the fading new one and flashes the page light blue
+ */
+::view-transition-old(root) {
+  animation: none;
+}
+::view-transition-new(root) {
+  animation: v2-vt-in 0.24s ease both;
+  mix-blend-mode: normal;
+}
+@keyframes v2-vt-in {
+  from {
+    opacity: 0;
+  }
+}
+::view-transition-group(v2-hero) {
+  animation-duration: 0.4s;
+  animation-timing-function: var(--v-ease);
+}
+::view-transition-old(v2-hero),
+::view-transition-new(v2-hero) {
+  animation-duration: 0.24s;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+}
+/* card to metric header: both captured square (see useGo), the frame eases the corners across */
+[data-vt-snap] {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+html[data-vt="sheet"] .mx-head {
+  border-radius: 0;
+}
+html[data-vt="sheet"]::view-transition-image-pair(v2-hero) {
+  overflow: hidden;
+  animation: v2-vt-corners 0.4s var(--v-ease) both;
+}
+@keyframes v2-vt-corners {
+  from {
+    border-radius: var(--vt-from-r, 24px);
+  }
+  to {
+    border-radius: 0 0 28px 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* two-tone headline (ui/Say.tsx): the lead sentence in ink, the rest in grey, one paragraph */
+.v2-say {
+  margin: 0;
+  font: 700 21px/1.24 var(--v-text);
+  letter-spacing: -0.01em;
+  color: var(--v-ink);
+  text-wrap: pretty;
+}
+.v2-say span {
+  font-weight: 500;
+  color: var(--v-ink-3);
+}
+
+
+/* ---------- scroll indicator ----------
+   one hairline pill on every page that scrolls: 3px, rounded, pale blue, shown only while scrolling, inset from the edge and kept clear
+   of the status bar and the tab bar; sideways rows keep theirs hidden */
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 0;
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  min-height: 36px;
+  border: 2px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+}
+/* drawn only while the page moves (ui/scrollReveal.ts) */
+[data-scrolling]::-webkit-scrollbar-thumb {
+  background: var(--v-scroll) padding-box;
+}
+*::-webkit-scrollbar-track {
+  margin: calc(var(--status-h) + 8px) 0 96px;
+  background: transparent;
+}
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  [data-scrolling] {
+    scrollbar-color: var(--v-scroll) transparent;
+  }
+}
+
+/* ---------- the status bar, as the system draws it ----------
+ * A light tint and a blur that grows toward the top edge. The blur is five
+ * stacked layers, each stronger and each ending higher up, so content softens
+ * gradually as it rises instead of cross-fading between sharp and blurred.
+ */
+.v2-blur,
+.v2-veil.mx-veil[data-at],
+.v2-veil.vs-veil[data-at] {
+  --veil-c: var(--v-ground, var(--v-bg));
+  height: calc(var(--status-h) + 84px);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--veil-c) 64%, transparent) 0,
+    color-mix(in srgb, var(--veil-c) 50%, transparent) var(--status-h),
+    color-mix(in srgb, var(--veil-c) 16%, transparent) calc(var(--status-h) + 40px),
+    transparent 100%
+  ) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.v2-blur {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+.v2-head[data-under] > .v2-blur {
+  opacity: 1;
+}
+.v2-blur > i,
+.v2-veil > i {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.v2-blur > i:nth-child(1),
+.v2-veil > i:nth-child(1) {
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  -webkit-mask-image: linear-gradient(#000 50%, transparent 100%);
+  mask-image: linear-gradient(#000 50%, transparent 100%);
+}
+.v2-blur > i:nth-child(2),
+.v2-veil > i:nth-child(2) {
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+  -webkit-mask-image: linear-gradient(#000 38%, transparent 80%);
+  mask-image: linear-gradient(#000 38%, transparent 80%);
+}
+.v2-blur > i:nth-child(3),
+.v2-veil > i:nth-child(3) {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  -webkit-mask-image: linear-gradient(#000 28%, transparent 62%);
+  mask-image: linear-gradient(#000 28%, transparent 62%);
+}
+.v2-blur > i:nth-child(4),
+.v2-veil > i:nth-child(4) {
+  backdrop-filter: blur(9px) saturate(120%);
+  -webkit-backdrop-filter: blur(9px) saturate(120%);
+  -webkit-mask-image: linear-gradient(#000 20%, transparent 46%);
+  mask-image: linear-gradient(#000 20%, transparent 46%);
+}
+.v2-blur > i:nth-child(5),
+.v2-veil > i:nth-child(5) {
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  -webkit-mask-image: linear-gradient(#000 12%, transparent 34%);
+  mask-image: linear-gradient(#000 12%, transparent 34%);
+}
+
+/* the round buttons at the top stay in place, above the status-bar veil, while the page scrolls under them */
+.mx-bar,
+.vs-bar,
+.cs-bar,
+.hb-bar {
+  position: sticky !important;
+  top: 0;
+  z-index: 4 !important;
+}
+
+/*
+ * The status-bar veil without backdrop blur. A blur layer that touches the
+ * screen's edges samples past them, and on a phone that shows up as dark
+ * smudges in the two top corners once the page scrolls under it. The veil is
+ * the ground colour alone, thinning out downward, so nothing outside the
+ * screen is ever pulled in.
+ */
+.v2-blur > i,
+.v2-veil > i {
+  display: none;
+}
+.v2-blur,
+.v2-veil.mx-veil[data-at],
+.v2-veil.vs-veil[data-at] {
+  height: calc(var(--status-h) + 56px);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--veil-c) 94%, transparent) 0,
+    color-mix(in srgb, var(--veil-c) 88%, transparent) var(--status-h),
+    color-mix(in srgb, var(--veil-c) 38%, transparent) calc(var(--status-h) + 28px),
+    transparent 100%
+  ) !important;
+}

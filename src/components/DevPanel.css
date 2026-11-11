@@ -43,6 +43,19 @@
   font-weight: 700;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
+/* four choices: two to a row, so no label is cut */
+.dp-seg[data-wrap] {
+  flex-wrap: wrap;
+}
+.dp-seg[data-wrap] button {
+  flex: 1 0 calc(50% - 2px);
+}
+.dp-note {
+  margin-top: -6px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: #777;
+}
 .dp-link {
   text-align: left;
   color: #26387d;

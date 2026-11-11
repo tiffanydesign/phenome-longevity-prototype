@@ -1,0 +1,476 @@
+/*
+ * Phenome redesign. Layout: icon tabs on top, a floating pill
+ * and a round button below, tinted cards between them on a white ground, bold
+ * Helvetica Neue and no serif anywhere. Colour is Phenome's own
+ * (src/styles/tokens.css), always flat: no gradients, no rendered 3D. Navy leads.
+ * The twin has its own voice: light numerals, hairline leaders.
+ * Gold still means Monitor and nothing else, so the capacity yellow is not used.
+ */
+:root {
+  --v-ink: #17234f;
+  --v-ink-2: #4a5578;
+  --v-ink-3: #636c8c;
+  --v-navy: #263980;
+  --v-deep: #1a2a66;
+  --v-blue: #4f96d1;
+  --v-line: #2639801f;
+  /* the clinic portal's warning pair: #ffb600 for marks, #7a5600 for words */
+  --v-gold: #ffb600;
+  --v-gold-ink: #7a5600;
+  --v-gold-wash: #ffb60033;
+  --v-gold-pill: #fff0cc;
+  /* the portal's in-range green, as the same capsule pair */
+  --v-ok-ink: #2f6b11;
+  --v-ok-pill: #e4f3d9; /* the wash, made opaque so it reads the same on a tinted tile */
+  --v-solid: #fffffff5;
+  --v-r: 24px;
+  --v-shadow: 0 8px 20px -16px #24365e59;
+  --v-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --v-text: "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
+  /* no serif anywhere: display is the text face, set bold and tight */
+  --v-display: var(--v-text);
+  /* numerals in the text face too, tabular where they line up: no slab or serif anywhere */
+  --v-num: var(--v-text);
+  --v-field: #fff;
+  /* type scale for a phone at arm's length: nothing under 12, nothing light under 26 */
+  --v-t-title: 700 21px/1.15 var(--v-text);
+  --v-t-head: 700 22px/1.15 var(--v-text);
+  --v-t-card: 700 15px/1.2 var(--v-text);
+  --v-t-body: 500 15px/1.34 var(--v-text);
+  --v-t-note: 500 13px/1.25 var(--v-text);
+  /* one more step between the page title and a card: the group a run of cards belongs to */
+  --v-t-section: 700 19px/1.2 var(--v-text);
+  /* the reading itself: the largest thing on a card, so it is read before its decoration */
+  --v-t-value: 700 34px/1 var(--v-text);
+  /* spacing on an 8 grid: screen gutter, between groups, between cards, inside a card */
+  --v-s-gutter: 16px;
+  --v-s-section: 28px;
+  --v-s-gap: 8px;
+  --v-s-pad: 16px;
+}
+
+.v2 {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--v-field);
+  color: var(--v-ink);
+  font-family: var(--v-text);
+  -webkit-font-smoothing: antialiased;
+}
+.v2 :where(button) {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+.v2 button:focus-visible,
+.v2 a:focus-visible,
+.v2-nav a:focus-visible,
+.v2-nav button:focus-visible {
+  outline: 2px solid var(--v-navy);
+  outline-offset: 2px;
+}
+.v2 ::selection {
+  background: #26398033;
+}
+
+/*
+ * colour fields: one tinted tile per category.
+ * Each field starts from its category colour (--mid: charts, marks, the
+ * object's second tone); the tile is that hue at OKLCH lightness 0.85 and the
+ * text the same hue at 0.31 (8:1 or better), so the set reads as one family.
+ * Sleep alone is a night tile in indigo with white text.
+ */
+[data-field] {
+  --f: #f2f4f8;
+  --fg: var(--v-ink);
+  --fg-2: var(--v-ink-2);
+  --mid: var(--v-navy);
+  --c-accent: var(--mid);
+  --s1: #fff;
+  --s2: var(--mid);
+  --s3: var(--fg);
+}
+[data-field="capacity"] {
+  --f: #adcfff;
+  --fg: #182f58;
+  --fg-2: #182f58d1;
+  --mid: #3478f6;
+}
+[data-field="vitals"] {
+  --f: #91d8ff;
+  --fg: #003652;
+  --fg-2: #003652d1;
+  --mid: #32ade6;
+}
+[data-field="body"] {
+  --f: #e2bdf9;
+  --fg: #3e224d;
+  --fg-2: #3e224dd1;
+  --mid: #af52de;
+}
+[data-field="habit"] {
+  --f: #88e1d0;
+  --fg: #003d32;
+  --fg-2: #003d32d1;
+  --mid: #3dbfaa;
+}
+[data-field="activity"] {
+  --f: #ffbaa3;
+  --fg: #511f0e;
+  --fg-2: #511f0ed1;
+  --mid: #fa6431;
+}
+/* food is apricot: warm, and clear of activity's coral and Monitor's yellow */
+[data-field="food"] {
+  --f: #f8c695;
+  --fg: #492603;
+  --fg-2: #492603d1;
+  --mid: #e68c2c;
+}
+[data-field="heart"] {
+  --f: #ffb6b8;
+  --fg: #511c21;
+  --fg-2: #511c21d1;
+  --mid: #fa3c5a;
+}
+/* four more, so a tab never repeats a colour */
+[data-field="rose"] {
+  --f: #f9bdd5;
+  --fg: #4c1e34;
+  --fg-2: #4c1e34d1;
+  --mid: #e0559a;
+}
+[data-field="lavender"] {
+  --f: #c7ccff;
+  --fg: #2a2a55;
+  --fg-2: #2a2a55d1;
+  --mid: #7d7aff;
+}
+[data-field="teal"] {
+  --f: #96dfee;
+  --fg: #003947;
+  --fg-2: #003947d1;
+  --mid: #30b0c7;
+}
+[data-field="sand"] {
+  --f: #ebcba3;
+  --fg: #442a02;
+  --fg-2: #442a02d1;
+  --mid: #a2845e;
+}
+/* a pale tint of the brand navy: quiet enough for three ring colours to sit on together */
+[data-field="mist"] {
+  --f: #dbe2f6;
+  --fg: #1c2a5c;
+  --fg-2: #1c2a5cd1;
+  --mid: #263980;
+}
+[data-field="sleep"] {
+  --f: #3a3b8b;
+  --fg: #fff;
+  --fg-2: #ffffffd9;
+  --mid: #5e5ce6;
+  --s2: #b3baeb;
+  --s3: #3a3b8b;
+}
+[data-field="plain"] {
+  --f: #f2f4f8;
+}
+
+/* organ mark (ui/OrganIcon.tsx): the organ's hue as line and as a pale disc behind it */
+.v2-organ-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 18%, #fff);
+}
+
+/* ---------- top of every tab root ---------- */
+/*
+ * The bar is glass: content scrolls up behind the title and tabs and shows
+ * through blurred. The blur itself thins out over its
+ * last 28px, so there is no white band and no hard line where it ends.
+ */
+.v2-veil {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 1;
+  pointer-events: none;
+  /* the ground itself, solid with a clean edge: content passes under it as under any app's status bar, with no fade or shadow */
+  background: var(--v-ground, #fff);
+}
+/* Home: the bar scrolls away, so only the status bar stays covered */
+.v2-veil[data-at="status"] {
+  z-index: 3;
+  height: var(--status-h);
+}
+.v2-top,
+.v2-tabs {
+  z-index: 2;
+}
+.v2-top {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: calc(var(--status-h) + 8px) 12px 6px 20px;
+}
+.v2-top h1 {
+  flex: 1;
+  margin: 0;
+  font: var(--v-t-title);
+  letter-spacing: -0.01em;
+}
+.v2-avatar {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+}
+.v2-avatar::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: var(--v-navy);
+}
+.v2-avatar > :not(i) {
+  position: relative;
+}
+.v2-avatar i {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #eb4e3d;
+  box-shadow: 0 0 0 2px #fff;
+}
+.v2-iconbtn {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+.v2-iconbtn[aria-pressed="true"] {
+  background: var(--v-solid);
+  color: var(--v-navy);
+}
+
+/* ---------- bottom bar ---------- */
+.v2-nav {
+  position: absolute;
+  left: 34px;
+  right: 34px;
+  bottom: 26px;
+  z-index: 40;
+  display: flex;
+  gap: 6px;
+  font-family: var(--v-text);
+}
+.v2-nav-pill {
+  flex: 1;
+  height: 54px;
+  padding: 4px;
+  display: flex;
+  border-radius: 27px;
+  /* the bar is glass the cards show through, not a white slab */
+  background: #ffffff70;
+  backdrop-filter: blur(14px) saturate(170%);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  box-shadow: 0 10px 26px -16px #24365e66, inset 0 0 0 1px #ffffffa6, 0 0 0 1px #2639800f;
+}
+.v2-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-radius: 23px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--v-ink-2);
+  text-decoration: none;
+  transition: background 0.24s linear, color 0.24s linear;
+}
+.v2-nav-item.active {
+  /* no capsule: the selected tab is told by its navy, its filled icon and its weight */
+  --knock: transparent;
+  background: none;
+  color: var(--v-navy);
+  font-weight: 700;
+}
+.v2-nav-ai {
+  flex: none;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  /* the same glass as the bar beside it, its mark in navy, so the cards under it never tint it */
+  color: var(--v-navy);
+  cursor: pointer;
+  background: #ffffff70;
+  backdrop-filter: blur(14px) saturate(170%);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  box-shadow: 0 10px 26px -16px #24365e66, inset 0 0 0 1px #ffffffa6, 0 0 0 1px #2639800f;
+}
+
+/* line at rest, solid when selected */
+.ic-fill {
+  transition: fill 0.2s linear;
+}
+.ic-dot {
+  fill: currentColor;
+  stroke: none;
+}
+[aria-selected="true"] svg,
+.v2-nav-item.active svg {
+  stroke-width: 2.3;
+}
+[aria-selected="true"] .ic-fill,
+.v2-nav-item.active .ic-fill {
+  fill: currentColor;
+}
+[aria-selected="true"] .ic-knock,
+.v2-nav-item.active .ic-knock {
+  stroke: var(--knock, #fff);
+}
+
+/* ---------- shared ---------- */
+.v2-back {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+}
+.v2-back[data-tone="light"] {
+  color: #fff;
+}
+.v2-back button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex: none;
+  margin-left: -8px;
+}
+/* a detail page's title in the page-title step, above its group headings, as every page title is */
+.v2-back h1 {
+  margin: 0;
+  font: var(--v-t-head);
+  letter-spacing: -0.01em;
+}
+.v2-pillbtn {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 22px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--v-navy);
+  background: var(--v-solid);
+  box-shadow: var(--v-shadow);
+  transition: transform 0.18s var(--v-ease);
+}
+.v2-pillbtn[data-solid] {
+  color: #fff;
+  background: var(--v-navy);
+}
+.v2-pillbtn:active {
+  transform: scale(0.96);
+}
+[data-status] {
+  font-style: normal;
+}
+.v2-p {
+  margin: 0;
+  font-style: normal;
+}
+
+/* ---------- screen to screen ---------- */
+/* the old screen holds still underneath while the new one fades in over it, so the ground never shows through */
+/*
+ * own fade, normal blend: the browser's default also animates mix-blend-mode to plus-lighter,
+ * which adds the opaque old screen to the fading new one and flashes the page light blue
+ */
+::view-transition-old(root) {
+  animation: none;
+}
+::view-transition-new(root) {
+  animation: v2-vt-in 0.24s ease both;
+  mix-blend-mode: normal;
+}
+@keyframes v2-vt-in {
+  from {
+    opacity: 0;
+  }
+}
+::view-transition-group(v2-hero) {
+  animation-duration: 0.4s;
+  animation-timing-function: var(--v-ease);
+}
+::view-transition-old(v2-hero),
+::view-transition-new(v2-hero) {
+  animation-duration: 0.24s;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+}
+/* card to metric header: both captured square (see useGo), the frame eases the corners across */
+[data-vt-snap] {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+html[data-vt="sheet"] .mx-head {
+  border-radius: 0;
+}
+html[data-vt="sheet"]::view-transition-image-pair(v2-hero) {
+  overflow: hidden;
+  animation: v2-vt-corners 0.4s var(--v-ease) both;
+}
+@keyframes v2-vt-corners {
+  from {
+    border-radius: var(--vt-from-r, 24px);
+  }
+  to {
+    border-radius: 0 0 28px 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* two-tone headline (ui/Say.tsx): the lead sentence in ink, the rest in grey, one paragraph */
+.v2-say {
+  margin: 0;
+  font: 700 21px/1.24 var(--v-text);
+  letter-spacing: -0.01em;
+  color: var(--v-ink);
+  text-wrap: pretty;
+}
+.v2-say span {
+  font-weight: 500;
+  color: var(--v-ink-3);
+}
+

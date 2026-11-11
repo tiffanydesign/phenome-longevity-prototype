@@ -1,0 +1,603 @@
+/* ---------- Today cards: one honest chart per reading ---------- */
+.gl {
+  position: relative;
+  width: 100%;
+  display: block;
+  margin: auto 0 12px;
+}
+
+/* the hours of the day under a chart that runs midnight to midnight */
+.gl-axis {
+  display: flex;
+  margin-top: 4px;
+}
+.gl-axis i {
+  flex: 1;
+  font: 500 10px/1 var(--v-text);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-3);
+}
+
+/* steps by the hour */
+.gl-hours-bars {
+  height: 40px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  border-bottom: 1px solid var(--v-line);
+}
+.gl-hours-bars i {
+  flex: 1;
+  min-height: 2px;
+  border-radius: 1.5px 1.5px 0 0;
+  background: var(--mid);
+}
+.gl-hours-bars i[data-later] {
+  height: 2px;
+  background: color-mix(in srgb, var(--mid) 18%, transparent);
+}
+
+/* the night by stage: four lanes, each block in its stage colour */
+.gl-night {
+  display: flex;
+  gap: 8px;
+}
+.gl-night-lanes {
+  position: relative;
+  flex: 1;
+  height: 48px;
+  background: repeating-linear-gradient(to bottom, transparent 0 11.5px, var(--v-line) 11.5px 12px);
+}
+.gl-night-lanes i {
+  position: absolute;
+  height: 25%;
+  border-radius: 2px;
+}
+.gl-night-key {
+  display: none;
+}
+[data-stage="Awake"] {
+  --stage: #ff7a59;
+}
+[data-stage="REM"] {
+  --stage: #5ac8fa;
+}
+[data-stage="Core"] {
+  --stage: #3478f6;
+}
+[data-stage="Deep"] {
+  --stage: #4b3fce;
+}
+.gl-night-lanes i {
+  background: var(--stage);
+}
+/* a wide card has room to name the lanes */
+.v2-slot[data-size="w"] .gl-night-key {
+  display: grid;
+  grid-template-rows: repeat(4, 12px);
+  font: 600 10px/12px var(--v-text);
+}
+.v2-slot[data-size="w"] .gl-night-key i {
+  font-style: normal;
+  color: var(--stage);
+}
+
+/* capacity: the gauge with what the score means beside it */
+.gl-gauge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.gl-gauge svg {
+  flex: none;
+  margin: -2px 0 -8px -4px;
+}
+.gl-gauge-word {
+  font: 600 13.5px/1.25 var(--v-text);
+  color: color-mix(in srgb, var(--mid) 75%, var(--v-ink));
+}
+
+/* the week as seven days */
+.gl-week {
+  display: flex;
+  justify-content: space-between;
+}
+.gl-week-day {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+}
+.gl-week-day i {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--mid) 14%, var(--v-card));
+}
+.gl-week-day[data-on] i {
+  background: var(--mid);
+}
+.gl-week-day[data-today] i {
+  box-shadow: 0 0 0 2px var(--v-card), 0 0 0 3.5px var(--mid);
+}
+.gl-week-day small {
+  font: 600 10px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.gl-week-day[data-today] small {
+  color: var(--v-ink);
+}
+
+/* heart rate: a range per two hours over a dashed resting floor */
+.gl-range-plot {
+  position: relative;
+  display: block;
+  height: 44px;
+  border-bottom: 1px solid var(--v-line);
+}
+.gl-range-cap {
+  position: absolute;
+  width: calc(100% / 12 - 4px);
+  min-height: 4px;
+  border-radius: 3px;
+  background: var(--mid);
+  opacity: 0.85;
+}
+.gl-range-cap[data-later] {
+  visibility: hidden;
+}
+.gl-range-rest {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed color-mix(in srgb, var(--mid) 55%, transparent);
+}
+
+/* energy split by source */
+.gl-macro-track {
+  height: 10px;
+  display: flex;
+  gap: 2px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--mid) 12%, var(--v-card));
+}
+.gl-macro-track i {
+  height: 100%;
+}
+.gl-macro-track i:last-child {
+  border-radius: 0 5px 5px 0;
+}
+[data-part="Protein"] {
+  --part: var(--mid);
+}
+[data-part="Carbs"] {
+  --part: color-mix(in srgb, var(--mid) 62%, var(--v-card));
+}
+[data-part="Fat"] {
+  --part: color-mix(in srgb, var(--mid) 35%, var(--v-card));
+}
+.gl-macro-track i {
+  background: var(--part);
+}
+.gl-macro-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  margin-top: 8px;
+  font: 500 11px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.gl-macro-key > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.gl-macro-key i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--part);
+}
+.gl-macro-key b {
+  font-weight: 600;
+  color: var(--v-ink);
+}
+
+/* habits as a row of stops */
+.gl-stops {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+.gl-stop {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+}
+.gl-stop i {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1.5px dashed color-mix(in srgb, var(--mid) 45%, transparent);
+}
+.gl-stop[data-on] i {
+  border: 0;
+  background: var(--mid);
+}
+.gl-stop small {
+  display: none;
+  max-width: 100%;
+  overflow: hidden;
+  font: 500 10.5px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.v2-slot[data-size="w"] .gl-stop small {
+  display: block;
+}
+.v2-slot[data-size="w"] .gl-stop i {
+  width: 26px;
+  height: 26px;
+}
+
+/* workouts: two rings, sessions outside and active minutes inside, each with its key */
+.gl-rings {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.gl-rings svg {
+  flex: none;
+  margin: -2px 0 -4px -2px;
+}
+.gl-rings circle {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s var(--v-ease);
+}
+.gl-ring-a {
+  stroke: var(--mid);
+}
+.gl-ring-b {
+  stroke: color-mix(in srgb, var(--mid) 45%, #ff9f43);
+}
+.gl-rings [data-track] {
+  stroke-opacity: 0.16;
+}
+.gl-rings-key {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.gl-rings-key span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 12.5px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+}
+.gl-rings-key span::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mid);
+}
+.gl-rings-key span[data-k="b"]::before {
+  background: color-mix(in srgb, var(--mid) 45%, #ff9f43);
+}
+.gl-rings-key b {
+  font-weight: 650;
+  color: var(--v-ink);
+}
+
+/* habits: the count sits quietly beside the title; the stops fill the card below */
+.v2-tile-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.v2-tile-count {
+  font: 500 13px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-2);
+}
+/* habits done today: a small green ring and the count, in a soft green capsule */
+.v2-hcount {
+  --hc: var(--mid, #2f9e5b);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+  padding: 0 9px 0 6px;
+  border-radius: 12px;
+  font: 500 12.5px/1 var(--v-text);
+  color: color-mix(in srgb, var(--hc) 70%, var(--v-ink));
+  background: color-mix(in srgb, var(--hc) 11%, var(--v-card, #fff));
+}
+.v2-hcount b {
+  font-weight: 700;
+  color: color-mix(in srgb, var(--hc) 82%, var(--v-ink));
+}
+.v2-hcount svg circle {
+  fill: none;
+  stroke: var(--hc);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+.v2-hcount svg [data-track] {
+  stroke-opacity: 0.22;
+}
+.v2-hcount[data-all] {
+  color: #fff;
+  background: var(--hc);
+}
+.v2-hcount[data-all] b {
+  color: #fff;
+}
+.v2-hcount[data-all] svg circle {
+  stroke: #fff;
+}
+.v2-tile-habits .gl-stops {
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: 2px;
+}
+.v2-slot[data-size="w"] .v2-tile-habits .gl-stop i {
+  width: 34px;
+  height: 34px;
+}
+.v2-tile-habits .gl-stop small {
+  font-size: 11.5px;
+}
+.v2-tile-habits .gl-stops {
+  margin: auto 0;
+  gap: 2px;
+}
+.v2-slot[data-size="w"] .v2-tile-habits .gl-stop i {
+  width: 32px;
+  height: 32px;
+}
+.v2-tile-habits .gl-stop small {
+  font-size: 11px;
+  letter-spacing: -0.01em;
+  text-overflow: clip;
+}
+.v2-tile-habits .gl-stops {
+  margin: auto 0 0;
+}
+.v2-slot[data-size="w"] .v2-tile-habits .gl-stop i {
+  width: 40px;
+  height: 40px;
+}
+.v2-tile-habits .gl-stop i svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* habits on Home: each habit's own mark, fixed width so a short plan stays left and a long one ends in "+n" */
+.v2-habits {
+  width: 100%;
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 4px;
+}
+.v2-habit {
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+.v2-habit small {
+  max-width: 100%;
+  overflow: hidden;
+  font: 500 11px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.v2-habit-more {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 650 14px/1 var(--v-text);
+  color: var(--v-ink-2);
+  background: var(--v-fill);
+}
+.v2-habits-empty {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+.v2-habits-empty b {
+  display: block;
+  font: 600 15px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.v2-habits-empty small {
+  font: 400 13px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.v2-habits-plus {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 500 22px/1 var(--v-text);
+  color: var(--mid);
+  border: 1.5px dashed color-mix(in srgb, var(--mid) 55%, transparent);
+}
+/* each habit a stop in the card's own green: dashed while waiting, solid with a tick once done */
+.v2-habit-dot {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1.5px dashed color-mix(in srgb, var(--mid) 50%, transparent);
+  transition: background 0.25s, border-color 0.25s;
+}
+.v2-habit-dot[data-on] {
+  border: 0;
+  background: var(--mid);
+}
+
+/* ---------- workouts, read by the day: two rings, two pinks ---------- */
+.gl-rings {
+  --pk-time: #d6336c;
+  --pk-kcal: #f07aae;
+  gap: 10px;
+}
+:root[data-theme="dark"] .gl-rings {
+  --pk-time: #ff4f8b;
+  --pk-kcal: #ff9cc8;
+}
+.gl-rings circle {
+  stroke-width: 8.5;
+}
+.gl-rings [data-ring="time"] {
+  --pk: var(--pk-time);
+}
+.gl-rings [data-ring="kcal"] {
+  --pk: var(--pk-kcal);
+}
+.gl-rings g {
+  stroke: var(--pk);
+}
+.gl-rings [data-track] {
+  stroke-opacity: 0.18;
+}
+.gl-rings-key {
+  gap: 4px;
+}
+.gl-rings-key span {
+  font-size: 12px;
+}
+.gl-rings-key span::before,
+.gl-rings-key span[data-k="b"]::before {
+  width: 7px;
+  height: 7px;
+  background: var(--pk);
+}
+.gl-rings-key span {
+  gap: 4px;
+  white-space: nowrap;
+  color: var(--v-ink-2);
+}
+.gl-rings-key b {
+  margin-left: 2px;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+
+/* food: three columns, each a name over its grams, lined up under the bar */
+.gl-macro-key {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: space-between;
+  gap: 4px;
+  margin-top: 9px;
+}
+.gl-macro-key > span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+}
+.gl-macro-key em {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-style: normal;
+}
+.gl-macro-key b {
+  font: 650 12.5px/1.15 var(--v-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- habits on Home: the day's list in two columns, each with its own state ---------- */
+.v2-hlist {
+  width: 100%;
+  margin: 8px 0 -4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  column-gap: 14px;
+  flex: 1;
+}
+.v2-hlist > span {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 0.5px solid var(--v-line);
+}
+.v2-hlist > span:nth-child(-n + 2) {
+  border-top: 0;
+}
+.v2-hlist .v2-habit-dot {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-width: 1.5px;
+}
+.v2-hlist .v2-habit-dot svg {
+  width: 12px;
+  height: 12px;
+}
+.v2-hlist-t {
+  flex: 1;
+  min-width: 0;
+  font: 500 13.5px/1.2 var(--v-text);
+  letter-spacing: -0.005em;
+  color: var(--v-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.v2-hlist > span[data-done] .v2-hlist-t {
+  color: var(--v-ink-3);
+}
+.v2-hlist-n {
+  flex: none;
+  font: 600 12px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-3);
+}
+.v2-hlist-more .v2-hlist-t {
+  color: var(--v-ink-2);
+}
+.v2-hlist-more i {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 650 10.5px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-2);
+  background: var(--v-fill);
+}

@@ -25,3 +25,8 @@ capture/apk_assets/lib/images/games/
 capture/.net_before.txt
 capture/.last_shot.txt
 capture/tools/.sensitive.json
+# clinic portal results for the demo member: 50 MB raw, carries contact details (scripts/build-member.mjs reads it)
+capture/portal/
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
