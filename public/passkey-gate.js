@@ -1,8 +1,15 @@
-/* Passkey gate: hides the page until the visitor enters the shared passkey.
+/* Passkey gate: hides the page until the visitor enters one of the shared passkeys.
    Unlocking is remembered per browser for every site on this origin. */
 (function () {
-  var HASH = "45256d06aacb9395f4ad0db8a6f085fb00e10de93f474f3d2f2c00c4db6eaa4a";
+  // SHA-256 of each accepted passkey; any one of them unlocks
+  var HASHES = [
+    "45256d06aacb9395f4ad0db8a6f085fb00e10de93f474f3d2f2c00c4db6eaa4a",
+    "fcc0a5910ca140653d8472fd044f0d6a5c109e2d57ebd6cee295932121852265",
+  ];
+  // a browser already let in by the prototype's earlier in-app gate stays in
+  var EARLIER = { key: "phenome.gate", value: "2698df0befa71dbe9020d83c248020aed56a80423bb3aca454af07cdb4753cc1" };
   var KEY = "pk-gate";
+  var accepted = function (h) { return HASHES.indexOf(h) >= 0; };
   var doc = document;
   var root = doc.documentElement;
 
@@ -12,7 +19,9 @@
   function write(v) {
     try { localStorage.setItem(KEY, v); } catch (e) { /* storage blocked */ }
   }
-  if (read() === HASH) return;
+  var earlier = null;
+  try { earlier = localStorage.getItem(EARLIER.key); } catch (e) { /* storage blocked */ }
+  if (accepted(read()) || earlier === EARLIER.value) return;
 
   function sha256(str) {
     var K = [], H = [], i, j;
@@ -72,7 +81,7 @@
   }
 
   window.addEventListener("storage", function (ev) {
-    if (ev.key === KEY && ev.newValue === HASH) unlock();
+    if (ev.key === KEY && accepted(ev.newValue)) unlock();
   });
 
   function mount() {
@@ -94,8 +103,9 @@
     input.focus();
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
-      if (sha256(input.value.trim()) === HASH) {
-        write(HASH);
+      var h = sha256(input.value.trim());
+      if (accepted(h)) {
+        write(h);
         unlock();
       } else {
         err.textContent = "Incorrect passkey.";
