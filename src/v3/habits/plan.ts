@@ -163,6 +163,37 @@ export const planActions = {
   },
 };
 
+/** Small wins progress the review panel can set the day to. */
+export type WinsState = "fresh" | "one" | "done";
+
+/**
+ * Sets today's log for the review panel, against the habits due by `hour`:
+ * fresh = nothing logged; one = all but the last due card done, so the next
+ * swipe plays the celebration; done = everything due done.
+ */
+export function setWinsState(state: WinsState, hour: number) {
+  const dow = new Date().getDay();
+  const due = plan.filter((h) => h.checkIn && h.days.includes(dow) && h.source !== "band" && hour >= PARTS[h.part].from);
+  // the card left over is one a single tap finishes, so the celebration is one swipe away
+  const last = [...due].reverse().find((h) => h.kind !== "count") ?? due[due.length - 1];
+  const keep = state === "one" ? due.filter((h) => h !== last) : state === "done" ? due : [];
+  const next: DayLog = { done: {}, taps: {} };
+  const now = Date.now();
+  for (const h of keep) {
+    if (h.kind === "count") next.taps[h.id] = Array.from({ length: h.goal ?? 1 }, (_, i) => now - i * 60_000);
+    else next.done[h.id] = h.kind === "choice" ? h.options?.[2] ?? "Done" : "Done";
+  }
+  freshLog();
+  setLog(next);
+  if (state === "fresh") {
+    try {
+      localStorage.removeItem("phenome.v3.wins.hinted");
+    } catch {
+      // the swipe hint stays as it was
+    }
+  }
+}
+
 export const newHabitId = () => `h-${Date.now().toString(36)}`;
 
 export function usePlan(): Habit[] {

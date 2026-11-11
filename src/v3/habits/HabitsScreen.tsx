@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHour } from "../demo/clock";
 import { Chevron } from "../ui/icons";
 import { BackBar, BlurLayers, V2Screen } from "../ui/shell";
 import { HabitMark } from "./HabitMark";
@@ -50,7 +51,7 @@ export function HabitsScreen() {
   const [editing, setEditing] = useState<Habit | null>(null);
   const [adding, setAdding] = useState(false);
   const done = asked.filter((t) => t.done).length;
-  const hour = new Date().getHours();
+  const hour = useHour();
   const next = asked.find((t) => !t.done && hour >= PARTS[t.h.part].from) ?? asked.find((t) => !t.done);
 
   return (

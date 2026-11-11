@@ -3,6 +3,7 @@ import { useGo } from "../ui/shell";
 import { HabitMark } from "../habits/HabitMark";
 import { PARTS, planActions, unitFor, useToday, type HabitToday } from "../habits/plan";
 import { WinDeck } from "./WinDeck";
+import { useHour } from "../demo/clock";
 import "../habits/habits.css";
 import "./checkin.css";
 
@@ -82,16 +83,6 @@ function Celebration({ fields, title, line }: { fields: string[]; title: string;
 /** "this evening", "this afternoon": when a part of the day comes round. */
 const partWhen = (p: HabitToday["h"]["part"]) => (p === "morning" ? "tomorrow morning" : p === "afternoon" ? "this afternoon" : p === "evening" ? "this evening" : "later");
 
-/** The hour, kept fresh so a new part of the day can bring the module back without a reload. */
-function useHour(): number {
-  const [hour, setHour] = useState(() => new Date().getHours());
-  useEffect(() => {
-    const id = window.setInterval(() => setHour(new Date().getHours()), 60_000);
-    return () => window.clearInterval(id);
-  }, []);
-  return hour;
-}
-
 type Phase = "live" | "party" | "closing" | "gone";
 
 export function CheckIn() {
@@ -137,7 +128,8 @@ export function CheckIn() {
   // the stack as it stands, with this one moved to the back
   const toBack = (id: string) => setOrder([...due.map((t) => t.h.id).filter((x) => x !== id), id]);
 
-  if (asked.length === 0) return null;
+  // nothing to do now: the module stays away, and what follows moves up
+  if (asked.length === 0 || (phase === "gone" && due.length === 0)) return null;
 
   const allDone = waiting.length === 0;
   // what counts today so far: done, or its part of the day has begun; later parts join as they start
@@ -169,8 +161,24 @@ export function CheckIn() {
     </header>
   );
 
-  // the praise folds away under the heading; the heading stays, so the list and undo are still in reach
-  const party = phase === "party" || phase === "closing";
+  // emptied just now: the praise plays under the heading, then the whole module folds away
+  if (phase === "party" || phase === "closing") {
+    return (
+      <section className="wn-mod ck-fold" data-closing={phase === "closing" ? "" : undefined} aria-label="Small wins">
+        <div className="wn-fold-in">
+          {head}
+          <div className="wn-party">
+            <Celebration
+              fields={asked.map((t) => t.h.field)}
+              title={allDone ? "Good job" : "Good job, all done for now"}
+              line={allDone ? `All ${asked.length} small wins done · see you tomorrow` : `Next: ${later[0]?.h.name ?? "more"}, ${later[0] ? partWhen(later[0].h.part) : "later"}`}
+            />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="wn-mod" aria-label="Small wins">
       {head}
@@ -210,19 +218,6 @@ export function CheckIn() {
           </div>
         </div>
       </div>
-      {party && !open && (
-        <div className="ck-fold" data-closing={phase === "closing" ? "" : undefined}>
-          <div className="wn-fold-in">
-            <div className="wn-party">
-              <Celebration
-                fields={asked.map((t) => t.h.field)}
-                title={allDone ? "Good job" : "Good job, all done for now"}
-                line={allDone ? `All ${asked.length} small wins done · see you tomorrow` : `Next: ${later[0]?.h.name ?? "more"}, ${later[0] ? partWhen(later[0].h.part) : "later"}`}
-              />
-            </div>
-          </div>
-        </div>
-      )}
       {!open && due.length > 0 && <WinDeck due={due} onLater={toBack} onFood={(el) => go("/v3/metric/diet", { from: el })} />}
     </section>
   );

@@ -54,6 +54,8 @@ function write(b: Booking | null) {
 export const bookingActions = {
   book: (b: Booking) => write(b),
   cancel: () => write(null),
+  /** the review panel's "Upcoming": the seeded session, eight days out */
+  seed: () => write(seed()),
 };
 
 export function useBooking(): Booking | null {

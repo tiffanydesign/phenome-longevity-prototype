@@ -67,9 +67,9 @@ export function Launcher({ onStart }: { onStart: () => void }) {
 
       <section className="ln-settings" aria-label="Prototype settings">
         <h2>Settings</h2>
-        <Toggle label="Sex" value={p.sex} options={["female", "male"]} onChange={(sex) => p.set({ sex })} />
+        <Toggle label="Sex" value={p.sex} options={["female", "male"]} labels={{ female: "Female", male: "Male" }} onChange={(sex) => p.set({ sex })} />
         <Toggle
-          label="Member"
+          label="Health record"
           value={p.member}
           options={MEMBER_MODES}
           labels={MEMBER_LABEL}
@@ -81,7 +81,7 @@ export function Launcher({ onStart }: { onStart: () => void }) {
           }}
         />
         <p className="ln-note">{MEMBER_NOTE[p.member]}</p>
-        <Toggle label="Theme" value={p.theme} options={["light", "dark"]} onChange={(theme) => p.set({ theme })} />
+        <Toggle label="Appearance" value={p.theme} options={["light", "dark"]} labels={{ light: "Light", dark: "Dark" }} onChange={(theme) => p.set({ theme })} />
       </section>
 
       <p className="ln-hint">In the app, tap the status bar three times to come back here.</p>

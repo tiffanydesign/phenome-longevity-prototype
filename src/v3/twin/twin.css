@@ -1042,24 +1042,6 @@
   --dot: #263980;
   --key: #4f96d1;
 }
-.tw-results-dots {
-  display: grid;
-  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
-  grid-template-rows: repeat(3, auto);
-  grid-auto-flow: column;
-  gap: 4px 3px;
-}
-.tw-results-dots i {
-  width: 100%;
-  max-width: 11px;
-  aspect-ratio: 1;
-  justify-self: center;
-  border-radius: 50%;
-  background: var(--key);
-}
-.tw-results-dots i[data-status="normal"] {
-  background: color-mix(in srgb, var(--key) 55%, var(--v-card, #fff));
-}
 .tw-results-key {
   display: flex;
   gap: 22px;
@@ -1371,18 +1353,4 @@
   content: none;
 }
 
-/* results bar: a few soft balls in the band's own hue instead of a dense row of dark dots */
-.tw-results-bar i {
-  width: 6px;
-  height: 6px;
-  background: var(--ball);
-}
-.tw-results [data-status="alert"] {
-  --ball: #f2a98c;
-}
-.tw-results [data-status="monitor"] {
-  --ball: #ffe08a;
-}
-.tw-results [data-status="normal"] {
-  --ball: #d3ebf7;
-}
+

@@ -427,12 +427,7 @@ function VisitEntries({ onOpen }: { onOpen: (visit: number, el: HTMLElement) => 
             aria-label={`Visit ${v}, ${visitDate(v)}${v === latest ? ", latest" : ""}`}
             onClick={(e) => onOpen(v, e.currentTarget)}
           >
-            {v === latest && (
-              <em className="v2-visit-tag" aria-hidden>
-                <i />
-                Latest
-              </em>
-            )}
+            {v === latest && <i className="v2-visit-now" aria-hidden />}
             <b>Visit {v}</b>
             <small>{visitDate(v)}</small>
           </button>

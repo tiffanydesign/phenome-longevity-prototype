@@ -55,6 +55,10 @@ export const notes = {
   read(id: string) {
     store.set((s) => ({ ...s, banner: s.banner?.id === id ? null : s.banner, list: s.list.map((n) => (n.id === id ? { ...n, read: true } : n)) }));
   },
+  /** the review panel's "New": the list as it first arrives, two unread */
+  reset() {
+    store.set((s) => ({ ...s, banner: null, list: SEED }));
+  },
   readAll() {
     store.set((s) => ({ ...s, list: s.list.map((n) => ({ ...n, read: true })) }));
   },

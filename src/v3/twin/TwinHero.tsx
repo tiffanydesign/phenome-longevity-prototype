@@ -132,11 +132,14 @@ export function ResultsBar({ visit = LATEST, keyed = true }: { visit?: number; k
   const results = resultsAt(visit);
   return (
     <span className="tw-results">
-      {/* every result is one dot, laid out in three rows from left to right: what to discuss first, then monitor, then in range */}
-      <span className="tw-results-dots" aria-hidden style={{ "--cols": Math.ceil(results.reduce((n, r) => n + r.count, 0) / 3) } as CSSProperties}>
-        {results.flatMap((r) =>
-          Array.from({ length: r.count }, (_, i) => <i key={`${r.status}-${i}`} data-status={r.status} />),
-        )}
+      <span className="tw-results-bar" aria-hidden>
+        {results.map((r) => (
+          <span key={r.status} data-status={r.status} style={{ flexGrow: r.count }}>
+            {Array.from({ length: r.count }, (_, i) => (
+              <i key={i} />
+            ))}
+          </span>
+        ))}
       </span>
       {keyed && (
         <span className="tw-results-key">
