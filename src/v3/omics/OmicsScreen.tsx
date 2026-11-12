@@ -73,8 +73,8 @@ function KitRow({ k, go }: { k: PortfolioRow; go: ReturnType<typeof useGo> }) {
 function ReportRows({ count, go }: { count: number; go: ReturnType<typeof useGo> }) {
   return (
     <>
-      <Row field="capacity" glyph="scale" title="Generated PDF reports" sub="From your clinician and the labs" count={count} onClick={() => go("/insights/reports")} />
-      <Row field="lavender" glyph="heart" title="Clinical insights" sub="Analyse your clinical data" onClick={() => go("/insights/clinical")} />
+      <Row field="capacity" glyph="report" title="Generated PDF reports" sub="From your clinician and the labs" count={count} onClick={() => go("/insights/reports")} />
+      <Row field="lavender" glyph="notes" title="Clinical insights" sub="Analyse your clinical data" onClick={() => go("/insights/clinical")} />
     </>
   );
 }
@@ -244,7 +244,7 @@ function TestView({ t, fresh, reportCount, go }: { t: Topic; fresh: boolean; rep
 
       <h2 className="om-h">On your body</h2>
       <div className="om-list">
-        <Row field={t.field} glyph={t.glyph} title="See it on your twin" sub={`Where ${t.name.toLowerCase()} shows up, visit by visit`} onClick={(el) => go(`/v3/twin?lens=omics&organ=${t.id}`, { from: el })} />
+        <Row field={t.field} glyph="body" title="See it on your twin" sub={`Where ${t.name.toLowerCase()} shows up, visit by visit`} onClick={(el) => go(`/v3/twin?lens=omics&organ=${t.id}`, { from: el })} />
       </div>
     </>
   );
