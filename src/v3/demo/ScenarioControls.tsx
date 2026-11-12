@@ -48,7 +48,7 @@ export function ScenarioControls() {
       <section className="dp-group">
         <h3>Home · today</h3>
         <Toggle label="Time of day" value={part} options={DAY_PARTS} labels={PART_LABEL} wrap onChange={setDayPart} />
-        <Toggle label="Small wins" value={wins} options={["fresh", "one", "done"]} labels={WINS_LABEL} onChange={(s) => setWinsState(s, hour)} />
+        <Toggle label="Today's wins" value={wins} options={["fresh", "one", "done"]} labels={WINS_LABEL} onChange={(s) => setWinsState(s, hour)} />
         {wins && <p className="dp-note">{WINS_NOTE[wins]}</p>}
         <Toggle
           label="Consultation"

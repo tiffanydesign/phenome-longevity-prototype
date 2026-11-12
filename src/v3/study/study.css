@@ -10,6 +10,8 @@
   --v-ink-3: #8a8d97;
   --v-line: #3c3c4324;
   --v-navy: #263980;
+  --v-on-navy: #fff;
+  --v-alert-ink: #9c4220;
   --v-deep: #1a2a66;
   --v-accent: #263980;
   --v-gold-ink: #7a5600;
@@ -201,7 +203,7 @@
   background: #ffb60033;
 }
 .rv-pill[data-tone="alert"] {
-  color: #9c4220;
+  color: var(--v-alert-ink);
   background: #fce4da;
 }
 
@@ -473,7 +475,7 @@
   color: var(--v-gold-ink);
 }
 .rv-analyte[data-tone="alert"] > b {
-  color: #9c4220;
+  color: var(--v-alert-ink);
 }
 
 .rv-find {
@@ -511,7 +513,7 @@
   white-space: nowrap;
 }
 .rv-find > b[data-tone="alert"] {
-  color: #9c4220;
+  color: var(--v-alert-ink);
 }
 .rv-find > b[data-tone="mon"] {
   color: var(--v-gold-ink);
@@ -922,7 +924,7 @@
   background: #ffb60033;
 }
 .rv-list-n small[data-tone="alert"] {
-  color: #9c4220;
+  color: var(--v-alert-ink);
   background: #fce4da;
 }
 .rv-list-v {
@@ -1056,7 +1058,7 @@ button.rv-glance-r:active {
   color: var(--v-gold-ink);
 }
 .rv-glance-r b[data-tone="alert"] {
-  color: #9c4220;
+  color: var(--v-alert-ink);
 }
 .rv-glance-r b em {
   margin-left: 4px;
@@ -1173,7 +1175,7 @@ button.rv-glance-r:active {
   background: var(--v-fill);
 }
 .rv-vm-item[aria-checked="true"] .rv-vm-lead {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 .rv-vm-text {
@@ -1374,7 +1376,7 @@ button.rv-glance-r:active {
   color: var(--v-gold-ink);
 }
 .rv-across-cols button[data-tone="alert"] b {
-  color: #9c4220;
+  color: var(--v-alert-ink);
 }
 .rv-across-cols span {
   font: 400 11.5px/1.2 var(--v-text);

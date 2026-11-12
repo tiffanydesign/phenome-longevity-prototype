@@ -76,12 +76,13 @@ function useIsPhone(): boolean {
 }
 
 /** Android status bar as captured on the POCO X8 Pro Max (HyperOS 4). */
-export function StatusBar({ tone = "dark" }: { tone?: "dark" | "light" }) {
+export function StatusBar({ tone = "dark", fixed }: { tone?: "dark" | "light"; fixed?: boolean }) {
   const { theme } = usePrefs();
   const time = useClock();
   // The app paints white status icons on Home / Capacity / Habit detail even in light mode
   // (clock invisible on white) — reproduced on purpose; dark theme makes them visible.
-  const fg = tone === "light" || theme === "dark" ? "#ffffff" : "#3a3a3a";
+  // fixed: the screen keeps its own ground whatever the theme (the study review stays light)
+  const fg = tone === "light" || (theme === "dark" && !fixed) ? "#ffffff" : "#3a3a3a";
   return (
     <div className="pf-status" style={{ color: fg }} aria-hidden>
       <span className="pf-time">{time}</span>

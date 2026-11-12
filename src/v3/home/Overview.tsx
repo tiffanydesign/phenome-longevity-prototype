@@ -7,7 +7,7 @@ import { Num } from "../ui/Num";
 import { useGo } from "../ui/shell";
 import { SIZES, useBento } from "./bento";
 import { CheckIn } from "./CheckIn";
-import { bookingDay, bookingLabel, bookingTime, useBooking } from "@/data/booking-store";
+import { bookingDay, bookingTime, useBooking } from "@/data/booking-store";
 import { shortOf, useToday } from "../habits/plan";
 import "../habits/habits.css";
 import { Gauge, HabitStops, HeartRange, HourBars, Hypnogram, MacroBar, WorkoutRings } from "./glance";
@@ -245,9 +245,9 @@ function ConsultTile({ open }: { open: (to: string) => (e: { currentTarget: HTML
     <ServiceTile
       field="lavender"
       mark="consult"
-      title={bookingLabel(b)}
+      title="Consultation"
       badge="Upcoming"
-      line={`${d.weekdayLong} ${d.num} ${d.monthLong}  ${bookingTime(b)}`}
+      line={`${d.weekday} ${d.num} ${d.month} · ${bookingTime(b)}`}
       onOpen={open("/v3/consultation")}
     />
   );
@@ -355,8 +355,14 @@ function ServiceTile({ field, mark, title, line, badge, onOpen, soon }: { field:
         </svg>
       </span>
       <span className="v2-svc-text">
-        {badge && <span className="v2-svc-badge">{badge}</span>}
-        <span className="v2-svc-t">{title}</span>
+        {badge ? (
+          <span className="v2-svc-row">
+            <span className="v2-svc-t">{title}</span>
+            <span className="v2-svc-badge">{badge}</span>
+          </span>
+        ) : (
+          <span className="v2-svc-t">{title}</span>
+        )}
         <span className="v2-svc-s">{line}</span>
       </span>
       {soon ? (

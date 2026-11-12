@@ -8,7 +8,7 @@ import "../habits/habits.css";
 import "./checkin.css";
 
 /*
- * Small wins: the habits Home asks about today, as a stack of cards to swipe
+ * Today's wins: the habits Home asks about today, as a stack of cards to swipe
  * through. It reads the member's plan and holds no list of its own.
  *  - only habits on today's plan with "Ask in daily check-in" switched on;
  *  - a habit is due once its part of the day has begun (morning 05:00,
@@ -23,31 +23,17 @@ import "./checkin.css";
  */
 
 /**
- * The day's progress as a ring cut into one arc per habit. Arcs fill clockwise
- * from the top, one after another, each in the hue of the habit it stands for.
+ * The day's progress as one ring, the same form as the ring on Habits: the
+ * brand blue fills clockwise from the top over a pale blue track.
  */
-function Progress({ items: all }: { items: HabitToday[] }) {
-  const items = [...all.filter((t) => t.done), ...all.filter((t) => !t.done)];
+function Progress({ done, total }: { done: number; total: number }) {
   const R = 9;
   const C = 2 * Math.PI * R;
-  const n = Math.max(items.length, 1);
-  const gap = n > 1 ? 2.2 : 0;
-  const seg = C / n - gap;
+  const share = total ? done / total : 0;
   return (
     <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden className="wn-prog">
-      {items.map((t, i) => (
-        <circle
-          key={t.h.id}
-          cx="12"
-          cy="12"
-          r={R}
-          data-field={t.h.field}
-          data-on={t.done ? "" : undefined}
-          strokeDasharray={`${seg} ${C - seg}`}
-          strokeDashoffset={-(C / n) * i}
-          transform="rotate(-90 12 12)"
-        />
-      ))}
+      <circle data-track cx="12" cy="12" r={R} />
+      {share > 0 && <circle cx="12" cy="12" r={R} strokeDasharray={`${C * share} ${C}`} transform="rotate(-90 12 12)" />}
     </svg>
   );
 }
@@ -137,7 +123,7 @@ export function CheckIn() {
   const clear = started.length > 0 && started.every((t) => t.done);
   const head = (
     <header className="v2-sec wn-head">
-      <h3>Small wins for you</h3>
+      <h3>Today's wins</h3>
       <button
         className="wn-count"
         data-clear={clear ? "" : undefined}
@@ -151,7 +137,7 @@ export function CheckIn() {
             <path d="m7.4 12.4 3.1 3.1 6.1-6.7" />
           </svg>
         ) : (
-          <Progress items={started} />
+          <Progress done={done.length} total={started.length} />
         )}
         <span key={clear ? "clear" : done.length}>{clear ? "All done" : `${done.length} of ${started.length}`}</span>
         <svg className="wn-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -164,14 +150,14 @@ export function CheckIn() {
   // emptied just now: the praise plays under the heading, then the whole module folds away
   if (phase === "party" || phase === "closing") {
     return (
-      <section className="wn-mod ck-fold" data-closing={phase === "closing" ? "" : undefined} aria-label="Small wins">
+      <section className="wn-mod ck-fold" data-closing={phase === "closing" ? "" : undefined} aria-label="Today's wins">
         <div className="wn-fold-in">
           {head}
           <div className="wn-party">
             <Celebration
               fields={asked.map((t) => t.h.field)}
               title={allDone ? "Good job" : "Good job, all done for now"}
-              line={allDone ? `All ${asked.length} small wins done · see you tomorrow` : `Next: ${later[0]?.h.name ?? "more"}, ${later[0] ? partWhen(later[0].h.part) : "later"}`}
+              line={allDone ? `All ${asked.length} wins done · see you tomorrow` : `Next: ${later[0]?.h.name ?? "more"}, ${later[0] ? partWhen(later[0].h.part) : "later"}`}
             />
           </div>
         </div>
@@ -180,7 +166,7 @@ export function CheckIn() {
   }
 
   return (
-    <section className="wn-mod" aria-label="Small wins">
+    <section className="wn-mod" aria-label="Today's wins">
       {head}
       <div className="wn-drawer" data-open={open ? "" : undefined}>
         <div>

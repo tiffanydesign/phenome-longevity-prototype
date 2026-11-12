@@ -25,6 +25,7 @@
   --v-line: #3c3c4324;
   /* brand */
   --v-navy: #263980;
+  --v-alert-ink: #9c4220;
   --v-deep: #1a2a66;
   --v-blue: #3a6df0;
   --v-accent: var(--v-navy);
@@ -76,6 +77,8 @@
   --v-ink-3: #75757d;
   --v-line: #ffffff1f;
   --v-navy: #8fa3ff;
+  --v-on-navy: #0b0d14;
+  --v-alert-ink: #ff8f66;
   --v-deep: #b7c3ff;
   --v-blue: #5e8bff;
   --v-gold-ink: #ffcf5c;
@@ -391,7 +394,7 @@
   transition: transform 0.18s var(--v-ease);
 }
 .v2-pillbtn[data-solid] {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 .v2-pillbtn:active {
@@ -619,4 +622,29 @@ html[data-vt="sheet"]::view-transition-image-pair(v2-hero) {
     color-mix(in srgb, var(--veil-c) 38%, transparent) calc(var(--status-h) + 28px),
     transparent 100%
   ) !important;
+}
+
+/* ---------- dark mode: small legibility fixes ---------- */
+/* the count on the selected filter sits on a dark tint of the lavender chip, not a white disc */
+:root[data-theme="dark"] .nt-filter button[aria-selected="true"] i {
+  color: #0b0d14;
+  background: #0b0d1429;
+}
+/* deep sleep's indigo is lifted so its lane and label read on a dark card */
+:root[data-theme="dark"] [data-stage="Deep"] {
+  --stage: #7d70ff;
+}
+
+/* screens shared with the original app keep their own styles; in the clinical
+   edition's dark theme their light-only pieces take the dark card instead */
+:root[data-theme="dark"] .as-chip {
+  color: var(--v-ink);
+  background: var(--v-card);
+  border-color: var(--v-line);
+}
+:root[data-theme="dark"] .as-logo :is(svg, img) {
+  filter: brightness(0) invert(0.96);
+}
+:root[data-theme="dark"] .prf-tab-avatar {
+  color: #0b0d14;
 }

@@ -312,7 +312,7 @@
   background: var(--v-card);
 }
 .hb-days button[aria-pressed="true"] {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 .hb-switch {
@@ -385,7 +385,7 @@
   font: 650 16px/1 var(--v-text);
 }
 .hb-primary {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 .hb-primary:disabled {
@@ -423,9 +423,12 @@
   height: auto;
   padding: 0;
 }
-/* rows sit on hairlines, so they keep square ends */
+/* rows sit on hairlines, so they keep square ends; the original journal's
+   .hb-row (fixed height, sky gradient, white text) must not show through */
 .hb-row {
+  height: auto;
   border-radius: 0;
+  background: none;
 }
 
 /* ---------- plan page, second pass: one-line rows on inset hairlines ---------- */

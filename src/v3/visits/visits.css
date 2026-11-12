@@ -478,7 +478,7 @@
   background: var(--v-card);
 }
 .vc-quick button[aria-pressed="true"] {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 :root[data-theme="dark"] .vc-quick button[aria-pressed="true"] {

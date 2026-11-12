@@ -37,7 +37,7 @@
   transition: background 0.2s linear, color 0.2s linear;
 }
 .nt-filter button[aria-selected="true"] {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
   box-shadow: none;
 }
