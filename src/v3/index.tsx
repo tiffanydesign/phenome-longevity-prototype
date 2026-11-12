@@ -1,4 +1,3 @@
-import "./ui/scrollReveal";
 import "./reports";
 import { BookingScreen } from "@/screens/discover/BookingScreen";
 import { AssistantScreen } from "@/screens/discover/AssistantScreen";

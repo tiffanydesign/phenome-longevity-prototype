@@ -105,7 +105,7 @@ export function KitScreen({ kind: kindProp }: { kind?: string }) {
         {/* clinical edition: a second way in when this test has been run more than once */}
         {EDITION === "v3" && canCompare(kind, slide.title) && (
           <button className="kit-compare" onClick={() => nav(`/v3/kit/${kind}/compare?test=${encodeURIComponent(slide.title)}`)}>
-            Compare results
+            Compare results <ArrowRight size={16} />
           </button>
         )}
       </div>

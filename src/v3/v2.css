@@ -481,38 +481,11 @@ html[data-vt="sheet"]::view-transition-image-pair(v2-hero) {
 
 
 /* ---------- scroll indicator ----------
-   one hairline pill on every page that scrolls: 3px, rounded, pale blue, shown only while scrolling, inset from the edge and kept clear
-   of the status bar and the tab bar; sideways rows keep theirs hidden */
-*::-webkit-scrollbar {
-  width: 7px;
-  height: 0;
-  background: transparent;
-}
-*::-webkit-scrollbar-thumb {
-  min-height: 36px;
-  border: 2px solid transparent;
-  border-radius: 7px;
-  background: transparent;
-}
-/* drawn only while the page moves (ui/scrollReveal.ts) */
-[data-scrolling]::-webkit-scrollbar-thumb {
-  background: var(--v-scroll) padding-box;
-}
-*::-webkit-scrollbar-track {
-  margin: calc(var(--status-h) + 8px) 0 96px;
-  background: transparent;
-}
-*::-webkit-scrollbar-corner {
-  background: transparent;
-}
-@supports not selector(::-webkit-scrollbar) {
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: transparent transparent;
-  }
-  [data-scrolling] {
-    scrollbar-color: var(--v-scroll) transparent;
-  }
+   one hairline pill on every page that scrolls, drawn over the content by lib/scrollbars (no reserved column): pale blue
+   (--v-scroll), shown only while scrolling, kept clear of the status bar and the tab bar */
+:root {
+  --scroll-inset-top: calc(var(--status-h) + 8px);
+  --scroll-inset-bottom: 96px;
 }
 
 /* ---------- the status bar, as the system draws it ----------

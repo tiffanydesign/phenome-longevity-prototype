@@ -50,17 +50,14 @@ img {
 }
 
 /*
- * Every other scroller keeps a slim bar that stays out of sight until the
- * page moves, then fades back a moment after it stops (see lib/scrollbars).
- * :where keeps this at zero weight, so a scroller that hides its bar for good
- * still does.
+ * No scroller reserves a column for its bar: native bars are off everywhere,
+ * and lib/scrollbars draws a thin pill over the content while a page moves.
  */
-:where(*) {
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
+* {
+  scrollbar-width: none;
 }
-:where([data-scrolling]) {
-  scrollbar-color: rgba(60, 70, 100, 0.34) transparent;
+*::-webkit-scrollbar {
+  display: none;
 }
 
 /* Scrollable screen body without visible scrollbars (matches native). */

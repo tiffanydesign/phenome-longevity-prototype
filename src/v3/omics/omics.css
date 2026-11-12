@@ -443,11 +443,11 @@
   background: #fff;
   box-shadow: inset 0 0 0 0.5px color-mix(in srgb, var(--v-ink) 14%, transparent);
 }
+/* the box fills its photo edge to edge, so it is inset to clear the tile's rounded corners and shown whole */
 .om-kit-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.06);
+  width: 76%;
+  height: 76%;
+  object-fit: contain;
 }
 [data-untested] .om-kit-photo img {
   opacity: 0.55;
@@ -482,33 +482,21 @@
 .om-chip {
   position: relative;
 }
+/* a tab with results not yet opened: the same slow-breathing accent dot as the latest visit on Home */
 .om-chip-dot {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 8px;
-  height: 8px;
+  top: 8px;
+  right: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: #2f7cf6;
-  box-shadow: 0 0 0 2px var(--v-card);
+  background: var(--v-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-accent) 18%, transparent);
+  animation: v2-visit-live 2.4s ease-in-out infinite;
 }
-.om-chip-dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: inherit;
-  animation: om-ping 1.6s 0.4s 2 ease-out;
-  opacity: 0;
-}
-@keyframes om-ping {
-  0% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(2.6);
+@keyframes v2-visit-live {
+  50% {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--v-accent) 0%, transparent);
   }
 }
 .om-new {
@@ -773,7 +761,7 @@
   color: var(--v-navy);
 }
 @media (prefers-reduced-motion: reduce) {
-  .om-chip-dot::after,
+  .om-chip-dot,
   .om-sheet-panel,
   .om-sheet-scrim {
     animation: none;
