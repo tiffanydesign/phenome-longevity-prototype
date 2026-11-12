@@ -4,7 +4,7 @@ import { Chevron, IconClose } from "../ui/icons";
 import { useGo } from "../ui/shell";
 import { canCompare } from "../kits/history";
 import { KitThumb, KIT_FIELD } from "./kitMarks";
-import type { Pick, TestKit } from "./tests";
+import { newestOf, type Pick, type TestKit } from "./tests";
 
 function IconCheck() {
   return (
@@ -30,6 +30,14 @@ export function KitPicker({ topic, kits, at, fresh, onPick }: { topic: string; k
   const runs = kits.reduce((n, k) => n + k.runs.length, 0);
   const choice = runs > 1 || kits.some((k) => !k.runs.length);
   const compare = topic === "genomics" && canCompare("genome", at.kit.name);
+  /* one Latest across the whole sheet: the tab's newest run, and its kit listed first */
+  const latest = newestOf(kits)?.run.key;
+  const tested = kits.filter((k) => k.runs.length);
+  const order = [
+    ...tested.filter((k) => k.runs.some((r) => r.key === latest)),
+    ...tested.filter((k) => !k.runs.some((r) => r.key === latest)),
+    ...kits.filter((k) => !k.runs.length),
+  ];
 
   useEffect(() => {
     if (!open) return;
@@ -89,7 +97,7 @@ export function KitPicker({ topic, kits, at, fresh, onPick }: { topic: string; k
               </button>
             </header>
             <div className="om-sheet-body">
-              {[...kits.filter((k) => k.runs.length), ...kits.filter((k) => !k.runs.length)].map((k) => (
+              {order.map((k) => (
                 <section key={k.id} className="om-sheet-kit" data-field={KIT_FIELD[k.family]} data-untested={k.runs.length ? undefined : ""}>
                   <div className="om-sheet-kit-head">
                     <KitThumb id={k.id} family={k.family} />
@@ -105,7 +113,7 @@ export function KitPicker({ topic, kits, at, fresh, onPick }: { topic: string; k
                   </div>
                   {k.runs.length > 0 && (
                     <div className="om-sheet-runs" role="radiogroup" aria-label={k.name}>
-                      {k.runs.map((r, i) => {
+                      {k.runs.map((r) => {
                         const on = r.key === at.run.key;
                         return (
                           <button
@@ -120,7 +128,7 @@ export function KitPicker({ topic, kits, at, fresh, onPick }: { topic: string; k
                             <span>
                               <b>
                                 {r.date}
-                                {i === 0 && <em>Latest</em>}
+                                {r.key === latest && <em>Latest</em>}
                               </b>
                               <small>{[r.visit ? `Visit ${r.visit}` : null, r.panel].filter(Boolean).join(" · ") || k.how}</small>
                             </span>

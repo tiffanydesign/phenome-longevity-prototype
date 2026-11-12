@@ -179,7 +179,7 @@
   transition: transform 0.15s;
 }
 .cs-primary {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 .cs-secondary {
@@ -251,7 +251,7 @@
   padding: 0 18px;
   border-radius: 22px;
   font: 650 15px/1 var(--v-text);
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 .cs-lead {

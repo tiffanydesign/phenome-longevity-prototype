@@ -124,7 +124,7 @@
   background: var(--v-card);
 }
 .mx-actions button[data-primary] {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 :root[data-theme="dark"] .mx-actions button[data-primary] {
@@ -453,7 +453,7 @@
   height: 50px;
   border-radius: 25px;
   font: 600 16px/1 var(--v-text);
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 :root[data-theme="dark"] .mx-sheet-save {

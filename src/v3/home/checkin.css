@@ -236,15 +236,19 @@
 .wn-count[aria-expanded="true"] .wn-chev {
   transform: rotate(180deg);
 }
+/* the day so far as one ring, in the brand blue on a pale blue track; the count sits beside it */
+.wn-prog {
+  flex: none;
+}
 .wn-prog circle {
   fill: none;
+  stroke: var(--v-accent);
   stroke-width: 3;
   stroke-linecap: round;
-  stroke: var(--v-fill);
-  transition: stroke 0.4s var(--v-ease);
+  transition: stroke-dasharray 0.5s var(--v-ease);
 }
-.wn-prog circle[data-on] {
-  stroke: var(--mid);
+.wn-prog [data-track] {
+  stroke: color-mix(in srgb, var(--v-accent) 14%, transparent);
 }
 /* everything so far is done: the celebration's green tick settles into the pill */
 .wn-count[data-clear] {
@@ -614,4 +618,124 @@
   .wn-card[data-shake] .wn-body {
     animation: none;
   }
+}
+
+/* ---------- compact pass: one row per card ----------
+   mark, name with its one line, and the action on the same row; a question adds
+   one short row of answers. The stack's edges are a few px, and no hint line. */
+.wn {
+  --card-h: 68px;
+  --peek: 5px;
+}
+.wn[data-kind="choice"] {
+  --card-h: 108px;
+}
+.wn-body {
+  padding: 12px 12px 12px 14px;
+  gap: 10px;
+}
+.wn-top {
+  align-items: center;
+  gap: 12px;
+}
+.wn-text {
+  gap: 3px;
+  padding-top: 0;
+}
+.wn-text b {
+  font: 600 16px/1.2 var(--v-text);
+}
+.wn-text small {
+  font-size: 12.5px;
+}
+.wn-top > .wn-acts,
+.wn-top > .wn-go {
+  flex: none;
+  margin-left: auto;
+}
+.wn-acts {
+  gap: 6px;
+}
+.wn-go,
+.wn-later {
+  height: 34px;
+  padding: 0 15px;
+  border-radius: 17px;
+  font-size: 14px;
+}
+.wn-minus {
+  width: 34px;
+  height: 34px;
+}
+.wn-chips {
+  margin-top: 0;
+  gap: 6px;
+}
+.wn-chip {
+  height: 32px;
+  border-radius: 16px;
+  font-size: 13.5px;
+}
+/* a count habit: its pips sit in the line under the name, the tally beside them */
+.wn-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.wn-sub .wn-pips {
+  flex: 0 1 112px;
+  gap: 3px;
+}
+.wn-sub .wn-pips i {
+  height: 6px;
+  border-radius: 3px;
+}
+.wn-sub small {
+  flex: none;
+  font-weight: 600;
+  color: var(--v-ink-2);
+}
+.wn-stamp {
+  top: 50%;
+  margin-top: -14px;
+}
+.wn[data-kind="choice"] .wn-stamp {
+  top: 12px;
+  margin-top: 0;
+}
+.wn-head.v2-sec {
+  margin-top: 2px;
+}
+
+/* the praise card keeps the height of a habit card */
+.wn-party {
+  box-sizing: border-box;
+  height: 68px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+}
+.wn-party .ck-party {
+  gap: 12px;
+  padding: 0;
+  min-width: 0;
+}
+.wn-party .ck-burst,
+.wn-party .ck-party-tick {
+  width: 36px;
+  height: 36px;
+}
+.wn-party .ck-party-t {
+  gap: 1px;
+  min-width: 0;
+}
+.wn-party .ck-party-t b {
+  font-size: 15px;
+}
+.wn-party .ck-party-t small {
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

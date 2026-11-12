@@ -4,8 +4,7 @@
   inset: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: #26398033 transparent;
+  --scroll-thumb: #26398033;
 }
 .tw-top {
   position: relative;
@@ -25,7 +24,7 @@
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
   box-shadow: 0 8px 16px -10px #263980b3;
 }
@@ -1354,3 +1353,15 @@
 }
 
 
+
+/* dark theme: the sky turns to a deep night blue rather than a grey wash of the day sky,
+   so the dotted figure keeps its glow; the in-range bar drops to the same night key */
+:root[data-theme="dark"] .tw,
+:root[data-theme="dark"] .tw-veil {
+  --two-sky: color-mix(in srgb, #2f6aa6 24%, #0a0e16);
+}
+:root[data-theme="dark"] .tw-results [data-status="normal"] {
+  --band: #24506b;
+  --dot: #a9d6f0;
+  --key: #6fb3dc;
+}

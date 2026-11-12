@@ -91,7 +91,7 @@ export function StudyScreen() {
 
   return (
     <div className="v2 rv">
-      <StatusBar tone="dark" />
+      <StatusBar tone="dark" fixed />
       <div className="rv-page" ref={page}>
         <div
           className="rv-stage"

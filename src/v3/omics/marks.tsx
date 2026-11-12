@@ -63,21 +63,10 @@ const MARKS: Record<string, ReactNode> = {
       <circle cx="21" cy="5.8" r="1.8" fill="currentColor" />
     </g>
   ),
-  // the gut's microbes: one rod-shaped bacterium and two smaller cells beside it
-  guthealth: (
-    <g>
-      <rect x="3.5" y="8.5" width="13" height="7" rx="3.5" transform="rotate(-35 10 12)" fill="currentColor" />
-      <circle cx="18" cy="16.5" r="2.6" fill="currentColor" opacity="0.6" />
-      <circle cx="17.5" cy="6" r="1.8" fill="currentColor" opacity="0.4" />
-    </g>
-  ),
+  // the stomach and the gut leaving it
+  guthealth: <path fill="currentColor" d="M4 18c.67 1.85 2.07 4 8 4c2.36 0 5.07-.07 7-2c1-1 3-3 3-9s-2-7-4-7c-1.38 0-3 0-4 2v.03a1.82 1.82 0 0 1-1.87.92C11 6.81 11 6.37 11 6V2H9v4a2.92 2.92 0 0 0 3 3c1 0 1 1.78 1 3c0 1.89-.5 3.26-2 4c-2.31 1.15-4.61 1-5.39-.53a1.5 1.5 0 0 0-2.47-.6A3.67 3.67 0 0 0 2 18v4h2Z" />,
   // a tooth, crown and two roots
-  oralhealth: (
-    <path
-      fill="currentColor"
-      d="M7.6 3.6c1.6 0 2.6.9 4.4.9s2.8-.9 4.4-.9c2.5 0 4 2 4 4.7 0 2.4-1 4-1.8 5.6-.8 1.7-1 3.6-1.5 5.4-.4 1.4-1 2-1.8 2-.9 0-1.2-.8-1.5-2.2l-.6-2.8c-.2-.9-.6-1.3-1.2-1.3s-1 .4-1.2 1.3l-.6 2.8c-.3 1.4-.6 2.2-1.5 2.2-.8 0-1.4-.6-1.8-2-.5-1.8-.7-3.7-1.5-5.4-.8-1.6-1.8-3.2-1.8-5.6 0-2.7 1.5-4.7 4-4.7z"
-    />
-  ),
+  oralhealth: <path fill="currentColor" d="M7 2C4 2 2 5 2 8c0 2.11 1 5 2 6s2 8 4 8c4.54 0 2-7 4-7s-.54 7 4 7c2 0 3-7 4-8s2-3.89 2-6c0-3-2-6-5-6s-3 1-5 1s-2-1-5-1" />,
 };
 
 /** A study's tab mark, in its hue. */

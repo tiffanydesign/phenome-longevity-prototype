@@ -3,7 +3,7 @@ import { HabitMark } from "../habits/HabitMark";
 import { PARTS, planActions, unitFor, type HabitToday } from "../habits/plan";
 
 /*
- * The small wins as a stack of cards, the one due now on top and the next two
+ * Up next: the habits due now as a stack of cards, the one due now on top and the next two
  * showing their edges beneath it. Swipe the top card right when it is done,
  * left to leave it for later (it goes to the back of the stack). Every swipe
  * has a button twin, so nothing depends on the gesture.
@@ -177,34 +177,29 @@ function WinCard({ t, depth, alone, nudge, onWay, onFood }: CardProps) {
 
       <div className="wn-body">
         <div className="wn-top">
-          <HabitMark mark={h.mark} field={h.field} size={44} />
+          <HabitMark mark={h.mark} field={h.field} size={36} />
           <span className="wn-text">
-            <small className="wn-when">{PARTS[h.part].label}</small>
             <b>{h.name}</b>
-            {h.kind !== "choice" && <small>{line}</small>}
+            {h.kind === "count" ? (
+              <span className="wn-sub">
+                <span className="wn-pips" aria-hidden style={{ "--n": t.goal } as CSSProperties}>
+                  {Array.from({ length: t.goal }, (_, n) => (
+                    <i key={n} data-on={n < t.count ? "" : undefined} data-new={n === t.count - 1 ? "" : undefined} />
+                  ))}
+                </span>
+                <small>
+                  {t.count}/{t.goal}
+                </small>
+              </span>
+            ) : (
+              <small>{h.kind === "choice" ? PARTS[h.part].label : line}</small>
+            )}
           </span>
-        </div>
 
-        {h.kind === "choice" && (
-          <div className="wn-chips">
-            {h.options!.map((o) => (
-              <button key={o} className="wn-chip" tabIndex={front ? 0 : -1} onClick={() => commit("done", o)}>
-                {o}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {h.kind === "count" && (
-          <div className="wn-count-row">
-            <span className="wn-pips" aria-hidden style={{ "--n": t.goal } as CSSProperties}>
-              {Array.from({ length: t.goal }, (_, n) => (
-                <i key={n} data-on={n < t.count ? "" : undefined} data-new={n === t.count - 1 ? "" : undefined} />
-              ))}
-            </span>
-            {h.source === "food" ? (
+          {h.kind === "count" &&
+            (h.source === "food" ? (
               <button className="wn-go" tabIndex={front ? 0 : -1} onClick={(e) => onFood(e.currentTarget)}>
-                Log a meal
+                Log
               </button>
             ) : (
               <span className="wn-acts">
@@ -215,24 +210,33 @@ function WinCard({ t, depth, alone, nudge, onWay, onFood }: CardProps) {
                     </svg>
                   </button>
                 )}
-                <button className="wn-go" tabIndex={front ? 0 : -1} onClick={() => commit("done")}>
-                  +1 {unitFor(h, 1)}
+                <button className="wn-go" tabIndex={front ? 0 : -1} aria-label={`Add one ${unitFor(h, 1)}`} onClick={() => commit("done")}>
+                  +1
                 </button>
               </span>
-            )}
-          </div>
-        )}
+            ))}
 
-        {h.kind === "once" && (
-          <div className="wn-acts wn-acts-once">
-            {!alone && (
-              <button className="wn-later" tabIndex={front ? 0 : -1} onClick={() => commit("later")}>
-                Later
+          {h.kind === "once" && (
+            <span className="wn-acts">
+              {!alone && (
+                <button className="wn-later" tabIndex={front ? 0 : -1} onClick={() => commit("later")}>
+                  Later
+                </button>
+              )}
+              <button className="wn-go" tabIndex={front ? 0 : -1} onClick={() => commit("done")}>
+                Done
               </button>
-            )}
-            <button className="wn-go" tabIndex={front ? 0 : -1} onClick={() => commit("done")}>
-              Done
-            </button>
+            </span>
+          )}
+        </div>
+
+        {h.kind === "choice" && (
+          <div className="wn-chips">
+            {h.options!.map((o) => (
+              <button key={o} className="wn-chip" tabIndex={front ? 0 : -1} onClick={() => commit("done", o)}>
+                {o}
+              </button>
+            ))}
           </div>
         )}
       </div>
@@ -281,7 +285,7 @@ export function WinDeck({ due, onLater, onFood }: { due: HabitToday[]; onLater: 
   };
 
   return (
-    <div className="wn" data-n={Math.min(due.length, DEPTH)} aria-roledescription="stack of cards" aria-label={`${due.length} to do now`}>
+    <div className="wn" data-n={Math.min(due.length, DEPTH)} data-kind={shown[0]?.h.kind} aria-roledescription="stack of cards" aria-label={`${due.length} to do now`}>
       <div className="wn-stack">
         {/* drawn back to front so the top card paints last */}
         {[...shown].reverse().map((t) => {
@@ -289,7 +293,6 @@ export function WinDeck({ due, onLater, onFood }: { due: HabitToday[]; onLater: 
           return <WinCard key={t.h.id} t={t} depth={depth} alone={alone} nudge={!hinted} onWay={way(t)} onFood={onFood} />;
         })}
       </div>
-      {!hinted && due.length > 0 && <p className="wn-hint">{alone ? "Swipe right when it's done" : "Swipe right when it's done, left for later"}</p>}
     </div>
   );
 }

@@ -154,7 +154,7 @@
 }
 /* when a card stands alone in its row, the size buttons that would close the gap are picked out */
 .v2-slot-tools[data-hint] button {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 .v2-edit-hint {
@@ -195,7 +195,7 @@
   border-radius: 50%;
   font: 700 16px/1 var(--v-text);
   font-style: normal;
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 
@@ -443,7 +443,7 @@
   place-items: center;
   border-radius: 50%;
   background: var(--v-navy);
-  color: #fff;
+  color: var(--v-on-navy, #fff);
 }
 .v2-results {
   position: absolute;
@@ -897,7 +897,7 @@
   height: 38px;
   font: 650 13px/1 var(--v-text);
   letter-spacing: 0.02em;
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 :root[data-theme="dark"] .v2-avatar {
@@ -1103,13 +1103,13 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #34c759;
-  box-shadow: 0 0 0 3px color-mix(in srgb, #34c759 18%, transparent);
+  background: var(--v-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-accent) 18%, transparent);
   animation: v2-visit-live 2.4s ease-in-out infinite;
 }
 @keyframes v2-visit-live {
   50% {
-    box-shadow: 0 0 0 5px color-mix(in srgb, #34c759 0%, transparent);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--v-accent) 0%, transparent);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1345,14 +1345,19 @@ button.v2-svc:active {
   fill: #34c759;
 }
 
-/* a service with something booked: a small green badge above its title */
+/* a service with something booked: a small green badge right of its title */
+.v2-svc-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
 .v2-svc-badge {
-  align-self: flex-start;
+  flex: none;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   height: 18px;
-  margin-bottom: 1px;
   padding: 0 7px 0 6px;
   border-radius: 9px;
   font: 650 11px/1 var(--v-text);
@@ -1373,15 +1378,6 @@ button.v2-svc:active {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-/* the booked card's date line runs a little longer: its gaps tighten so the time stays whole */
-.v2-svc:has(.v2-svc-badge) {
-  gap: 10px;
-  padding-right: 14px;
-}
-.v2-svc:has(.v2-svc-badge) .v2-svc-s {
-  font-size: 12.5px;
-  letter-spacing: -0.005em;
 }
 
 /* Today's cards carry a chart and one number, no line under it, so their rows run shorter */

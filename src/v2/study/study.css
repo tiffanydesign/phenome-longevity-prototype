@@ -17,18 +17,9 @@
   inset: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: #26398052 transparent;
-}
-.rv-page::-webkit-scrollbar {
-  width: 4px;
-}
-.rv-page::-webkit-scrollbar-thumb {
-  border-radius: 2px;
-  background: #26398052;
-}
-.rv-page::-webkit-scrollbar-track {
-  margin: calc(var(--status-h) + 60px) 0 104px;
+  --scroll-thumb: #26398052;
+  --scroll-inset-top: calc(var(--status-h) + 60px);
+  --scroll-inset-bottom: 104px;
 }
 
 .rv-stage {

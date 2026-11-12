@@ -15,33 +15,12 @@ const MARKS: Record<string, ReactNode> = {
       <path d="M8.5 6.6h7M8.5 17.4h7M10.6 12h2.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
     </>
   ),
-  // the mouth as an open arc, with the microbes it holds rising above it
-  Oral: (
-    <>
-      <path d="M4 11.5a8 8 0 0 0 16 0z" fill="currentColor" />
-      <path d="M7.5 14.6h9" stroke="var(--om-tile, #fff)" strokeWidth="1.6" strokeLinecap="round" opacity="0.9" />
-      <circle cx="8" cy="6.5" r="1.7" fill="currentColor" opacity="0.45" />
-      <circle cx="12.5" cy="4.5" r="1.3" fill="currentColor" opacity="0.35" />
-      <circle cx="16.5" cy="7" r="2" fill="currentColor" opacity="0.55" />
-    </>
-  ),
-  // the gut as one thick line folding back on itself
-  Gut: (
-    <>
-      <path d="M5 5h11a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h11" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="19" cy="17" r="1.9" fill="currentColor" opacity="0.5" />
-      <circle cx="5" cy="5" r="1.9" fill="currentColor" opacity="0.5" />
-    </>
-  ),
-  // an almond of two arcs, a small colony held inside it
-  Vaginal: (
-    <>
-      <path d="M12 3c5 3.4 5 14.6 0 18-5-3.4-5-14.6 0-18z" fill="currentColor" opacity="0.25" />
-      <path d="M12 3c5 3.4 5 14.6 0 18-5-3.4-5-14.6 0-18z" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
-      <circle cx="11" cy="10" r="1.6" fill="currentColor" />
-      <circle cx="13" cy="14.2" r="1.25" fill="currentColor" />
-    </>
-  ),
+  // a tooth, crown and two roots
+  Oral: <path d="M7 2C4 2 2 5 2 8c0 2.11 1 5 2 6s2 8 4 8c4.54 0 2-7 4-7s-.54 7 4 7c2 0 3-7 4-8s2-3.89 2-6c0-3-2-6-5-6s-3 1-5 1s-2-1-5-1" fill="currentColor" />,
+  // the stomach and the gut leaving it
+  Gut: <path d="M4 18c.67 1.85 2.07 4 8 4c2.36 0 5.07-.07 7-2c1-1 3-3 3-9s-2-7-4-7c-1.38 0-3 0-4 2v.03a1.82 1.82 0 0 1-1.87.92C11 6.81 11 6.37 11 6V2H9v4a2.92 2.92 0 0 0 3 3c1 0 1 1.78 1 3c0 1.89-.5 3.26-2 4c-2.31 1.15-4.61 1-5.39-.53a1.5 1.5 0 0 0-2.47-.6A3.67 3.67 0 0 0 2 18v4h2Z" fill="currentColor" />,
+  // the female sign
+  Vaginal: <path d="M11 19h-1q-.425 0-.712-.288T9 18t.288-.712T10 17h1v-2.1q-1.975-.35-3.238-1.888T6.5 9.45q0-2.275 1.613-3.862T12 4t3.888 1.588T17.5 9.45q0 2.025-1.263 3.563T13 14.9V17h1q.425 0 .713.288T15 18t-.288.713T14 19h-1v1q0 .425-.288.713T12 21t-.712-.288T11 20zm3.475-7.025Q15.5 10.95 15.5 9.5t-1.025-2.475T12 6T9.525 7.025T8.5 9.5t1.025 2.475T12 13t2.475-1.025" fill="currentColor" />,
   // a protein folding: beads on a chain that doubles back
   Proteome: (
     <>
