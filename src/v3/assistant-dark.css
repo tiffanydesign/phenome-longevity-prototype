@@ -1,0 +1,92 @@
+/* =====================================================================
+ * Longevity AI, dark: the welcome keeps its layout, logo, globe and chips;
+ * only the surfaces move onto the edition's dark palette. The page sits on
+ * the true black ground, chips and the composer are cards a step above it,
+ * the member's words on a raised grey and the answers on a deep brand navy.
+ * ===================================================================== */
+:root[data-theme="dark"] .scr:has(.as-body),
+:root[data-theme="dark"] .scr:has(.as-body) .scr-header {
+  background: var(--v-bg);
+}
+:root[data-theme="dark"] .as-logo > span {
+  color: var(--v-ink) !important;
+}
+:root[data-theme="dark"] .as-round {
+  border-color: transparent;
+  color: var(--v-ink-2);
+  background: var(--v-card);
+}
+:root[data-theme="dark"] .as-title {
+  color: var(--v-ink);
+}
+:root[data-theme="dark"] .as-sub {
+  color: var(--v-ink-2);
+}
+:root[data-theme="dark"] .as-chip {
+  border-color: transparent;
+  color: var(--v-ink);
+  background: var(--v-card);
+}
+:root[data-theme="dark"] .as-chip:active {
+  background: var(--v-card-2);
+}
+
+/* the conversation */
+:root[data-theme="dark"] .as-user {
+  color: var(--v-ink);
+  background: var(--v-card-2);
+}
+:root[data-theme="dark"] .as-ai,
+:root[data-theme="dark"] .as-typing {
+  color: #e6ebf8;
+  background: #1e2d63;
+}
+:root[data-theme="dark"] .as-ai b {
+  color: #ffffff;
+}
+
+/* the composer */
+:root[data-theme="dark"] .as-input {
+  border-color: transparent;
+  background: var(--v-card);
+  box-shadow: inset 0 0 0 1px #ffffff14;
+}
+:root[data-theme="dark"] .as-input input {
+  color: var(--v-ink);
+}
+:root[data-theme="dark"] .as-input input::placeholder {
+  color: var(--v-ink-3);
+}
+:root[data-theme="dark"] .as-mic {
+  color: #fff;
+  background: var(--v-accent);
+}
+
+/* chat history sheet */
+:root[data-theme="dark"] .ah-head h2,
+:root[data-theme="dark"] .ah-title {
+  color: var(--v-ink);
+}
+:root[data-theme="dark"] .ah-group,
+:root[data-theme="dark"] .ah-time {
+  color: var(--v-ink-3);
+}
+:root[data-theme="dark"] .ah-new {
+  color: #fff;
+  background: var(--v-accent);
+}
+:root[data-theme="dark"] .ah-item {
+  border-color: transparent;
+  background: var(--v-card-2);
+}
+:root[data-theme="dark"] .ah-item[data-on] {
+  border-color: var(--v-accent);
+  background: color-mix(in srgb, var(--v-accent) 14%, var(--v-card-2));
+}
+:root[data-theme="dark"] .ah-icon {
+  color: var(--v-accent);
+  background: color-mix(in srgb, var(--v-accent) 16%, var(--v-card));
+}
+:root[data-theme="dark"] .ah-check {
+  color: var(--v-accent);
+}
