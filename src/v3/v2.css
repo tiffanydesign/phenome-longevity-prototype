@@ -88,6 +88,38 @@
   --v-ok-pill: #1f3a14;
   color-scheme: dark;
 }
+/* system: true black, the standard grouped-card greys, opaque separators, vivid blue as the one accent */
+:root[data-theme="dark"][data-tone="system"] {
+  --v-bg: #000000;
+  --v-card: #1c1c1e;
+  --v-card-2: #2c2c2e;
+  --v-fill: #7878805c;
+  --v-glass: #1c1c1ed9;
+  --v-glass-bar: #2c2c2e80;
+  --v-ink: #ffffff;
+  --v-ink-2: #98989f;
+  --v-ink-3: #6c6c70;
+  --v-line: #38383a;
+  --v-navy: #0a84ff;
+  --v-on-navy: #ffffff;
+  --v-deep: #64a8ff;
+  --v-blue: #0a84ff;
+  --v-alert-ink: #ff9f0a;
+  --v-ok-ink: #30d158;
+  --v-gold-ink: #ffd60a;
+}
+/* graphite: a grey ground with cards lifted a step above it, instead of cards on black */
+:root[data-theme="dark"][data-tone="graphite"] {
+  --v-bg: #232428;
+  --v-card: #313338;
+  --v-card-2: #3d3f45;
+  --v-fill: #8e8e9a38;
+  --v-glass: #313338c7;
+  --v-glass-bar: #3d3f4566;
+  --v-ink-2: #b0b0b8;
+  --v-ink-3: #85858e;
+  --v-line: #ffffff17;
+}
 
 .v2 {
   position: absolute;

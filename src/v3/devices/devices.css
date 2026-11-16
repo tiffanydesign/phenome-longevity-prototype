@@ -392,29 +392,6 @@
   color: var(--v-ink-3);
 }
 
-/* ---------- add: the page's one solid button, in the brand navy ---------- */
-.dv-addbtn {
-  width: 100%;
-  min-height: 56px;
-  margin-top: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0 16px 0 20px;
-  border-radius: 18px;
-  font: 400 16px/1.2 var(--v-text);
-  color: var(--v-on-navy, #fff);
-  background: var(--v-navy);
-  transition: transform 0.15s var(--v-ease);
-}
-.dv-addbtn b {
-  font-weight: 700;
-}
-.dv-addbtn:active {
-  transform: scale(0.98);
-}
-
 /* =====================================================================
  * One device's page
  * ===================================================================== */
@@ -646,4 +623,9 @@
   .dd-row[data-state="busy"] .dd-row-mark {
     animation: none;
   }
+}
+
+/* adding a device: its own card under the wearables, before At home */
+.dv-group.dv-add-solo {
+  margin-top: 12px;
 }

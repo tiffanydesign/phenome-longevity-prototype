@@ -177,7 +177,7 @@
   place-items: center;
   border-radius: 50%;
   background: var(--batt-ok);
-  animation: ad-pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
+  animation: ad-pop 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .ad-done-tick .pf-tick {
   width: 40px;

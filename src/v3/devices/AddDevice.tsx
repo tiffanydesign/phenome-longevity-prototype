@@ -99,7 +99,7 @@ function AddDeviceFlow() {
   if (step === "choose") {
     return (
       <SubPage title="Add a device" lead="Choose what you are adding. Readings are wellness estimates, not a medical device." onBack={back}>
-        <Group title="Worn every day">
+        <Group title="Wearables">
           <div className="dv-group">
             {WEAR.map(({ d, line }) => (
               <Choice key={d.id} d={d} line={line} onPick={() => (setDevice(d), setStep("ready"))} />

@@ -1408,3 +1408,6 @@ button.v2-svc:active {
   font-size: 11px;
   letter-spacing: -0.015em;
 }
+:root[data-theme="dark"][data-tone="graphite"] .v2-head[data-under] .v2-hpill {
+  background: #3133388c;
+}

@@ -35,6 +35,9 @@ export function DevPanel() {
       <section className="dp-group">
         <h3>Display</h3>
         <Toggle label="Appearance" value={p.theme} options={["light", "dark"]} labels={{ light: "Light", dark: "Dark" }} onChange={(theme) => p.set({ theme })} />
+        {EDITION === "v3" && p.theme === "dark" && (
+          <Toggle label="Dark tone" value={p.tone} options={["graphite", "black", "system"]} labels={{ graphite: "Graphite", black: "Black", system: "Apple" }} onChange={(tone) => p.set({ tone })} />
+        )}
         <Toggle label="Connection" value={p.network} options={["online", "offline"]} labels={{ online: "Online", offline: "Offline" }} onChange={(network) => p.set({ network })} />
       </section>
 

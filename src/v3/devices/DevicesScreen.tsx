@@ -108,16 +108,17 @@ function DeviceRow({ d }: { d: Device }) {
   );
 }
 
-/** Adding a device: the page's one solid action, in the brand navy. */
-function AddButton({ label }: { label: ReactNode }) {
+/** Adding a device: a row with a plus in the icon column and the words in the accent. */
+function AddRow({ label }: { label: string }) {
   const go = useGo();
   return (
-    <button className="dv-addbtn" onClick={() => go("/v3/add-device")}>
+    <button className="dv-row dv-add" onClick={(e) => go("/v3/add-device", { from: e.currentTarget })}>
+      <span className="dv-plus" aria-hidden>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+      </span>
       <span>{label}</span>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
-        <circle cx="12" cy="12" r="9.5" />
-        <path d="M12 8v8M8 12h8" />
-      </svg>
     </button>
   );
 }
@@ -148,19 +149,15 @@ export function DevicesScreen() {
         <Head title="Devices" />
         <NotMedical />
 
-        <Section title="Worn every day">
+        <Section title="Wearables">
           <div className="dv-group">
             {PAIRED.map((d) => (
               <DeviceRow key={d.id} d={d} />
             ))}
           </div>
-          <AddButton
-            label={
-              <>
-                Add a <b>Phenome</b>Tech device
-              </>
-            }
-          />
+          <div className="dv-group dv-add-solo">
+            <AddRow label="Add a device" />
+          </div>
         </Section>
 
         <Section title="At home">
@@ -220,8 +217,8 @@ export function HomeDevicesScreen() {
             {HOME_DEVICES.map((d) => (
               <DeviceRow key={d.id} d={d} />
             ))}
+            <AddRow label="Add a home device" />
           </div>
-          <AddButton label="Add a home device" />
         </Section>
       </div>
     </V2Screen>

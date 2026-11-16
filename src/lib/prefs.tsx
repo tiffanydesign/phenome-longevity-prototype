@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
 /**
  * Prototype-level switches (not part of the original app):
  *  - theme:   light | dark            (mirrors Profile → Appearance)
+ *  - tone:    graphite | black        (which dark: a grey ground with lifted cards, true black, or the system palette)
  *  - data:    real | demo             (real = captured empty test account, demo = populated mock)
  *  - network: online | offline        (renders the captured offline/error states)
  *  - sex:     female | male           (the member's sex; every body figure in v2 follows it)
@@ -11,6 +12,7 @@ import { createContext, useContext, useEffect, useMemo, useState, type ReactNode
  * Each can be forced from the URL query, e.g. #/home?theme=dark&data=demo — used by tests/compare.mjs.
  */
 export type Theme = "light" | "dark";
+export type DarkTone = "graphite" | "black" | "system";
 export type DataMode = "real" | "demo";
 export type Network = "online" | "offline";
 export type Sex = "female" | "male";
@@ -19,6 +21,7 @@ export const MEMBER_MODES: MemberMode[] = ["clinic", "varied", "first", "risk"];
 
 interface Prefs {
   theme: Theme;
+  tone: DarkTone;
   data: DataMode;
   network: Network;
   sex: Sex;
@@ -63,6 +66,7 @@ export function readMemberMode(): MemberMode {
 export function PrefsProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState(() => ({
     theme: "light" as Theme,
+    tone: "graphite" as DarkTone,
     network: "online" as Network,
     // the demo member's profile and the full review's member are both female
     sex: "female" as Sex,
@@ -75,6 +79,7 @@ export function PrefsProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.dataset.theme = state.theme;
+    document.documentElement.dataset.tone = state.tone;
     try {
       localStorage.setItem(KEY, JSON.stringify(state));
     } catch {
