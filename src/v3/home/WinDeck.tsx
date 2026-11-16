@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import { HabitMark } from "../habits/HabitMark";
 import { PARTS, planActions, unitFor, type HabitToday } from "../habits/plan";
+import { Glyph } from "../ui/glyphs";
+import type { InboxItem } from "./inbox";
 
 /*
  * Up next: the habits due now as a stack of cards, the one due now on top and the next two
@@ -20,6 +22,9 @@ const DEPTH = 3;
 
 type Way = "done" | "later";
 
+/** A card in the stack: a habit due now, or something that arrived for the member (a new report). */
+export type DeckItem = { type: "habit"; id: string; t: HabitToday } | { type: "note"; id: string; n: InboxItem };
+
 const reduceMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 const buzz = () => {
   try {
@@ -30,7 +35,7 @@ const buzz = () => {
 };
 
 interface CardProps {
-  t: HabitToday;
+  item: DeckItem;
   depth: number;
   alone: boolean;
   nudge: boolean;
@@ -38,8 +43,10 @@ interface CardProps {
   onFood: (el: HTMLElement) => void;
 }
 
-function WinCard({ t, depth, alone, nudge, onWay, onFood }: CardProps) {
-  const { h } = t;
+function WinCard({ item, depth, alone, nudge, onWay, onFood }: CardProps) {
+  const t = item.type === "habit" ? item.t : null;
+  const n = item.type === "note" ? item.n : null;
+  const h = t?.h;
   const [dx, setDx] = useState(0);
   const [drag, setDrag] = useState(false);
   const [fly, setFly] = useState<null | "left" | "right">(null);
@@ -58,11 +65,12 @@ function WinCard({ t, depth, alone, nudge, onWay, onFood }: CardProps) {
     }
   }, [depth]);
 
-  const rightLabel = h.kind === "count" ? (h.source === "food" ? "Log" : `+1 ${unitFor(h, 1)}`) : "Done";
-  const canRight = h.kind !== "choice";
+  const rightLabel = !h ? "Open" : h.kind === "count" ? (h.source === "food" ? "Log" : `+1 ${unitFor(h, 1)}`) : "Done";
+  const canRight = !h || h.kind !== "choice";
+  const field = h?.field ?? n!.field;
 
   const commit = (way: Way, value?: string) => {
-    if (way === "done" && h.source === "food") {
+    if (way === "done" && h?.source === "food") {
       setDx(0);
       return;
     }
@@ -113,8 +121,8 @@ function WinCard({ t, depth, alone, nudge, onWay, onFood }: CardProps) {
     setDrag(false);
     if (!s?.locked) return;
     if (dx > COMMIT) {
-      if (canRight && h.source !== "food") return commit("done");
-      if (h.source === "food") {
+      if (canRight && h?.source !== "food") return commit("done");
+      if (h?.source === "food") {
         setDx(0);
         return;
       }
@@ -137,12 +145,13 @@ function WinCard({ t, depth, alone, nudge, onWay, onFood }: CardProps) {
     "--pl": Math.max(0, -p),
   } as CSSProperties;
 
-  const line = h.kind === "count" ? `${t.count} of ${t.goal} ${unitFor(h, t.goal)}` : h.detail ?? PARTS[h.part].label;
+  const line = !h || !t ? "" : h.kind === "count" ? `${t.count} of ${t.goal} ${unitFor(h, t.goal)}` : h.detail ?? PARTS[h.part].label;
 
   return (
     <div
       className="wn-card"
-      data-field={h.field}
+      data-field={field}
+      data-note={n ? "" : undefined}
       data-front={front ? "" : undefined}
       data-depth={depth}
       data-drag={drag ? "" : undefined}
@@ -175,6 +184,26 @@ function WinCard({ t, depth, alone, nudge, onWay, onFood }: CardProps) {
         Later
       </span>
 
+      {n && (
+        <div className="wn-body">
+          <div className="wn-top">
+            <span className="wn-note-mark" aria-hidden>
+              <Glyph name="report" size={18} />
+            </span>
+            {/* one sentence that reads straight through: what arrived, then where from and when */}
+            <span className="wn-text">
+              <b>{n.title}</b>
+              <small>{n.line}</small>
+            </span>
+            <span className="wn-acts">
+              <button className="wn-go" tabIndex={front ? 0 : -1} onClick={() => commit("done")}>
+                View
+              </button>
+            </span>
+          </div>
+        </div>
+      )}
+      {h && t && (
       <div className="wn-body">
         <div className="wn-top">
           <HabitMark mark={h.mark} field={h.field} size={36} />
@@ -183,8 +212,8 @@ function WinCard({ t, depth, alone, nudge, onWay, onFood }: CardProps) {
             {h.kind === "count" ? (
               <span className="wn-sub">
                 <span className="wn-pips" aria-hidden style={{ "--n": t.goal } as CSSProperties}>
-                  {Array.from({ length: t.goal }, (_, n) => (
-                    <i key={n} data-on={n < t.count ? "" : undefined} data-new={n === t.count - 1 ? "" : undefined} />
+                  {Array.from({ length: t.goal }, (_, k) => (
+                    <i key={k} data-on={k < t.count ? "" : undefined} data-new={k === t.count - 1 ? "" : undefined} />
                   ))}
                 </span>
                 <small>
@@ -240,6 +269,7 @@ function WinCard({ t, depth, alone, nudge, onWay, onFood }: CardProps) {
           </div>
         )}
       </div>
+      )}
     </div>
   );
 }
@@ -257,7 +287,7 @@ const readHinted = () => {
  * The stack. `due` is in the order the member will meet them; "later" moves
  * one to the back, which the parent keeps so the order survives a re-render.
  */
-export function WinDeck({ due, onLater, onFood }: { due: HabitToday[]; onLater: (id: string) => void; onFood: (el: HTMLElement) => void }) {
+export function WinDeck({ due, onLater, onFood, onOpen }: { due: DeckItem[]; onLater: (id: string) => void; onFood: (el: HTMLElement) => void; onOpen: (n: InboxItem) => void }) {
   const [hinted, setHinted] = useState(readHinted);
   const shown = due.slice(0, DEPTH);
   const alone = due.length === 1;
@@ -272,9 +302,11 @@ export function WinDeck({ due, onLater, onFood }: { due: HabitToday[]; onLater: 
     }
   };
 
-  const way = (t: HabitToday) => (w: Way, value?: string) => {
+  const way = (item: DeckItem) => (w: Way, value?: string) => {
     learnt();
-    if (w === "later") return onLater(t.h.id);
+    if (w === "later") return onLater(item.id);
+    if (item.type === "note") return onOpen(item.n);
+    const t = item.t;
     if (t.h.kind === "count") {
       planActions.tap(t.h.id);
       // still short of the goal: round to the back for the next one
@@ -285,12 +317,12 @@ export function WinDeck({ due, onLater, onFood }: { due: HabitToday[]; onLater: 
   };
 
   return (
-    <div className="wn" data-n={Math.min(due.length, DEPTH)} data-kind={shown[0]?.h.kind} aria-roledescription="stack of cards" aria-label={`${due.length} to do now`}>
+    <div className="wn" data-n={Math.min(due.length, DEPTH)} data-kind={shown[0]?.type === "habit" ? shown[0].t.h.kind : "note"} aria-roledescription="stack of cards" aria-label={`${due.length} to do now`}>
       <div className="wn-stack">
         {/* drawn back to front so the top card paints last */}
         {[...shown].reverse().map((t) => {
           const depth = shown.indexOf(t);
-          return <WinCard key={t.h.id} t={t} depth={depth} alone={alone} nudge={!hinted} onWay={way(t)} onFood={onFood} />;
+          return <WinCard key={t.id} item={t} depth={depth} alone={alone} nudge={!hinted} onWay={way(t)} onFood={onFood} />;
         })}
       </div>
     </div>

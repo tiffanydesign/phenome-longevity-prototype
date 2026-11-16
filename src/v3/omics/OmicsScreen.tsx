@@ -69,12 +69,16 @@ function KitRow({ k, go }: { k: PortfolioRow; go: ReturnType<typeof useGo> }) {
   );
 }
 
-/** The two rows every reports list opens with: the PDFs and the clinical data. */
-function ReportRows({ count, go }: { count: number; go: ReturnType<typeof useGo> }) {
+/**
+ * The rows a reports list opens with: the PDFs, and on the Overview only the
+ * clinical data. Clinical insights are body measurements (height, BMI, blood
+ * chemistry, hormones), not omics, so a single test's tab leaves them out.
+ */
+function ReportRows({ count, go, clinical = false }: { count: number; go: ReturnType<typeof useGo>; clinical?: boolean }) {
   return (
     <>
       <Row field="capacity" glyph="report" title="Generated PDF reports" sub="From your clinician and the labs" count={count} onClick={() => go("/insights/reports")} />
-      <Row field="lavender" glyph="notes" title="Clinical insights" sub="Analyse your clinical data" onClick={() => go("/insights/clinical")} />
+      {clinical && <Row field="lavender" glyph="notes" title="Clinical insights" sub="Analyse your clinical data" onClick={() => go("/insights/clinical")} />}
     </>
   );
 }
@@ -170,7 +174,7 @@ export function OmicsScreen() {
             {/* what the member has: reports, clinical data and every study they have results for; then the studies still to try */}
             <h2 className="om-h">Reports and insights</h2>
             <div className="om-list">
-              <ReportRows count={ins.reportCount} go={go} />
+              <ReportRows count={ins.reportCount} go={go} clinical />
               {tested.map((k) => (
                 <KitRow key={k.title} k={k} go={go} />
               ))}
@@ -237,7 +241,7 @@ function TestView({ t, fresh, reportCount, go }: { t: Topic; fresh: boolean; rep
         {at ? contentOf(t.id, at) : (readingOf(t.id).omicsCards ?? readingOf(t.id).cards)}
       </div>
 
-      <h2 className="om-h">Reports and insights</h2>
+      <h2 className="om-h">Reports</h2>
       <div className="om-list">
         <ReportRows count={reportCount} go={go} />
       </div>

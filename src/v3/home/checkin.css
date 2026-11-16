@@ -739,3 +739,61 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ---------- inbox card: something that arrived for the member ----------
+   Same row as a habit card: a mark on a tinted disc, the title over one
+   line of where it came from, and one way in. */
+.wn-note-mark {
+  position: relative;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--mid);
+  background: color-mix(in srgb, var(--mid) 14%, var(--v-card));
+}
+/* the note's words never cut off: the title may take two lines, the card grows to fit */
+.wn[data-kind="note"] {
+  --card-h: 72px;
+}
+.wn-card[data-note] .wn-text {
+  gap: 3px;
+}
+.wn-card[data-note] .wn-text b {
+  font: 600 15.5px/1.25 var(--v-text);
+  white-space: normal;
+  text-wrap: balance;
+}
+.wn-card[data-note] .wn-text small {
+  white-space: normal;
+}
+.wn-card[data-note] .wn-go {
+  color: #fff;
+  background: var(--v-accent);
+}
+
+/* ---------- spacing under the tabs ----------
+   Whatever opens Home (Today's wins, or Today once the wins are done) sits the
+   same distance under the tab bar. While the wins fold away, Today's heading
+   rises into their place in the same motion rather than jumping after it. */
+.wn-mod {
+  margin-bottom: 0;
+}
+.wn-head.v2-sec {
+  margin-top: var(--v-s-lead, 10px);
+}
+.v2-all > .v2-home-group:first-child > .v2-day,
+.v2-all > .ck-fold[data-closing] + .v2-home-group > .v2-day {
+  margin-top: var(--v-s-lead, 10px);
+}
+.v2-all > .v2-home-group > .v2-day {
+  transition: margin-top 0.45s var(--v-ease);
+}
+.ck-fold {
+  transition:
+    grid-template-rows 0.45s var(--v-ease),
+    opacity 0.3s linear,
+    transform 0.45s var(--v-ease);
+}

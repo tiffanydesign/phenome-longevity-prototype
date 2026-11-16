@@ -2,6 +2,7 @@ import { Toggle } from "@/components/DevPanel";
 import { bookingActions, useBooking } from "@/data/booking-store";
 import { PARTS, setWinsState, useToday, type WinsState } from "../habits/plan";
 import { notes, useNotes } from "../notify/store";
+import { inbox, useInbox } from "../home/inbox";
 import { setOmicsNew, useAnyUnseen } from "../omics/tests";
 import { TOPICS } from "../omics/topics";
 import { DAY_PARTS, setDayPart, useDayPart, useHour, type DayPart } from "./clock";
@@ -18,7 +19,7 @@ const WINS_LABEL: Record<WinsState, string> = { fresh: "Not started", one: "One 
 const WINS_NOTE: Record<WinsState, string> = {
   fresh: "Every card due now is waiting, swipe hint included",
   one: "One card left: finish it on Home to see the celebration",
-  done: "Everything due is done, so Home leaves the module out",
+  done: "Everything due is done, so Home leaves the module out (unless a report is waiting)",
 };
 const TOPIC_IDS = TOPICS.map((t) => t.id);
 
@@ -42,6 +43,7 @@ export function ScenarioControls() {
   const { list } = useNotes();
   const unread = list.some((n) => !n.read);
   const fresh = useAnyUnseen(TOPIC_IDS);
+  const waiting = useInbox().length > 0;
 
   return (
     <>
@@ -50,6 +52,14 @@ export function ScenarioControls() {
         <Toggle label="Time of day" value={part} options={DAY_PARTS} labels={PART_LABEL} wrap onChange={setDayPart} />
         <Toggle label="Today's wins" value={wins} options={["fresh", "one", "done"]} labels={WINS_LABEL} onChange={(s) => setWinsState(s, hour)} />
         {wins && <p className="dp-note">{WINS_NOTE[wins]}</p>}
+        <Toggle
+          label="Report in wins"
+          value={waiting ? "new" : "none"}
+          options={["none", "new"]}
+          labels={{ none: "None", new: "Report ready" }}
+          onChange={(v) => inbox.setReport(v === "new")}
+        />
+        {waiting && <p className="dp-note">A "gut health report is ready" card leads the stack; View opens the report</p>}
         <Toggle
           label="Consultation"
           value={booking ? "booked" : "none"}

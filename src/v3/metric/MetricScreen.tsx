@@ -2,6 +2,7 @@ import { useMemo, useState, type ReactNode } from "react";
 import { Gauge, HeartRange, HourBars, Hypnogram, MacroBar, WorkoutRings } from "../home/glance";
 import "../home/glance.css";
 import { CapacityDetail } from "./CapacityDetail";
+import { SleepDetail } from "./SleepDetail";
 import { GoalSheet, goalOf, GOALS, useGoals } from "./goals";
 import { useParams } from "react-router-dom";
 import { metric as baseMetric, metricsFor, periodTitle, rangeLabels, seriesFor, SOURCE_LABEL, STATUS_LABEL, visitLabels, type Range } from "../data/metrics";
@@ -82,9 +83,12 @@ export function MetricScreen() {
   const stats = values.length ? [{ k: "Average", v: values.reduce((a, b) => a + b, 0) / values.length }, { k: "Lowest", v: Math.min(...values) }, { k: "Highest", v: Math.max(...values) }] : [];
   const chartUnit = m.unit.startsWith("/") ? m.unit.match(/[a-z]+$/i)?.[0] ?? "" : m.unit;
   // a daily page relates only to daily readings, a clinic page only to clinic ones: the two never share a page
-  const related = metricsFor(m.organ)
-    .filter((r) => r.id !== m.id && isDaily(r) === isDaily(m))
-    .slice(0, 3);
+  const related =
+    m.id === "sleep"
+      ? []
+      : metricsFor(m.organ)
+          .filter((r) => r.id !== m.id && isDaily(r) === isDaily(m))
+          .slice(0, 3);
   const actions = ACTIONS[m.id] ?? [];
 
   const statusWord = STATUS_LABEL[m.status];
@@ -147,6 +151,9 @@ export function MetricScreen() {
             ))}
           </div>
         )}
+
+        {/* sleep reads its night before its history: score, stages, schedule, overnight body */}
+        {m.id === "sleep" && <SleepDetail />}
 
         {/* the chart stands on the page itself, no panel round it */}
         <section className="mx-stage" aria-label={m.chart === "scan" ? "Across your visits" : "Trend"}>

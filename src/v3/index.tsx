@@ -7,7 +7,8 @@ import { HomeScreen } from "./home/HomeScreen";
 import { MetricScreen } from "./metric/MetricScreen";
 import { OmicsScreen } from "./omics/OmicsScreen";
 import { AddDeviceScreen } from "@/screens/home/device/AddDeviceScreen";
-import { DevicesScreen } from "./devices/DevicesScreen";
+import { DevicesScreen, HomeDevicesScreen } from "./devices/DevicesScreen";
+import { DeviceScreen } from "./devices/DeviceScreen";
 import { NotificationsScreen } from "./notify/NotificationsScreen";
 import { VisitsScreen } from "./visits/VisitsScreen";
 import { ProfileScreen } from "./profile/ProfileScreen";
@@ -29,6 +30,8 @@ export const routes: ScreenRoute[] = [
   { path: "/v3/visits", element: <VisitsScreen />, title: "Clinic visits", group },
   { path: "/v3/notifications", element: <NotificationsScreen />, title: "Notifications", group },
   { path: "/v3/devices", element: <DevicesScreen />, title: "Devices", group },
+  { path: "/v3/devices/home", element: <HomeDevicesScreen />, title: "Home devices", group },
+  { path: "/v3/devices/:id", element: <DeviceScreen />, title: "Device", group },
   { path: "/v3/metric/:id", element: <MetricScreen />, title: "Metric detail", group },
   { path: "/v3/profile", element: <ProfileScreen />, title: "Profile", group },
   { path: "/v3/add-device", element: <AddDeviceScreen />, title: "Add device", group },

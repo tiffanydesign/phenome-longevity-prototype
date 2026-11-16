@@ -12,6 +12,7 @@ import { shortOf, useToday } from "../habits/plan";
 import "../habits/habits.css";
 import { Gauge, HabitStops, HeartRange, HourBars, Hypnogram, MacroBar, WorkoutRings } from "./glance";
 import { glyphOf, Kind, type GlyphName } from "../ui/glyphs";
+import { DevicesTile } from "./DevicesTile";
 
 
 /** Each card's name, for the remove and add controls. */
@@ -26,6 +27,7 @@ const CARD_NAME: Record<string, string> = {
   habits: "Habits",
   consult: "Your consultations",
   games: "Cognitive data",
+  devices: "My devices",
 };
 
 /**
@@ -36,7 +38,7 @@ const CARD_NAME: Record<string, string> = {
 const GROUPS: { id: string; title?: string; meta?: string; cards: string[] }[] = [
   { id: "today", title: "Today", cards: ["activity", "sleep", "capacity", "workouts", "vitals", "food", "habits"] },
   { id: "clinic", title: "Clinic", cards: ["twin"] },
-  { id: "more", title: "More", cards: ["consult", "games"] },
+  { id: "more", title: "More", cards: ["consult", "games", "devices"] },
 ];
 
 /** How many days back the Today cards read: 0 is today, up to the six days the week's series holds. */
@@ -228,6 +230,7 @@ function Tile({ id, go }: { id: string; go: ReturnType<typeof useGo> }) {
     habits: () => <HabitsTile onOpen={open("/v3/habits")} />,
     consult: () => <ConsultTile open={open} />,
     games: () => <ServiceTile field="teal" mark="games" title="Cognitive data" line="Memory and focus, test by test" onOpen={open("/discover/games")} />,
+    devices: () => <DevicesTile onOpen={open("/v3/devices")} />,
   };
   return <>{tiles[id]()}</>;
 }

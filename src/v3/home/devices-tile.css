@@ -1,0 +1,86 @@
+/* My devices: battery rings in a row, each device's mark at the centre */
+.dvt {
+  --batt-ok: #4cb86b;
+  --batt-low: #ec5a4f;
+  gap: 12px;
+}
+:root[data-theme="dark"] .dvt {
+  --batt-ok: #5cc97b;
+  --batt-low: #ff6b60;
+}
+.dvt-low {
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 11px;
+  font: 600 12px/1 var(--v-text);
+  color: var(--batt-low);
+  background: color-mix(in srgb, var(--batt-low) 12%, transparent);
+}
+.dvt-row {
+  width: 100%;
+  margin-top: auto;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  justify-items: center;
+}
+/* the wide card lists every device; the half-width one only the lowest three */
+.v2-slot[data-size="s"] .dvt-row[data-wide],
+.v2-slot[data-size="w"] .dvt-row[data-small] {
+  display: none;
+}
+.dvt-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+.dvt-ring {
+  position: relative;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 4px;
+  display: grid;
+  place-items: center;
+  color: var(--v-ink);
+}
+.dvt-ring .dvt-arc {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.dvt-arc circle {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.dvt-arc circle:first-child {
+  stroke: color-mix(in srgb, var(--v-ink) 10%, transparent);
+}
+.dvt-arc circle + circle {
+  stroke: var(--batt-ok);
+}
+.dvt-cell[data-low] .dvt-arc circle + circle {
+  stroke: var(--batt-low);
+}
+.dvt-cell b {
+  font: 650 14px/1.1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.dvt-cell[data-low] b {
+  color: var(--batt-low);
+}
+.dvt-cell small {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 500 11.5px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}

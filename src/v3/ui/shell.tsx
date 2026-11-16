@@ -176,7 +176,7 @@ export function DevicesButton() {
         )}
         {charging && <path className="v2-dev-bolt" d="M19.9 0.6 15.9 6.4h2.8l-1.2 4.6 4-5.8h-2.8z" />}
       </svg>
-      <Icon name={d.icon} size={17} />
+      <Icon name={d.icon!} size={17} />
     </button>
   );
 }

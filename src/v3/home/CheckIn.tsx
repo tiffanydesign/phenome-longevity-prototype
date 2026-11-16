@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useGo } from "../ui/shell";
 import { HabitMark } from "../habits/HabitMark";
 import { PARTS, planActions, unitFor, useToday, type HabitToday } from "../habits/plan";
-import { WinDeck } from "./WinDeck";
+import { WinDeck, type DeckItem } from "./WinDeck";
+import { inbox, useInbox } from "./inbox";
 import { useHour } from "../demo/clock";
 import "../habits/habits.css";
 import "./checkin.css";
@@ -17,6 +18,9 @@ import "./checkin.css";
  *  - anything a device or the food log already knows is ticked for the member;
  *  - the heading sits above the stack with the day's progress, which opens
  *    the whole list with undo;
+ *  - it doubles as an inbox: something important (a new report) joins the
+ *    front of the stack as its own card; "View" opens it, "Later" sends it back;
+ *    it never counts toward the day's progress;
  *  - when nothing is left to do now, a short word of praise plays and the
  *    whole module folds away. It comes back the next day, or when the next
  *    part of the day brings something new.
@@ -77,6 +81,7 @@ export function CheckIn() {
   const hour = useHour();
   const [open, setOpen] = useState(false);
   const [order, setOrder] = useState<string[]>([]);
+  const notes = useInbox();
 
   const done = asked.filter((t) => t.done);
   const waiting = asked.filter((t) => !t.done);
@@ -90,13 +95,19 @@ export function CheckIn() {
     .filter((t) => hour >= PARTS[t.h.part].from)
     .sort((a, b) => rank(a.h.id) - rank(b.h.id) || Number(a.h.kind === "count") - Number(b.h.kind === "count"));
 
-  // nothing to do now when Home opens: the module stays away. Emptied just now: praise, then fold away.
-  const [phase, setPhase] = useState<Phase>(() => (due.length === 0 ? "gone" : "live"));
+  // the stack: what arrived for the member first (unless sent to the back), then the habits due now
+  const deck: DeckItem[] = [
+    ...notes.map((n) => ({ type: "note" as const, id: n.id, n })),
+    ...due.map((t) => ({ type: "habit" as const, id: t.h.id, t })),
+  ].sort((a, b) => rank(a.id) - rank(b.id));
+
+  // nothing to do now when Home opens: the module stays away. Habits emptied just now: praise, then fold away.
+  const [phase, setPhase] = useState<Phase>(() => (deck.length === 0 ? "gone" : "live"));
   const before = useRef(due.length);
   useEffect(() => {
     const was = before.current;
     before.current = due.length;
-    if (due.length > 0) {
+    if (due.length > 0 || notes.length > 0) {
       setPhase("live");
       return;
     }
@@ -109,13 +120,13 @@ export function CheckIn() {
       window.clearTimeout(fold);
       window.clearTimeout(gone);
     };
-  }, [due.length]);
+  }, [due.length, notes.length]);
 
   // the stack as it stands, with this one moved to the back
-  const toBack = (id: string) => setOrder([...due.map((t) => t.h.id).filter((x) => x !== id), id]);
+  const toBack = (id: string) => setOrder([...deck.map((d) => d.id).filter((x) => x !== id), id]);
 
   // nothing to do now: the module stays away, and what follows moves up
-  if (asked.length === 0 || (phase === "gone" && due.length === 0)) return null;
+  if ((asked.length === 0 && notes.length === 0) || (phase === "gone" && deck.length === 0)) return null;
 
   const allDone = waiting.length === 0;
   // what counts today so far: done, or its part of the day has begun; later parts join as they start
@@ -124,6 +135,7 @@ export function CheckIn() {
   const head = (
     <header className="v2-sec wn-head">
       <h3>Today's wins</h3>
+      {asked.length > 0 && (
       <button
         className="wn-count"
         data-clear={clear ? "" : undefined}
@@ -144,6 +156,7 @@ export function CheckIn() {
           <path d="m6 9 6 6 6-6" />
         </svg>
       </button>
+      )}
     </header>
   );
 
@@ -204,7 +217,17 @@ export function CheckIn() {
           </div>
         </div>
       </div>
-      {!open && due.length > 0 && <WinDeck due={due} onLater={toBack} onFood={(el) => go("/v3/metric/diet", { from: el })} />}
+      {!open && deck.length > 0 && (
+        <WinDeck
+          due={deck}
+          onLater={toBack}
+          onFood={(el) => go("/v3/metric/diet", { from: el })}
+          onOpen={(n) => {
+            inbox.opened(n.id);
+            go(n.to);
+          }}
+        />
+      )}
     </section>
   );
 }

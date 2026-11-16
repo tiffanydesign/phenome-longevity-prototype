@@ -20,6 +20,7 @@ export const SIZES: Record<string, Size[]> = {
   habits: ["s", "w"],
   consult: ["w", "s"],
   games: ["w", "s"],
+  devices: ["w", "s"],
 };
 
 const DEFAULT: Slot[] = [
@@ -33,9 +34,10 @@ const DEFAULT: Slot[] = [
   { id: "twin", size: "w" },
   { id: "consult", size: "w" },
   { id: "games", size: "w" },
+  { id: "devices", size: "w" },
 ];
 
-const KEY = "phenome.v2.bento.12";
+const KEY = "phenome.v2.bento.13";
 
 function load(): Slot[] {
   try {
