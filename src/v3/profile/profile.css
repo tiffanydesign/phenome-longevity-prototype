@@ -1,0 +1,255 @@
+/* =====================================================================
+ * Profile. Same parts as Devices and the metric pages: glass round buttons
+ * on the page ground, white grouped cards, 20px section headings 32 apart.
+ * Hierarchy: the member (largest), then quiet lists; signing out sits alone at the foot.
+ * ===================================================================== */
+.pf-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pf-round {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink);
+  background: color-mix(in srgb, var(--v-card) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 0 0 1px #ffffffb3, 0 6px 16px -10px #24365e40;
+}
+:root[data-theme="dark"] .pf-round {
+  box-shadow: inset 0 0 0 1px #ffffff1f;
+}
+.pf-round:active {
+  transform: scale(0.94);
+}
+.pf-round i {
+  position: absolute;
+  top: 4px;
+  right: 3px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  font: 700 10.5px/1 var(--v-text);
+  font-style: normal;
+  color: #fff;
+  background: #ec5a4f;
+  box-shadow: 0 0 0 2px var(--v-bg);
+}
+
+/* ---------- the member ---------- */
+.pf-me {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 4px;
+  text-align: left;
+  color: var(--v-ink);
+}
+.pf-me > svg {
+  flex: none;
+  color: var(--v-ink-3);
+}
+.pf-avatar {
+  flex: none;
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 650 24px/1 var(--v-text);
+  letter-spacing: 0.01em;
+  color: var(--v-on-navy, #fff);
+  background: var(--v-navy);
+}
+.pf-me-t {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.pf-me-t b {
+  font: 700 26px/1.15 var(--v-text);
+  letter-spacing: -0.025em;
+}
+.pf-me-t small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 400 15px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.pf-me-edit {
+  margin-top: 4px;
+  font: 600 14px/1.2 var(--v-text);
+  color: var(--v-accent);
+}
+.pf-me:active .pf-avatar {
+  transform: scale(0.96);
+}
+
+/* ---------- rows ---------- */
+.pf-row {
+  width: 100%;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 16px;
+  font: 400 16px/1.2 var(--v-text);
+  text-align: left;
+  color: var(--v-ink);
+}
+.pf-row:active {
+  background: var(--v-fill);
+}
+.pf-row-mark {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 8%, var(--v-card));
+}
+.pf-row-mark svg {
+  width: 18px;
+  height: 18px;
+}
+.pf-row-t {
+  flex: 1;
+  min-width: 0;
+}
+.pf-row em {
+  font-style: normal;
+  color: var(--v-ink-3);
+}
+.pf-row > svg {
+  flex: none;
+  color: var(--v-ink-3);
+}
+/* hairlines start at the label, past the mark */
+.pf .dv-group > .pf-row + .pf-row::before {
+  left: 60px;
+}
+
+/* ---------- sign out, alone at the foot ---------- */
+.pf-out {
+  margin-top: 32px;
+}
+.pf-out .pf-row {
+  justify-content: center;
+  font-weight: 500;
+  color: var(--batt-low);
+}
+.pf-out .pf-row-t {
+  flex: none;
+}
+.pf-foot {
+  margin: 28px 0 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font: 500 12.5px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.pf-foot svg,
+.pf-foot img {
+  opacity: 0.45;
+}
+
+/* ---------- log out confirm ---------- */
+.pf-modal {
+  padding: 22px 20px 16px;
+  text-align: center;
+}
+.pf-modal h3 {
+  margin: 0;
+  font: 700 19px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.pf-modal p {
+  margin: 8px 0 18px;
+  font: 400 14.5px/1.45 var(--v-text);
+  color: var(--v-ink-2);
+}
+.pf-modal > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.pf-modal button {
+  height: 46px;
+  border-radius: 14px;
+  font: 600 15.5px/1 var(--v-text);
+  color: var(--v-ink);
+  background: var(--v-fill);
+}
+.pf-modal button[data-danger] {
+  color: #fff;
+  background: #ec5a4f;
+}
+
+/* ---------- personal details ---------- */
+.pf-avatar-lg {
+  width: 88px;
+  height: 88px;
+  font-size: 30px;
+}
+/* Edit / Done: a glass capsule beside the back button; Done fills navy */
+.pf-pill {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 22px;
+  font: 600 15.5px/1 var(--v-text);
+  color: var(--v-accent);
+  background: color-mix(in srgb, var(--v-card) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 0 0 1px #ffffffb3, 0 6px 16px -10px #24365e40;
+}
+.pf-pill[data-on] {
+  color: var(--v-on-navy, #fff);
+  background: var(--v-navy);
+  box-shadow: none;
+}
+.pf-pill:active {
+  transform: scale(0.96);
+}
+.pf-fields dd {
+  flex: 1;
+  min-width: 0;
+}
+/* in edit, the value becomes a field in the same place, a soft fill marking it */
+.pf-fields input {
+  width: 100%;
+  height: 34px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 10px;
+  font: 500 15px/1 var(--v-text);
+  text-align: right;
+  color: var(--v-ink);
+  background: var(--v-fill);
+  outline: none;
+}
+.pf-fields input:focus {
+  box-shadow: inset 0 0 0 1.5px var(--v-accent);
+}
+.pf-note {
+  margin: 8px 4px 0;
+  font: 400 13px/1.4 var(--v-text);
+  color: var(--v-ink-3);
+}

@@ -65,7 +65,7 @@ export function AppearanceScreen() {
   );
 }
 
-const languageStore = createStore("English");
+export const languageStore = createStore("English");
 
 /** Language — capture: profile_language/top, scroll_1…scroll_4 (list scrolls under a fixed title + search). */
 export function LanguageScreen() {

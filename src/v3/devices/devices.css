@@ -22,7 +22,17 @@
 
 /* ---------- head: glass back, then the large title on its own line ---------- */
 .dv-bar {
+  position: relative;
+  z-index: 2;
   padding-top: calc(var(--status-h) + 6px);
+}
+/* the veil waits until the page scrolls, then fades in under the buttons */
+.v2-veil.dv-veil {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+.v2-veil.dv-veil[data-on] {
+  opacity: 1;
 }
 .dv-bar .v2-back button {
   width: 44px;

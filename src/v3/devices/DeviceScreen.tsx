@@ -1,9 +1,10 @@
 import { useState, type CSSProperties } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Chevron } from "../ui/icons";
-import { BackBar, useGo, V2Screen } from "../ui/shell";
+import { BackBar, BlurLayers, useGo, V2Screen } from "../ui/shell";
 import { DeviceMark } from "./marks";
 import { deviceById, isLow } from "./paired";
+import { veilOnScroll } from "./veil";
 import "./devices.css";
 
 /**
@@ -24,7 +25,10 @@ export function DeviceScreen() {
   if (!d) {
     return (
       <V2Screen nav={false}>
-        <div className="dv scroll">
+      <div className="v2-veil mx-veil dv-veil" data-at="status" aria-hidden>
+        <BlurLayers />
+      </div>
+        <div className="dv scroll" onScroll={veilOnScroll}>
           <header className="dv-bar">
             <BackBar />
           </header>
@@ -46,7 +50,10 @@ export function DeviceScreen() {
 
   return (
     <V2Screen nav={false}>
-      <div className="dv scroll">
+      <div className="v2-veil mx-veil dv-veil" data-at="status" aria-hidden>
+        <BlurLayers />
+      </div>
+      <div className="dv scroll" onScroll={veilOnScroll}>
         <header className="dv-bar">
           <BackBar />
         </header>

@@ -1,0 +1,269 @@
+/* =====================================================================
+ * Add a device: one question per step, on the Profile sub-page parts.
+ * ===================================================================== */
+.ad-choice,
+.ad-found {
+  width: 100%;
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  text-align: left;
+  color: var(--v-ink);
+}
+.ad-choice:active:not([aria-disabled]) {
+  background: var(--v-fill);
+}
+.ad-choice > svg {
+  flex: none;
+  color: var(--v-ink-3);
+}
+.ad-choice[aria-disabled] {
+  opacity: 0.5;
+}
+.ad-choice-t {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ad-choice-t b {
+  font: 600 16.5px/1.25 var(--v-text);
+}
+.ad-choice-t small {
+  font: 400 13.5px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.dv-group > .ad-choice + *::before,
+.dv-group > .ad-found + *::before {
+  left: 72px;
+}
+
+/* ---------- the device, large ---------- */
+.ad-hero {
+  margin: 28px 0 24px;
+  display: grid;
+  place-items: center;
+}
+.ad-mark {
+  width: 112px;
+  height: 112px;
+  display: grid;
+  place-items: center;
+  border-radius: 34px;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: 0 12px 28px -18px #24365e55;
+}
+
+/* ---------- numbered steps ---------- */
+.ad-steps {
+  margin: 0;
+  padding: 4px 16px;
+  list-style: none;
+}
+.ad-steps li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+  font: 400 15.5px/1.4 var(--v-text);
+  color: var(--v-ink);
+}
+.ad-steps li + li {
+  border-top: 0.5px solid var(--v-line);
+}
+.ad-steps li > i {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 650 13px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-accent);
+  background: color-mix(in srgb, var(--v-accent) 10%, var(--v-card));
+}
+
+/* ---------- searching: rings spreading from the device ---------- */
+.ad-radar {
+  position: relative;
+  height: 300px;
+  margin-top: 12px;
+  display: grid;
+  place-items: center;
+}
+.ad-radar > span:not(.ad-mark) {
+  position: absolute;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--v-accent) 40%, transparent);
+  animation: ad-ring 2.4s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+.ad-radar > span:nth-child(2) {
+  animation-delay: 0.8s;
+}
+.ad-radar > span:nth-child(3) {
+  animation-delay: 1.6s;
+}
+.ad-radar .ad-mark {
+  position: relative;
+  border-radius: 50%;
+}
+@keyframes ad-ring {
+  from {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+.ad-say {
+  margin: 0 auto;
+  max-width: 30ch;
+  font: 400 16px/1.45 var(--v-text);
+  text-align: center;
+  color: var(--v-ink-2);
+}
+.ad-quiet {
+  display: block;
+  margin: 14px auto 0;
+  padding: 10px 16px;
+  font: 600 15.5px/1 var(--v-text);
+  color: var(--v-accent);
+}
+
+/* ---------- found ---------- */
+.ad-signal {
+  flex: none;
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+.ad-signal i {
+  width: 4px;
+  border-radius: 1.5px;
+  background: var(--batt-ok);
+}
+.ad-signal i:nth-child(1) {
+  height: 6px;
+}
+.ad-signal i:nth-child(2) {
+  height: 10px;
+}
+.ad-signal i:nth-child(3) {
+  height: 14px;
+}
+
+/* ---------- done ---------- */
+.ad-done {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.ad-done-tick {
+  width: 88px;
+  height: 88px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--batt-ok);
+  animation: ad-pop 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.ad-done-tick .pf-tick {
+  width: 40px;
+  height: 40px;
+  color: #fff;
+}
+@keyframes ad-pop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+.ad-done h2 {
+  margin: 22px 0 0;
+  font: 700 26px/1.2 var(--v-text);
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+}
+.ad-done p {
+  margin: 8px 0 0;
+  max-width: 32ch;
+  font: 400 16px/1.45 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* ---------- Bluetooth sheet ---------- */
+.ad-sheet-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: flex;
+  align-items: flex-end;
+}
+.ad-scrim {
+  position: absolute;
+  inset: 0;
+  background: #0b122633;
+  animation: ad-fade 0.2s linear;
+}
+.ad-sheet {
+  position: relative;
+  width: 100%;
+  padding: 26px 20px calc(18px + env(safe-area-inset-bottom));
+  border-radius: 28px 28px 0 0;
+  text-align: center;
+  background: var(--v-card);
+  animation: ad-up 0.32s var(--v-ease);
+}
+.ad-sheet-mark {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-accent);
+  background: color-mix(in srgb, var(--v-accent) 10%, var(--v-card));
+}
+.ad-sheet h3 {
+  margin: 14px 0 0;
+  font: 700 21px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.ad-sheet p {
+  margin: 8px auto 20px;
+  max-width: 32ch;
+  font: 400 15px/1.45 var(--v-text);
+  color: var(--v-ink-2);
+}
+.ad-sheet .ad-quiet {
+  margin-top: 6px;
+}
+@keyframes ad-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+@keyframes ad-fade {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ad-radar > span:not(.ad-mark),
+  .ad-done-tick,
+  .ad-sheet {
+    animation: none;
+  }
+}

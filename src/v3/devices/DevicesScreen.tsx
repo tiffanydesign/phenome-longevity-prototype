@@ -1,8 +1,9 @@
 import { useState, type ReactNode } from "react";
 import { Chevron } from "../ui/icons";
-import { BackBar, useGo, V2Screen } from "../ui/shell";
+import { BackBar, BlurLayers, useGo, V2Screen } from "../ui/shell";
 import { DeviceMark } from "./marks";
 import { HOME_DEVICES, isLow, PAIRED, type Device } from "./paired";
+import { veilOnScroll } from "./veil";
 import "./devices.css";
 
 const SETTINGS = [
@@ -140,7 +141,10 @@ export function DevicesScreen() {
   const low = HOME_DEVICES.filter(isLow);
   return (
     <V2Screen nav={false}>
-      <div className="dv scroll">
+      <div className="v2-veil mx-veil dv-veil" data-at="status" aria-hidden>
+        <BlurLayers />
+      </div>
+      <div className="dv scroll" onScroll={veilOnScroll}>
         <Head title="Devices" />
         <NotMedical />
 
@@ -206,7 +210,10 @@ export function DevicesScreen() {
 export function HomeDevicesScreen() {
   return (
     <V2Screen nav={false}>
-      <div className="dv scroll">
+      <div className="v2-veil mx-veil dv-veil" data-at="status" aria-hidden>
+        <BlurLayers />
+      </div>
+      <div className="dv scroll" onScroll={veilOnScroll}>
         <Head title="Home devices" lead="They log for you whenever you use them, so there is nothing to type in." />
         <Section title="Paired">
           <div className="dv-group">

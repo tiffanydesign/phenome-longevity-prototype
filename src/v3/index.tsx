@@ -6,12 +6,16 @@ import type { ScreenRoute } from "@/screens/types";
 import { HomeScreen } from "./home/HomeScreen";
 import { MetricScreen } from "./metric/MetricScreen";
 import { OmicsScreen } from "./omics/OmicsScreen";
-import { AddDeviceScreen } from "@/screens/home/device/AddDeviceScreen";
 import { DevicesScreen, HomeDevicesScreen } from "./devices/DevicesScreen";
 import { DeviceScreen } from "./devices/DeviceScreen";
+import { WorkoutScreen } from "./metric/WorkoutScreen";
+import { AddDevice } from "./devices/AddDevice";
 import { NotificationsScreen } from "./notify/NotificationsScreen";
 import { VisitsScreen } from "./visits/VisitsScreen";
 import { ProfileScreen } from "./profile/ProfileScreen";
+import { PersonalDetails } from "./profile/PersonalDetails";
+import { ActivatePage, AddressPage, HealthHistoryPage, LifestylePage, OrdersPage, PasswordPage, TestsPage } from "./profile/records";
+import { AppearancePage, FaqsPage, LanguagePage, PrivacyPage } from "./profile/settings";
 import { StudyScreen } from "./study/StudyScreen";
 import { TwinScreen } from "./twin/TwinScreen";
 import { ConsultScreen } from "./consult/ConsultScreen";
@@ -33,8 +37,21 @@ export const routes: ScreenRoute[] = [
   { path: "/v3/devices/home", element: <HomeDevicesScreen />, title: "Home devices", group },
   { path: "/v3/devices/:id", element: <DeviceScreen />, title: "Device", group },
   { path: "/v3/metric/:id", element: <MetricScreen />, title: "Metric detail", group },
+  { path: "/v3/workout/:id", element: <WorkoutScreen />, title: "Workout", group },
   { path: "/v3/profile", element: <ProfileScreen />, title: "Profile", group },
-  { path: "/v3/add-device", element: <AddDeviceScreen />, title: "Add device", group },
+  { path: "/v3/profile/details", element: <PersonalDetails />, title: "Personal details", group },
+  { path: "/v3/profile/health-history", element: <HealthHistoryPage />, title: "Health history", group },
+  { path: "/v3/profile/lifestyle", element: <LifestylePage />, title: "Lifestyle", group },
+  { path: "/v3/profile/address", element: <AddressPage />, title: "Address", group },
+  { path: "/v3/profile/orders", element: <OrdersPage />, title: "Orders", group },
+  { path: "/v3/profile/tests", element: <TestsPage />, title: "Activated tests", group },
+  { path: "/v3/profile/activate", element: <ActivatePage />, title: "Activate a test", group },
+  { path: "/v3/profile/password", element: <PasswordPage />, title: "Change password", group },
+  { path: "/v3/profile/appearance", element: <AppearancePage />, title: "Appearance", group },
+  { path: "/v3/profile/language", element: <LanguagePage />, title: "Language", group },
+  { path: "/v3/profile/faqs", element: <FaqsPage />, title: "FAQs", group },
+  { path: "/v3/profile/privacy", element: <PrivacyPage />, title: "Privacy", group },
+  { path: "/v3/add-device", element: <AddDevice />, title: "Add device", group },
   { path: "/v3/assistant", element: <AssistantScreen />, title: "Longevity AI", group },
   { path: "/v3/store", element: <StoreScreen />, title: "Store", group },
   { path: "/v3/habits", element: <HabitsScreen />, title: "Habits", group },

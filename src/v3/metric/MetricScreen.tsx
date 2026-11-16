@@ -3,6 +3,7 @@ import { Gauge, HeartRange, HourBars, Hypnogram, MacroBar, WorkoutRings } from "
 import "../home/glance.css";
 import { CapacityDetail } from "./CapacityDetail";
 import { SleepDetail } from "./SleepDetail";
+import { ActivityDetail } from "./ActivityDetail";
 import { GoalSheet, goalOf, GOALS, useGoals } from "./goals";
 import { useParams } from "react-router-dom";
 import { metric as baseMetric, metricsFor, periodTitle, rangeLabels, seriesFor, SOURCE_LABEL, STATUS_LABEL, visitLabels, type Range } from "../data/metrics";
@@ -84,7 +85,7 @@ export function MetricScreen() {
   const chartUnit = m.unit.startsWith("/") ? m.unit.match(/[a-z]+$/i)?.[0] ?? "" : m.unit;
   // a daily page relates only to daily readings, a clinic page only to clinic ones: the two never share a page
   const related =
-    m.id === "sleep"
+    m.id === "sleep" || m.id === "steps"
       ? []
       : metricsFor(m.organ)
           .filter((r) => r.id !== m.id && isDaily(r) === isDaily(m))
@@ -154,6 +155,7 @@ export function MetricScreen() {
 
         {/* sleep reads its night before its history: score, stages, schedule, overnight body */}
         {m.id === "sleep" && <SleepDetail />}
+        {m.id === "steps" && <ActivityDetail />}
 
         {/* the chart stands on the page itself, no panel round it */}
         <section className="mx-stage" aria-label={m.chart === "scan" ? "Across your visits" : "Trend"}>

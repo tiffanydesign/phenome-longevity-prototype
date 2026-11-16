@@ -1,0 +1,348 @@
+/* =====================================================================
+ * Activity sections and the workout page. Each card opens with one plain
+ * sentence (.ac-say), then its picture, then a quiet key. Today's line is
+ * the activity hue; yesterday and resting energy are grey.
+ * ===================================================================== */
+.ac-card {
+  width: 100%;
+  display: block;
+  text-align: left;
+  color: var(--v-ink);
+}
+.ac-say {
+  margin: 0 0 14px;
+  font: 400 16px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+.ac-say b {
+  font-weight: 650;
+  color: var(--v-ink);
+}
+
+/* ---------- pace: steps adding up through the day ---------- */
+.ac-pace {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.ac-goal {
+  stroke: var(--v-ink-3);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+  opacity: 0.6;
+}
+.ac-goal-t,
+.ac-axis {
+  font: 500 10.5px var(--v-text);
+  fill: var(--v-ink-3);
+}
+.ac-was {
+  fill: none;
+  stroke: var(--v-ink-3);
+  stroke-width: 1.8;
+  stroke-dasharray: 4 4;
+  stroke-linejoin: round;
+  opacity: 0.7;
+}
+.ac-now-area {
+  fill: var(--mid);
+  opacity: 0.1;
+}
+.ac-now {
+  fill: none;
+  stroke: var(--mid);
+  stroke-width: 2.6;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.ac-nowline {
+  stroke: var(--v-ink);
+  stroke-width: 1;
+  opacity: 0.18;
+}
+.ac-dot {
+  fill: var(--v-card);
+  stroke: var(--mid);
+  stroke-width: 2.6;
+}
+.ac-key {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 0.5px solid var(--v-line);
+}
+.ac-key div + div {
+  padding-left: 12px;
+  border-left: 0.5px solid var(--v-line);
+}
+.ac-key dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 12px/1.25 var(--v-text);
+  color: var(--v-ink-2);
+}
+.ac-key dt::before {
+  content: "";
+  flex: none;
+  width: 10px;
+  height: 0;
+  border-top: 2.6px solid var(--mid);
+  border-radius: 2px;
+}
+.ac-key [data-k="was"] dt::before {
+  border-top: 2px dashed var(--v-ink-3);
+}
+.ac-key dd {
+  margin: 4px 0 0;
+  font: 700 18px/1.1 var(--v-num);
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+
+/* ---------- energy: active on top of resting ---------- */
+.ac-energy {
+  position: relative;
+}
+.ac-energy > svg {
+  position: absolute;
+  top: 20px;
+  right: 16px;
+  color: var(--v-ink-3);
+}
+.ac-split {
+  display: flex;
+  gap: 3px;
+  height: 14px;
+}
+.ac-split i {
+  flex-basis: 0;
+  min-width: 10px;
+  border-radius: 4px;
+}
+.ac-split [data-k="active"] {
+  background: var(--mid);
+}
+.ac-split [data-k="rest"] {
+  background: color-mix(in srgb, var(--v-ink) 12%, transparent);
+}
+.ac-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+.ac-legend > span {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font: 400 14px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.ac-legend i {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-top: 5px;
+  border-radius: 3px;
+}
+.ac-legend > span > span {
+  display: block;
+}
+.ac-legend [data-k="active"] i {
+  background: var(--mid);
+}
+.ac-legend [data-k="rest"] i {
+  background: color-mix(in srgb, var(--v-ink) 12%, transparent);
+}
+.ac-legend b {
+  margin-right: 4px;
+  font: 700 18px/1.1 var(--v-num);
+  color: var(--v-ink);
+}
+.ac-legend small {
+  display: block;
+  margin-top: 3px;
+  font: 400 12.5px/1.3 var(--v-text);
+  color: var(--v-ink-3);
+}
+.ac-grid {
+  margin-top: 24px;
+}
+
+/* ---------- workouts today ---------- */
+.ac-list {
+  padding: 4px 16px !important;
+}
+.ac-wo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  text-align: left;
+  color: var(--v-ink);
+}
+.ac-wo + .ac-wo {
+  border-top: 0.5px solid var(--v-line);
+}
+.ac-wo > svg {
+  flex: none;
+  color: var(--v-ink-3);
+}
+.ac-wo:active {
+  opacity: 0.6;
+}
+.ac-wo-mark {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--mid);
+  background: color-mix(in srgb, var(--mid) 13%, var(--v-card));
+}
+.ac-wo-t,
+.ac-wo-v {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ac-wo-t {
+  flex: 1;
+  min-width: 0;
+}
+.ac-wo-v {
+  align-items: flex-end;
+}
+.ac-wo b {
+  font: 600 16px/1.2 var(--v-text);
+  font-variant-numeric: tabular-nums;
+}
+.ac-wo small {
+  font: 400 13px/1.3 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-2);
+}
+
+/* =====================================================================
+ * One workout
+ * ===================================================================== */
+.wk-title {
+  margin: 6px 0 0;
+  font: 700 34px/1.1 var(--v-text);
+  letter-spacing: -0.03em;
+  color: var(--v-ink);
+}
+.wk-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 24px 16px 0;
+  border-radius: var(--v-r);
+  overflow: hidden;
+  background: var(--v-line);
+}
+.wk-stats div {
+  padding: 14px 16px;
+  background: var(--v-card);
+}
+.wk-stats dt {
+  font: 500 13px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.wk-stats dd {
+  margin: 6px 0 0;
+  font: 700 26px/1 var(--v-num);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.wk-stats dd u {
+  font: 600 14px var(--v-text);
+  text-decoration: none;
+  color: var(--v-ink-2);
+}
+/* zone colours: calm to hot, kept soft */
+[data-zone="1"] {
+  --zone: #9aa7c7;
+}
+[data-zone="2"] {
+  --zone: #3fb5a3;
+}
+[data-zone="3"] {
+  --zone: #e7b53c;
+}
+[data-zone="4"] {
+  --zone: #ef8a4a;
+}
+[data-zone="5"] {
+  --zone: #e25a5a;
+}
+.wk-trace {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.wk-trace rect {
+  fill: var(--zone);
+  opacity: 0.09;
+}
+.wk-line {
+  fill: none;
+  stroke: var(--mid);
+  stroke-width: 2.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.wk-zone {
+  display: grid;
+  grid-template-columns: 112px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+}
+.wk-zone + .wk-zone {
+  border-top: 0.5px solid var(--v-line);
+}
+.wk-zone-n {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.wk-zone-n b {
+  font: 600 14px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.wk-zone-n small {
+  font: 400 12px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.wk-zone-bar {
+  height: 10px;
+  border-radius: 5px;
+  background: var(--v-fill);
+  overflow: hidden;
+}
+.wk-zone-bar i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--zone);
+}
+.wk-zone em {
+  font: 600 14px/1 var(--v-text);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--v-ink);
+}
+.wk-zone[data-empty] em,
+.wk-zone[data-empty] b {
+  color: var(--v-ink-3);
+}

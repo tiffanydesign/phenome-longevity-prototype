@@ -4,7 +4,7 @@ import { profileData, LIFESTYLE_OPTIONS, DASH, type Lifestyle } from "@/data/pro
 import { EditToggle, PfScreen, ViewField } from "./ProfileKit";
 import "./LifestyleScreen.css";
 
-const lifestyleStore = createStore<Lifestyle | null>(null);
+export const lifestyleStore = createStore<Lifestyle | null>(null);
 
 /**
  * Lifestyle Habits — capture: profile_lifestyle/top (view), edit (chips), edit_selected,
