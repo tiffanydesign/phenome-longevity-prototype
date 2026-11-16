@@ -741,8 +741,7 @@
 }
 
 /* ---------- inbox card: something that arrived for the member ----------
-   Same row as a habit card: a mark on a tinted disc, the title over one
-   line of where it came from, and one way in. */
+   Same row as a habit card: a mark on a tinted disc, one sentence, and one way in. */
 .wn-note-mark {
   position: relative;
   flex: none;
@@ -758,19 +757,15 @@
 .wn[data-kind="note"] {
   --card-h: 72px;
 }
-.wn-card[data-note] .wn-text {
-  gap: 3px;
-}
+/* a single sentence, centred on the mark; on a narrow phone it breaks once, never leaving one word alone */
 .wn-card[data-note] .wn-text b {
-  font: 600 15.5px/1.25 var(--v-text);
+  font: 600 16px/1.3 var(--v-text);
+  letter-spacing: -0.01em;
   white-space: normal;
-  text-wrap: balance;
-}
-.wn-card[data-note] .wn-text small {
-  white-space: normal;
+  text-wrap: pretty;
 }
 .wn-card[data-note] .wn-go {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-accent);
 }
 

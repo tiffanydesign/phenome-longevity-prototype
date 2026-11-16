@@ -190,10 +190,9 @@ function WinCard({ item, depth, alone, nudge, onWay, onFood }: CardProps) {
             <span className="wn-note-mark" aria-hidden>
               <Glyph name="report" size={18} />
             </span>
-            {/* one sentence that reads straight through: what arrived, then where from and when */}
+            {/* one sentence: what arrived; the report itself says where from and when */}
             <span className="wn-text">
               <b>{n.title}</b>
-              <small>{n.line}</small>
             </span>
             <span className="wn-acts">
               <button className="wn-go" tabIndex={front ? 0 : -1} onClick={() => commit("done")}>
