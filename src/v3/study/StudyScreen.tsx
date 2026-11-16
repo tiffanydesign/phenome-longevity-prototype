@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { HomeIndicator, StatusBar } from "@/components/PhoneFrame";
 import { asset } from "@/lib/asset";
+import { usePrefs } from "@/lib/prefs";
 import { Chevron, IconClose } from "../ui/icons";
 import { useGo } from "../ui/shell";
 import { useDisplayFace } from "../ui/displayFace";
@@ -15,6 +16,76 @@ import "./study.css";
 
 const SWIPE = 48;
 
+/*
+ * Night ink for the films: each pixel's luminance picks a colour from this ramp.
+ * The footage is pale shaded organs on a pale sky of nearly the same value, so the
+ * sky's narrow band maps to the night ground, and both directions away from it
+ * light up: the shaded fills and contours rise to a soft blue, the highlights to
+ * a dimmer one. An organ then reads by its whole surface, not by its outline alone.
+ */
+const NIGHT: [number, string][] = [
+  [0, "#c9dbf0"],
+  [0.5, "#b3cdec"],
+  [0.7, "#8ab3e0"],
+  [0.8, "#6797cf"],
+  [0.855, "#41689a"],
+  [0.885, "#1c2b47"],
+  [0.9, "#101827"],
+  [0.94, "#101827"],
+  [0.96, "#2c446b"],
+  [0.98, "#5a7fb2"],
+  [1, "#86aad8"],
+];
+/* the films are exposed brighter than their stills: the sky sits at the very top of the range, so the ramp climbs from there */
+const NIGHT_FILM: [number, string][] = [
+  [0, "#c9dbf0"],
+  [0.6, "#b3cdec"],
+  [0.8, "#8ab3e0"],
+  [0.9, "#6f9fd4"],
+  [0.94, "#4a74a8"],
+  [0.962, "#2e4a74"],
+  [0.976, "#1a2843"],
+  [0.986, "#101827"],
+  [1, "#101827"],
+];
+
+function tableOf(ramp: [number, string][]): string[] {
+  const n = 128;
+  const ch: number[][] = [[], [], []];
+  for (let k = 0; k < n; k++) {
+    const x = k / (n - 1);
+    const j = Math.max(0, ramp.findIndex(([at]) => at >= x) - 1);
+    const [a, ca] = ramp[j];
+    const [b, cb] = ramp[Math.min(j + 1, ramp.length - 1)];
+    const t = b > a ? Math.min(1, Math.max(0, (x - a) / (b - a))) : 0;
+    for (let c = 0; c < 3; c++) {
+      const va = parseInt(ca.slice(1 + c * 2, 3 + c * 2), 16);
+      const vb = parseInt(cb.slice(1 + c * 2, 3 + c * 2), 16);
+      ch[c].push((va + (vb - va) * t) / 255);
+    }
+  }
+  return ch.map((v) => v.map((x) => x.toFixed(3)).join(" "));
+}
+const TABLES = { "rv-night": tableOf(NIGHT), "rv-night-film": tableOf(NIGHT_FILM) };
+
+/** The filter the night palette applies to the film; it does nothing until the CSS asks for it. */
+function NightInk() {
+  return (
+    <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden>
+      {Object.entries(TABLES).map(([id, t]) => (
+        <filter key={id} id={id} colorInterpolationFilters="sRGB">
+          <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0" />
+          <feComponentTransfer>
+            <feFuncR type="table" tableValues={t[0]} />
+            <feFuncG type="table" tableValues={t[1]} />
+            <feFuncB type="table" tableValues={t[2]} />
+          </feComponentTransfer>
+        </filter>
+      ))}
+    </svg>
+  );
+}
+
 /** The room display's own camera flight, recorded, so a phone gets it without a WebGL scene. */
 function StudyFilm({ code }: { code: string }) {
   const [ready, setReady] = useState(false);
@@ -23,6 +94,7 @@ function StudyFilm({ code }: { code: string }) {
   useEffect(() => setReady(false), [code]);
   return (
     <div className="rv-film">
+      <NightInk />
       <img src={poster} alt="" data-on={still || !ready ? "" : undefined} />
       {!still && (
         <video key={code} src={asset(`twin/study/${code}.mp4`)} muted playsInline autoPlay preload="auto" onPlaying={() => setReady(true)} aria-hidden />
@@ -48,6 +120,7 @@ function Progress({ index }: { index: number }) {
  */
 export function StudyScreen() {
   useDisplayFace();
+  const { theme } = usePrefs();
   const { code } = useParams();
   const nav = useNavigate();
   const go = useGo();
@@ -91,7 +164,7 @@ export function StudyScreen() {
 
   return (
     <div className="v2 rv">
-      <StatusBar tone="dark" fixed />
+      <StatusBar tone={theme === "dark" ? "light" : "dark"} fixed />
       <div className="rv-page" ref={page}>
         <div
           className="rv-stage"

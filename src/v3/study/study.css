@@ -18,9 +18,23 @@
   --v-gold-pill: #fff0cc;
   --v-ok-ink: #2f6b11;
   --v-ok-pill: #e4f3d9;
+  /* the review's own surfaces, named so the night palette can swap them */
+  --rv-ground: #f2f5fb;
+  --rv-sky: #e6f0f8;
+  --rv-chip: #e6e9f2;
+  --rv-wash: #e6ebf8;
+  --rv-track: #dfe6f3;
+  --rv-alert-pill: #fce4da;
+  --rv-glass: #ffffffe0;
+  --rv-shade: #24365e;
+  --rv-ramp-0: #0a1e57;
+  --rv-ramp-1: #263980;
+  --rv-ramp-2: #7185bd;
+  --rv-ramp-3: #a9b5d9;
+  --rv-ramp-4: #435ba1;
   color-scheme: light;
   overflow: clip;
-  background: #f2f5fb;
+  background: var(--rv-ground);
   color: var(--v-ink);
 }
 .rv .pf-status,
@@ -50,7 +64,7 @@
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  background: #e6f0f8;
+  background: var(--rv-sky);
   /* a fade into the page, never a hard edge: a transparency mask, as the twin's own crop.
      It is gone by 80%, so the study's name and number below sit on clean ground, not on dots */
   -webkit-mask-image: linear-gradient(#000 45%, transparent 80%);
@@ -89,10 +103,10 @@
   border-radius: 50%;
   color: var(--v-navy);
   /* solid white with a hairline, so the two buttons stay distinct over the film and over a card scrolled beneath them */
-  background: #fff;
+  background: var(--v-card);
   box-shadow:
-    0 0 0 1px #2639801f,
-    0 6px 16px -8px #24365e66;
+    0 0 0 1px color-mix(in srgb, var(--v-navy) 12%, transparent),
+    0 6px 16px -8px color-mix(in srgb, var(--rv-shade) 40%, transparent);
 }
 .rv-top-list {
   align-content: center;
@@ -122,7 +136,7 @@
   height: 98px;
   z-index: 3;
   pointer-events: none;
-  background: #f2f5fb;
+  background: var(--rv-ground);
 }
 .rv .v2-nav {
   z-index: 4;
@@ -141,7 +155,7 @@
   border-radius: 10px;
   font: 600 12px/1 var(--v-text);
   color: var(--v-ink-2);
-  background: #e6ebf8;
+  background: var(--rv-wash);
 }
 .rv-lead h2 {
   margin: 0;
@@ -192,7 +206,7 @@
   font-weight: 500;
   white-space: nowrap;
   color: var(--v-ink-2);
-  background: #e6e9f2;
+  background: var(--rv-chip);
 }
 .rv-pill[data-tone="ok"] {
   color: #2f6313;
@@ -204,7 +218,7 @@
 }
 .rv-pill[data-tone="alert"] {
   color: var(--v-alert-ink);
-  background: #fce4da;
+  background: var(--rv-alert-pill);
 }
 
 .rv-when {
@@ -217,7 +231,7 @@
   margin-bottom: var(--v-s-gap);
   padding: var(--v-s-pad);
   border-radius: 20px;
-  background: #fff;
+  background: var(--v-card);
   box-shadow: var(--v-shadow);
 }
 .rv-head {
@@ -267,7 +281,7 @@
   font-weight: 500;
   line-height: 1.4;
   color: var(--v-ink);
-  background: #f2f5fb;
+  background: var(--rv-ground);
   text-wrap: pretty;
 }
 .rv-facts {
@@ -351,7 +365,7 @@
   position: relative;
   height: 6px;
   border-radius: 3px;
-  background: #e6e9f2;
+  background: var(--rv-chip);
 }
 .rv-range i {
   position: absolute;
@@ -368,7 +382,7 @@
   margin-left: -3px;
   border-radius: 3px;
   background: #417e1b;
-  box-shadow: 0 0 0 2px #fff;
+  box-shadow: 0 0 0 2px var(--v-card);
 }
 .rv-range[data-tone="mon"] b {
   background: var(--v-gold);
@@ -598,7 +612,7 @@
 .rv-meter i {
   aspect-ratio: 1;
   border-radius: 50%;
-  background: #e6e9f2;
+  background: var(--rv-chip);
 }
 .rv-meter i[data-on] {
   background: var(--v-navy);
@@ -684,7 +698,7 @@
 .rv-rank i {
   height: 6px;
   border-radius: 3px;
-  background: #e6e9f2;
+  background: var(--rv-chip);
 }
 .rv-rank b {
   display: block;
@@ -701,10 +715,10 @@
   display: flex;
   align-items: center;
   border-radius: 33px;
-  background: #ffffffe0;
+  background: var(--rv-glass);
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
-  box-shadow: 0 14px 30px -14px #24365e99, 0 0 0 1px #2639801a;
+  box-shadow: 0 14px 30px -14px color-mix(in srgb, var(--rv-shade) 60%, transparent), 0 0 0 1px color-mix(in srgb, var(--v-navy) 10%, transparent);
 }
 .rv-bar > button:not(.rv-bar-at) {
   flex: none;
@@ -719,7 +733,7 @@
   cursor: pointer;
 }
 .rv-bar > button:disabled {
-  color: #26398040;
+  color: color-mix(in srgb, var(--v-navy) 25%, transparent);
   cursor: default;
 }
 .rv-bar-at {
@@ -769,7 +783,7 @@
   height: 3px;
   overflow: hidden;
   border-radius: 2px;
-  background: #2639801f;
+  background: color-mix(in srgb, var(--v-navy) 12%, transparent);
 }
 .rv-path i {
   position: absolute;
@@ -792,7 +806,7 @@
   display: flex;
   flex-direction: column;
   padding-top: calc(var(--status-h) + 6px);
-  background: #f2f5fb;
+  background: var(--rv-ground);
   animation: rv-up 0.38s var(--v-ease);
 }
 @keyframes rv-up {
@@ -822,7 +836,7 @@
   place-items: center;
   border-radius: 50%;
   color: var(--v-navy);
-  background: #fff;
+  background: var(--v-card);
 }
 /* which visit the review reads from, newest first, under the sheet's title */
 .rv-list-visits {
@@ -840,7 +854,7 @@
   gap: 3px;
   padding: 10px 10px;
   border-radius: 14px;
-  background: #fff;
+  background: var(--v-card);
   text-align: left;
 }
 .rv-list-visits b {
@@ -858,7 +872,7 @@
 }
 .rv-list-visits button[aria-checked="true"] b,
 .rv-list-visits button[aria-checked="true"] small {
-  color: #fff;
+  color: var(--v-on-navy);
 }
 .rv-list-body {
   flex: 1;
@@ -882,7 +896,7 @@
   align-items: center;
   gap: 12px;
   border-radius: 18px;
-  background: #fff;
+  background: var(--v-card);
 }
 .rv-list section button[aria-current] {
   box-shadow: inset 0 0 0 2px var(--v-navy);
@@ -893,7 +907,7 @@
   height: 56px;
   object-fit: cover;
   border-radius: 13px;
-  background: #dfe6f3;
+  background: var(--rv-track);
 }
 .rv-list-n {
   flex: 1;
@@ -925,7 +939,7 @@
 }
 .rv-list-n small[data-tone="alert"] {
   color: var(--v-alert-ink);
-  background: #fce4da;
+  background: var(--rv-alert-pill);
 }
 .rv-list-v {
   flex: none;
@@ -1019,7 +1033,7 @@
   transition: background-color 0.15s;
 }
 button.rv-glance-r:active {
-  background: #f2f5fb;
+  background: var(--rv-ground);
 }
 .rv-glance-l svg {
   flex: none;
@@ -1122,7 +1136,7 @@ button.rv-glance-r:active {
   width: 280px;
   padding: 6px;
   border-radius: 18px;
-  background: #fff;
+  background: var(--v-card);
   box-shadow:
     0 0 0 1px var(--v-line),
     0 18px 40px -12px #0b0d1440;
@@ -1156,7 +1170,7 @@ button.rv-glance-r:active {
 }
 .rv-top .rv-vm-item[aria-checked="true"],
 .rv-top .rv-vm-item:active {
-  background: #f2f5fb;
+  background: var(--rv-ground);
 }
 .rv-vm-item > svg {
   flex: none;
@@ -1357,7 +1371,7 @@ button.rv-glance-r:active {
   transition: background 0.2s;
 }
 .rv-across-cols button[aria-checked="true"] {
-  background: #f2f5fb;
+  background: var(--rv-ground);
 }
 .rv-across-cols small {
   font: 500 11.5px/1.2 var(--v-text);
@@ -1382,4 +1396,97 @@ button.rv-glance-r:active {
   font: 400 11.5px/1.2 var(--v-text);
   color: var(--v-ink-2);
   white-space: nowrap;
+}
+
+/* =====================================================================
+ * Night: the presentation in the dark. The pale sky becomes a deep night
+ * navy, the films are re-inked by luminance (sky to ground, fills to a blue
+ * glow, contours to light) so the same footage reads as a lit hologram, and
+ * the panels sit a step above the ground in the same navy family.
+ * ===================================================================== */
+:root[data-theme="dark"] .rv {
+  --v-card: #182134;
+  --v-card-2: #202a41;
+  --v-fill: #8ea3d82e;
+  --v-glass: #182134b8;
+  --v-ink: #dde3ee;
+  --v-ink-2: #98a2b8;
+  --v-ink-3: #667088;
+  --v-line: #ffffff17;
+  --v-navy: #86a0e4;
+  --v-on-navy: #101827;
+  --v-alert-ink: #ff9a73;
+  --v-deep: #c3d1fa;
+  --v-accent: #86a0e4;
+  --v-gold-ink: #f0c25a;
+  --v-gold-pill: #3d3214;
+  --v-ok-ink: #86c068;
+  --v-ok-pill: #1f3a14;
+  --rv-ground: #101827;
+  --rv-sky: #e6f0f8;
+  --rv-chip: #202a41;
+  --rv-wash: #202a41;
+  --rv-track: #26314d;
+  --rv-alert-pill: #4a2418;
+  --rv-glass: #182134e6;
+  --rv-shade: #000000;
+  --rv-ramp-0: #c3d1fa;
+  --rv-ramp-1: #8ea9f0;
+  --rv-ramp-2: #5b78d6;
+  --rv-ramp-3: #3a4f8f;
+  --rv-ramp-4: #7390e6;
+  color-scheme: dark;
+}
+/* the charts draw in fixed day inks; at night each takes its partner from the palette */
+:root[data-theme="dark"] .rv [fill="#10214b"] {
+  fill: var(--v-ink);
+}
+:root[data-theme="dark"] .rv [fill="#4a5578"] {
+  fill: var(--v-ink-2);
+}
+:root[data-theme="dark"] .rv [stroke="#4a5578"] {
+  stroke: var(--v-ink-2);
+}
+:root[data-theme="dark"] .rv [fill="#263980"] {
+  fill: var(--v-navy);
+}
+:root[data-theme="dark"] .rv [stroke="#263980"] {
+  stroke: var(--v-navy);
+}
+:root[data-theme="dark"] .rv [stroke="#10214b"] {
+  stroke: var(--v-ink);
+}
+:root[data-theme="dark"] .rv [fill="#a9b5d9"] {
+  fill: #6f84bd;
+}
+:root[data-theme="dark"] .rv [stroke="#7185bd"] {
+  stroke: #8ea9f0;
+}
+:root[data-theme="dark"] .rv [fill="#e6e9f2"] {
+  fill: var(--rv-chip);
+}
+:root[data-theme="dark"] .rv [stroke="#e6e9f2"] {
+  stroke: var(--rv-track);
+}
+:root[data-theme="dark"] .rv [fill="#fce4da"] {
+  fill: var(--rv-alert-pill);
+}
+
+:root[data-theme="dark"] .rv-film {
+  background: var(--rv-ground);
+}
+:root[data-theme="dark"] .rv-film img {
+  filter: url(#rv-night);
+}
+:root[data-theme="dark"] .rv-film video {
+  filter: url(#rv-night-film);
+}
+/* the score meter at night: earned points a quieter blue, a missed point an open ring so it still counts as a place */
+:root[data-theme="dark"] .rv-meter i {
+  background: none;
+  box-shadow: inset 0 0 0 1.5px #4a5675;
+}
+:root[data-theme="dark"] .rv-meter i[data-on] {
+  background: #6f88cf;
+  box-shadow: none;
 }

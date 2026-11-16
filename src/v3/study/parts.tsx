@@ -194,7 +194,8 @@ export function VisitTrend({ values, at }: { values: number[]; at: number }) {
   );
 }
 
-const RAMP = ["#0a1e57", "#263980", "#7185bd", "#a9b5d9", "#435ba1"];
+/** the composition ramp, darkest first; the review defines the five tones per theme */
+const RAMP = [0, 1, 2, 3, 4].map((k) => `var(--rv-ramp-${k})`);
 
 /** Parts of one whole: one hue in depths ordered by share, then what each part is. */
 export function Parts({ items, unit = "%" }: { items: { name: string; value: number }[]; unit?: string }) {

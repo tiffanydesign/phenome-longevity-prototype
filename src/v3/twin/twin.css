@@ -932,7 +932,8 @@
   box-shadow: 0 14px 28px -20px #1d3f72;
 }
 :root[data-theme="dark"] .two-plan {
-  background: #2a5c92;
+  background: var(--v-navy);
+  box-shadow: none;
 }
 .two-plan::after {
   content: "";
@@ -1354,11 +1355,12 @@
 
 
 
-/* dark theme: the sky turns to a deep night blue rather than a grey wash of the day sky,
-   so the dotted figure keeps its glow; the in-range bar drops to the same night key */
+/* dark theme: the sky is the page's own card with a breath of the brand navy, so the
+   hero sits in the dark palette (black, graphite or system) instead of a separate blue
+   slab; the lit contour of the figure does the glowing. The in-range bar keeps a night key. */
 :root[data-theme="dark"] .tw,
 :root[data-theme="dark"] .tw-veil {
-  --two-sky: color-mix(in srgb, #2f6aa6 24%, #0a0e16);
+  --two-sky: color-mix(in srgb, var(--v-navy) 12%, var(--v-card));
 }
 :root[data-theme="dark"] .tw-results [data-status="normal"] {
   --band: #24506b;

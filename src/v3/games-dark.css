@@ -1,0 +1,64 @@
+/* =====================================================================
+ * Cognitive games, dark: the page on the edition's ground, each game a
+ * flat card a step above it, words in the edition's ink. The launch sheet
+ * follows: segmented tabs on fill, rows as cards, the play button in the accent.
+ * ===================================================================== */
+:root[data-theme="dark"] .scr:has(.gm),
+:root[data-theme="dark"] .scr:has(.gm) .scr-header {
+  background: var(--v-bg);
+}
+:root[data-theme="dark"] .gm-h1,
+:root[data-theme="dark"] .gm-card-title {
+  color: var(--v-ink);
+}
+:root[data-theme="dark"] .gm-intro {
+  color: var(--v-ink-2);
+}
+:root[data-theme="dark"] .gm-card {
+  background: var(--v-card);
+  color: var(--v-ink-3);
+}
+:root[data-theme="dark"] .gm-card:active {
+  background: var(--v-card-2);
+}
+:root[data-theme="dark"] .gm-card-desc {
+  color: var(--v-ink-2);
+}
+
+/* launch sheet */
+:root[data-theme="dark"] .gs-title,
+:root[data-theme="dark"] .gs-name {
+  color: var(--v-ink);
+}
+:root[data-theme="dark"] .gs-tabs {
+  background: var(--v-fill);
+}
+:root[data-theme="dark"] .gs-tabs button {
+  color: var(--v-ink-2);
+}
+:root[data-theme="dark"] .gs-tabs button[data-on] {
+  background: var(--v-card-2);
+  color: var(--v-ink);
+}
+:root[data-theme="dark"] .gs-row {
+  background: var(--v-card-2);
+}
+:root[data-theme="dark"] .gs-score {
+  background: var(--v-fill);
+  color: var(--v-ink);
+}
+:root[data-theme="dark"] .gs-medal-1 .gs-score {
+  background: #f9d94929;
+}
+:root[data-theme="dark"] .gs-medal-3 .gs-score {
+  background: #c2834229;
+}
+:root[data-theme="dark"] .gs-empty,
+:root[data-theme="dark"] .gs-empty-title,
+:root[data-theme="dark"] .gs-empty-sub {
+  color: var(--v-ink-2);
+}
+:root[data-theme="dark"] .gs-play {
+  background: var(--v-accent);
+  color: var(--v-on-navy, #fff);
+}

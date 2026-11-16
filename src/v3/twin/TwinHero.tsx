@@ -13,6 +13,12 @@ const GOLD = "#ffb600";
 const ALERT = "#c4572e";
 const NAVY = "#263980";
 const SLATE = "#5d6a93";
+/*
+ * On a dark ground the figure takes the lens figures' ramp (sky blue in the open
+ * middle to navy at the contour), so the overview and the Vitals, Body and Omics
+ * lenses draw one body. The figure's own marks lift so they still read on the dark.
+ */
+const DARK = { navy: "#9fb2ee", slate: "#9aa3bb", ramp: ["#5aaeca", "#263980"] as [string, string], past: ["#c3cbe2", "#5d6a93"] as [string, string] };
 
 /** A visit's laboratory markers, by the laboratory's own flag: critical, outside its range, within it. */
 export function resultsAt(visit: number = LATEST): { status: Status; count: number }[] {
@@ -55,21 +61,24 @@ const MARKS = {
 };
 
 /** Gold when the study asks for a look, the portal's red to discuss, else the figure's own ink. */
-function colourAt(id: string, visit: number, past: boolean) {
+function colourAt(id: string, visit: number, past: boolean, dark = false) {
   const t = toneOf(readingOf(id, visit));
-  return t === "alert" ? ALERT : t === "mon" ? GOLD : past ? SLATE : NAVY;
+  if (t === "alert") return ALERT;
+  if (t === "mon") return GOLD;
+  if (past) return dark ? DARK.slate : SLATE;
+  return dark ? DARK.navy : NAVY;
 }
 
 /** Leaders start under each readout, run level, then drop onto their mark wherever the bake seated it. */
-function leads(hero: HeroMap, visit: number, past: boolean) {
+function leads(hero: HeroMap, visit: number, past: boolean, dark: boolean) {
   const box = heroBox(hero);
   const end = (at: [number, number]) => {
     const [fx, fy] = heroAt(hero, at);
     return `${Math.round(1000 * (box.left + fx * box.width))},${Math.round(1150 * (box.top + fy * box.height))}`;
   };
   return [
-    { d: `M888,305 H730 L${end(MARKS.bp.at)}`, colour: colourAt("natural", visit, past) },
-    { d: `M112,543 H320 L${end(MARKS.fat.at)}`, colour: colourAt("composition", visit, past) },
+    { d: `M888,305 H730 L${end(MARKS.bp.at)}`, colour: colourAt("natural", visit, past, dark) },
+    { d: `M112,543 H320 L${end(MARKS.fat.at)}`, colour: colourAt("composition", visit, past, dark) },
   ];
 }
 
@@ -79,24 +88,26 @@ function leads(hero: HeroMap, visit: number, past: boolean) {
  * arm and body fat at the belly; a checkpoint draws it in slate.
  */
 export function TwinHero({ visit = LATEST, past = false, readouts = true, className }: { visit?: number; past?: boolean; readouts?: boolean; className?: string }) {
-  const hero = useHero(usePrefs().sex);
+  const prefs = usePrefs();
+  const hero = useHero(prefs.sex);
+  const dark = prefs.theme === "dark";
   const bp = readingOf("natural", visit);
   const fat = readingOf("composition", visit);
   const tints = useMemo<Tint[]>(
     () => [
-      { organ: MARKS.bp, color: colourAt("natural", visit, past), strength: toneOf(bp) ? 1 : 0.5 },
-      { organ: MARKS.fat, color: colourAt("composition", visit, past), strength: toneOf(fat) ? 1 : 0.5 },
+      { organ: MARKS.bp, color: colourAt("natural", visit, past, dark), strength: toneOf(bp) ? 1 : 0.5 },
+      { organ: MARKS.fat, color: colourAt("composition", visit, past, dark), strength: toneOf(fat) ? 1 : 0.5 },
     ],
-    [visit, past, bp, fat],
+    [visit, past, bp, fat, dark],
   );
   return (
     <span className={`tw-hero-stage ${className ?? ""}`} data-past={past ? "" : undefined}>
       {hero && (
         <>
-          <HeroField className="tw-hero-field" hero={hero} tints={tints} ramp={past ? ["#d3d9ea", SLATE] : undefined} label={`Your twin at visit ${visit}`} style={heroStyle(hero)} />
+          <HeroField className="tw-hero-field" hero={hero} tints={tints} ramp={dark ? (past ? DARK.past : DARK.ramp) : past ? ["#d3d9ea", SLATE] : undefined} label={`Your twin at visit ${visit}`} style={heroStyle(hero)} />
           {readouts && (
             <svg className="tw-hero-lead" viewBox="0 0 1000 1150" aria-hidden>
-              {leads(hero, visit, past).map((l) => (
+              {leads(hero, visit, past, dark).map((l) => (
                 <path key={l.d} d={l.d} fill="none" stroke={l.colour} strokeWidth="1" vectorEffect="non-scaling-stroke" />
               ))}
             </svg>

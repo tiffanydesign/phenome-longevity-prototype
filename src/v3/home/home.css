@@ -1118,7 +1118,7 @@
   }
 }
 
-/* the twin's door on Home: one short row, a bust on a pale sky disc, two lines and a way in */
+/* the twin's door on Home: one short row, the figure on its sky in a rounded window, two lines and a way in */
 .v2-slot[data-card="twin"][data-size="w"],
 .v2-slot[data-card="supplements"],
 .v2-slot[data-card="cgm"] {
@@ -1145,16 +1145,22 @@
 .v2-twin-entry-fig {
   position: relative;
   flex: none;
-  width: 62px;
-  height: 62px;
+  width: 60px;
+  height: 60px;
   overflow: hidden;
-  border-radius: 50%;
+  border-radius: 18px;
+  /* the twin's own sky, so the thumbnail is a window onto the Twin page */
   background: color-mix(in srgb, #7fbcdc 24%, var(--v-card));
 }
-/* cropped to head and shoulders */
+:root[data-theme="dark"] .v2-twin-entry-fig {
+  background: color-mix(in srgb, var(--v-navy) 22%, var(--v-card-2));
+}
+/* the half-length figure from the Twin page, framed head to chest and dissolving at the bottom edge as it does there */
 .v2-twin-entry-fig .tw-hero-stage {
-  width: 260%;
-  margin: -6px 0 0 -80%;
+  width: 180%;
+  margin: 1px 0 0 -40%;
+  -webkit-mask-image: linear-gradient(#000 52%, transparent 74%);
+  mask-image: linear-gradient(#000 52%, transparent 74%);
 }
 .v2-twin-entry-text {
   min-width: 0;
@@ -1407,7 +1413,4 @@ button.v2-svc:active {
 .v2-visit small {
   font-size: 11px;
   letter-spacing: -0.015em;
-}
-:root[data-theme="dark"][data-tone="graphite"] .v2-head[data-under] .v2-hpill {
-  background: #3133388c;
 }

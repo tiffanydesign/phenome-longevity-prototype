@@ -586,12 +586,3 @@ a.pf-row {
 .pf-doc > *::before {
   display: none;
 }
-:root[data-tone="graphite"] .pf-prev[data-dark] {
-  background: #232428;
-}
-:root[data-tone="graphite"] .pf-prev[data-dark] i[data-k="card"] {
-  background: #313338;
-}
-:root[data-tone="graphite"] .pf-prev[data-dark] i[data-k="bar"] {
-  background: #3d3f45;
-}
