@@ -26,10 +26,12 @@ const MODES: { id: Mode; name: string; icon: JSX.Element }[] = [
   {
     id: "meal",
     name: "Meal",
+    // fork and knife
     icon: (
       <>
-        <circle cx="12" cy="12" r="7.5" />
-        <circle cx="12" cy="12" r="3.5" />
+        <path d="M4 3v6a2.5 2.5 0 0 0 2.5 2.5h1A2.5 2.5 0 0 0 10 9V3" />
+        <path d="M7 3v18" />
+        <path d="M19.5 14.5V3c-2.5 0-4.5 2.2-4.5 5v4.5a2 2 0 0 0 2 2h2.5zm0 0V21" />
       </>
     ),
   },
@@ -210,7 +212,9 @@ export function ScanScreen() {
         )}
 
         {/* the read, adding up as it goes */}
+        {/* the read appears once the scan finds its first food, then counts up */}
         {mode === "meal" ? (
+          found > 0 && (
           <section className="sc-card" aria-label="Live nutrition read">
             <div className="sc-card-head">
               <span>
@@ -244,6 +248,7 @@ export function ScanScreen() {
               ))}
             </div>
           </section>
+          )
         ) : (
           read && (
             <section className="sc-card sc-pack" aria-label="Product read">

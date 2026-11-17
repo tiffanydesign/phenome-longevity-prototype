@@ -42,7 +42,7 @@
   box-shadow: inset 0 0 0 1px #ffffff1f;
 }
 .ml3-round[aria-pressed="true"] {
-  color: var(--v-navy);
+  color: var(--v-save);
 }
 .ml3-round:active {
   transform: scale(0.93);

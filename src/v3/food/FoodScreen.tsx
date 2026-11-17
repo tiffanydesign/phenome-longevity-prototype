@@ -137,8 +137,11 @@ export function FoodScreen() {
         <section className="fd-sec">
           <div className="fd-h-row">
             <h2>{isToday ? "Today's meals" : "Meals"}</h2>
-            <button className="fd-more" onClick={() => go("/v3/food/saved")}>
-              Saved{saved.length ? ` (${saved.length})` : ""}
+            <button className="fd-saved" aria-label={`Saved meals, ${saved.length}`} onClick={() => go("/v3/food/saved")}>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden>
+                <path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-4.5L5.5 20.5v-16a1 1 0 0 1 1-1z" />
+              </svg>
+              {saved.length > 0 && <b>{saved.length}</b>}
             </button>
           </div>
           {list.length === 0 ? (

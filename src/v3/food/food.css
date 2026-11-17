@@ -1265,3 +1265,26 @@
 .v2-veil.dv-veil[data-on] {
   opacity: 1;
 }
+
+/* saved meals: the bookmark itself, yellow, with the count beside it */
+:root {
+  --v-save: #f2b705;
+}
+.fd-saved {
+  height: 34px;
+  padding: 0 12px 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 17px;
+  color: var(--v-save);
+  background: var(--v-card);
+}
+.fd-saved b {
+  font: 600 15px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.fd-saved:active {
+  transform: scale(0.95);
+}
