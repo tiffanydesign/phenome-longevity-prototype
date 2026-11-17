@@ -24,6 +24,11 @@ import { ConsultScreen } from "./consult/ConsultScreen";
 import { ConsultationsScreen } from "./consult/ConsultationsScreen";
 import { HabitsScreen } from "./habits/HabitsScreen";
 import { KitCompareScreen } from "./kits/KitCompareScreen";
+import { FoodScreen } from "./food/FoodScreen";
+import { ScanScreen } from "./food/ScanScreen";
+import { MealScreen } from "./food/MealScreen";
+import { AddFood } from "./food/AddFood";
+import { SavedScreen } from "./food/SavedScreen";
 
 const group = "Clinical edition";
 
@@ -40,6 +45,11 @@ export const routes: ScreenRoute[] = [
   { path: "/v3/devices/:id", element: <DeviceScreen />, title: "Device", group },
   { path: "/v3/metric/:id", element: <MetricScreen />, title: "Metric detail", group },
   { path: "/v3/workout/:id", element: <WorkoutScreen />, title: "Workout", group },
+  { path: "/v3/food", element: <FoodScreen />, title: "Nutrition", group },
+  { path: "/v3/food/scan", element: <ScanScreen />, title: "Scan a meal", group },
+  { path: "/v3/food/meal/:id", element: <MealScreen />, title: "Meal", group },
+  { path: "/v3/food/add", element: <AddFood />, title: "Add food", group },
+  { path: "/v3/food/saved", element: <SavedScreen />, title: "Saved meals", group },
   { path: "/v3/profile", element: <ProfileScreen />, title: "Profile", group },
   { path: "/v3/profile/details", element: <PersonalDetails />, title: "Personal details", group },
   { path: "/v3/profile/health-history", element: <HealthHistoryPage />, title: "Health history", group },

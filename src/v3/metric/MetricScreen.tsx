@@ -4,6 +4,8 @@ import "../home/glance.css";
 import { CapacityDetail } from "./CapacityDetail";
 import { SleepDetail } from "./SleepDetail";
 import { ActivityDetail } from "./ActivityDetail";
+import { FoodScreen } from "../food/FoodScreen";
+import { BpDetail, CompareBlock, inMonitor, MetricPicker } from "./MonitorExtras";
 import { GoalSheet, goalOf, GOALS, useGoals } from "./goals";
 import { useParams } from "react-router-dom";
 import { metric as baseMetric, metricsFor, periodTitle, rangeLabels, seriesFor, SOURCE_LABEL, STATUS_LABEL, visitLabels, type Range } from "../data/metrics";
@@ -37,10 +39,6 @@ const ACTIONS: Record<string, { label: string; to: string; primary?: boolean }[]
     { label: "Log an activity", to: "/journal/activity/select", primary: true },
     { label: "Activity history", to: "/journal/activity" },
   ],
-  diet: [
-    { label: "Log a meal", to: "/journal/diet", primary: true },
-    { label: "Snap a meal", to: "/journal/diet/camera" },
-  ],
 };
 
 /**
@@ -60,8 +58,13 @@ const FROM_CARD: Record<string, { title: string; field?: string; glyph?: GlyphNa
 /** Clinic and omics readings belong to the twin; everything else is a daily reading from a device or the diary. */
 const isDaily = (m: { source: string }) => m.source !== "clinic" && m.source !== "omics";
 
+/** Food has its own page (food/FoodScreen); every other reading uses the shared one. */
 export function MetricScreen() {
   const { id = "capacity" } = useParams();
+  return id === "diet" ? <FoodScreen /> : <MetricPage id={id} />;
+}
+
+function MetricPage({ id }: { id: string }) {
   const go = useGo();
   const goals = useGoals();
   // a goal the member set replaces the default one in the unit and the comparison
@@ -71,6 +74,7 @@ export function MetricScreen() {
   const [range, setRangeRaw] = useState<Range>("W");
   const [page, setPage] = useState(0);
   const [editing, setEditing] = useState(false);
+  const [picking, setPicking] = useState(false);
   const setRange = (r: Range) => {
     setRangeRaw(r);
     setPage(0);
@@ -116,10 +120,19 @@ export function MetricScreen() {
 
         {/* the reading named in its own hue, the number large, then one plain sentence of what it means */}
         <section className="mx-hero" style={{ viewTransitionName: "v2-hero" }}>
-          <p className="mx-eyebrow">
-            <Glyph name={card?.glyph ?? glyphOf(m.id)} size={18} />
-            {card?.title ?? m.label}
-          </p>
+          {inMonitor(m.id) ? (
+            // the original monitor's picker: any daily reading, switched in place
+            <button className="mx-eyebrow mx-eyebrow-pick" aria-label={`${card?.title ?? m.label}, choose another reading`} onClick={() => setPicking(true)}>
+              <Glyph name={card?.glyph ?? glyphOf(m.id)} size={18} />
+              {card?.title ?? m.label}
+              <Chevron dir="down" size={14} />
+            </button>
+          ) : (
+            <p className="mx-eyebrow">
+              <Glyph name={card?.glyph ?? glyphOf(m.id)} size={18} />
+              {card?.title ?? m.label}
+            </p>
+          )}
           <div className="mx-value">
             <b>
               <Num v={m.value} />
@@ -204,6 +217,10 @@ export function MetricScreen() {
           )}
         </section>
 
+        {/* the period against the one before, as the original monitor set it */}
+        {isDaily(m) && m.chart !== "scan" && <CompareBlock m={m} range={range} page={page} />}
+        {m.id === "bpd" && <BpDetail range={range} page={page} />}
+
         {m.id === "capacity" && <CapacityDetail />}
 
         {/* what the number means, as a headline and a plain sentence */}
@@ -247,6 +264,7 @@ export function MetricScreen() {
           </button>
         )}
       </div>
+      {picking && <MetricPicker current={m.id} onClose={() => setPicking(false)} />}
       {editing && GOALS[m.id] && <GoalSheet id={m.id} current={goals.get(m.id)} onSave={(v) => goals.set(m.id, v)} onClose={() => setEditing(false)} />}
     </V2Screen>
   );

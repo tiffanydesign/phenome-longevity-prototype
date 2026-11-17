@@ -1,0 +1,1258 @@
+/* =====================================================================
+ * Nutrition: one large number in a white card, three rings under it, the
+ * plates as photo cards, then the day and the weeks. White cards on the
+ * page ground, ink for values, grey for words, one hue per nutrient.
+ * ===================================================================== */
+.fd {
+  padding-bottom: calc(120px + env(safe-area-inset-bottom));
+}
+.fd-title {
+  margin: 14px 20px 0;
+  font: 700 34px/1.1 var(--v-text);
+  letter-spacing: -0.03em;
+  color: var(--v-ink);
+}
+
+/* ---------- rings ---------- */
+.fd-ring {
+  position: relative;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+}
+.fd-ring svg {
+  position: absolute;
+  inset: 0;
+}
+.fd-ring-track {
+  fill: none;
+  stroke: color-mix(in srgb, var(--v-ink) 9%, transparent);
+}
+.fd-ring-in {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.fd-mark {
+  flex: none;
+  display: block;
+}
+
+/* ---------- the week ---------- */
+.fd-week {
+  margin: 16px 12px 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.fd-week button {
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--v-ink-2);
+}
+.fd-week .fd-ring-in span {
+  font: 600 13px/1 var(--v-text);
+}
+.fd-week b {
+  font: 500 15px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+}
+.fd-week button[aria-pressed="true"] {
+  color: var(--v-ink);
+}
+.fd-week button[aria-pressed="true"] b {
+  font-weight: 700;
+}
+.fd-week button[aria-pressed="true"] .fd-ring::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--mid) 14%, transparent);
+}
+
+/* ---------- the one number ---------- */
+.fd-hero {
+  margin: 14px 16px 0;
+  padding: 22px 20px 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 28px;
+  background: var(--v-card);
+  animation: mx-in 0.45s var(--v-ease) backwards;
+}
+.fd-hero > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.fd-hero-n {
+  font: 700 56px/1 var(--v-num);
+  letter-spacing: -0.04em;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.fd-hero-w {
+  margin-top: 6px;
+  font: 600 17px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.fd-hero-w small {
+  font-weight: 500;
+  color: var(--v-ink-3);
+}
+.fd-hero-s {
+  margin-top: 4px;
+  font: 400 14px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-hero-mark {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink);
+  background: var(--v-bg);
+}
+
+/* ---------- nutrient cards, two swipeable pages ---------- */
+.fd-pager {
+  margin-top: 10px;
+}
+.fd-pages {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.fd-page {
+  flex: none;
+  width: 100%;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  scroll-snap-align: start;
+}
+.fd-nc {
+  min-width: 0;
+  padding: 16px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 22px;
+  background: var(--v-card);
+}
+.fd-nc > b {
+  font: 700 22px/1.1 var(--v-num);
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.fd-nc > span {
+  margin: 3px 0 14px;
+  font: 500 13px/1.25 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-nc em {
+  font-style: normal;
+}
+.fd-nc[data-over] em {
+  font-weight: 600;
+  color: var(--v-alert-ink);
+}
+.fd-nc .fd-ring {
+  align-self: center;
+}
+.fd-dots {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+.fd-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--v-ink) 18%, transparent);
+  transition: background 0.2s;
+}
+.fd-dots i[data-on] {
+  background: var(--v-ink);
+}
+
+/* ---------- meals ---------- */
+.fd-meals {
+  padding-top: 32px;
+}
+.fd-h-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.fd-h-note {
+  font: 500 15px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.fd-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.fd-meal {
+  width: 100%;
+  min-height: 112px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 22px;
+  text-align: left;
+  background: var(--v-card);
+  color: var(--v-ink);
+}
+.fd-meal:active {
+  transform: scale(0.985);
+}
+.fd-meal-pic {
+  position: relative;
+  flex: none;
+  width: 112px;
+  background: var(--v-card-2);
+}
+.fd-meal-pic img,
+.fd-meal-pic .fd-tile {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fd-meal-prog {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #0b0d1466;
+  color: #fff;
+}
+.fd-meal-prog small {
+  font: 600 13px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+}
+.fd-meal-prog .fd-ring-track {
+  stroke: #ffffff40;
+}
+.fd-meal-body {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+}
+.fd-meal-when {
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.fd-meal-name {
+  margin-top: -2px;
+  font: 600 16px/1.25 var(--v-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.fd-meal-kcal {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 500 15px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-meal-kcal b {
+  font: 700 19px/1 var(--v-num);
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.fd-meal-macros {
+  display: flex;
+  gap: 14px;
+}
+.fd-meal-macros span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font: 500 14px/1 var(--v-text);
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.fd-skel {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.fd-skel i {
+  height: 9px;
+  border-radius: 5px;
+  background: var(--v-fill);
+  animation: fd-pulse 1.4s ease-in-out infinite;
+}
+.fd-skel i:last-child {
+  width: 64%;
+}
+@keyframes fd-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+.fd-meal-wait {
+  font: 400 13px/1.3 var(--v-text);
+  color: var(--v-ink-3);
+}
+.fd-tile {
+  display: grid;
+  place-items: center;
+  font: 700 34px/1 var(--v-text);
+  color: color-mix(in oklab, var(--mid), var(--v-ink) 30%);
+  background: color-mix(in srgb, var(--mid) 16%, var(--v-card));
+}
+.fd-empty {
+  width: 100%;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 22px;
+  border: 1.5px dashed color-mix(in srgb, var(--v-ink) 16%, transparent);
+  text-align: left;
+  color: var(--v-ink);
+}
+.fd-empty b {
+  font: 600 17px/1.2 var(--v-text);
+}
+.fd-empty span {
+  font: 400 15px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-slots {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.fd-slots button {
+  height: 40px;
+  padding: 0 16px 0 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 20px;
+  font: 600 15px/1 var(--v-text);
+  color: var(--v-navy);
+  background: var(--v-card);
+}
+.fd-slots button:active {
+  transform: scale(0.96);
+}
+
+/* ---------- day and week pictures ---------- */
+.fd-card {
+  padding: 18px 18px 16px;
+}
+.fd-say {
+  margin: 0 0 14px;
+  font: 400 17px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-say b {
+  font-weight: 600;
+  color: var(--v-ink);
+}
+.fd-pace {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.fd-goal {
+  stroke: var(--v-ink-3);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+.fd-goal-t,
+.fd-axis {
+  font: 500 11px var(--v-text);
+  fill: var(--v-ink-3);
+}
+.fd-was {
+  fill: none;
+  stroke: var(--v-ink-3);
+  stroke-width: 1.8;
+  stroke-dasharray: 4 4;
+}
+.fd-now {
+  fill: none;
+  stroke: var(--mid);
+  stroke-width: 2.6;
+  stroke-linejoin: round;
+}
+.fd-now-area {
+  fill: color-mix(in srgb, var(--mid) 12%, transparent);
+}
+.fd-dot {
+  fill: var(--v-card);
+  stroke: var(--mid);
+  stroke-width: 2.6;
+}
+.fd-key {
+  margin: 14px 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.fd-key div {
+  min-width: 0;
+}
+.fd-key dt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 500 12px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-key dt::before {
+  content: "";
+  flex: none;
+  width: 12px;
+  height: 0;
+  border-top: 2.6px solid var(--mid);
+}
+.fd-key [data-k="was"] dt::before {
+  border-top: 1.8px dashed var(--v-ink-3);
+}
+.fd-key dd {
+  margin: 4px 0 0;
+  font: 600 15px/1.2 var(--v-num);
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.fd-seg i {
+  width: calc((100% - 6px) / 4);
+}
+.fd-seg button {
+  font-size: 13px;
+}
+.fd-wk-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.fd-wk-head div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fd-wk-head div:last-child {
+  align-items: flex-end;
+  text-align: right;
+}
+.fd-wk-head b {
+  font: 700 30px/1 var(--v-num);
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.fd-wk-head b small {
+  font-size: 17px;
+  color: var(--v-ink-3);
+}
+.fd-wk-head span {
+  font: 400 14px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-wk {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  align-items: end;
+  border-bottom: 1px solid var(--v-line);
+}
+.fd-wk-goal {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed var(--v-ink-3);
+}
+.fd-wk-goal span {
+  position: absolute;
+  right: 0;
+  top: -16px;
+  font: 500 11px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+}
+.fd-wk-col {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.fd-wk-stack {
+  width: min(100%, 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  border-radius: 7px 7px 3px 3px;
+  transform-origin: bottom;
+  animation: fd-grow 0.5s var(--v-ease) both;
+}
+@keyframes fd-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+.fd-wk-stack i {
+  min-height: 2px;
+}
+.fd-wk-none {
+  position: absolute;
+  bottom: 0;
+  width: 6px;
+  height: 6px;
+  margin-bottom: 4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--v-ink-3);
+}
+.fd-wk-axis {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  text-align: center;
+  font: 500 12px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-wk-axis [data-today] {
+  font-weight: 700;
+  color: var(--v-ink);
+}
+.fd-wk-axis [data-ahead] {
+  color: var(--v-ink-3);
+  opacity: 0.6;
+}
+.fd-wk-key {
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.fd-wk-key span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink);
+}
+.fd-wk-key i {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+}
+.fd-wk-key small {
+  font: 500 13px/1 var(--v-num);
+  color: var(--v-ink-3);
+}
+
+/* ---------- about ---------- */
+.fd-acc {
+  padding: 4px 18px;
+}
+.fd-acc > div + div {
+  border-top: 0.5px solid var(--v-line);
+}
+.fd-acc button {
+  width: 100%;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  font: 600 16px/1.3 var(--v-text);
+  color: var(--v-ink);
+}
+.fd-acc button svg {
+  flex: none;
+  color: var(--v-ink-3);
+  transition: transform 0.25s var(--v-ease);
+}
+.fd-acc [data-open] button svg {
+  transform: rotate(45deg);
+}
+.fd-acc p {
+  display: none;
+  margin: 0 0 16px;
+  font: 400 15px/1.5 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-acc [data-open] p {
+  display: block;
+}
+
+/* ---------- the round add button ---------- */
+.fd-fab {
+  position: absolute;
+  z-index: 40;
+  right: 20px;
+  bottom: calc(30px + env(safe-area-inset-bottom));
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-on-navy, #fff);
+  background: var(--v-navy);
+  box-shadow: 0 14px 28px -12px #1a2a66aa, 0 2px 6px #0b0d1426;
+  animation: mx-in 0.45s 0.15s var(--v-ease) backwards;
+}
+:root[data-theme="dark"] .fd-fab {
+  color: #0b0d14;
+}
+.fd-fab:active {
+  transform: scale(0.94);
+}
+
+/* ---------- add sheet ---------- */
+.fd-add {
+  align-items: stretch;
+}
+.fd-add > h2 {
+  align-self: center;
+}
+.fd-ways {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.fd-ways button {
+  min-height: 112px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 3px;
+  border-radius: 22px;
+  text-align: left;
+  color: var(--v-ink);
+  background: var(--v-bg);
+}
+.fd-ways button svg {
+  margin-bottom: auto;
+  color: var(--v-navy);
+}
+.fd-ways button[data-k="meal"] {
+  color: var(--v-on-navy, #fff);
+  background: var(--v-navy);
+}
+.fd-ways button[data-k="meal"] svg {
+  color: inherit;
+}
+.fd-ways button[data-k="meal"] small {
+  color: color-mix(in srgb, currentColor 72%, transparent);
+}
+:root[data-theme="dark"] .fd-ways button[data-k="meal"] {
+  color: #0b0d14;
+}
+.fd-ways b {
+  font: 600 16px/1.2 var(--v-text);
+}
+.fd-ways small {
+  font: 400 13px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-ways button:active {
+  transform: scale(0.97);
+}
+.fd-add-h {
+  margin: 8px 0 0;
+  font: 600 15px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-again {
+  margin: 0 -20px;
+  padding: 0 20px 4px;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.fd-again button {
+  flex: none;
+  width: 108px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+  color: var(--v-ink);
+}
+.fd-again-pic {
+  position: relative;
+  width: 108px;
+  height: 108px;
+  margin-bottom: 5px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--v-card-2);
+}
+.fd-again-pic img,
+.fd-again-pic .fd-tile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fd-again-pic i {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-navy);
+  background: #fffffff0;
+}
+.fd-again b {
+  font: 600 13px/1.25 var(--v-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.fd-again small {
+  font: 400 12px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* ---------- fix sheet / food sheet ---------- */
+.fd-fix,
+.fd-food {
+  align-items: stretch;
+}
+.fd-fix > h2,
+.fd-food > h2 {
+  align-self: center;
+  text-align: center;
+}
+.fd-fix textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 16px;
+  resize: none;
+  font: 400 16px/1.4 var(--v-text);
+  color: var(--v-ink);
+  background: var(--v-bg);
+}
+.fd-fix textarea:focus {
+  outline: 2px solid var(--v-navy);
+}
+.fd-fix-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.fd-fix-chips button {
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 19px;
+  font: 500 14px/1 var(--v-text);
+  color: var(--v-ink);
+  background: var(--v-bg);
+}
+.fd-fix-chips button[aria-pressed="true"] {
+  color: var(--v-on-navy, #fff);
+  background: var(--v-navy);
+}
+.fd-fix .mx-sheet-save:disabled {
+  opacity: 0.35;
+}
+.fd-food .mx-sheet-save,
+.fd-fix .mx-sheet-save {
+  text-align: center;
+}
+.fd-fix .mx-sheet-cancel,
+.fd-food .mx-sheet-cancel {
+  align-self: center;
+}
+.fd-food-desc {
+  margin: -8px 0 4px;
+  text-align: center;
+  font: 400 14px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-food-sum {
+  padding: 14px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  border-radius: 16px;
+  font: 400 14px/1 var(--v-text);
+  color: var(--v-ink-2);
+  background: var(--v-bg);
+}
+.fd-food-sum span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.fd-food-sum b {
+  font-weight: 700;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- nutrient bars (meal page) ---------- */
+.fd-bars {
+  padding: 4px 18px;
+  border-radius: 22px;
+  background: var(--v-card);
+}
+.fd-bar {
+  padding: 14px 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px 8px;
+}
+.fd-bar + .fd-bar {
+  border-top: 0.5px solid var(--v-line);
+}
+.fd-bar-name {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 600 15px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.fd-bar-val {
+  font: 400 14px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.fd-bar-val b {
+  font-weight: 600;
+  color: var(--v-ink);
+}
+.fd-bar-track {
+  grid-column: 1 / -1;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--v-ink) 8%, transparent);
+}
+.fd-bar-track i {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* ---------- add food page ---------- */
+.fa {
+  padding: 0 0 48px;
+}
+.fa-seg {
+  margin: 4px 0 14px;
+}
+.fa-seg i {
+  width: calc((100% - 6px) / 4);
+}
+.fa-quick {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.fa-quick button {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 16px;
+  font: 600 15px/1 var(--v-text);
+  color: var(--v-navy);
+  background: var(--v-card);
+}
+.fa-h {
+  margin: 28px 4px 10px;
+  font: 700 20px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.fa-none {
+  margin: 0 4px;
+  font: 400 15px/1.45 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fa-list {
+  border-radius: 22px;
+  background: var(--v-card);
+  overflow: hidden;
+}
+.fa-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 12px;
+}
+.fa-row + .fa-row {
+  border-top: 0.5px solid var(--v-line);
+}
+.fa-row-main {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 4px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  color: var(--v-ink);
+}
+.fa-row-main b {
+  font: 600 16px/1.25 var(--v-text);
+}
+.fa-row-main small {
+  font: 400 13px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fa-plus {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 10%, transparent);
+}
+.fa-plus::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+}
+.fa-plus {
+  position: relative;
+}
+.fa-plus:active {
+  transform: scale(0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fd-hero,
+  .fd-fab,
+  .fd-skel i,
+  .fd-wk-stack {
+    animation: none;
+  }
+}
+
+/* =====================================================================
+ * Grouped-card pass: page name beside the back button, hue labels open
+ * every card, section headings bold with a quiet link at the right.
+ * ===================================================================== */
+.fd-top {
+  position: relative;
+  z-index: 2;
+  padding: calc(var(--status-h) + 6px) 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.fd-top h1 {
+  flex: 1;
+  margin: 0;
+  font: 700 24px/1 var(--v-text);
+  letter-spacing: -0.025em;
+  color: var(--v-ink);
+}
+.fd-goal-pill {
+  height: 40px;
+  padding: 0 14px 0 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 20px;
+  font: 600 15px/1 var(--v-num);
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+  background: color-mix(in srgb, var(--v-card) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 0 0 1px #ffffffb3, 0 6px 16px -10px #24365e40;
+}
+:root[data-theme="dark"] .fd-goal-pill {
+  box-shadow: inset 0 0 0 1px #ffffff1f;
+}
+.fd-goal-pill svg {
+  color: var(--mid);
+}
+.fd-goal-pill:active {
+  transform: scale(0.96);
+}
+.fd-week {
+  margin-top: 18px;
+}
+
+/* the hue label every card opens with */
+.fd-label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 15px/1.2 var(--v-text);
+  color: color-mix(in oklab, var(--mid), var(--v-ink) 22%);
+}
+.fd-label svg {
+  color: var(--mid);
+}
+.fd-label span {
+  margin-left: auto;
+  font-weight: 400;
+  color: var(--v-ink-3);
+}
+
+.fd-hero {
+  display: block;
+  padding: 16px 18px 18px;
+  border-radius: 24px;
+}
+.fd-hero-row {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.fd-hero > .fd-hero-row {
+  flex-direction: row;
+}
+.fd-hero-row > div {
+  display: flex;
+  flex-direction: column;
+}
+.fd-hero-n {
+  font-size: 54px;
+}
+.fd-hero-pct {
+  font: 700 17px/1 var(--v-num);
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.fd-hero-say {
+  margin: 14px 0 0;
+  padding-top: 14px;
+  border-top: 0.5px solid var(--v-line);
+  font: 400 15px/1.45 var(--v-text);
+  color: var(--v-ink-2);
+  text-wrap: pretty;
+}
+.fd-hero-say b {
+  font-weight: 600;
+  color: var(--v-ink);
+}
+
+/* nutrient cards: hue label, amount, target, ring */
+.fd-nc {
+  padding: 14px 12px 14px 14px;
+}
+.fd-nc-label {
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 600 13px/1 var(--v-text);
+  color: color-mix(in oklab, var(--hue), var(--v-ink) 25%);
+}
+.fd-nc > span {
+  margin: 4px 0 12px;
+  font-size: 12px;
+}
+.fd-nc-pct {
+  font: 700 12px/1 var(--v-num);
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* sections */
+.fd-sec {
+  padding: 34px 16px 0;
+}
+.fd-h-row {
+  margin: 0 4px 12px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.fd-h-row h2 {
+  margin: 0;
+  font: 700 22px/1.2 var(--v-text);
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+}
+.fd-more {
+  min-height: 32px;
+  font: 500 16px/1 var(--v-text);
+  color: var(--v-accent);
+}
+.fd-sec .fd-slots {
+  margin-left: 0;
+}
+
+/* longevity analysis: hue label, the number, what it means */
+.fd-la {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.fd-la-card {
+  padding: 16px 18px 18px;
+  border-radius: 22px;
+  background: var(--v-card);
+}
+.fd-la-label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 15px/1.2 var(--v-text);
+  color: color-mix(in oklab, var(--hue), var(--v-ink) 25%);
+}
+.fd-la-value {
+  display: block;
+  margin-top: 8px;
+  font: 700 26px/1.1 var(--v-num);
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.fd-la-body {
+  margin: 8px 0 0;
+  font: 400 15px/1.45 var(--v-text);
+  color: var(--v-ink-2);
+  text-wrap: pretty;
+}
+.fd-la-foot,
+.fd-la-none {
+  margin: 4px 4px 0;
+  font: 400 13px/1.4 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* history */
+.fd-hs-period {
+  margin: -4px -6px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.fd-hs-period span {
+  font: 600 15px/1 var(--v-text);
+  color: var(--v-ink);
+}
+.fd-hs-period button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink);
+  background: var(--v-bg);
+}
+.fd-hs-period button:disabled {
+  opacity: 0.3;
+}
+.fd-wk[data-span="D"],
+.fd-card:has(.fd-wk[data-span="D"]) .fd-wk-axis {
+  gap: 2px;
+}
+.fd-wk[data-span="M"],
+.fd-wk[data-span="6M"],
+.fd-card:has(.fd-wk[data-span="M"]) .fd-wk-axis,
+.fd-card:has(.fd-wk[data-span="6M"]) .fd-wk-axis {
+  gap: 3px;
+}
+.fd-wk[data-span="Y"],
+.fd-card:has(.fd-wk[data-span="Y"]) .fd-wk-axis {
+  gap: 6px;
+}
+.fd-wk[data-span="M"] .fd-wk-stack,
+.fd-wk[data-span="6M"] .fd-wk-stack,
+.fd-wk[data-span="D"] .fd-wk-stack {
+  gap: 1px;
+  border-radius: 3px 3px 1px 1px;
+}
+.fd-wk-axis span {
+  white-space: nowrap;
+  overflow: visible;
+}
+.fd-wk-col[data-now] .fd-wk-stack {
+  outline: 2px solid var(--v-card);
+  box-shadow: 0 0 0 3.5px color-mix(in srgb, var(--v-ink) 22%, transparent);
+}
+
+/* saved meals */
+.fs-row {
+  padding-left: 12px;
+}
+.fs-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+.fs-main .fa-row-main {
+  padding-left: 0;
+}
+.fs-pic {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--v-card-2);
+}
+.fs-pic img,
+.fs-pic .fd-tile {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fs-pic .fd-tile {
+  font-size: 22px;
+}
+.fd-add-row {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.fd-add-row .fd-add-h {
+  margin: 0;
+}

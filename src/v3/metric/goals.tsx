@@ -6,6 +6,7 @@ export const GOALS: Record<string, { title: string; unit: string; step: number; 
   steps: { title: "Daily step goal", unit: "steps", step: 500, min: 2000, max: 30000 },
   kcal: { title: "Active calorie goal", unit: "kcal", step: 10, min: 50, max: 1500 },
   diet: { title: "Daily energy goal", unit: "kcal", step: 50, min: 1000, max: 4000 },
+  distance: { title: "Daily distance goal", unit: "km", step: 1, min: 1, max: 30 },
 };
 
 const KEY = "phenome.v3.goals";

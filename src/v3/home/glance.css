@@ -169,14 +169,15 @@
 .gl-macro-track i:last-child {
   border-radius: 0 5px 5px 0;
 }
+/* one hue per macro, the same three the Nutrition page uses (food/data.ts NUTRIENT) */
 [data-part="Protein"] {
-  --part: var(--mid);
+  --part: #e0559a;
 }
 [data-part="Carbs"] {
-  --part: color-mix(in srgb, var(--mid) 62%, var(--v-card));
+  --part: #e68c2c;
 }
 [data-part="Fat"] {
-  --part: color-mix(in srgb, var(--mid) 35%, var(--v-card));
+  --part: #3478f6;
 }
 .gl-macro-track i {
   background: var(--part);

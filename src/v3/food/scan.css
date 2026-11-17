@@ -1,0 +1,698 @@
+/* =====================================================================
+ * The camera as a scene: a real table edge to edge, controls as dark
+ * glass floating over it, a band of light reading the plate, foods
+ * pinned where they sit, the read adding up in a card at the foot.
+ * Always dark, whatever the theme.
+ * ===================================================================== */
+.sc {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  --sc-glass: #0b0d1466;
+  --sc-glass-strong: #0b0d14b8;
+  --sc-edge: inset 0 0 0 0.5px #ffffff38, 0 10px 30px -14px #000c;
+  --sc-ok: #4cd964;
+  container-type: size;
+}
+.sc-feed {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: sc-settle 1.2s var(--v-ease) both;
+}
+/* the camera finding focus as it opens */
+@keyframes sc-settle {
+  from {
+    transform: scale(1.06);
+    filter: blur(6px) brightness(0.8);
+  }
+}
+.sc-torchlight {
+  position: absolute;
+  inset: 0;
+  background: #fff8e8;
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* ---------- glass, shared ---------- */
+.sc-round,
+.sc-status,
+.sc-live,
+.sc-modes,
+.sc-card,
+.sc-tag > span {
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: var(--sc-edge);
+}
+
+.sc-top {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--status-h) + 6px);
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sc-round {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--sc-glass);
+}
+.sc-round:active {
+  transform: scale(0.93);
+}
+.sc-status {
+  height: 34px;
+  padding: 0 14px 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 17px;
+  font: 600 14px/1 var(--v-text);
+  background: var(--sc-glass);
+}
+.sc-status i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffd85f;
+  animation: sc-blink 1s ease-in-out infinite;
+}
+.sc[data-done] .sc-status i {
+  background: var(--sc-ok);
+  animation: none;
+}
+@keyframes sc-blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+.sc-live {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  z-index: 3;
+  right: 16px;
+  top: calc(var(--status-h) + 60px);
+  height: 30px;
+  padding: 0 13px;
+  border-radius: 15px;
+  white-space: nowrap;
+  font: 600 12.5px/1 var(--v-text);
+  color: #ffffffd9;
+  background: var(--sc-glass);
+}
+
+/* ---------- the frame ---------- */
+.sc-frame {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 17.5%;
+  height: 37%;
+  transition: all 0.45s var(--v-ease);
+}
+.sc[data-mode="barcode"] .sc-frame {
+  left: 10%;
+  right: 10%;
+  top: 27%;
+  height: 16%;
+}
+.sc[data-mode="label"] .sc-frame {
+  left: 18%;
+  right: 18%;
+  top: 15%;
+  height: 40%;
+}
+/* a packaged food: everything outside the frame dims so the eye finds the code */
+.sc[data-mode="barcode"] .sc-frame,
+.sc[data-mode="label"] .sc-frame {
+  border-radius: 20px;
+  box-shadow: 0 0 0 100vmax #0b0d1473;
+}
+.sc-code {
+  position: absolute;
+  left: 50%;
+  bottom: -40px;
+  transform: translateX(-50%);
+  padding: 6px 11px;
+  border-radius: 12px;
+  white-space: nowrap;
+  font: 600 12.5px/1 var(--v-num);
+  letter-spacing: 0.02em;
+  color: #0b0d14;
+  background: var(--sc-ok);
+  animation: sc-pop 0.4s var(--v-ease) both;
+}
+.sc-frame > i {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border: 0 solid #fff;
+  filter: drop-shadow(0 1px 4px #0008);
+  transition: border-color 0.3s, transform 0.45s var(--v-ease);
+}
+.sc-frame > i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-top-width: 3.5px;
+  border-left-width: 3.5px;
+  border-top-left-radius: 22px;
+}
+.sc-frame > i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-top-width: 3.5px;
+  border-right-width: 3.5px;
+  border-top-right-radius: 22px;
+}
+.sc-frame > i:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 3.5px;
+  border-left-width: 3.5px;
+  border-bottom-left-radius: 22px;
+}
+.sc-frame > i:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 3.5px;
+  border-right-width: 3.5px;
+  border-bottom-right-radius: 22px;
+}
+/* locked on: the corners close in a little and turn green */
+.sc[data-done] .sc-frame > i {
+  border-color: var(--sc-ok);
+}
+.sc[data-done] .sc-frame > i:nth-child(1) {
+  transform: translate(6px, 6px);
+}
+.sc[data-done] .sc-frame > i:nth-child(2) {
+  transform: translate(-6px, 6px);
+}
+.sc[data-done] .sc-frame > i:nth-child(3) {
+  transform: translate(6px, -6px);
+}
+.sc[data-done] .sc-frame > i:nth-child(4) {
+  transform: translate(-6px, -6px);
+}
+
+/* the band of light: a bright line with a soft haze trailing it */
+.sc-beam {
+  position: absolute;
+  inset: 4px;
+  overflow: hidden;
+  border-radius: 18px;
+  pointer-events: none;
+}
+.sc-beam b {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 0 10px 2px #ffffffd0, 0 0 34px 10px #b9f3ff80;
+  animation: sc-beam 2.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+.sc-beam b::after {
+  content: "";
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 3px;
+  height: 70px;
+  background: #d8f7ff2e;
+  filter: blur(14px);
+}
+@keyframes sc-beam {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(var(--sc-travel, 420px));
+    opacity: 0;
+  }
+}
+.sc[data-mode="meal"] .sc-beam {
+  --sc-travel: 37cqh;
+}
+.sc[data-mode="label"] .sc-beam {
+  --sc-travel: 40cqh;
+}
+/* barcode: a red laser line held across the middle, breathing */
+.sc[data-mode="barcode"] .sc-beam b {
+  top: 50%;
+  height: 2px;
+  background: #ff453a;
+  box-shadow: 0 0 10px 2px #ff453a99;
+  animation: sc-blink 0.9s ease-in-out infinite;
+}
+.sc[data-mode="barcode"] .sc-beam b::after {
+  display: none;
+}
+.sc[data-done] .sc-beam {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+/* ---------- foods pinned where they sit ---------- */
+.sc-tag {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translate(-7px, -50%);
+  animation: sc-pop 0.5s var(--v-ease) both;
+}
+.sc-tag[data-side="left"] {
+  flex-direction: row-reverse;
+  transform: translate(calc(-100% + 7px), -50%);
+}
+.sc-tag > i {
+  position: relative;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 3px #ffffff55, 0 2px 6px #0008;
+}
+.sc-tag > i::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  animation: sc-ping 1.6s ease-out infinite;
+}
+@keyframes sc-ping {
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.sc-tag > span {
+  max-width: 46cqw;
+  padding: 7px 11px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  border-radius: 13px;
+  white-space: nowrap;
+  background: var(--sc-glass-strong);
+}
+.sc-tag b {
+  font: 600 13.5px/1.1 var(--v-text);
+}
+.sc-tag small {
+  font: 500 12px/1 var(--v-text);
+  color: #ffffffb3;
+  font-variant-numeric: tabular-nums;
+}
+@keyframes sc-pop {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+}
+
+/* ---------- the read, at the foot ---------- */
+.sc-card {
+  position: absolute;
+  z-index: 3;
+  left: 16px;
+  right: 16px;
+  bottom: calc(194px + env(safe-area-inset-bottom));
+  padding: 16px 16px 14px;
+  border-radius: 26px;
+  background: var(--sc-glass-strong);
+  animation: sc-rise 0.5s var(--v-ease) both;
+}
+@keyframes sc-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+.sc-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sc-card-head > span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.sc-card-head small {
+  font: 600 12px/1 var(--v-text);
+  letter-spacing: 0.04em;
+  color: #ffffff99;
+}
+.sc-card-head b {
+  font: 600 17px/1.2 var(--v-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sc-card .fd-ring-track {
+  stroke: #ffffff2e;
+}
+.sc-card .fd-ring-in small {
+  font: 700 13px/1 var(--v-num);
+}
+.sc[data-done] .sc-card .fd-ring circle:last-child {
+  stroke: var(--sc-ok);
+}
+.sc-card-kcal {
+  margin-top: 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.sc-card-kcal svg {
+  align-self: center;
+  color: #ffb340;
+}
+.sc-card-kcal b {
+  font: 700 38px/1 var(--v-num);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.sc-card-kcal span {
+  font: 600 16px/1 var(--v-text);
+  color: #ffffffb3;
+}
+.sc-card-macros {
+  margin-top: 12px;
+  padding-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  border-top: 0.5px solid #ffffff26;
+}
+.sc-card-macros span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.sc-card-macros em {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font: 500 12.5px/1 var(--v-text);
+  font-style: normal;
+  color: #ffffffa6;
+}
+.sc-card-macros em i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.sc-card-macros b {
+  font: 700 17px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+}
+
+/* packaged food */
+.sc-pack-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sc-pack-top img {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  object-fit: cover;
+  object-position: 50% 60%;
+}
+.sc-pack-top span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.sc-pack-top small {
+  font: 500 12px/1 var(--v-text);
+  color: #ffffff99;
+  font-variant-numeric: tabular-nums;
+}
+.sc-pack-top b {
+  font: 600 17px/1.2 var(--v-text);
+}
+.sc-pack-top em {
+  font: 400 13px/1 var(--v-text);
+  font-style: normal;
+  color: #ffffffb3;
+}
+.sc-panel {
+  margin: 12px 0 0;
+  padding: 4px 12px;
+  border-radius: 14px;
+  background: #ffffff14;
+}
+.sc-panel div {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font: 500 14px/1 var(--v-text);
+}
+.sc-panel div + div {
+  border-top: 0.5px solid #ffffff1f;
+}
+.sc-panel dt {
+  color: #ffffffb3;
+}
+.sc-panel dd {
+  margin: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.sc-pack-add {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  height: 46px;
+  margin-top: 14px;
+  border-radius: 23px;
+  font: 600 16px/1 var(--v-text);
+  color: #0b0d14;
+  background: #fff;
+}
+.sc-pack-add:active {
+  transform: scale(0.97);
+}
+
+/* ---------- modes ---------- */
+.sc-modes {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: calc(138px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  padding: 4px;
+  display: flex;
+  gap: 2px;
+  border-radius: 22px;
+  background: var(--sc-glass);
+}
+.sc-modes button {
+  height: 36px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 18px;
+  font: 600 14px/1 var(--v-text);
+  color: #ffffffcc;
+  transition: background 0.2s, color 0.2s;
+}
+.sc-modes button[aria-selected="true"] {
+  color: #0b0d14;
+  background: #fff;
+}
+
+/* ---------- foot ---------- */
+.sc-foot {
+  position: absolute;
+  z-index: 3;
+  left: 28px;
+  right: 28px;
+  bottom: calc(36px + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sc-lib {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 0 0 2px #fff, 0 6px 16px -6px #000a;
+}
+.sc-lib img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sc-shutter {
+  width: 80px;
+  height: 80px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 4px #fff, 0 8px 24px -8px #000c;
+}
+.sc-shutter i {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.15s;
+}
+.sc[data-done] .sc-shutter i {
+  animation: sc-ready 1.6s ease-out infinite;
+}
+@keyframes sc-ready {
+  0% {
+    box-shadow: 0 0 0 0 #ffffff88;
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 12px #ffffff00;
+  }
+}
+.sc-shutter:active i {
+  transform: scale(0.88);
+}
+.sc-shutter:disabled {
+  opacity: 0.45;
+}
+.sc-torch[aria-pressed="true"] {
+  color: #0b0d14;
+  background: #ffd85f;
+}
+
+.sc-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #fff;
+  animation: sc-flash 0.3s ease-out forwards;
+}
+@keyframes sc-flash {
+  from {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ---------- tips ---------- */
+.sc-help-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  background: #0006;
+}
+.sc-help {
+  width: 100%;
+  padding: 26px 24px calc(26px + env(safe-area-inset-bottom));
+  border-radius: 28px 28px 0 0;
+  color: var(--v-ink);
+  background: var(--v-card);
+  animation: mx-rise 0.32s var(--v-ease);
+}
+.sc-help h2 {
+  margin: 0 0 18px;
+  letter-spacing: -0.02em;
+  font: 700 22px/1.2 var(--v-text);
+}
+.sc-help ol {
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+  counter-reset: tip;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sc-help li {
+  counter-increment: tip;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 3px 12px;
+}
+.sc-help li::before {
+  content: counter(tip);
+  grid-row: span 2;
+  margin-top: -3px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 700 14px/1 var(--v-text);
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 12%, transparent);
+}
+.sc-help b {
+  font: 600 16px/1.3 var(--v-text);
+}
+.sc-help span {
+  font: 400 15px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+  text-wrap: pretty;
+}
+.sc-help > button {
+  width: 100%;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  border-radius: 25px;
+  font: 600 16px/1 var(--v-text);
+  color: var(--v-on-navy, #fff);
+  background: var(--v-navy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-feed,
+  .sc-beam b,
+  .sc-tag,
+  .sc-tag > i::after,
+  .sc-status i,
+  .sc[data-done] .sc-shutter i {
+    animation: none;
+  }
+}
