@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useGo } from "../ui/shell";
+import { AddSheet } from "../food/AddSheet";
+import { todayKey } from "../food/store";
+import "../metric/metric.css";
+import "../food/food.css";
 import { HabitMark } from "../habits/HabitMark";
 import { PARTS, planActions, unitFor, useToday, type HabitToday } from "../habits/plan";
 import { WinDeck, type DeckItem } from "./WinDeck";
@@ -80,6 +85,7 @@ export function CheckIn() {
   const { asked } = useToday();
   const hour = useHour();
   const [open, setOpen] = useState(false);
+  const [foodHost, setFoodHost] = useState<HTMLElement | null>(null);
   const [order, setOrder] = useState<string[]>([]);
   const notes = useInbox();
 
@@ -221,13 +227,15 @@ export function CheckIn() {
         <WinDeck
           due={deck}
           onLater={toBack}
-          onFood={(el) => go("/v3/metric/diet", { from: el })}
+          onFood={(el) => setFoodHost(el.closest<HTMLElement>(".v2") ?? document.body)}
           onOpen={(n) => {
             inbox.opened(n.id);
             go(n.to);
           }}
         />
       )}
+      {/* logging food opens the four ways to add it right here, over the whole screen */}
+      {foodHost && createPortal(<AddSheet day={todayKey()} onClose={() => setFoodHost(null)} />, foodHost)}
     </section>
   );
 }
