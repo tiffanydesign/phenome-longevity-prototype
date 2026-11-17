@@ -280,6 +280,8 @@
 .ml3-serv button {
   width: 36px;
   height: 36px;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
   font: 500 22px/1 var(--v-text);
   color: var(--v-ink);
@@ -467,6 +469,9 @@
 .ml3-weigh button {
   height: 32px;
   padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   border-radius: 16px;
   font: 600 14px/1 var(--v-text);
   color: var(--v-navy);
@@ -507,7 +512,7 @@
   margin: 32px auto 0;
   min-height: 44px;
   font: 600 15px/1 var(--v-text);
-  color: var(--v-alert-ink);
+  color: var(--v-navy);
 }
 
 /* ---------- foot ---------- */

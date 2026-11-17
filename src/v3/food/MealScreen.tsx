@@ -7,6 +7,13 @@ import { food, useMeal } from "./store";
 import { clock, MealTile, NutrientBars, NutrientMark, useAnalysing } from "./parts";
 import { FixSheet } from "./FixSheet";
 import "./food.css";
+
+/** Minus and plus drawn as strokes, so both sit on the same centre. */
+const Pm = ({ plus, size = 16 }: { plus?: boolean; size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" aria-hidden>
+    <path d={plus ? "M3 8h10M8 3v10" : "M3 8h10"} />
+  </svg>
+);
 import "./meal.css";
 
 /*
@@ -120,11 +127,11 @@ export function MealScreen() {
                 <span>Servings</span>
                 <div>
                   <button aria-label="Fewer servings" disabled={m.servings <= 0.5} onClick={() => food.update(m.id, { servings: m.servings - 0.5 })}>
-                    −
+                    <Pm />
                   </button>
                   <b>{m.servings}</b>
                   <button aria-label="More servings" onClick={() => food.update(m.id, { servings: m.servings + 0.5 })}>
-                    +
+                    <Pm plus />
                   </button>
                 </div>
               </div>
@@ -183,11 +190,13 @@ export function MealScreen() {
                           <div className="ml3-item-edit">
                             <div className="ml3-weigh">
                               <button aria-label="Less" onClick={() => weigh(i, -10)}>
-                                −10 g
+                                <Pm size={12} />
+                                10 g
                               </button>
                               <b>{x.grams} g</b>
                               <button aria-label="More" onClick={() => weigh(i, 10)}>
-                                +10 g
+                                <Pm plus size={12} />
+                                10 g
                               </button>
                             </div>
                             <button className="ml3-remove" onClick={() => drop(i)}>

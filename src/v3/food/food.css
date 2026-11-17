@@ -1256,3 +1256,12 @@
 .fd-add-row .fd-add-h {
   margin: 0;
 }
+
+/* the status veil stays clear until the page scrolls under it */
+.v2-veil.dv-veil {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+.v2-veil.dv-veil[data-on] {
+  opacity: 1;
+}

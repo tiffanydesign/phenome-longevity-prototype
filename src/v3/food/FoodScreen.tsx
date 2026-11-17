@@ -11,6 +11,7 @@ import { History } from "./history";
 import { LongevityAnalysis } from "./analysis";
 import { useSaved } from "./SavedScreen";
 import { AddSheet } from "./AddSheet";
+import { veilOnScroll } from "../devices/veil";
 import "../metric/metric.css";
 import "./food.css";
 
@@ -52,10 +53,10 @@ export function FoodScreen() {
 
   return (
     <V2Screen nav={false}>
-      <div className="v2-veil mx-veil" data-at="status" aria-hidden>
+      <div className="v2-veil mx-veil dv-veil" data-at="status" aria-hidden>
         <BlurLayers />
       </div>
-      <div className="mx fd scroll" data-field="food">
+      <div className="mx fd scroll" data-field="food" onScroll={veilOnScroll}>
         {/* back, the page name beside it, the day's energy goal at the right */}
         <header className="fd-top">
           <button className="mx-round" aria-label="Back" onClick={() => nav(-1)}>
@@ -97,7 +98,7 @@ export function FoodScreen() {
               <b className="fd-hero-n">{fmt(l.n)}</b>
               <span className="fd-hero-w">kcal {l.word}</span>
             </div>
-            <Ring value={t.kcal / goal} size={96} stroke={10} hue={l.over ? "#e5484d" : "var(--mid)"}>
+            <Ring value={t.kcal / goal} size={96} stroke={10} hue={l.over ? "#e5484d" : "var(--v-navy)"}>
               <span className="fd-hero-pct">{Math.round((t.kcal / goal) * 100)}%</span>
             </Ring>
           </div>
