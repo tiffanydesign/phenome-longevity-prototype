@@ -165,12 +165,13 @@
   color: var(--v-ink);
   background: var(--v-card);
 }
+/* the main action in the page's own hue, deepened a touch so white text reads on it */
 .mx-actions button[data-primary] {
-  color: var(--v-on-navy, #fff);
-  background: var(--v-navy);
+  color: #fff;
+  background: color-mix(in oklab, var(--mid), #000 10%);
 }
-:root[data-theme="dark"] .mx-actions button[data-primary] {
-  color: #0b0d14;
+.mx-actions button:not([data-primary]) {
+  color: var(--mx-ink);
 }
 .mx-actions button:active {
   transform: scale(0.97);

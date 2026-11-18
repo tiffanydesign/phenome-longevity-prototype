@@ -171,13 +171,13 @@
 }
 /* one hue per macro, the same three the Nutrition page uses (food/data.ts NUTRIENT) */
 [data-part="Protein"] {
-  --part: #e0559a;
+  --part: #ef6f55;
 }
 [data-part="Carbs"] {
-  --part: #7d7aff;
+  --part: #e5ab2e;
 }
 [data-part="Fat"] {
-  --part: #3478f6;
+  --part: #86b83a;
 }
 .gl-macro-track i {
   background: var(--part);
