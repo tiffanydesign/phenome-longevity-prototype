@@ -195,3 +195,9 @@ export function BpDetail({ range, page }: { range: Range; page: number }) {
     </>
   );
 }
+
+/** The longer "About" paragraph the original monitor gave a reading, kept under this page's own note. */
+export const MONITOR_ABOUT: Record<string, string> = {
+  steps: "Step count tracks the total number of steps you take throughout the day. Regular walking and movement are fundamental to cardiovascular health, metabolism and overall wellbeing.",
+  sleep: "Hours of sleep tracks your total sleep duration across all stages: core, deep and REM. Adequate sleep is essential for recovery, cognitive function, immune health and overall longevity.",
+};

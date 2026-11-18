@@ -1,11 +1,12 @@
 import { useMemo, useState, type ReactNode } from "react";
-import { Gauge, HeartRange, HourBars, Hypnogram, MacroBar, WorkoutRings } from "../home/glance";
+import { Gauge, HeartRange, MacroBar, WorkoutRings } from "../home/glance";
 import "../home/glance.css";
 import { CapacityDetail } from "./CapacityDetail";
-import { SleepDetail } from "./SleepDetail";
+import { SleepDetail, STAGES } from "./SleepDetail";
+import { ActivityLanes, NightChart } from "./detailCharts";
 import { ActivityDetail } from "./ActivityDetail";
 import { FoodScreen } from "../food/FoodScreen";
-import { BpDetail, CompareBlock, inMonitor, MetricPicker } from "./MonitorExtras";
+import { BpDetail, CompareBlock, inMonitor, MetricPicker, MONITOR_ABOUT } from "./MonitorExtras";
 import { GoalSheet, goalOf, GOALS, useGoals } from "./goals";
 import { useParams } from "react-router-dom";
 import { metric as baseMetric, metricsFor, periodTitle, rangeLabels, seriesFor, SOURCE_LABEL, STATUS_LABEL, visitLabels, type Range } from "../data/metrics";
@@ -47,8 +48,8 @@ const ACTIONS: Record<string, { label: string; to: string; primary?: boolean }[]
  * the number, before any history.
  */
 const FROM_CARD: Record<string, { title: string; field?: string; glyph?: GlyphName; span: string; glance: (m: ReturnType<typeof baseMetric>) => ReactNode }> = {
-  steps: { title: "Activity", span: "Today", glance: (m) => <HourBars m={m} ago={0} /> },
-  sleep: { title: "Sleep", span: "Last night", glance: () => <Hypnogram ago={0} /> },
+  steps: { title: "Activity", span: "Today", glance: () => <ActivityLanes /> },
+  sleep: { title: "Sleep", span: "Last night", glance: () => <NightChart stages={STAGES.map((s) => ({ stage: s.stage, min: s.min }))} bed="23:12" up="07:20" /> },
   capacity: { title: "Capacity", span: "Today", glance: (m) => <Gauge m={m} /> },
   workouts: { title: "Workouts", field: "rose", glyph: "dumbbell", span: "Today", glance: (m) => <WorkoutRings m={m} /> },
   rhr: { title: "Heart", span: "Today", glance: (m) => <HeartRange m={m} ago={0} /> },
@@ -201,7 +202,7 @@ function MetricPage({ id }: { id: string }) {
                   <Chevron size={16} />
                 </button>
               </div>
-              <TrendChart values={values} labels={labels} kind={m.chart} band={m.band} unit={chartUnit} decimals={decimals} />
+              <TrendChart values={values} labels={labels} kind={m.chart} band={m.band} unit={chartUnit} decimals={decimals} fine={inMonitor(m.id)} />
               {/* the period in three numbers, set as a quiet ruled list */}
               <dl className="mx-stats">
                 {stats.map((s) => (
@@ -227,6 +228,7 @@ function MetricPage({ id }: { id: string }) {
         <section className="mx-about">
           <h2 className="mx-h">About this reading</h2>
           <p>{m.note}</p>
+          {MONITOR_ABOUT[m.id] && <p className="mx-about-more">{MONITOR_ABOUT[m.id]}</p>}
         </section>
 
         {related.length > 0 && (

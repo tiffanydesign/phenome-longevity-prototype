@@ -98,12 +98,14 @@ interface TrendProps {
   band?: [number, number];
   unit: string;
   decimals?: number;
+  /** slim bars with the period's average as a dotted rule, for the daily monitor readings */
+  fine?: boolean;
 }
 
 const CHART = { w: 361, h: 196, top: 34, bottom: 22 };
 
 /** Detail chart. Dragging across it reads any point back. */
-export function TrendChart({ values, labels, kind, band, unit, decimals = 0 }: TrendProps) {
+export function TrendChart({ values, labels, kind, band, unit, decimals = 0, fine = false }: TrendProps) {
   const [hit, setHit] = useState<number | null>(null);
   const ref = useRef<SVGSVGElement>(null);
   const { lo, hi } = useMemo(() => scale(values, band, kind === "bars"), [values, band, kind]);
@@ -125,7 +127,8 @@ export function TrendChart({ values, labels, kind, band, unit, decimals = 0 }: T
   const bubbleX = Math.max(bubbleW / 2, Math.min(CHART.w - bubbleW / 2, x(idx)));
   const pts = values.map((v, i): [number, number] => [x(i), y(v)]);
   const line = smooth(pts);
-  const bar = Math.max(3, (CHART.w / values.length) * 0.58);
+  const bar = fine ? Math.max(3, Math.min(9, (CHART.w / values.length) * 0.32)) : Math.max(3, (CHART.w / values.length) * 0.58);
+  const avg = values.reduce((a, b) => a + b, 0) / (values.length || 1);
 
   return (
     <div className="v2-chart">
@@ -142,10 +145,19 @@ export function TrendChart({ values, labels, kind, band, unit, decimals = 0 }: T
         onPointerUp={() => setHit(null)}
         onPointerCancel={() => setHit(null)}
       >
-        {band && <rect x="0" y={y(band[1])} width={CHART.w} height={Math.max(2, y(band[0]) - y(band[1]))} rx="10" fill="var(--c-accent)" opacity="0.12" />}
+        {band && <rect x="0" y={y(band[1])} width={CHART.w} height={Math.max(2, y(band[0]) - y(band[1]))} rx={fine ? 4 : 10} fill="var(--c-accent)" opacity={fine ? 0.07 : 0.12} />}
+        {fine && (
+          <>
+            <line x1="0" x2={CHART.w} y1={CHART.top + inner} y2={CHART.top + inner} stroke="var(--v-line)" />
+            <line x1="0" x2={CHART.w} y1={y(avg)} y2={y(avg)} stroke="var(--v-ink-3)" strokeWidth="1.2" strokeDasharray="2 4" strokeLinecap="round" />
+            <text x="2" y={y(avg) - 6} className="v2-chart-avg">
+              Avg {fmt(avg)}
+            </text>
+          </>
+        )}
         {kind === "bars" &&
           values.map((v, i) => (
-            <rect key={i} x={x(i) - bar / 2} y={y(v)} width={bar} height={CHART.top + inner - y(v)} rx={bar / 2} fill="var(--c-accent)" opacity={i === idx ? 1 : 0.36} />
+            <rect key={i} x={x(i) - bar / 2} y={y(v)} width={bar} height={CHART.top + inner - y(v)} rx={bar / 2} fill="var(--c-accent)" opacity={i === idx ? 1 : fine ? 0.55 : 0.36} />
           ))}
         {kind === "line" && (
           <>

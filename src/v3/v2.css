@@ -182,6 +182,25 @@
 [data-field="sleep"] {
   --mid: #5e5ce6;
 }
+/* the sleep score's four parts: one lightness and softness, four hues */
+[data-field="sage"] {
+  --mid: #4fb3a0;
+}
+[data-field="periwinkle"] {
+  --mid: #6b87e6;
+}
+[data-field="violet"] {
+  --mid: #9a7ce3;
+}
+[data-field="apricot"] {
+  --mid: #f2a066;
+}
+[data-field="exercise"] {
+  --mid: #4cb82a;
+}
+[data-field="coral"] {
+  --mid: #ff7452;
+}
 [data-field="plain"] {
   --mid: var(--v-navy);
 }

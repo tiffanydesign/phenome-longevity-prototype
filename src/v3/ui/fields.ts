@@ -15,4 +15,10 @@ export const FIELD_MID: Record<string, string> = {
   teal: "#30b0c7",
   sand: "#a2845e",
   mist: "#263980",
+  exercise: "#4cb82a",
+  coral: "#ff7452",
+  sage: "#4fb3a0",
+  periwinkle: "#6b87e6",
+  violet: "#9a7ce3",
+  apricot: "#f2a066",
 };

@@ -1,0 +1,219 @@
+/* =====================================================================
+ * The Sleep and Activity pages' larger charts (detailCharts.tsx).
+ * Every part is named in its own hue beside the picture; rules between
+ * lanes are dotted hairlines; colour only in the data, flat throughout.
+ * ===================================================================== */
+
+.dc-rule {
+  stroke: var(--v-line);
+  stroke-width: 1;
+  stroke-dasharray: 1.5 3;
+  vector-effect: non-scaling-stroke;
+}
+.dc-axis {
+  font: 500 10px var(--v-text);
+  fill: var(--v-ink-3);
+}
+
+/* ---------- sleep score: an arc open at the foot, pale to full hue ---------- */
+.dc-score {
+  position: relative;
+  flex: none;
+  display: block;
+  width: 148px;
+}
+.dc-score svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.dc-score path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 20;
+}
+.dc-score-track {
+  stroke: var(--v-fill);
+}
+.dc-score-g0 {
+  stop-color: color-mix(in srgb, var(--mid) 30%, var(--v-card));
+}
+.dc-score-g1 {
+  stop-color: var(--mid);
+}
+.dc-score-c {
+  position: absolute;
+  inset: 12% 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.dc-score-c b {
+  font: 700 32px/1 var(--v-num);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.dc-score-c em {
+  padding: 3px 8px;
+  border-radius: 7px;
+  font: 600 13px/1.2 var(--v-text);
+  font-style: normal;
+  color: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+  background: color-mix(in srgb, var(--mid) 13%, var(--v-card));
+}
+
+/* ---------- the night ---------- */
+.dc-night {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 14px;
+  margin: 0 0 12px;
+}
+.dc-night-key {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.dc-night-key li {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px dashed var(--v-line);
+}
+.dc-night-key li:last-child {
+  border-bottom: 0;
+}
+.dc-night-key span {
+  font: 600 15px/1 var(--v-text);
+  color: color-mix(in oklab, var(--stage), var(--v-ink) 18%);
+}
+.dc-night-key b {
+  font: 700 15px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.dc-night-plot svg {
+  display: block;
+  width: 100%;
+  height: 128px;
+}
+.dc-night-plot rect {
+  fill: var(--stage);
+}
+.dc-riser {
+  stroke: var(--stage);
+  stroke-width: 1.4;
+  opacity: 0.55;
+  vector-effect: non-scaling-stroke;
+}
+.dc-night-ends {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.dc-night-ends i {
+  font: 500 11px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+}
+
+/* ---------- stage shares against the usual range ---------- */
+.dc-shares {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.dc-shares li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 8px;
+  padding: 12px 0;
+}
+.dc-shares li + li {
+  border-top: 0.5px solid var(--v-line);
+}
+.dc-shares-name {
+  font: 600 16px/1.2 var(--v-text);
+  color: color-mix(in oklab, var(--stage), var(--v-ink) 18%);
+}
+.dc-shares b {
+  font: 700 17px/1.2 var(--v-num);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.dc-shares-track {
+  grid-column: 1 / 3;
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--v-fill);
+}
+.dc-shares-track i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--lo);
+  right: calc(100% - var(--hi));
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--stage) 30%, var(--v-card));
+}
+.dc-shares-track em {
+  position: absolute;
+  top: 50%;
+  left: var(--at);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--stage);
+  box-shadow: 0 0 0 2.5px var(--v-card);
+  transform: translate(-50%, -50%);
+}
+.dc-shares small {
+  grid-column: 1 / 3;
+  font: 400 13px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* ---------- a day of moving ---------- */
+.dc-lanes {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 12px;
+}
+.dc-lanes svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.dc-bar {
+  fill: var(--mid);
+}
+.dc-dot {
+  fill: var(--mid);
+}
+.dc-dot[data-off] {
+  fill: color-mix(in srgb, var(--mid) 20%, var(--v-card));
+}
+.dc-lanes-key {
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+.dc-lanes-key dt {
+  font: 500 12px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.dc-lanes-key dd {
+  margin: 2px 0 0;
+  font: 700 17px/1.1 var(--v-num);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in oklab, var(--mid), var(--v-ink) 22%);
+}

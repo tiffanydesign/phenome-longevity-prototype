@@ -3,6 +3,7 @@ import { metric } from "../data/metrics";
 import { Chevron } from "../ui/icons";
 import { Num } from "../ui/Num";
 import { useGo } from "../ui/shell";
+import { ScoreSegments, StageShares } from "./detailCharts";
 import "./sleep.css";
 
 /*
@@ -14,21 +15,24 @@ import "./sleep.css";
  * 7:24 asleep of 8:08 in bed (91% efficient), deep + REM = 2:49 (38%).
  */
 
-/** The score's four parts: today, the comparison point, and how the comparison is named. */
+/**
+ * The score's four parts: today and the comparison point, in the part's own unit
+ * (restorative sleep is hours of deep + REM, the rest are percentages).
+ */
 const PARTS = [
-  { id: "hoursneeds", name: "Hours vs needs", now: 96, before: 88, vs: "yesterday", line: "7:24 of 7:40 needed" },
-  { id: "efficiency", name: "Efficiency", now: 91, before: 89, vs: "yesterday", line: "Awake 44 min in bed" },
-  { id: "restorative", name: "Restorative", now: 38, before: 34, vs: "yesterday", line: "Deep and REM, 2:49", max: 50 },
-  { id: "consistency", name: "Consistency", now: 78, before: 71, vs: "last week", line: "Bedtime within 25 min" },
+  { id: "hoursneeds", name: "Hours vs needs", now: 96, before: 88, vs: "Yesterday", line: "7:24 of 7:40 needed", unit: "%" },
+  { id: "efficiency", name: "Efficiency", now: 91, before: 89, vs: "Yesterday", line: "Awake 44 min in bed", unit: "%" },
+  { id: "restorative", name: "Restorative", now: 169, before: 151, vs: "Yesterday", line: "Deep and REM, 38% of sleep", unit: "h", max: 240 },
+  { id: "consistency", name: "Consistency", now: 78, before: 71, vs: "Last week", line: "Bedtime within 25 min", unit: "%" },
 ];
 
-/** Minutes asleep by stage, plus awake time in bed. */
-const STAGES = [
-  { stage: "Deep", min: 64, typical: "13–23%" },
-  { stage: "REM", min: 105, typical: "20–25%" },
-  { stage: "Core", min: 275, typical: "45–60%" },
-  { stage: "Awake", min: 44, typical: "under 10%" },
-];
+/** Minutes asleep by stage, plus awake time in bed; the usual share of the night for each. */
+export const STAGES = [
+  { stage: "Deep", min: 64, typical: [13, 23] as [number, number], label: "13–23%" },
+  { stage: "REM", min: 105, typical: [20, 25] as [number, number], label: "20–25%" },
+  { stage: "Core", min: 275, typical: [45, 60] as [number, number], label: "45–60%" },
+  { stage: "Awake", min: 44, typical: [0, 10] as [number, number], label: "under 10%" },
+] as const;
 
 /** The week's nights: into bed and up, as minutes after 18:00 so the night reads left to right. */
 const NIGHTS = [
@@ -61,19 +65,16 @@ const FROM = at("21:00");
 const SPAN = at("09:00") - FROM;
 const x = (t: string) => `${((at(t) - FROM) / SPAN) * 100}%`;
 
+/** the week's average of clock times that may cross midnight */
+function avgClock(ts: string[]) {
+  const m = Math.round(ts.reduce((n, t) => n + at(t), 0) / ts.length) + 18 * 60;
+  return `${String(Math.floor(m / 60) % 24).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
+}
+/** the week's average time in bed, in minutes */
+const avgBed = () => NIGHTS.reduce((n, d) => n + at(d.up) - at(d.bed), 0) / NIGHTS.length;
+
 function scoreWord(v: number) {
   return v >= 85 ? "Excellent" : v >= 70 ? "Good" : v >= 50 ? "Fair" : "Poor";
-}
-
-function ScoreRing({ value }: { value: number }) {
-  const R = 42;
-  const C = 2 * Math.PI * R;
-  return (
-    <svg className="sl-ring" viewBox="0 0 100 100" aria-hidden>
-      <circle cx="50" cy="50" r={R} />
-      <circle cx="50" cy="50" r={R} strokeDasharray={`${(C * value) / 100} ${C}`} transform="rotate(-90 50 50)" />
-    </svg>
-  );
 }
 
 export function SleepDetail() {
@@ -89,18 +90,13 @@ export function SleepDetail() {
       <section className="mx-block sl-block">
         <h2 className="mx-h">Sleep score</h2>
         <button className="mx-card sl-score" onClick={(e) => go("/v3/metric/sleepscore", { from: e.currentTarget })}>
-          <span className="sl-score-ring">
-            <ScoreRing value={score} />
-            <b>
-              <Num v={String(score)} />
-            </b>
-          </span>
+          <ScoreSegments score={score} word={scoreWord(score)} />
           <span className="sl-score-t">
-            <b>{scoreWord(score)}</b>
-            <small>
+            <b>
               {score >= scoreBefore ? "+" : "−"}
-              {Math.abs(score - scoreBefore)} on the night before: longer, with more deep sleep.
-            </small>
+              {Math.abs(score - scoreBefore)} on the night before
+            </b>
+            <small>Longer, with more deep sleep.</small>
           </span>
           <Chevron size={14} />
         </button>
@@ -109,13 +105,16 @@ export function SleepDetail() {
           {PARTS.map((p) => {
             const max = p.max ?? 100;
             const up = p.now >= p.before;
+            const hours = p.unit === "h";
+            // hours read as h:mm, percentages as plain numbers
+            const val = (v: number) => (hours ? hm(v) : String(v));
             return (
               <button key={p.id} className="sl-part" data-field={metric(p.id).field} onClick={(e) => go(`/v3/metric/${p.id}`, { from: e.currentTarget })}>
                 <span className="sl-part-head">
                   <span className="sl-part-name">{p.name}</span>
                   <b>
-                    {p.now}
-                    <u>%</u>
+                    {val(p.now)}
+                    <u>{p.unit}</u>
                   </b>
                 </span>
                 {/* today's bar in the part's hue; a thin tick marks where the comparison point stood */}
@@ -126,8 +125,17 @@ export function SleepDetail() {
                 <span className="sl-part-foot">
                   <span>{p.line}</span>
                   <span data-up={up ? "" : undefined}>
-                    {up ? "▲" : "▼"} {Math.abs(p.now - p.before)} vs {p.vs}
+                    {up ? "▲" : "▼"} {val(Math.abs(p.now - p.before))}
+                    {hours ? " h" : ""}
                   </span>
+                </span>
+                {/* the comparison point written out, as the original monitor set today beside yesterday */}
+                <span className="sl-part-was">
+                  {p.vs}{" "}
+                  <b>
+                    {val(p.before)}
+                    {p.unit === "%" ? "%" : " h"}
+                  </b>
                 </span>
               </button>
             );
@@ -142,26 +150,14 @@ export function SleepDetail() {
           <p className="sl-sum">
             <b>{hm(asleep)}</b> asleep of <b>{hm(inBed)}</b> in bed
           </p>
-          <span className="sl-stack" aria-hidden>
-            {STAGES.map((s) => (
-              <i key={s.stage} data-stage={s.stage} style={{ flexGrow: s.min }} />
-            ))}
-          </span>
-          <ul className="sl-stage-list">
-            {STAGES.map((s) => {
-              const share = Math.round((s.min / (s.stage === "Awake" ? inBed : asleep)) * 100);
-              return (
-                <li key={s.stage} data-stage={s.stage}>
-                  <i aria-hidden />
-                  <span>{s.stage}</span>
-                  <b>{hm(s.min)}</b>
-                  <small>
-                    {share}% · typical {s.typical}
-                  </small>
-                </li>
-              );
-            })}
-          </ul>
+          <StageShares
+            rows={STAGES.map((s) => ({
+              stage: s.stage,
+              share: Math.round((s.min / (s.stage === "Awake" ? inBed : asleep)) * 100),
+              typical: s.typical,
+              label: s.label,
+            }))}
+          />
         </div>
       </section>
 
@@ -169,20 +165,20 @@ export function SleepDetail() {
       <section className="mx-block sl-block">
         <h2 className="mx-h">Schedule</h2>
         <div className="mx-card sl-sched">
-          <dl className="sl-facts">
-            <div>
-              <dt>Bedtime</dt>
-              <dd>23:12</dd>
-            </div>
-            <div>
-              <dt>Asleep in</dt>
-              <dd>14 min</dd>
-            </div>
-            <div>
-              <dt>Woke</dt>
-              <dd>07:20</dd>
-            </div>
-          </dl>
+          <div className="mx-grid sl-facts">
+            {[
+              { k: "Bedtime", v: "23:12", avg: avgClock(NIGHTS.map((n) => n.bed)), field: "apricot" },
+              { k: "Woke", v: "07:20", avg: avgClock(NIGHTS.map((n) => n.up)), field: "sage" },
+              { k: "Asleep in", v: "14 min", avg: "18 min", field: "violet" },
+              { k: "Time in bed", v: hm(inBed), avg: hm(avgBed()), field: "periwinkle" },
+            ].map((f) => (
+              <div key={f.k} className="mx-read" data-field={f.field}>
+                <small>{f.k}</small>
+                <b>{f.v}</b>
+                <span>Avg: {f.avg}</span>
+              </div>
+            ))}
+          </div>
           <div className="sl-nights">
             {NIGHTS.map((n, i) => (
               <div key={n.day} className="sl-night" data-last={i === NIGHTS.length - 1 ? "" : undefined}>
@@ -212,7 +208,7 @@ export function SleepDetail() {
         <h2 className="mx-h">While you slept</h2>
         <div className="mx-grid">
           {OVERNIGHT.map((r) => (
-            <button key={r.id} className="mx-read" data-field={metric(r.id).field} onClick={() => go(`/v3/metric/${r.id}`)}>
+            <button key={r.id} className="mx-read" data-field="sleep" onClick={() => go(`/v3/metric/${r.id}`)}>
               <small>
                 {r.label}
                 <Chevron size={13} />

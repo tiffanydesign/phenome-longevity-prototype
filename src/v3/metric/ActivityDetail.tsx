@@ -43,7 +43,7 @@ function WorkoutRow({ w }: { w: Workout }) {
   const go = useGo();
   return (
     <button className="ac-wo" onClick={(e) => go(`/v3/workout/${w.id}`, { from: e.currentTarget })}>
-      <span className="ac-wo-mark" aria-hidden>
+      <span className="ac-wo-mark" data-field={w.kind === "strength" ? "exercise" : "activity"} aria-hidden>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           {w.kind === "strength" ? (
             <path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11" />
@@ -115,7 +115,7 @@ export function ActivityDetail() {
       {/* 2 · what the day burned: movement on top of the body at rest */}
       <section className="mx-block">
         <h2 className="mx-h">Energy</h2>
-        <button className="mx-card ac-card ac-energy" onClick={(e) => go("/v3/metric/kcal", { from: e.currentTarget })}>
+        <button className="mx-card ac-card ac-energy" data-field="heart" onClick={(e) => go("/v3/metric/kcal", { from: e.currentTarget })}>
           <p className="ac-say">
             <b>{fmt(total)} kcal</b> burned so far today.
           </p>
@@ -152,7 +152,7 @@ export function ActivityDetail() {
             </b>
             <span>0.88 km to 5 km</span>
           </button>
-          <button className="mx-read" data-field="rose" onClick={() => go("/v3/metric/workouts")}>
+          <button className="mx-read" data-field="exercise" onClick={() => go("/v3/metric/workouts")}>
             <small>
               Training time
               <Chevron size={13} />
