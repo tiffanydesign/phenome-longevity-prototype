@@ -13,6 +13,8 @@ import "../habits/habits.css";
 import { Gauge, HabitStops, HeartRange, HourBars, Hypnogram, MacroBar, WorkoutRings } from "./glance";
 import { glyphOf, Kind, type GlyphName } from "../ui/glyphs";
 import { DevicesTile } from "./DevicesTile";
+import { useDiaryMetric } from "./diary";
+
 
 
 /** Each card's name, for the remove and add controls. */
@@ -23,7 +25,7 @@ const CARD_NAME: Record<string, string> = {
   capacity: "Capacity",
   workouts: "Workouts",
   vitals: "Heart",
-  food: "Food",
+  food: "Nutrition",
   habits: "Habits",
   consult: "Your consultations",
   games: "Cognitive data",
@@ -402,7 +404,7 @@ function Glance({ id, row, ago }: { id: string; row: Metric; ago: number }) {
 /** A reading's card. `field` and `art` override the metric's own where Home needs every card to differ from its neighbours. */
 function Stat({ m, title, field, glyph, onOpen }: { m: string; title?: string; field?: string; glyph?: GlyphName; onOpen: (e: { currentTarget: HTMLElement }) => void }) {
   const ago = useContext(DayAgo);
-  const row = metricOn(m, ago);
+  const row = useDiaryMetric(metricOn(m, ago), ago);
   return (
     <button className="v2-tile" data-field={field ?? row.field} onClick={onOpen}>
       <Kind name={glyph ?? glyphOf(m)}>{title ?? row.label}</Kind>

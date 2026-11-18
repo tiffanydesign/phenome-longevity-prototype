@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { BlurLayers, useGo, V2Screen } from "../ui/shell";
 import { Chevron } from "../ui/icons";
 import { GoalSheet, useGoals } from "../metric/goals";
-import { ABOUT, fmt, MACROS, MICROS, SLOTS, TARGET } from "./data";
+import { ABOUT, fmt, MACROS, SLOTS, TARGET } from "./data";
 import { dayKey, dayOffset, dayTotals, useMeals } from "./store";
-import { leftOf, MealCard, NutrientCard, NutrientMark, Ring } from "./parts";
+import { leftOf, MealCard, NutrientMark, Ring } from "./parts";
+import { DaySlides } from "./slides";
+import { Ph } from "./icons";
 import { DayPace } from "./charts";
 import { History } from "./history";
 import { LongevityAnalysis } from "./analysis";
@@ -14,6 +16,7 @@ import { AddSheet } from "./AddSheet";
 import { veilOnScroll } from "../devices/veil";
 import "../metric/metric.css";
 import "./food.css";
+import "./food-glass.css";
 
 /*
  * Nutrition, in the order a member asks: how much is left today, which
@@ -29,7 +32,6 @@ export function FoodScreen() {
   const goals = useGoals();
   const goal = goals.get("diet") ?? TARGET.kcal;
   const [day, setDay] = useState(() => dayKey(new Date()));
-  const [page, setPage] = useState(0);
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState(false);
   const [about, setAbout] = useState<number | null>(null);
@@ -48,7 +50,7 @@ export function FoodScreen() {
     : l.over
       ? `Over your goal for ${isToday ? "today" : "this day"}. Lighter choices for the rest of the day keep the week on track.`
       : behind.share < 0.6
-        ? `On track for energy. ${behind.id === "protein" ? "Protein" : behind.id === "carbs" ? "Carbs" : "Fat"} is furthest behind, ${fmt(TARGET[behind.id] - t[behind.id])} g to go.`
+        ? `On track for energy. ${behind.id === "protein" ? "Protein is" : behind.id === "carbs" ? "Carbs are" : "Fat is"} furthest behind, ${fmt(TARGET[behind.id] - t[behind.id])} g to go.`
         : "On track for energy, and every macro is well on its way.";
 
   return (
@@ -64,84 +66,75 @@ export function FoodScreen() {
           </button>
           <h1>Nutrition</h1>
           <button className="fd-goal-pill" aria-label={`Daily energy goal ${fmt(goal)} kcal, edit`} onClick={() => setEditing(true)}>
-            <NutrientMark id="kcal" size={17} />
+            <NutrientMark id="kcal" size={16} />
             {fmt(goal)}
+            <small>kcal</small>
           </button>
         </header>
 
-        {/* the last seven days, each a ring of how full that day got */}
+        {/* the last seven days on one glass track: the weekday inside a fine
+            dashed ring that fills as the day fills, the date under it */}
         <nav className="fd-week" aria-label="Choose a day">
           {week.map((d) => {
             const k = dayKey(d);
             const dt = dayTotals(meals, k);
             const sel = k === day;
+            const over = dt.kcal > goal;
             return (
-              <button key={k} aria-pressed={sel} onClick={() => setDay(k)}>
-                <Ring value={dt.kcal / goal} size={40} stroke={2.6} hue="var(--mid)" dashed={dt.kcal === 0}>
-                  <span>{d.toLocaleDateString("en-GB", { weekday: "narrow" })}</span>
+              <button
+                key={k}
+                aria-pressed={sel}
+                aria-label={`${d.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}, ${fmt(dt.kcal)} kcal`}
+                data-today={k === dayKey(new Date()) ? "" : undefined}
+                onClick={() => setDay(k)}
+              >
+                <Ring value={dt.kcal / goal} size={36} stroke={2.2} hue={over ? "var(--fd-over)" : "var(--v-accent)"} dashed>
+                  <span className="fd-week-d">{d.toLocaleDateString("en-GB", { weekday: "narrow" })}</span>
                 </Ring>
-                <b>{d.getDate()}</b>
+                <b className="fd-week-n">{d.getDate()}</b>
               </button>
             );
           })}
         </nav>
 
-        {/* 1 · the one number: energy left, and a sentence on what to do with it */}
-        <section className="fd-hero" aria-label={`${dayName}: ${fmt(l.n)} kcal ${l.word}`}>
-          <p className="fd-label">
-            <NutrientMark id="kcal" size={16} />
-            Energy
-            <span>{dayName}</span>
-          </p>
-          <div className="fd-hero-row">
-            <div>
-              <b className="fd-hero-n">{fmt(l.n)}</b>
-              <span className="fd-hero-w">kcal {l.word}</span>
-            </div>
-            <Ring value={t.kcal / goal} size={96} stroke={10} hue={l.over ? "#e5484d" : "var(--v-navy)"}>
-              <span className="fd-hero-pct">{Math.round((t.kcal / goal) * 100)}%</span>
-            </Ring>
-          </div>
-          <p className="fd-hero-say">
-            <b>
-              {fmt(t.kcal)} of {fmt(goal)} kcal.
-            </b>{" "}
-            {say}
-          </p>
-        </section>
-
-        {/* 2 · macros left, then fibre and minerals one swipe over */}
-        <section className="fd-pager" aria-label="Nutrients left">
-          <div
-            className="fd-pages"
-            onScroll={(e) => {
-              const el = e.currentTarget;
-              setPage(Math.round(el.scrollLeft / el.clientWidth));
-            }}
-          >
-            {[MACROS, MICROS].map((ids, i) => (
-              <div key={i} className="fd-page">
-                {ids.map((id) => (
-                  <NutrientCard key={id} id={id} t={t} />
-                ))}
+        {/* 1 · the day at a glance, swiped: energy and macros, the diet score
+            with fibre and minerals, then movement */}
+        <DaySlides
+          t={t}
+          goal={goal}
+          onOpen={(path) => go(path)}
+          hero={
+            <section className="fd-hero" aria-label={`${dayName}: ${fmt(l.n)} kcal ${l.word}`}>
+              <p className="fd-label">
+                <NutrientMark id="kcal" size={16} />
+                Energy
+                <span>{dayName}</span>
+              </p>
+              <div className="fd-hero-row">
+                <div>
+                  <b className="fd-hero-n">{fmt(l.n)}</b>
+                  <span className="fd-hero-w">Calories {l.word}</span>
+                  <span className="fd-hero-s">
+                    {fmt(t.kcal)} of {fmt(goal)} eaten
+                  </span>
+                </div>
+                <Ring value={t.kcal / goal} size={112} stroke={11} hue={l.over ? "var(--fd-over)" : "var(--mid)"}>
+                  <span className="fd-core fd-core-lg">
+                    <NutrientMark id="kcal" size={22} />
+                  </span>
+                </Ring>
               </div>
-            ))}
-          </div>
-          <div className="fd-dots" aria-hidden>
-            <i data-on={page === 0 ? "" : undefined} />
-            <i data-on={page === 1 ? "" : undefined} />
-          </div>
-        </section>
+              <p className="fd-hero-say">{say}</p>
+            </section>
+          }
+        />
 
         {/* 3 · what was eaten, in the order it was eaten */}
-        <section className="fd-sec">
+        <section className="fd-sec fd-sec-meals">
           <div className="fd-h-row">
             <h2>{isToday ? "Today's meals" : "Meals"}</h2>
             <button className="fd-saved" aria-label={`Saved meals, ${saved.length}`} onClick={() => go("/v3/food/saved")}>
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden>
-                <path d="M6.5 3.5h11a1 1 0 0 1 1 1v16l-6.5-4.5L5.5 20.5v-16a1 1 0 0 1 1-1z" />
-              </svg>
-              {saved.length > 0 && <b>{saved.length}</b>}
+              <Ph name="bookmark" size={18} />
             </button>
           </div>
           {list.length === 0 ? (
@@ -160,9 +153,7 @@ export function FoodScreen() {
             <div className="fd-slots">
               {missing.map((s) => (
                 <button key={s.id} onClick={() => go(`/v3/food/add?slot=${s.id}&day=${day}`)}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" aria-hidden>
-                    <path d="M12 5v14M5 12h14" />
-                  </svg>
+                  <Ph name="plus" size={14} />
                   {s.name}
                 </button>
               ))}
@@ -174,6 +165,7 @@ export function FoodScreen() {
         <section className="fd-sec">
           <div className="fd-h-row">
             <h2>Longevity analysis</h2>
+            <span className="fd-h-note">Last 7 days</span>
           </div>
           <LongevityAnalysis meals={meals} goal={goal} />
         </section>
@@ -207,9 +199,7 @@ export function FoodScreen() {
               <div key={a.title} data-open={about === i ? "" : undefined}>
                 <button aria-expanded={about === i} onClick={() => setAbout(about === i ? null : i)}>
                   {a.title}
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden>
-                    <path d="M12 5v14M5 12h14" />
-                  </svg>
+                  <Ph name="plus" size={14} />
                 </button>
                 <p>{a.body}</p>
               </div>
@@ -220,9 +210,7 @@ export function FoodScreen() {
 
       {/* one round way to add food, always in reach */}
       <button className="fd-fab" aria-label="Add food" onClick={() => setAdding(true)}>
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden>
-          <path d="M12 5v14M5 12h14" />
-        </svg>
+        <Ph name="plus" size={22} />
       </button>
       {adding && <AddSheet day={day} onClose={() => setAdding(false)} />}
       {editing && <GoalSheet id="diet" current={goals.get("diet")} onSave={(v) => goals.set("diet", v)} onClose={() => setEditing(false)} />}

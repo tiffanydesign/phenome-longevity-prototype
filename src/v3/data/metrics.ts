@@ -351,7 +351,7 @@ const DEVICE: Metric[] = [
   { id: "distance", label: "Distance", value: "4.12", unit: "/ 5 km", base: 4.6, swing: 1.6, decimals: 2, ...band(), status: "normal", delta: "82% of goal", organ: "skeletal", tab: "activity", field: "teal", chart: "bars", band: [5, 8], note: "Walking and running combined." },
   { id: "workouts", label: "Workouts", value: "38", unit: "min", base: 38, swing: 18, source: "log", when: "today", status: "normal", delta: "243 kcal", organ: "heart", tab: "activity", field: "habit", chart: "bars", note: "A strength session this morning. Time is every minute you trained, calories the energy those minutes took." },
 
-  { id: "diet", label: "Food", value: "1,240", unit: "/ 2,000 kcal", base: 1900, swing: 300, source: "log", when: "today", status: "normal", delta: "760 kcal left", organ: "stomach", tab: "food", field: "food", chart: "bars", band: [1800, 2200], note: "Two meals logged. Protein is on pace for your 110 g goal." },
+  { id: "diet", label: "Nutrition", value: "1,240", unit: "/ 2,000 kcal", base: 1900, swing: 300, source: "log", when: "today", status: "normal", delta: "760 kcal left", organ: "stomach", tab: "food", field: "food", chart: "bars", band: [1800, 2200], note: "Two meals logged. Protein is on pace for your 110 g goal." },
   { id: "habits", label: "Habits", value: "50", unit: "%", base: 62, swing: 22, source: "log", when: "today", status: "normal", delta: "3 of 6 done", organ: "brain", tab: "food", field: "habit", chart: "bars", note: "Morning light and hydration are done. Three habits left today." },
 ];
 

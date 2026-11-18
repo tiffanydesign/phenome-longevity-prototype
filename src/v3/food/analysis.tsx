@@ -1,5 +1,5 @@
 import { useMemo, type ReactNode } from "react";
-import { fmt, TARGET } from "./data";
+import { fmt, NUTRIENT, TARGET } from "./data";
 import { dayKey, dayOffset, dayTotals, type Meal } from "./store";
 import { NutrientMark } from "./parts";
 
@@ -29,7 +29,7 @@ export function LongevityAnalysis({ meals, goal }: { meals: Meal[]; goal: number
       {
         id: "protein",
         label: "Protein",
-        hue: "#e0559a",
+        hue: NUTRIENT.protein.hue,
         mark: <NutrientMark id="protein" size={16} solid />,
         value: `${fmt(protein)} g a day`,
         body:
@@ -40,7 +40,7 @@ export function LongevityAnalysis({ meals, goal }: { meals: Meal[]; goal: number
       {
         id: "fiber",
         label: "Fibre",
-        hue: "#30b39d",
+        hue: NUTRIENT.fiber.hue,
         mark: <NutrientMark id="fiber" size={16} />,
         value: `${fmt(fiber)} g a day`,
         body:
@@ -51,7 +51,7 @@ export function LongevityAnalysis({ meals, goal }: { meals: Meal[]; goal: number
       {
         id: "energy",
         label: "Energy balance",
-        hue: "#e68c2c",
+        hue: "var(--mid)",
         mark: <NutrientMark id="kcal" size={16} />,
         value: `${bal >= 0 ? "+" : "−"}${fmt(Math.abs(bal))} kcal a day`,
         body:

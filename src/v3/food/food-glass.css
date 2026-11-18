@@ -1,0 +1,649 @@
+/* =====================================================================
+ * Nutrition, quiet pass. The page is drawn in ink and greys; colour lives
+ * only in the data (nutrient rings, nutrient marks, macro bars), in soft
+ * muted tones, never in words. Generous room: a 20px gutter, 12px between
+ * cards in a group, 36px between sections, big inner padding so each
+ * number and ring has space of its own. Controls that float on the page
+ * ground share one glass recipe with a hairline rim and no drop shadows.
+ * ===================================================================== */
+.fd {
+  --fd-ink: #17191f;
+  /* the page wears the Nutrition hue (--mid from data-field="food"), brand
+     navy for rings and actions, each nutrient its field hue, as on Home */
+  --fd-move: #fa6431;
+  --fd-burn: #e0559a;
+  --fd-over: #e5534b;
+  --fd-core: #f3f3f6;
+  --fd-r-lg: 28px;
+  --fd-r-md: 24px;
+  --fd-gut: 20px;
+  --fd-glass-bg: color-mix(in srgb, var(--v-card) 58%, transparent);
+  --fd-glass-blur: blur(20px) saturate(180%);
+  --fd-glass-rim: inset 0 0 0 1px #ffffffb3;
+}
+:root[data-theme="dark"] .fd {
+  --fd-ink: #f2f2f7;
+  --fd-over: #ff6b6b;
+  --fd-core: #2c2c2e;
+  --fd-glass-bg: color-mix(in srgb, var(--v-card) 62%, transparent);
+  --fd-glass-rim: inset 0 0 0 1px #ffffff1a;
+}
+
+/* ---------- glass controls ---------- */
+.fd .mx-round,
+.fd-goal-pill,
+.fd-saved,
+.fd-slots button {
+  background: var(--fd-glass-bg);
+  backdrop-filter: var(--fd-glass-blur);
+  -webkit-backdrop-filter: var(--fd-glass-blur);
+  box-shadow: var(--fd-glass-rim);
+}
+:root[data-theme="dark"] .fd-goal-pill {
+  box-shadow: var(--fd-glass-rim);
+}
+.fd-top {
+  padding-left: var(--fd-gut);
+  padding-right: var(--fd-gut);
+}
+.fd-top h1 {
+  font-size: 26px;
+}
+.fd-goal-pill {
+  gap: 4px;
+  padding: 0 14px 0 12px;
+}
+.fd-goal-pill svg {
+  color: var(--mid);
+}
+.fd-goal-pill small {
+  margin-left: 1px;
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* ---------- the day track ---------- */
+.fd-week {
+  margin: 18px var(--fd-gut) 0;
+  padding: 5px;
+  gap: 2px;
+  border-radius: 28px;
+  background: #ffffff73;
+  backdrop-filter: var(--fd-glass-blur);
+  -webkit-backdrop-filter: var(--fd-glass-blur);
+  box-shadow: var(--fd-glass-rim);
+}
+:root[data-theme="dark"] .fd-week {
+  background: #ffffff10;
+}
+.fd-week button {
+  position: relative;
+  min-height: 0;
+  padding: 8px 0 10px;
+  gap: 7px;
+  border-radius: 23px;
+  transition: background 0.25s var(--v-ease);
+}
+.fd-week button:active {
+  transform: scale(0.94);
+}
+.fd-week .fd-ring-track {
+  stroke: color-mix(in srgb, var(--v-ink) 22%, transparent);
+}
+.fd-week-d {
+  font: 600 13px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-week-n {
+  font: 500 15px/1 var(--v-num);
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.fd-week button[aria-pressed="true"] {
+  background: var(--v-card);
+  box-shadow: none;
+}
+.fd-week button[aria-pressed="true"] .fd-week-d,
+.fd-week button[aria-pressed="true"] .fd-week-n {
+  font-weight: 700;
+  color: var(--v-ink);
+}
+.fd-week button[aria-pressed="true"] .fd-ring::before {
+  content: none;
+}
+
+/* the soft disc a ring's mark rests on */
+.fd-core {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--fd-core);
+}
+/* the ring's own svg is laid over the box; the mark inside stays in flow */
+.fd-core svg {
+  position: static;
+}
+.fd-core-lg {
+  width: 46px;
+  height: 46px;
+  color: var(--mid);
+}
+
+/* ---------- the one number ---------- */
+.fd-hero {
+  margin: 14px var(--fd-gut) 0;
+  padding: 20px 24px 24px;
+  border-radius: var(--fd-r-lg);
+}
+.fd-hero-row {
+  margin-top: 12px;
+}
+.fd-hero .fd-label svg {
+  color: var(--mid);
+}
+.fd-hero-n {
+  font: 700 60px/1 var(--v-num);
+  letter-spacing: -0.045em;
+}
+.fd-hero-w {
+  margin-top: 8px;
+  font: 500 16px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.fd-hero-s {
+  margin-top: 4px;
+  font: 400 14px/1.3 var(--v-text);
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.fd-hero-say {
+  margin: 22px 0 0;
+  padding-top: 16px;
+  font: 400 15px/1.45 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* ---------- nutrient cards ---------- */
+.fd-pager {
+  margin-top: 12px;
+}
+.fd-page {
+  padding: 0 var(--fd-gut);
+  gap: 12px;
+}
+.fd-nc {
+  padding: 18px 16px 18px;
+  border-radius: var(--fd-r-md);
+}
+.fd-nc > b {
+  font: 700 24px/1.05 var(--v-num);
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+.fd-nc > span:not(.fd-ring) {
+  margin: 6px 0 0;
+  font: 500 14px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+}
+.fd-nc strong {
+  font-weight: 600;
+  color: color-mix(in oklab, var(--hue), var(--v-ink) 22%);
+}
+.fd-nc em {
+  font-style: normal;
+}
+.fd-nc[data-over] em {
+  color: var(--fd-over);
+}
+.fd-nc > .fd-ring {
+  align-self: center;
+  margin: 18px 0 0;
+}
+.fd-dots {
+  margin-top: 14px;
+}
+.fd-dots i {
+  width: 6px;
+  transition: background 0.2s;
+}
+.fd-dots i[data-on] {
+  width: 16px;
+  border-radius: 3px;
+}
+
+/* ---------- sections ---------- */
+.fd-sec {
+  padding: 36px var(--fd-gut) 0;
+}
+.fd-h-row {
+  margin: 0 4px 14px;
+  align-items: center;
+}
+.fd-h-note {
+  font: 500 15px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.fd-saved {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  justify-content: center;
+  border-radius: 50%;
+  /* saved keeps its own yellow */
+  color: var(--v-save, #f2b705);
+}
+
+/* ---------- meals ---------- */
+.fd-list {
+  gap: 12px;
+}
+.fd-meal {
+  min-height: 120px;
+  border-radius: var(--fd-r-md);
+}
+.fd-meal-pic {
+  width: 120px;
+}
+.fd-meal-body {
+  gap: 10px;
+  padding: 16px 16px 16px 18px;
+}
+.fd-meal-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.fd-meal-name {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font: 600 16px/1.3 var(--v-text);
+  -webkit-line-clamp: 2;
+}
+.fd-meal-when {
+  flex: none;
+  padding: 5px 9px;
+  border-radius: 10px;
+  font: 500 12px/1 var(--v-num);
+  color: var(--v-ink-2);
+  background: var(--fd-core);
+}
+.fd-meal-kcal {
+  gap: 6px;
+  font: 500 15px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-meal-kcal svg {
+  color: var(--mid);
+}
+.fd-meal-kcal b {
+  font: 700 20px/1 var(--v-num);
+}
+.fd-meal-macros {
+  gap: 16px;
+}
+.fd-meal-macros span {
+  gap: 5px;
+  font: 500 14px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-tile {
+  color: var(--v-ink-3);
+  background: var(--fd-core);
+}
+.fd-slots {
+  margin-top: 12px;
+}
+.fd-slots button {
+  height: 38px;
+  border-radius: 19px;
+  font-size: 15px;
+  color: var(--v-ink);
+}
+
+/* ---------- longevity analysis: words in ink, colour only in the mark ---------- */
+.fd-la {
+  gap: 12px;
+}
+.fd-la-card {
+  padding: 20px 22px 22px;
+  border-radius: var(--fd-r-md);
+}
+.fd-la-label {
+  font: 600 14px/1.2 var(--v-text);
+  color: color-mix(in oklab, var(--hue), var(--v-ink) 22%);
+}
+.fd-la-label svg {
+  color: var(--hue);
+}
+.fd-la-value {
+  margin-top: 10px;
+}
+.fd-la-foot {
+  display: none;
+}
+
+/* ---------- day and week pictures ---------- */
+.fd-card {
+  padding: 20px 20px 18px;
+  border-radius: var(--fd-r-md);
+}
+.fd .mx-card {
+  border-radius: var(--fd-r-md);
+}
+
+/* history ranges: the same glass track as the day track and the Home tabs */
+.fd .mx-seg {
+  height: 48px;
+  margin-bottom: 12px;
+  padding: 4px;
+  border-radius: 24px;
+  background: #ffffff73;
+  box-shadow: var(--fd-glass-rim);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+:root[data-theme="dark"] .fd .mx-seg {
+  background: #ffffff10;
+}
+.fd .mx-seg i {
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / 5);
+  border-radius: 20px;
+  box-shadow: none;
+}
+.fd .mx-seg button {
+  font: 500 15px/1 var(--v-text);
+  color: var(--v-ink-3);
+  transition: color 0.2s linear;
+}
+.fd .mx-seg button[aria-selected="true"] {
+  font-weight: 600;
+  color: var(--v-accent);
+}
+
+/* ---------- the add button: ink glass ---------- */
+.fd-fab {
+  /* the button sits outside .fd, so its values are written out here */
+  right: 20px;
+  bottom: calc(28px + env(safe-area-inset-bottom));
+  width: 54px;
+  height: 54px;
+  color: #fff;
+  background: color-mix(in srgb, var(--v-navy) 92%, transparent);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  box-shadow: inset 0 1px 0.5px #ffffff59, inset 0 0 0 0.5px #ffffff33;
+}
+:root[data-theme="dark"] .fd-fab {
+  color: #0b0d14;
+  box-shadow: inset 0 1px 0.5px #ffffff, inset 0 0 0 0.5px #ffffff80;
+}
+
+/* =====================================================================
+ * Day pages: the whole day block swipes, three pages of one height.
+ * ===================================================================== */
+.fd-pager {
+  margin-top: 14px;
+}
+.fd-slide {
+  flex: none;
+  width: 100%;
+  padding: 0 var(--fd-gut);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-snap-align: start;
+}
+.fd-slide > .fd-hero {
+  flex: 1;
+  margin: 0;
+}
+.fd-row3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.fd-row2 {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* the diet score: mark, name, n / 10, one bar, what would lift it */
+.fd-score {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+.fd-score > .fd-score-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+.fd-score-head > b {
+  flex: 1;
+  font: 600 17px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.fd-score .fd-core-lg {
+  color: #e0559a;
+}
+.fd-score-n {
+  margin-left: auto;
+  font: 500 17px/1 var(--v-num);
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.fd-score-n b {
+  font: 700 30px/1 var(--v-num);
+  letter-spacing: -0.03em;
+  color: var(--v-ink);
+}
+.fd-score-bar {
+  display: block;
+  height: 8px;
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--fd-core);
+}
+.fd-score-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: #3dbfaa;
+}
+.fd-score .fd-hero-say {
+  margin-top: auto;
+}
+
+/* movement: two tall cards */
+.fd-move {
+  min-width: 0;
+  padding: 20px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--fd-r-md);
+  text-align: left;
+  color: var(--v-ink);
+  background: var(--v-card);
+}
+.fd-move:active {
+  transform: scale(0.985);
+}
+.fd-move-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.fd-move-head > svg {
+  flex: none;
+  margin-top: 4px;
+  color: var(--fd-move);
+}
+.fd-move + .fd-move .fd-move-head > svg {
+  color: var(--fd-burn);
+}
+.fd-move-head > span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fd-move-head b {
+  font: 700 26px/1 var(--v-num);
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.fd-move-head small {
+  font: 500 14px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-move-bars {
+  flex: 1;
+  min-height: 0;
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.fd-move-bars > span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.fd-move-bars em {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.fd-move-bars i {
+  width: 100%;
+  max-width: 14px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--fd-move) 30%, var(--v-card));
+}
+.fd-move-bars [data-today] i {
+  background: var(--fd-move);
+}
+.fd-move-bars small {
+  position: relative;
+  font: 500 12px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.fd-move-bars [data-today] small {
+  font-weight: 700;
+  color: var(--v-ink);
+}
+.fd-move-bars [data-today] small::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 4px);
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--v-accent);
+}
+.fd-move-rows {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.fd-move-rows > span {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.fd-move-rows i {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--fd-burn);
+  background: color-mix(in srgb, var(--fd-burn) 14%, var(--v-card));
+}
+.fd-move-rows i svg {
+  position: static;
+}
+.fd-move-rows > span > span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fd-move-rows small {
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fd-move-rows b {
+  font: 700 17px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+}
+
+/* meals sit closer under the page dots */
+.fd-sec-meals {
+  padding-top: 20px;
+}
+
+/* a wide score row: mark on its disc, name and n / 10, one bar under them */
+.fd-wide {
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: var(--fd-r-md);
+  text-align: left;
+  color: var(--v-ink);
+  background: var(--v-card);
+}
+.fd-wide:active {
+  transform: scale(0.985);
+}
+.fd-wide .fd-core-lg {
+  color: var(--fd-move);
+}
+.fd-wide .fd-score-bar i {
+  background: var(--fd-move);
+}
+.fd-wide-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.fd-wide-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.fd-wide-top > b {
+  font: 600 17px/1.2 var(--v-text);
+}
+.fd-wide-top > span {
+  font: 500 15px/1 var(--v-num);
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.fd-wide-top > span b {
+  font: 700 22px/1 var(--v-num);
+  color: var(--v-ink);
+}
+.fd-wide .fd-score-bar {
+  margin-top: 12px;
+}

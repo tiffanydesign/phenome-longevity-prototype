@@ -583,3 +583,8 @@
     animation: none;
   }
 }
+
+/* energy wears the Nutrition hue, as on Home, same as the Nutrition hub */
+.ml3 {
+  --mid: #e68c2c;
+}

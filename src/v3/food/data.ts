@@ -73,11 +73,11 @@ export const TARGET: Record<NutrientId, number> & { kcal: number } = {
 /** How each nutrient is named, measured and coloured (one hue each, never repeated on a page). */
 export const NUTRIENT: Record<NutrientId, { name: string; short: string; unit: string; hue: string }> = {
   protein: { name: "Protein", short: "Protein", unit: "g", hue: "#e0559a" },
-  carbs: { name: "Carbohydrates", short: "Carbs", unit: "g", hue: "#e68c2c" },
+  carbs: { name: "Carbohydrates", short: "Carbs", unit: "g", hue: "#7d7aff" },
   fat: { name: "Fat", short: "Fat", unit: "g", hue: "#3478f6" },
-  fiber: { name: "Fibre", short: "Fibre", unit: "g", hue: "#30b39d" },
+  fiber: { name: "Fibre", short: "Fibre", unit: "g", hue: "#3dbfaa" },
   calcium: { name: "Calcium", short: "Calcium", unit: "mg", hue: "#30b0c7" },
-  iron: { name: "Iron", short: "Iron", unit: "mg", hue: "#a2845e" },
+  iron: { name: "Iron", short: "Iron", unit: "mg", hue: "#fa3c5a" },
 };
 export const MACROS: NutrientId[] = ["protein", "carbs", "fat"];
 export const MICROS: NutrientId[] = ["fiber", "calcium", "iron"];

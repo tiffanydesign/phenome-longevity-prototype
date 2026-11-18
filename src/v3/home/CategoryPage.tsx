@@ -3,6 +3,7 @@ import { glyphOf, Kind } from "../ui/glyphs";
 import { Num } from "../ui/Num";
 import { useGo } from "../ui/shell";
 import { TabVerdict } from "./TabVerdict";
+import { useDiaryMetric } from "./diary";
 
 interface Page {
   title: string;
@@ -73,7 +74,7 @@ function Direction({ delta }: { delta: string }) {
 /** Overview to detail: the card keeps its number and trend, and grows into the metric's page. */
 function MetricCard({ id }: { id: string }) {
   const go = useGo();
-  const m = metric(id);
+  const m = useDiaryMetric(metric(id));
   const flagged = m.status !== "normal";
   return (
     <button className="v2-card" data-field={m.field} data-flag={flagged ? "" : undefined} onClick={(e) => go(m.id === "habits" ? "/v3/habits" : `/v3/metric/${m.id}`, { from: e.currentTarget })}>

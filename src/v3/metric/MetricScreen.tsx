@@ -52,7 +52,7 @@ const FROM_CARD: Record<string, { title: string; field?: string; glyph?: GlyphNa
   capacity: { title: "Capacity", span: "Today", glance: (m) => <Gauge m={m} /> },
   workouts: { title: "Workouts", field: "rose", glyph: "dumbbell", span: "Today", glance: (m) => <WorkoutRings m={m} /> },
   rhr: { title: "Heart", span: "Today", glance: (m) => <HeartRange m={m} ago={0} /> },
-  diet: { title: "Food", span: "Today", glance: (m) => <MacroBar m={m} /> },
+  diet: { title: "Nutrition", span: "Today", glance: (m) => <MacroBar m={m} /> },
 };
 
 /** Clinic and omics readings belong to the twin; everything else is a daily reading from a device or the diary. */

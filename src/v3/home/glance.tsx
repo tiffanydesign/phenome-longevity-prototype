@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import type { Metric } from "../data/metrics";
+import type { DiaryMetric } from "./diary";
 import "./glance.css";
 
 /*
@@ -158,14 +159,16 @@ export function HeartRange({ m, ago }: { m: Metric; ago: number }) {
 }
 
 /** Energy eaten, split into where it came from, against the day's budget. */
-export function MacroBar({ m }: { m: Metric }) {
+export function MacroBar({ m }: { m: DiaryMetric }) {
   const eaten = num(m.value);
   const goal = num(/\/\s*([\d,]+)/.exec(m.unit)?.[1] ?? "2000") || 2000;
-  // a typical split by energy; grams follow from 4, 4 and 9 kcal per gram
+  // the day's own split when the diary gives grams, else a typical one; 4, 4 and 9 kcal per gram
+  const g = m.grams;
+  const kcal = g ? g.protein * 4 + g.carbs * 4 + g.fat * 9 || 1 : 1;
   const parts = [
-    { name: "Protein", share: 0.24, per: 4 },
-    { name: "Carbs", share: 0.48, per: 4 },
-    { name: "Fat", share: 0.28, per: 9 },
+    { name: "Protein", share: g ? (g.protein * 4) / kcal : 0.24, per: 4 },
+    { name: "Carbs", share: g ? (g.carbs * 4) / kcal : 0.48, per: 4 },
+    { name: "Fat", share: g ? (g.fat * 9) / kcal : 0.28, per: 9 },
   ];
   return (
     <span className="gl gl-macro">

@@ -1,5 +1,6 @@
 import { metric, seriesFor, type Tab } from "../data/metrics";
 import { HistoryChart } from "../ui/charts";
+import { FoodWeek, foodVerdict, useFoodWeek } from "./FoodWeek";
 
 type HomeTab = Exclude<Tab, "body">;
 
@@ -64,6 +65,7 @@ const weekLabels = () => Array.from({ length: 7 }, (_, i) => DAY[(new Date().get
  * in plain words, then the week it rests on, before any card.
  */
 export function TabVerdict({ tab }: { tab: HomeTab }) {
+  if (tab === "food") return <FoodVerdict />;
   const v = VERDICTS[tab];
   const values = seriesFor(metric(v.chart.metric), "W");
   return (
@@ -80,6 +82,21 @@ export function TabVerdict({ tab }: { tab: HomeTab }) {
           <HistoryChart values={values} labels={weekLabels().slice(-values.length)} marks={v.chart.marks} />
         </section>
       )}
+    </div>
+  );
+}
+
+/** Nutrition reads its verdict and its week from the food diary itself. */
+function FoodVerdict() {
+  const v = VERDICTS.food;
+  const w = useFoodWeek();
+  const say = foodVerdict(w);
+  return (
+    <div className="v2-verdict" data-field={v.field}>
+      <h1 className="v2-verdict-title">{v.title}</h1>
+      <h2>{say.headline}</h2>
+      <p>{say.text}</p>
+      <FoodWeek />
     </div>
   );
 }

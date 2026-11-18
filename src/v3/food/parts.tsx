@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Chevron } from "../ui/icons";
 import { fmt, grams, MACROS, NUTRIENT, slotName, TARGET, type NutrientId, type Totals } from "./data";
 import { ANALYSE_MS, mealTotals, type Meal } from "./store";
+import { Ph, type PhName } from "./icons";
 
 /* The pieces the food pages share: rings, nutrient marks, meal cards, bars. */
 
@@ -34,30 +35,19 @@ export function Ring({ value, size = 64, stroke = 7, hue, dashed, children }: { 
   );
 }
 
-const MARK: Record<NutrientId | "kcal", ReactNode> = {
-  kcal: (
-    <>
-      <path d="M12 2.8c.9 3.4 5.8 5.6 5.8 10.9a5.8 5.8 0 0 1-11.6 0c0-2.6 1.4-4.4 2.6-5.4.1 1.7.9 2.8 2 3.2-.4-3.1.3-6.3 1.2-8.7z" />
-      <path d="M12 20.5a2.4 2.4 0 0 1-2.4-2.4c0-1.7 2.4-3.6 2.4-3.6s2.4 1.9 2.4 3.6a2.4 2.4 0 0 1-2.4 2.4z" />
-    </>
-  ),
-  protein: <ellipse cx="12" cy="13" rx="5.5" ry="7" />,
-  carbs: <path d="M12 21V8M12 8c-2.2-.6-3-2.4-3-4.5 2.2.5 3 2.3 3 4.5zm0 0c2.2-.6 3-2.4 3-4.5-2.2.5-3 2.3-3 4.5zm0 5c-2.4-.5-3.5-2.2-3.5-4.5 2.4.5 3.5 2.2 3.5 4.5zm0 0c2.4-.5 3.5-2.2 3.5-4.5-2.4.5-3.5 2.2-3.5 4.5zm0 5c-2.4-.5-3.5-2.2-3.5-4.5 2.4.5 3.5 2.2 3.5 4.5zm0 0c2.4-.5 3.5-2.2 3.5-4.5-2.4.5-3.5 2.2-3.5 4.5z" />,
-  fat: <path d="M12 3c3 4 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 3-7 6-11z" />,
-  fiber: <path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14zm0 0 8-8" />,
-  calcium: <path d="M8 3h8l-1.2 4.5V20a1 1 0 0 1-1 1h-3.6a1 1 0 0 1-1-1V7.5z" />,
-  iron: <path d="m12 3 7.8 4.5v9L12 21l-7.8-4.5v-9z" />,
+const MARK: Record<NutrientId | "kcal", PhName> = {
+  kcal: "flame",
+  protein: "egg",
+  carbs: "grains",
+  fat: "avocado",
+  fiber: "leaf",
+  calcium: "bone",
+  iron: "hexagon",
 };
 
-/** A nutrient's small mark, in its hue. */
-export function NutrientMark({ id, size = 18, solid }: { id: NutrientId | "kcal"; size?: number; solid?: boolean }) {
-  const hue = id === "kcal" ? "currentColor" : NUTRIENT[id].hue;
-  const filled = solid && id !== "carbs" && id !== "fiber" && id !== "kcal";
-  return (
-    <svg className="fd-mark" width={size} height={size} viewBox="0 0 24 24" fill={filled ? hue : "none"} stroke={hue} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      {MARK[id]}
-    </svg>
-  );
+/** A nutrient's small solid mark, in its hue (energy takes the text colour). */
+export function NutrientMark({ id, size = 18 }: { id: NutrientId | "kcal"; size?: number; solid?: boolean }) {
+  return <Ph name={MARK[id]} size={size} color={id === "kcal" ? undefined : NUTRIENT[id].hue} className="fd-mark" />;
 }
 
 /** Left of a target, or over it, said the plain way. */
@@ -66,22 +56,27 @@ export function leftOf(eaten: number, target: number) {
   return { n: Math.abs(target - eaten), word: over ? "over" : "left", over };
 }
 
-/** One nutrient against its target: amount left large, ring under it. */
+/** One nutrient against its target: amount left, its name, then a ring
+ *  with the nutrient's mark resting in the middle. Colour lives only in the
+ *  ring and the mark; the words stay ink and grey. */
 export function NutrientCard({ id, t }: { id: NutrientId; t: Totals }) {
   const n = NUTRIENT[id];
   const l = leftOf(t[id], TARGET[id]);
   return (
-    <div className="fd-nc" data-over={l.over ? "" : undefined} style={{ "--hue": n.hue } as React.CSSProperties}>
-      <p className="fd-nc-label">
-        <NutrientMark id={id} size={14} solid />
-        {n.short}
-      </p>
+    <div
+      className="fd-nc"
+      data-over={l.over ? "" : undefined}
+      aria-label={`${n.name}: ${grams(l.n, n.unit)} ${l.word} of ${fmt(TARGET[id])} ${n.unit}`}
+      style={{ "--hue": n.hue } as React.CSSProperties}
+    >
       <b>{grams(l.n, n.unit)}</b>
       <span>
-        <em>{l.word}</em> of {fmt(TARGET[id])} {n.unit}
+        <strong>{n.short}</strong> <em>{l.word}</em>
       </span>
-      <Ring value={t[id] / TARGET[id]} size={58} stroke={6} hue={n.hue}>
-        <small className="fd-nc-pct">{Math.round((t[id] / TARGET[id]) * 100)}%</small>
+      <Ring value={t[id] / TARGET[id]} size={64} stroke={6} hue={n.hue}>
+        <span className="fd-core">
+          <NutrientMark id={id} size={15} solid />
+        </span>
       </Ring>
     </div>
   );
@@ -125,10 +120,12 @@ export function MealCard({ m, onOpen }: { m: Meal; onOpen: (el: HTMLElement) => 
         )}
       </span>
       <span className="fd-meal-body">
-        <time className="fd-meal-when">
-          {slotName(m.slot)} · {clock(m.at)}
-        </time>
-        <b className="fd-meal-name">{busy ? "Analysing your meal…" : m.name}</b>
+        <span className="fd-meal-top">
+          <b className="fd-meal-name">{busy ? "Analysing your meal…" : m.name}</b>
+          <time className="fd-meal-when" aria-label={`${slotName(m.slot)} at ${clock(m.at)}`}>
+            {clock(m.at)}
+          </time>
+        </span>
         {busy ? (
           <>
             <span className="fd-skel" aria-hidden>
@@ -141,7 +138,7 @@ export function MealCard({ m, onOpen }: { m: Meal; onOpen: (el: HTMLElement) => 
           <>
             <span className="fd-meal-kcal">
               <NutrientMark id="kcal" size={17} solid />
-              <b>{fmt(t.kcal)}</b> kcal
+              <b>{fmt(t.kcal)}</b> calories
             </span>
             <span className="fd-meal-macros">
               {MACROS.map((id) => (

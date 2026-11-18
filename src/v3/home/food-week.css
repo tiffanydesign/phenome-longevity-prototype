@@ -1,0 +1,119 @@
+/* The Nutrition tab's week of calories: average on top, stacked bars, goal rule, key. */
+.fw {
+  display: block;
+  width: calc(100% + 8px);
+  margin: 18px -4px 0;
+  padding: 18px 18px 16px;
+  border-radius: var(--v-r);
+  text-align: left;
+  color: var(--v-ink);
+  background: var(--v-card);
+}
+.fw:active {
+  transform: scale(0.99);
+}
+.fw-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.fw-head > span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fw-head b {
+  font: 700 26px/1 var(--v-num);
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.fw-head small {
+  font: 500 14px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fw-head em {
+  font: 500 13px/1.4 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+}
+.fw-plot {
+  position: relative;
+  height: 128px;
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  align-items: end;
+  border-bottom: 1px solid color-mix(in srgb, var(--v-ink) 10%, transparent);
+}
+.fw-goal {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 1.5px dashed color-mix(in srgb, var(--v-ink) 26%, transparent);
+}
+.fw-goal span {
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  font: 600 11px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+}
+.fw-col {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.fw-bar {
+  width: 100%;
+  max-width: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  border-radius: 7px;
+}
+.fw-bar i {
+  display: block;
+  min-height: 3px;
+}
+.fw-col[data-today] .fw-bar {
+  outline: 1.5px solid color-mix(in srgb, var(--v-ink) 55%, transparent);
+  outline-offset: 2px;
+}
+.fw-axis {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+.fw-axis span {
+  text-align: center;
+  font: 500 12px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.fw-axis [data-today] {
+  font-weight: 700;
+  color: var(--v-ink);
+}
+.fw-key {
+  margin-top: 14px;
+  display: flex;
+  gap: 16px;
+}
+.fw-key span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.fw-key i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
