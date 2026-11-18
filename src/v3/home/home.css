@@ -1351,6 +1351,37 @@ button.v2-svc:active {
   fill: #34c759;
 }
 
+/* header controls: 40px rounds that read in step with the 24px mark at the left,
+   each with an invisible 44px touch area; 20px device mark, 14.5px initials */
+.v2-hpill .v2-round,
+.v2-hpill .v2-avatar {
+  width: 40px;
+  height: 40px;
+}
+.v2-hpill .v2-round::after,
+.v2-hpill .v2-avatar::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+}
+.v2-hpill .v2-avatar {
+  font: 650 14.5px/1 var(--v-text);
+  letter-spacing: 0.01em;
+}
+/* the unread dot centred on the avatar's edge at 45°: 20 + 20·cos45° = 34.1,
+   so a 10px dot sits 1px in from the top and right of the 40px box */
+.v2-hpill .v2-avatar-dot {
+  top: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 0 0 2px var(--v-bg);
+}
+.v2-hpill .v2-dev-ring circle {
+  stroke-width: 2.4;
+}
+
 /* a service with something booked: a small green badge right of its title */
 .v2-svc-row {
   display: flex;

@@ -135,7 +135,7 @@ export function followHead(el: HTMLElement | null, top: number, travel: number, 
 /* ring geometry: the arc runs clockwise from twelve o'clock; while charging a
    gap is held open at the top for the bolt */
 const R = 16.5;
-const GAP = 16;
+const GAP = 22;
 
 export function DevicesButton() {
   const go = useGo();
@@ -174,9 +174,9 @@ export function DevicesButton() {
             strokeDashoffset={-start}
           />
         )}
-        {charging && <path className="v2-dev-bolt" d="M19.9 0.6 15.9 6.4h2.8l-1.2 4.6 4-5.8h-2.8z" />}
+        {charging && <path className="v2-dev-bolt" d="M20.3-1 15 6.6h3.7l-1.6 6 5.3-7.6h-3.7z" />}
       </svg>
-      <Icon name={d.icon!} size={17} />
+      <Icon name={d.icon!} size={20} />
     </button>
   );
 }
