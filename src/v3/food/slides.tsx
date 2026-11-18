@@ -3,6 +3,7 @@ import { fmt, NUTRIENT, TARGET, type NutrientId, type Totals } from "./data";
 import { NutrientCard, NutrientMark } from "./parts";
 import { Ph } from "./icons";
 import { ENERGY, STEP_GOAL, STEPS_TODAY, STEPS_YESTERDAY, WORKOUTS } from "../metric/activityData";
+import { ScoreSegments } from "../metric/detailCharts";
 
 /*
  * The day at a glance, as pages the member swipes through: energy and the
@@ -20,26 +21,20 @@ export function dietScore(t: Totals, goal: number) {
   return { score, low: low.id };
 }
 
-/** The score as a wide card: mark, name, n / 10, one bar, what would lift it. */
+const scoreWord = (n: number) => (n >= 8 ? "Great" : n >= 6 ? "Good" : n >= 4 ? "Fair" : "Low");
+
+/** The score as the Sleep score is shown: the arc at the left, what would lift it beside it. */
 function ScoreCard({ t, goal }: { t: Totals; goal: number }) {
   const s = dietScore(t, goal);
   return (
     <section className="fd-hero fd-score" aria-label={`Diet score ${s.score} out of 10`}>
-      <div className="fd-score-head">
-        <span className="fd-core fd-core-lg" aria-hidden>
-          <Ph name="heart" size={20} />
-        </span>
+      <ScoreSegments score={s.score} max={10} word={scoreWord(s.score)} />
+      <span className="fd-score-t">
         <b>Diet score</b>
-        <span className="fd-score-n">
-          <b>{s.score}</b>/10
-        </span>
-      </div>
-      <span className="fd-score-bar" aria-hidden>
-        <i style={{ width: `${s.score * 10}%` }} />
+        <small>
+          {s.score >= 8 ? "A well-rounded day so far." : `More ${NUTRIENT[s.low].name.toLowerCase()} would lift it most.`} Energy, protein, fibre, calcium and iron each count.
+        </small>
       </span>
-      <p className="fd-hero-say">
-        {s.score >= 8 ? "A well-rounded day so far." : `More ${NUTRIENT[s.low].name.toLowerCase()} would lift it most.`} Energy, protein, fibre, calcium and iron each count.
-      </p>
     </section>
   );
 }

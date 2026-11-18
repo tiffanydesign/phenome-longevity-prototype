@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { useId, type CSSProperties } from "react";
 import { stepDay, STEP_GOAL, STEPS_TODAY, WORKOUTS } from "./activityData";
 import "./detail-charts.css";
 
@@ -38,25 +38,26 @@ const arc = (cx: number, cy: number, r: number, from: number, to: number) => {
  * The score as an arc open at the foot, filled to the score, shading from a
  * pale tint of the page's hue to the full hue. The number sits in the middle with its word under it.
  */
-export function ScoreSegments({ score, word }: { score: number; word: string }) {
+export function ScoreSegments({ score, word, max = 100 }: { score: number; word: string; max?: number }) {
+  const grad = `dc-score-grad${useId().replace(/:/g, "")}`;
   const C = 120;
   const R = 92;
   const START = -135;
   const SWEEP = 270;
-  const end = START + (SWEEP * Math.max(1, Math.min(100, score))) / 100;
+  const end = START + SWEEP * Math.max(0.01, Math.min(1, score / max));
   const fill = arc(C, C, R, START, end);
   return (
-    <span className="dc-score" role="img" aria-label={`Sleep score ${score}, ${word}`}>
+    <span className="dc-score" role="img" aria-label={`Score ${score} of ${max}, ${word}`}>
       <svg viewBox="0 0 240 216" aria-hidden>
         <defs>
           {/* light at the start of the arc, the page's full hue where the score stands */}
-          <linearGradient id="dc-score-grad" gradientUnits="userSpaceOnUse" x1="20" y1="200" x2="220" y2="40">
+          <linearGradient id={grad} gradientUnits="userSpaceOnUse" x1="20" y1="200" x2="220" y2="40">
             <stop offset="0" className="dc-score-g0" />
             <stop offset="1" className="dc-score-g1" />
           </linearGradient>
         </defs>
         <path className="dc-score-track" d={arc(C, C, R, START, START + SWEEP)} />
-        <path className="dc-score-fill" d={fill} stroke="url(#dc-score-grad)" />
+        <path className="dc-score-fill" d={fill} stroke={`url(#${grad})`} />
       </svg>
       <span className="dc-score-c">
         <b>{score}</b>

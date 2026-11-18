@@ -19,24 +19,66 @@
   padding: calc(var(--status-h) + 6px) 16px 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
 }
+.mx-bar > .mx-round {
+  margin-left: auto;
+}
+/* the page's name: a pill in the reading's hue that opens the list of readings */
+.mx-title-pick {
+  min-width: 0;
+  height: 40px;
+  padding: 0 10px 0 9px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 20px;
+  font: 600 16px/1 var(--v-text);
+  color: var(--mx-ink);
+  background: color-mix(in srgb, var(--mid) 12%, var(--v-card));
+}
+.mx-title-pick > span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.mx-title-pick > svg {
+  flex: none;
+  color: var(--mid);
+}
+.mx-title-pick > svg:last-child {
+  color: var(--mx-ink);
+}
+.mx-title-pick:active {
+  transform: scale(0.97);
+}
+/* in a top bar the pill sits centred on the screen, between the round buttons */
+:is(.mx-bar, .fd-top) > .mx-title-pick {
+  position: absolute;
+  top: calc(var(--status-h) + 9px);
+  left: 50%;
+  max-width: 56%;
+  transform: translateX(-50%);
+}
+:is(.mx-bar, .fd-top) > .mx-title-pick:active {
+  transform: translateX(-50%) scale(0.97);
+}
+/* round bar buttons: a plain white disc with a hairline edge, the mark in ink */
 .mx-bar .v2-back button,
 .mx-round {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   margin: 0;
   display: grid;
   place-items: center;
   border-radius: 50%;
   color: var(--v-ink);
-  background: color-mix(in srgb, var(--v-card) 72%, transparent);
-  backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
-  box-shadow: inset 0 0 0 1px #ffffffb3, 0 6px 16px -10px #24365e40;
+  background: var(--v-card);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--v-ink) 12%, transparent);
 }
 :root[data-theme="dark"] .mx-bar .v2-back button,
 :root[data-theme="dark"] .mx-round {
+  background: color-mix(in srgb, var(--v-card) 88%, #fff);
   box-shadow: inset 0 0 0 1px #ffffff1f;
 }
 .mx-bar .v2-back button:active,
@@ -447,8 +489,13 @@
   color: var(--v-ink-2);
 }
 .mx-sheet-step button {
+  flex: none;
   width: 52px;
   height: 52px;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
   font: 500 26px/1 var(--v-text);
   color: var(--v-navy);
@@ -460,6 +507,10 @@
 .mx-sheet-save {
   width: 100%;
   height: 50px;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  place-items: center;
   border-radius: 25px;
   font: 600 16px/1 var(--v-text);
   color: var(--v-on-navy, #fff);

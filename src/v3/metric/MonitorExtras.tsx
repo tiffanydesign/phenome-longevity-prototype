@@ -1,5 +1,8 @@
-import { metric, seriesFor, type Metric, type Range } from "../data/metrics";
-import { Glyph, glyphOf } from "../ui/glyphs";
+import { useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { metric, METRICS, seriesFor, type Metric, type Range } from "../data/metrics";
+import { Glyph, glyphOf, type GlyphName } from "../ui/glyphs";
+import { Chevron } from "../ui/icons";
 import { Num } from "../ui/Num";
 import { useGo } from "../ui/shell";
 
@@ -84,6 +87,39 @@ export const MONITOR_GROUPS: { title: string; ids: string[] }[] = [
 export const inMonitor = (id: string) => MONITOR_GROUPS.some((g) => g.ids.includes(id));
 
 /** A sheet listing every reading; picking one swaps the page in place. */
+/** The readings Home's Today cards open, in the order the cards sit. */
+const HOME_CARDS = ["capacity", "workouts", "steps", "sleep", "rhr", "diet"];
+const TAB_NAME: Record<string, string> = { activity: "Activity", sleep: "Sleep", vitals: "Vitals", body: "Body", food: "Food", all: "More" };
+
+/** Today's cards first, then the monitor's groups; a reading outside both brings its own tab's readings. */
+function pickerGroups(current: string) {
+  const seen = new Set(HOME_CARDS);
+  const groups = [{ title: "Today", ids: HOME_CARDS }, ...MONITOR_GROUPS.map((g) => ({ title: g.title, ids: g.ids.filter((id) => !seen.has(id)) }))];
+  if (!groups.some((g) => g.ids.includes(current))) {
+    const tab = metric(current).tab;
+    groups.push({ title: TAB_NAME[tab] ?? "More", ids: Object.values(METRICS).filter((r) => r.tab === tab && !seen.has(r.id)).map((r) => r.id) });
+  }
+  return groups.filter((g) => g.ids.length);
+}
+
+/** The page's name as a pill beside the back button; it opens the list of readings to switch to in place. */
+export function TitlePick({ id, title, glyph }: { id: string; title: string; glyph: GlyphName }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLButtonElement>(null);
+  // the sheet covers the whole screen, wherever on the page the pill sits
+  const host = open ? ref.current?.closest(".v2") : null;
+  return (
+    <>
+      <button ref={ref} className="mx-title-pick" aria-label={`${title}, choose another reading`} onClick={() => setOpen(true)}>
+        <Glyph name={glyph} size={18} />
+        <span>{title}</span>
+        <Chevron dir="down" size={14} />
+      </button>
+      {open && host && createPortal(<MetricPicker current={id} onClose={() => setOpen(false)} />, host)}
+    </>
+  );
+}
+
 export function MetricPicker({ current, onClose }: { current: string; onClose: () => void }) {
   const go = useGo();
   return (
@@ -92,7 +128,7 @@ export function MetricPicker({ current, onClose }: { current: string; onClose: (
         <i className="mx-sheet-grab" aria-hidden />
         <h2>Your health monitor</h2>
         <div className="mx-pick-scroll">
-          {MONITOR_GROUPS.map((g) => (
+          {pickerGroups(current).map((g) => (
             <section key={g.title}>
               <h3>{g.title}</h3>
               <div className="mx-pick-list">

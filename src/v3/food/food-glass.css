@@ -30,7 +30,6 @@
 }
 
 /* ---------- glass controls ---------- */
-.fd .mx-round,
 .fd-goal-pill,
 .fd-saved,
 .fd-slots button {
@@ -49,9 +48,12 @@
 .fd-top h1 {
   font-size: 26px;
 }
+.fd-top > .fd-goal-edit {
+  margin-left: auto;
+}
 .fd-goal-pill {
   gap: 4px;
-  padding: 0 14px 0 12px;
+  padding: 0 12px 0 10px;
 }
 .fd-goal-pill svg {
   color: var(--mid);
@@ -417,36 +419,32 @@
 }
 
 /* the diet score: mark, name, n / 10, one bar, what would lift it */
+/* the diet score, set as the sleep score: the arc at the left, words beside it */
 .fd-score {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-}
-.fd-score > .fd-score-head {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
-.fd-score-head > b {
+.fd-score .dc-score {
+  width: 128px;
+}
+.fd-score-t {
   flex: 1;
-  font: 600 17px/1.2 var(--v-text);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+.fd-score-t b {
+  font: 700 19px/1.25 var(--v-text);
+  letter-spacing: -0.015em;
   color: var(--v-ink);
 }
-.fd-score .fd-core-lg {
-  color: #e0559a;
-}
-.fd-score-n {
-  margin-left: auto;
-  font: 500 17px/1 var(--v-num);
-  color: var(--v-ink-3);
-  font-variant-numeric: tabular-nums;
-}
-.fd-score-n b {
-  font: 700 30px/1 var(--v-num);
-  letter-spacing: -0.03em;
-  color: var(--v-ink);
+.fd-score-t small {
+  font: 400 14px/1.4 var(--v-text);
+  color: var(--v-ink-2);
 }
 .fd-score-bar {
   display: block;

@@ -6,13 +6,13 @@ import { SleepDetail, STAGES } from "./SleepDetail";
 import { ActivityLanes, NightChart } from "./detailCharts";
 import { ActivityDetail } from "./ActivityDetail";
 import { FoodScreen } from "../food/FoodScreen";
-import { BpDetail, CompareBlock, inMonitor, MetricPicker, MONITOR_ABOUT } from "./MonitorExtras";
+import { BpDetail, CompareBlock, inMonitor, MONITOR_ABOUT, TitlePick } from "./MonitorExtras";
 import { GoalSheet, goalOf, GOALS, useGoals } from "./goals";
 import { useParams } from "react-router-dom";
 import { metric as baseMetric, metricsFor, periodTitle, rangeLabels, seriesFor, SOURCE_LABEL, STATUS_LABEL, visitLabels, type Range } from "../data/metrics";
 import { ICON, lensOf, readingOf, REGIONS } from "../twin/regions";
 import { TrendChart } from "../ui/charts";
-import { Glyph, glyphOf, type GlyphName } from "../ui/glyphs";
+import { glyphOf, type GlyphName } from "../ui/glyphs";
 import { OrganIcon } from "../ui/OrganIcon";
 import { Chevron } from "../ui/icons";
 import { Num } from "../ui/Num";
@@ -75,7 +75,6 @@ function MetricPage({ id }: { id: string }) {
   const [range, setRangeRaw] = useState<Range>("W");
   const [page, setPage] = useState(0);
   const [editing, setEditing] = useState(false);
-  const [picking, setPicking] = useState(false);
   const setRange = (r: Range) => {
     setRangeRaw(r);
     setPage(0);
@@ -109,6 +108,8 @@ function MetricPage({ id }: { id: string }) {
         {/* a round glass way back, and the goal beside it when the reading has one */}
         <header className="mx-bar">
           <BackBar />
+          {/* the page's name beside the way back, a pill that switches to any other reading */}
+          <TitlePick id={m.id} title={card?.title ?? m.label} glyph={card?.glyph ?? glyphOf(m.id)} />
           {GOALS[m.id] && (
             <button className="mx-round" aria-label="Edit goal" onClick={() => setEditing(true)}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -121,19 +122,6 @@ function MetricPage({ id }: { id: string }) {
 
         {/* the reading named in its own hue, the number large, then one plain sentence of what it means */}
         <section className="mx-hero" style={{ viewTransitionName: "v2-hero" }}>
-          {inMonitor(m.id) ? (
-            // the original monitor's picker: any daily reading, switched in place
-            <button className="mx-eyebrow mx-eyebrow-pick" aria-label={`${card?.title ?? m.label}, choose another reading`} onClick={() => setPicking(true)}>
-              <Glyph name={card?.glyph ?? glyphOf(m.id)} size={18} />
-              {card?.title ?? m.label}
-              <Chevron dir="down" size={14} />
-            </button>
-          ) : (
-            <p className="mx-eyebrow">
-              <Glyph name={card?.glyph ?? glyphOf(m.id)} size={18} />
-              {card?.title ?? m.label}
-            </p>
-          )}
           <div className="mx-value">
             <b>
               <Num v={m.value} />
@@ -266,7 +254,6 @@ function MetricPage({ id }: { id: string }) {
           </button>
         )}
       </div>
-      {picking && <MetricPicker current={m.id} onClose={() => setPicking(false)} />}
       {editing && GOALS[m.id] && <GoalSheet id={m.id} current={goals.get(m.id)} onSave={(v) => goals.set(m.id, v)} onClose={() => setEditing(false)} />}
     </V2Screen>
   );

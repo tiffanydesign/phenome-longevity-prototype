@@ -14,6 +14,8 @@ import { LongevityAnalysis } from "./analysis";
 import { useSaved } from "./SavedScreen";
 import { AddSheet } from "./AddSheet";
 import { veilOnScroll } from "../devices/veil";
+import { TitlePick } from "../metric/MonitorExtras";
+import { glyphOf } from "../ui/glyphs";
 import "../metric/metric.css";
 import "./food.css";
 import "./food-glass.css";
@@ -64,11 +66,12 @@ export function FoodScreen() {
           <button className="mx-round" aria-label="Back" onClick={() => nav(-1)}>
             <Chevron dir="left" size={22} />
           </button>
-          <h1>Nutrition</h1>
-          <button className="fd-goal-pill" aria-label={`Daily energy goal ${fmt(goal)} kcal, edit`} onClick={() => setEditing(true)}>
-            <NutrientMark id="kcal" size={16} />
-            {fmt(goal)}
-            <small>kcal</small>
+          <TitlePick id="diet" title="Nutrition" glyph={glyphOf("diet")} />
+          <button className="mx-round fd-goal-edit" aria-label={`Daily energy goal ${fmt(goal)} kcal, edit`} onClick={() => setEditing(true)}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z" />
+              <path d="m13.5 6.5 4 4" />
+            </svg>
           </button>
         </header>
 
@@ -88,7 +91,7 @@ export function FoodScreen() {
                 data-today={k === dayKey(new Date()) ? "" : undefined}
                 onClick={() => setDay(k)}
               >
-                <Ring value={dt.kcal / goal} size={36} stroke={2.2} hue={over ? "var(--fd-over)" : "var(--v-accent)"} dashed>
+                <Ring value={dt.kcal / goal} size={36} stroke={2.2} hue={over ? "var(--fd-over)" : "var(--mid)"} dashed>
                   <span className="fd-week-d">{d.toLocaleDateString("en-GB", { weekday: "narrow" })}</span>
                 </Ring>
                 <b className="fd-week-n">{d.getDate()}</b>
