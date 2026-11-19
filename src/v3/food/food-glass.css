@@ -673,3 +673,19 @@
   color: color-mix(in oklab, var(--fd-over), var(--v-ink) 25%);
   background: color-mix(in srgb, var(--fd-over) 12%, var(--v-card));
 }
+
+/* day rings: the energy meaning at one low chroma and one lightness, so
+   seven small rings read as a quiet row rather than traffic lights */
+.fd {
+  --fd-go-soft: #8f9cc4;
+  --fd-met-soft: #6fb593;
+  --fd-over-soft: #e2907a;
+}
+:root[data-theme="dark"] .fd {
+  --fd-go-soft: #8d9bd0;
+  --fd-met-soft: #7cc6a2;
+  --fd-over-soft: #ef9f8a;
+}
+.fd-week .fd-ring-track {
+  stroke: color-mix(in srgb, var(--v-ink) 14%, transparent);
+}

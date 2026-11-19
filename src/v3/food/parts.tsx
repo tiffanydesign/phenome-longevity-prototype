@@ -65,6 +65,8 @@ export function energyZone(eaten: number, goal: number): EnergyZone {
   return r > 1.1 ? "over" : r >= 0.9 ? "met" : "go";
 }
 export const ZONE_HUE: Record<EnergyZone, string> = { go: "var(--fd-go)", met: "var(--fd-met)", over: "var(--fd-over)" };
+/** The same meaning at low chroma, for the small dashed day rings. */
+export const ZONE_SOFT: Record<EnergyZone, string> = { go: "var(--fd-go-soft)", met: "var(--fd-met-soft)", over: "var(--fd-over-soft)" };
 
 /** One nutrient against its target: amount left, its name, then a ring
  *  with the nutrient's mark resting in the middle. Colour lives only in the

@@ -5,7 +5,7 @@ import { Chevron } from "../ui/icons";
 import { GoalSheet, useGoals } from "../metric/goals";
 import { ABOUT, fmt, MACROS, SLOTS, TARGET } from "./data";
 import { dayKey, dayOffset, dayTotals, useMeals } from "./store";
-import { energyZone, leftOf, MealCard, NutrientMark, Ring, ZONE_HUE } from "./parts";
+import { energyZone, leftOf, MealCard, NutrientMark, Ring, ZONE_HUE, ZONE_SOFT } from "./parts";
 import { DaySlides } from "./slides";
 import { Ph } from "./icons";
 import { DayPace } from "./charts";
@@ -92,7 +92,7 @@ export function FoodScreen() {
                 data-today={k === dayKey(new Date()) ? "" : undefined}
                 onClick={() => setDay(k)}
               >
-                <Ring value={dt.kcal / goal} size={36} stroke={2.2} hue={ZONE_HUE[zone]} dashed>
+                <Ring value={dt.kcal / goal} size={36} stroke={2.2} hue={ZONE_SOFT[zone]} dashed>
                   <span className="fd-week-d">{d.toLocaleDateString("en-GB", { weekday: "narrow" })}</span>
                 </Ring>
                 <b className="fd-week-n">{d.getDate()}</b>
