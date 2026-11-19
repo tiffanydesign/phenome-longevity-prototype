@@ -5,7 +5,7 @@ import { Chevron } from "../ui/icons";
 import { GoalSheet, useGoals } from "../metric/goals";
 import { ABOUT, fmt, MACROS, SLOTS, TARGET } from "./data";
 import { dayKey, dayOffset, dayTotals, useMeals } from "./store";
-import { leftOf, MealCard, NutrientMark, Ring } from "./parts";
+import { energyZone, leftOf, MealCard, NutrientMark, Ring, ZONE_HUE } from "./parts";
 import { DaySlides } from "./slides";
 import { Ph } from "./icons";
 import { DayPace } from "./charts";
@@ -42,6 +42,7 @@ export function FoodScreen() {
   const t = useMemo(() => dayTotals(meals, day), [meals, day]);
   const list = useMemo(() => meals.filter((m) => m.day === day).sort((a, b) => a.at - b.at), [meals, day]);
   const l = leftOf(t.kcal, goal);
+  const zone = energyZone(t.kcal, goal);
   const missing = SLOTS.filter((s) => !list.some((m) => m.slot === s.id));
   const week = useMemo(() => Array.from({ length: 7 }, (_, i) => dayOffset(i - 6)), []);
   const dayName = isToday ? "Today" : new Date(`${day}T12:00:00`).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short" });
@@ -82,7 +83,7 @@ export function FoodScreen() {
             const k = dayKey(d);
             const dt = dayTotals(meals, k);
             const sel = k === day;
-            const over = dt.kcal > goal;
+            const zone = energyZone(dt.kcal, goal);
             return (
               <button
                 key={k}
@@ -91,7 +92,7 @@ export function FoodScreen() {
                 data-today={k === dayKey(new Date()) ? "" : undefined}
                 onClick={() => setDay(k)}
               >
-                <Ring value={dt.kcal / goal} size={36} stroke={2.2} hue={over ? "var(--fd-over)" : "var(--mid)"} dashed>
+                <Ring value={dt.kcal / goal} size={36} stroke={2.2} hue={ZONE_HUE[zone]} dashed>
                   <span className="fd-week-d">{d.toLocaleDateString("en-GB", { weekday: "narrow" })}</span>
                 </Ring>
                 <b className="fd-week-n">{d.getDate()}</b>
@@ -120,9 +121,10 @@ export function FoodScreen() {
                   <span className="fd-hero-s">
                     {fmt(t.kcal)} of {fmt(goal)} eaten
                   </span>
+                  {zone !== "go" && <span className="fd-zone" data-zone={zone}>{zone === "met" ? "On target" : "Over goal"}</span>}
                 </div>
-                <Ring value={t.kcal / goal} size={112} stroke={11} hue={l.over ? "var(--fd-over)" : "var(--mid)"}>
-                  <span className="fd-core fd-core-lg">
+                <Ring value={t.kcal / goal} size={112} stroke={11} hue={ZONE_HUE[zone]}>
+                  <span className="fd-core fd-core-lg" style={{ color: ZONE_HUE[zone] }}>
                     <NutrientMark id="kcal" size={22} />
                   </span>
                 </Ring>

@@ -90,7 +90,8 @@ function nightBlocks(stages: StageMinutes[]) {
 }
 
 /** Last night: each stage's name and time on the left, the night on the right, lane for lane. */
-export function NightChart({ stages, bed, up }: { stages: StageMinutes[]; bed: string; up: string }) {
+/** `focus` keeps one stage in full colour and quietens the rest, for a page about that stage. */
+export function NightChart({ stages, bed, up, focus }: { stages: StageMinutes[]; bed: string; up: string; focus?: StageMinutes["stage"] }) {
   const blocks = nightBlocks(stages);
   const total = blocks.reduce((n, b) => n + b.min, 0);
   const W = 180;
@@ -103,10 +104,10 @@ export function NightChart({ stages, bed, up }: { stages: StageMinutes[]; bed: s
     return { ...b, x, w: Math.max(2.5, (b.min / total) * W), y: LANE[b.stage] * LH + LH / 2 };
   });
   return (
-    <div className="dc-night">
+    <div className="dc-night" data-focus={focus ? "" : undefined}>
       <ul className="dc-night-key">
         {(["Awake", "REM", "Core", "Deep"] as const).map((s) => (
-          <li key={s} data-stage={s}>
+          <li key={s} data-stage={s} data-dim={focus && focus !== s ? "" : undefined}>
             <span>{s}</span>
             <b>{hm(stages.find((x) => x.stage === s)?.min ?? 0)}</b>
           </li>
@@ -119,10 +120,10 @@ export function NightChart({ stages, bed, up }: { stages: StageMinutes[]; bed: s
           ))}
           {/* a thin riser joins each stage to the next, in the colour of the stage it enters */}
           {placed.slice(1).map((b, i) => (
-            <line key={`r${i}`} className="dc-riser" data-stage={b.stage} x1={b.x} x2={b.x} y1={placed[i].y} y2={b.y} />
+            <line key={`r${i}`} className="dc-riser" data-stage={b.stage} data-dim={focus && focus !== b.stage ? "" : undefined} x1={b.x} x2={b.x} y1={placed[i].y} y2={b.y} />
           ))}
           {placed.map((b, i) => (
-            <rect key={i} data-stage={b.stage} x={b.x} y={b.y - BH / 2} width={b.w} height={BH} rx="3" />
+            <rect key={i} data-stage={b.stage} data-dim={focus && focus !== b.stage ? "" : undefined} x={b.x} y={b.y - BH / 2} width={b.w} height={BH} rx="3" />
           ))}
         </svg>
         <span className="dc-night-ends" aria-hidden>

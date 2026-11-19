@@ -222,3 +222,113 @@
   font: 400 14px/1.45 var(--v-text);
   color: var(--v-ink-2);
 }
+
+/* =====================================================================
+ * Pages that open from the Sleep tab's cards (SleepChild.tsx): the same
+ * parts as the Sleep page, set inside the white card under the number.
+ * ===================================================================== */
+.mx-today .sl-part-still {
+  padding: 0 0 14px;
+}
+.mx-today .sl-score-still {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 0 12px;
+}
+
+/* a stage page keeps its own stage in colour, the others quiet */
+.dc-night [data-dim] {
+  opacity: 0.2;
+}
+.dc-night-key li[data-dim] {
+  opacity: 0.45;
+}
+
+.sc-facts {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.sc-facts .mx-stats {
+  margin: 0;
+  --mx-ink: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+}
+
+/* skin temperature through the night: the usual band, the baseline, one line */
+.sc-temp {
+  margin: 0 0 12px;
+}
+.sc-temp-plot {
+  position: relative;
+  padding-right: 34px;
+}
+.sc-temp-plot svg {
+  display: block;
+  width: 100%;
+  height: 132px;
+  overflow: visible;
+}
+.sc-temp-band {
+  fill: color-mix(in srgb, var(--mid) 14%, transparent);
+}
+.sc-temp-line {
+  fill: none;
+  stroke: var(--mid);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.sc-temp-dot {
+  fill: var(--v-card);
+  stroke: var(--mid);
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
+.sc-temp-y i {
+  position: absolute;
+  right: 0;
+  font: 500 11px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+  transform: translateY(-50%);
+}
+.sc-temp + .dc-night-ends,
+.sc-temp .dc-night-ends {
+  margin-right: 34px;
+}
+
+/* the way to the whole night */
+.sl-block .mx-card.sc-night {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 18px 18px 20px;
+}
+.sc-night:active {
+  transform: scale(0.985);
+}
+.sc-night-t {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sc-night-t small {
+  font: 600 15px/1.2 var(--v-text);
+  color: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+}
+.sc-night-t b {
+  font: 700 19px/1.25 var(--v-num);
+  letter-spacing: -0.015em;
+  color: var(--v-ink);
+}
+.sc-night-t span {
+  font: 400 14px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+}
+.sc-night > svg {
+  flex: none;
+  color: var(--v-ink-3);
+}

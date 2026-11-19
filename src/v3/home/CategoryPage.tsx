@@ -1,4 +1,5 @@
 import { metric, STATUS_LABEL, type Tab } from "../data/metrics";
+import { FoodTabExtras } from "./FoodTabExtras";
 import { glyphOf, Kind } from "../ui/glyphs";
 import { Num } from "../ui/Num";
 import { useGo } from "../ui/shell";
@@ -13,7 +14,7 @@ interface Page {
 const PAGES: Record<Exclude<Tab, "all">, Page> = {
   activity: {
     title: "Activity",
-    cards: ["steps", "kcal", "workouts", "distance"],
+    cards: ["steps", "kcal", "workouts", "distance", "habits"],
   },
   sleep: {
     title: "Sleep",
@@ -29,7 +30,7 @@ const PAGES: Record<Exclude<Tab, "all">, Page> = {
   },
   food: {
     title: "Nutrition",
-    cards: ["diet", "habits"],
+    cards: ["diet"],
   },
 };
 
@@ -56,6 +57,7 @@ export function CategoryPage({ tab }: { tab: Exclude<Tab, "all"> }) {
           ))}
         </section>
       ))}
+      {tab === "food" && <FoodTabExtras />}
     </div>
   );
 }

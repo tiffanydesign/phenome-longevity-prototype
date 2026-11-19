@@ -20,10 +20,10 @@ import { useDiaryMetric } from "./diary";
 /** Each card's name, for the remove and add controls. */
 const CARD_NAME: Record<string, string> = {
   twin: "Digital twin",
-  activity: "Activity",
+  activity: "Steps",
   sleep: "Sleep",
   capacity: "Capacity",
-  workouts: "Workouts",
+  workouts: "Activity",
   vitals: "Heart",
   food: "Nutrition",
   habits: "Habits",
@@ -224,7 +224,7 @@ function Tile({ id, go }: { id: string; go: ReturnType<typeof useGo> }) {
   const tiles: Record<string, () => ReactNode> = {
     twin: () => <TwinTile onOpen={open("/v3/twin")} />,
     capacity: () => <Stat m="capacity" onOpen={open("/v3/metric/capacity")} />,
-    workouts: () => <Stat m="workouts" title="Workouts" field="rose" glyph="dumbbell" onOpen={open("/v3/metric/workouts")} />,
+    workouts: () => <Stat m="workouts" title="Activity" field="rose" glyph="dumbbell" onOpen={open("/v3/metric/workouts")} />,
     activity: () => <ActivityTile onOpen={open("/v3/metric/steps")} />,
     sleep: () => <Stat m="sleep" onOpen={open("/v3/metric/sleep")} />,
     vitals: () => <Stat m="rhr" title="Heart" onOpen={open("/v3/metric/rhr")} />,
@@ -452,7 +452,7 @@ function ActivityTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) 
   const steps = metricOn("steps", ago);
   return (
     <button className="v2-tile" data-field="activity" onClick={onOpen}>
-      <Kind name="flame">Activity</Kind>
+      <Kind name="flame">Steps</Kind>
       <HourBars m={steps} ago={ago} />
       <span className="v2-tile-foot">
         <span className="v2-tile-v">

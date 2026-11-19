@@ -56,6 +56,16 @@ export function leftOf(eaten: number, target: number) {
   return { n: Math.abs(target - eaten), word: over ? "over" : "left", over };
 }
 
+/** Where a day's energy sits against its goal, as a colour meaning:
+ *  still filling (brand navy), within 10% of the goal (green), more than
+ *  10% past it (red). */
+export type EnergyZone = "go" | "met" | "over";
+export function energyZone(eaten: number, goal: number): EnergyZone {
+  const r = goal > 0 ? eaten / goal : 0;
+  return r > 1.1 ? "over" : r >= 0.9 ? "met" : "go";
+}
+export const ZONE_HUE: Record<EnergyZone, string> = { go: "var(--fd-go)", met: "var(--fd-met)", over: "var(--fd-over)" };
+
 /** One nutrient against its target: amount left, its name, then a ring
  *  with the nutrient's mark resting in the middle. Colour lives only in the
  *  ring and the mark; the words stay ink and grey. */

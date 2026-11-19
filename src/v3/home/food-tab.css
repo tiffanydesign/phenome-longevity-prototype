@@ -1,0 +1,239 @@
+/* =====================================================================
+ * Nutrition tab, after the Nutrition card: the last three meals as one
+ * grouped white card, then a "next meal" check with the two fastest ways
+ * to log. Same white cards, 22px radius and type scale as the tab's cards.
+ * ===================================================================== */
+.ft-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 32px;
+  font: 500 15px/1 var(--v-text);
+  color: var(--v-accent);
+}
+
+/* ---------- latest meals ---------- */
+.ft-meals {
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  overflow: hidden;
+}
+.ft-meal {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px 12px 12px;
+  text-align: left;
+  color: var(--v-ink);
+}
+.ft-meal + .ft-meal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 88px;
+  right: 0;
+  height: 0.5px;
+  background: var(--v-line);
+}
+.ft-meal:active {
+  opacity: 0.6;
+}
+.ft-pic {
+  flex: none;
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: grid;
+  background: var(--v-fill);
+}
+.ft-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ft-pic .fd-tile {
+  display: grid;
+  place-items: center;
+  font: 600 22px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.ft-meal-t {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ft-meal-t b {
+  font: 600 16px/1.25 var(--v-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ft-meal-t small {
+  font: 400 13px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.ft-macros {
+  margin-top: 2px;
+  display: flex;
+  gap: 12px;
+}
+.ft-macros span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 500 13px/1 var(--v-num);
+  color: var(--v-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.ft-macros svg,
+.ft-next svg {
+  position: static;
+}
+.ft-kcal {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+.ft-kcal b {
+  font: 700 19px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+}
+.ft-kcal small {
+  font: 500 12px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.ft-empty {
+  width: 100%;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: var(--v-r);
+  text-align: left;
+  background: var(--v-card);
+  color: var(--v-ink);
+}
+.ft-empty b {
+  font: 600 16px/1.25 var(--v-text);
+}
+.ft-empty span {
+  font: 400 14px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* ---------- next meal ---------- */
+.ft-next {
+  padding: 18px 16px 16px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+}
+.ft-next-nums {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0 4px;
+}
+.ft-next-nums > span {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ft-next-nums > span + span {
+  padding-left: 16px;
+  border-left: 0.5px solid var(--v-line);
+}
+.ft-next-nums b {
+  font: 700 28px/1 var(--v-num);
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.ft-next-nums small {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: 500 14px/1.2 var(--v-text);
+  color: var(--v-ink-2);
+}
+.ft-next-h {
+  display: block;
+  padding: 0 4px;
+  font: 600 17px/1.3 var(--v-text);
+  color: var(--v-ink);
+}
+.ft-next-p {
+  margin: 6px 4px 0;
+  font: 400 15px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+.ft-fit {
+  margin-top: 16px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--mid) 9%, var(--v-card));
+}
+.ft-fit img {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.ft-fit > span {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ft-fit small {
+  font: 600 12px/1 var(--v-text);
+  color: color-mix(in oklab, var(--mid), var(--v-ink) 30%);
+}
+.ft-fit b {
+  font: 600 15px/1.25 var(--v-text);
+  color: var(--v-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ft-fit em {
+  font: 400 13px/1.2 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-2);
+}
+.ft-acts {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.ft-act {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 23px;
+  font: 600 15px/1 var(--v-text);
+  color: var(--v-ink);
+  background: var(--v-fill);
+}
+.ft-act-main {
+  color: #fff;
+  background: var(--v-accent);
+}
+:root[data-theme="dark"] .ft-act-main {
+  color: var(--v-on-navy, #0b0d14);
+}
+.ft-act:active {
+  transform: scale(0.97);
+}

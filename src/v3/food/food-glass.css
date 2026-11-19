@@ -645,3 +645,31 @@
 .fd-wide .fd-score-bar {
   margin-top: 12px;
 }
+
+/* ---------- energy colour meaning ----------
+ * The energy ring and the day rings say where the day sits against its
+ * goal: brand navy while it is still filling, green within 10% of the
+ * goal, red once it runs more than 10% past. A word pill repeats green
+ * and red so the meaning never rests on colour alone. */
+.fd {
+  --fd-go: var(--v-accent);
+  --fd-met: #34c759;
+}
+:root[data-theme="dark"] .fd {
+  --fd-met: #30d158;
+}
+.fd-zone {
+  align-self: flex-start;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 11px;
+  font: 600 13px/1 var(--v-text);
+}
+.fd-zone[data-zone="met"] {
+  color: var(--v-ok-ink);
+  background: var(--v-ok-pill);
+}
+.fd-zone[data-zone="over"] {
+  color: color-mix(in oklab, var(--fd-over), var(--v-ink) 25%);
+  background: color-mix(in srgb, var(--fd-over) 12%, var(--v-card));
+}

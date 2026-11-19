@@ -3,6 +3,7 @@ import { Gauge, HeartRange, MacroBar, WorkoutRings } from "../home/glance";
 import "../home/glance.css";
 import { CapacityDetail } from "./CapacityDetail";
 import { SleepDetail, STAGES } from "./SleepDetail";
+import { isSleepChild, SLEEP_GLANCE, SleepChild } from "./SleepChild";
 import { ActivityLanes, NightChart } from "./detailCharts";
 import { ActivityDetail } from "./ActivityDetail";
 import { FoodScreen } from "../food/FoodScreen";
@@ -48,12 +49,14 @@ const ACTIONS: Record<string, { label: string; to: string; primary?: boolean }[]
  * the number, before any history.
  */
 const FROM_CARD: Record<string, { title: string; field?: string; glyph?: GlyphName; span: string; glance: (m: ReturnType<typeof baseMetric>) => ReactNode }> = {
-  steps: { title: "Activity", span: "Today", glance: () => <ActivityLanes /> },
+  steps: { title: "Steps", span: "Today", glance: () => <ActivityLanes /> },
   sleep: { title: "Sleep", span: "Last night", glance: () => <NightChart stages={STAGES.map((s) => ({ stage: s.stage, min: s.min }))} bed="23:12" up="07:20" /> },
   capacity: { title: "Capacity", span: "Today", glance: (m) => <Gauge m={m} /> },
-  workouts: { title: "Workouts", field: "rose", glyph: "dumbbell", span: "Today", glance: (m) => <WorkoutRings m={m} /> },
+  workouts: { title: "Activity", field: "rose", glyph: "dumbbell", span: "Today", glance: (m) => <WorkoutRings m={m} /> },
   rhr: { title: "Heart", span: "Today", glance: (m) => <HeartRange m={m} ago={0} /> },
   diet: { title: "Nutrition", span: "Today", glance: (m) => <MacroBar m={m} /> },
+  // the Sleep tab's cards: each opens on its own part of last night's Sleep page
+  ...Object.fromEntries(Object.entries(SLEEP_GLANCE).map(([id, glance]) => [id, { title: baseMetric(id).label, span: "Last night", glance }])),
 };
 
 /** Clinic and omics readings belong to the twin; everything else is a daily reading from a device or the diary. */
@@ -89,7 +92,7 @@ function MetricPage({ id }: { id: string }) {
   const chartUnit = m.unit.startsWith("/") ? m.unit.match(/[a-z]+$/i)?.[0] ?? "" : m.unit;
   // a daily page relates only to daily readings, a clinic page only to clinic ones: the two never share a page
   const related =
-    m.id === "sleep" || m.id === "steps"
+    m.id === "sleep" || m.id === "steps" || isSleepChild(m.id)
       ? []
       : metricsFor(m.organ)
           .filter((r) => r.id !== m.id && isDaily(r) === isDaily(m))
@@ -157,6 +160,7 @@ function MetricPage({ id }: { id: string }) {
 
         {/* sleep reads its night before its history: score, stages, schedule, overnight body */}
         {m.id === "sleep" && <SleepDetail />}
+        {isSleepChild(m.id) && <SleepChild id={m.id} />}
         {m.id === "steps" && <ActivityDetail />}
 
         {/* the chart stands on the page itself, no panel round it */}

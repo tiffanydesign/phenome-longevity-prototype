@@ -74,24 +74,26 @@ function snack(day: Date, h: number, m: number): Meal {
   };
 }
 
-/** Six days back plus this morning. One day is left empty: a gap reads as a gap. */
+/** Six days back plus this morning. One day is left empty: a gap reads as a gap.
+ *  The last number scales dinner so the week shows every energy state: one
+ *  day past the goal, one on it, the rest still short. */
 function seed(): Meal[] {
-  const plan: [string, string, string | null, boolean][] = [
-    ["french-toast", "green-salad", "shrimp-curry", true],
+  const plan: [string, string, string | null, boolean, number?][] = [
+    ["french-toast", "green-salad", "shrimp-curry", true, 2.2],
     ["egg-toast", "buddha-bowl", "salmon-bowl", false],
     ["", "", null, false],
-    ["egg-toast", "salmon-bowl", "shrimp-curry", true],
+    ["egg-toast", "salmon-bowl", "shrimp-curry", true, 1.35],
     ["french-toast", "buddha-bowl", "green-salad", true],
     ["egg-toast", "green-salad", "shrimp-curry", false],
   ];
   const out: Meal[] = [];
-  plan.forEach(([b, l, dn, s], i) => {
+  plan.forEach(([b, l, dn, s, big = 1], i) => {
     if (!b) return;
     const day = dayOffset(i - 6);
     out.push(fromDish(b, day, 8, 5 + i * 3, "breakfast"));
     if (s) out.push(snack(day, 10, 40));
     out.push(fromDish(l, day, 12, 30 + i * 2, "lunch"));
-    if (dn) out.push(fromDish(dn, day, 19, 10 + i * 4, "dinner"));
+    if (dn) out.push({ ...fromDish(dn, day, 19, 10 + i * 4, "dinner"), servings: big });
   });
   const today = dayOffset(0);
   out.push(fromDish("egg-toast", today, 8, 10, "breakfast"), snack(today, 10, 30), fromDish("salmon-bowl", today, 12, 40, "lunch"));

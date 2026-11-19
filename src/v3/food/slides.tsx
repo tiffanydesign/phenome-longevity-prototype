@@ -81,7 +81,7 @@ function BurnCard({ onOpen }: { onOpen: () => void }) {
       mark: (
         <Ph name="barbell" size={17} />
       ),
-      name: "Workouts",
+      name: "Activity",
       value: `${mins} min`,
     },
   ];

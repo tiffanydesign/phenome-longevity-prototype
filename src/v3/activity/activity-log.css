@@ -1,0 +1,185 @@
+/* =====================================================================
+ * Activity log and the activity picker, on the Profile/Devices parts:
+ * glass round buttons, 34px title, white grouped cards. Each row carries
+ * the app's own sport mark on a soft disc in the Activity hue (rose).
+ * ===================================================================== */
+.al-search {
+  margin: 20px 0 4px;
+}
+
+.al-group {
+  --mid: #e0559a;
+}
+.al-group > * + *::before {
+  left: 70px;
+}
+
+.al-row {
+  width: 100%;
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 14px 0 16px;
+  text-align: left;
+  color: var(--v-ink);
+}
+.al-row > svg:last-child {
+  flex: none;
+  color: var(--v-ink-3);
+}
+.al-row-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  color: inherit;
+}
+.al-row-main:active,
+.al-session:active {
+  opacity: 0.6;
+}
+.al-disc {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--mid);
+  background: color-mix(in srgb, var(--mid) 13%, var(--v-card));
+}
+.al-name {
+  font: 500 16px/1.25 var(--v-text);
+}
+.al-star {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin-right: -8px;
+  display: grid;
+  place-items: center;
+  color: color-mix(in srgb, var(--v-ink) 26%, transparent);
+  transition: color 0.2s, transform 0.2s var(--v-ease);
+}
+.al-star[data-on] {
+  color: var(--v-save, #f2b705);
+}
+.al-star:active {
+  transform: scale(0.85);
+}
+
+/* A to Z: a small letter over each run of rows */
+.al-letter + .al-letter {
+  margin-top: 14px;
+}
+.al-letter h3 {
+  margin: 0 4px 8px;
+  font: 600 13px/1 var(--v-text);
+  letter-spacing: 0.02em;
+  color: var(--v-ink-3);
+}
+
+/* ---------- today ---------- */
+.al-today {
+  margin-top: 22px;
+  padding: 18px 20px 20px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+}
+.al-today-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.al-today-k {
+  font: 600 15px/1 var(--v-text);
+  color: color-mix(in oklab, var(--mid), var(--v-ink) 18%);
+}
+.al-today-g {
+  font: 500 14px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.al-today-row {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.al-today-row > span + span {
+  padding-left: 16px;
+  border-left: 0.5px solid var(--v-line);
+}
+.al-today-row b {
+  font: 700 32px/1 var(--v-num);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.al-today-row u {
+  display: block;
+  margin-top: 6px;
+  text-decoration: none;
+  font: 500 14px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.al-bar {
+  display: block;
+  height: 8px;
+  margin-top: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--v-fill);
+}
+.al-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--mid);
+  transition: width 0.6s var(--v-ease);
+}
+.al-today-say {
+  margin: 12px 0 0;
+  font: 400 15px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* ---------- one session ---------- */
+.al-session {
+  min-height: 72px;
+}
+.al-session-t {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.al-session-t b {
+  font: 600 16px/1.25 var(--v-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.al-session-t small,
+.al-session-v small {
+  font: 400 13px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.al-session-v {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+.al-session-v b {
+  font: 700 17px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+}
+.al-session-v u {
+  text-decoration: none;
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-2);
+}

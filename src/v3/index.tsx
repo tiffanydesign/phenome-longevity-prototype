@@ -29,6 +29,8 @@ import { ScanScreen } from "./food/ScanScreen";
 import { MealScreen } from "./food/MealScreen";
 import { AddFood } from "./food/AddFood";
 import { SavedScreen } from "./food/SavedScreen";
+import { ActivityLog } from "./activity/ActivityLog";
+import { SportPick } from "./activity/SportPick";
 
 const group = "Clinical edition";
 
@@ -70,6 +72,9 @@ export const routes: ScreenRoute[] = [
   { path: "/v3/consultations", element: <ConsultationsScreen />, title: "Consultations", group },
   // the shared address opens the same list in this edition
   { path: "/discover/consultations", element: <ConsultationsScreen />, title: "Consultations (shared address)", group },
+  // the shared journal addresses open the clinical-edition activity pages here
+  { path: "/journal/activity", element: <ActivityLog />, title: "Activity log (shared address)", group },
+  { path: "/journal/activity/select", element: <SportPick />, title: "Log an activity (shared address)", group },
   { path: "/v3/consultation", element: <ConsultScreen />, title: "Upcoming consultation", group },
   { path: "/v3/kit/:kind/compare", element: <KitCompareScreen />, title: "Compare kit results", group },
   { path: "/v3/booking", element: <BookingScreen />, title: "Book a visit", group },
