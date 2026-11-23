@@ -6,13 +6,20 @@ import { Ring } from "@/components/Charts";
 import { ChevronLeft, ChevronRight } from "@/components/NavHeader";
 import { PlusCircle } from "@/components/Controls";
 import { useDataset } from "@/lib/data";
-import { homeData, type MonitorMetric } from "@/data/home";
+import { usePrefs } from "@/lib/prefs";
+import { homeData, type HomeData, type MonitorMetric } from "@/data/home";
+import { CAPTURE_TODAY, DEFAULT_DAY, addDays, monitorRows, num, realDay, ringLabel } from "@/data/real";
 import { useJournalSummary } from "@/data/journal-store";
 import "./HomeScreen.css";
 
 /** Home tab — capture: home/top, home/scroll_1…4, home/date_prev, home/journal_with_data. */
 export function HomeScreen() {
-  const d = useDataset(homeData);
+  const base = useDataset(homeData);
+  const real = usePrefs().data === "real";
+  // real: the synced account, opened on the last full day the ring synced (see data/real)
+  const [day, setDay] = useState(() => (real ? DEFAULT_DAY : new Date()));
+  const today = real ? CAPTURE_TODAY : new Date();
+  const d = real ? dayData(base, day) : base;
   const nav = useNavigate();
   // after any logged meal / habit the Diet & Habits cards become progress cards (capture home/journal_with_data)
   const journal = useJournalSummary() ?? d.journal;
@@ -27,12 +34,12 @@ export function HomeScreen() {
           <PlusCircle size={28} />
         </button>
 
-        <DateStrip />
+        <DateStrip day={day} today={today} onChange={setDay} />
 
         <div className="home-rings">
-          <RingTile label="Sleep" color="var(--c-sleep)" value={d.sleepHours} goal={d.sleepGoal} onClick={() => nav("/home/monitor/sleep")} />
-          <RingTile label="Calories" unit="kcal" color="var(--c-calories)" value={d.calories} goal={d.caloriesGoal} onClick={() => nav("/home/monitor/calories")} />
-          <RingTile label="Steps" color="var(--c-steps)" value={d.steps} goal={d.stepsGoal} onClick={() => nav("/home/monitor/steps")} />
+          <RingTile label="Sleep" color="var(--c-sleep)" value={d.sleepHours} goal={d.sleepGoal} text={d.ringText?.sleep} onClick={() => nav("/home/monitor/sleep")} />
+          <RingTile label="Calories" unit="kcal" color="var(--c-calories)" value={d.calories} goal={d.caloriesGoal} text={d.ringText?.calories} onClick={() => nav("/home/monitor/calories")} />
+          <RingTile label="Steps" color="var(--c-steps)" value={d.steps} goal={d.stepsGoal} text={d.ringText?.steps} onClick={() => nav("/home/monitor/steps")} />
         </div>
 
         <button className="home-capacity" onClick={() => nav("/home/capacity")}>
@@ -41,7 +48,7 @@ export function HomeScreen() {
           </Ring>
           <span className="home-capacity-text">
             <span className="home-capacity-title">Capacity</span>
-            <span className="home-capacity-sub">Check your daily recovery score.</span>
+            <span className="home-capacity-sub">{d.capacityText ?? "Check your daily recovery score."}</span>
           </span>
           <ChevronRight size={26} />
         </button>
@@ -143,39 +150,57 @@ function HomeLogo() {
 }
 
 /** "‹  Tue, 27   TODAY   Thu, 29  ›" — future dates are disabled (capture home/date_prev). */
-function DateStrip() {
-  const [offset, setOffset] = useState(0); // 0 = today, -1 = yesterday …
-  const day = (o: number) => {
-    if (o === 0) return "TODAY";
-    const d = new Date();
-    d.setDate(d.getDate() + o);
-    return d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric" }).replace(" ", ", ");
-  };
+function DateStrip({ day, today, onChange }: { day: Date; today: Date; onChange: (d: Date) => void }) {
+  const same = (a: Date, b: Date) => a.toDateString() === b.toDateString();
+  const label = (d: Date) => (same(d, today) ? "TODAY" : d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric" }).replace(" ", ", "));
+  const atToday = day >= today || same(day, today);
+  const prev = () => onChange(addDays(day, -1));
+  const next = () => !atToday && onChange(addDays(day, 1));
   return (
     <div className="home-dates">
-      <button className="home-dates-arrow" onClick={() => setOffset(offset - 1)} aria-label="Previous day">
+      <button className="home-dates-arrow" onClick={prev} aria-label="Previous day">
         <ChevronLeft size={22} />
       </button>
-      <button className="home-date" onClick={() => setOffset(offset - 1)}>
-        {day(offset - 1)}
+      <button className="home-date" onClick={prev}>
+        {label(addDays(day, -1))}
       </button>
-      <span className="home-date home-date-on">{day(offset)}</span>
-      <button className="home-date" disabled={offset >= 0} onClick={() => setOffset(offset + 1)}>
-        {day(offset + 1)}
+      <span className="home-date home-date-on">{label(day)}</span>
+      <button className="home-date" disabled={atToday} onClick={next}>
+        {label(addDays(day, 1))}
       </button>
-      <button className="home-dates-arrow" disabled={offset >= 0} onClick={() => setOffset(offset + 1)} aria-label="Next day">
+      <button className="home-dates-arrow" disabled={atToday} onClick={next} aria-label="Next day">
         <ChevronRight size={22} />
       </button>
     </div>
   );
 }
 
-function RingTile({ label, unit, color, value, goal, onClick }: { label: string; unit?: string; color: string; value: number; goal: number; onClick: () => void }) {
+/** One day of the synced account on top of the empty capture (rings, Capacity, monitor rows). */
+function dayData(base: HomeData, day: Date): HomeData {
+  const r = realDay(day);
+  if (!r) return base;
+  const steps = num(r.monitor.steps) ?? r.steps ?? 0;
+  const kcal = num(r.monitor.calories) ?? r.calories ?? 0;
+  return {
+    ...base,
+    // the synced app's Sleep ring shows the sleep score out of 100
+    sleepHours: r.sleep ?? 0,
+    sleepGoal: 100,
+    calories: kcal,
+    steps,
+    capacity: r.capacity ?? 0,
+    capacityText: r.capacityText || undefined,
+    ringText: { sleep: ringLabel(r.sleep ?? 0), calories: ringLabel(kcal), steps: ringLabel(steps) },
+    monitor: monitorRows(base.monitor, r),
+  };
+}
+
+function RingTile({ label, unit, color, value, goal, text, onClick }: { label: string; unit?: string; color: string; value: number; goal: number; text?: string; onClick: () => void }) {
   return (
     <button className="home-ring" onClick={onClick}>
       <Ring size={89} stroke={8} value={value / goal} color={color}>
         <span className="home-ring-val" style={{ color }} data-unit={unit ? "" : undefined}>
-          {Number.isInteger(value) ? value.toLocaleString("en-GB") : value.toFixed(1)}
+          {text ?? (Number.isInteger(value) ? value.toLocaleString("en-GB") : value.toFixed(1))}
           {unit && <small>{unit}</small>}
         </span>
       </Ring>

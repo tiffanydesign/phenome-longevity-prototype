@@ -52,7 +52,8 @@ export interface ClinicalValue {
 export const clinicalAvailable: DataPair<boolean> = { real: true, demo: true };
 
 export const clinicalValues: DataPair<Record<string, ClinicalValue>> = {
-  real: {},
+  // synced account (adb 23 Nov 2026): the weight saved during the field_edit capture is still there
+  real: { Weight: { value: "68.5", date: "2026-10-28" } },
   // DEMO
   demo: {
     Weight: { value: "68.5", date: "2026-10-28" },

@@ -5,6 +5,9 @@ import { NavHeader, ChevronLeft, ChevronRight } from "@/components/NavHeader";
 import { Segmented } from "@/components/Controls";
 import { Icon } from "@/components/Icon";
 import { useDataset } from "@/lib/data";
+import { usePrefs } from "@/lib/prefs";
+import { realPage, realPeriods } from "@/data/real";
+import { FilledBody } from "./filled/FilledBody";
 import { METRICS, PERIODS, PICKER_GROUPS, metricById, monitorData, valuesFor, type MetricDef, type Period } from "@/data/home-monitor";
 import { BpBody, SleepBody, StandardBody } from "./MonitorSections";
 import { nowFromSearch } from "../shared/marks";
@@ -26,15 +29,19 @@ function MonitorView({ id, search }: { id: string | undefined; search: string })
   const nav = useNavigate();
   const m = metricById(id);
   const all = useDataset(monitorData);
+  // real: the synced account's pages (data/real); the four sleep sub-scores have no D tab there
+  const real = usePrefs().data === "real" && !!realPage(m.id, "W");
+  const periods = (real ? realPeriods(m.id) : PERIODS) as Period[];
   // `?period=W` opens a period directly (compare harness; prototype-only switch).
-  const [period, setPeriod] = useState<Period>(() => PERIODS.find((p) => p === new URLSearchParams(search).get("period")) ?? "D");
+  const [period, setPeriod] = useState<Period>(() => periods.find((p) => p === new URLSearchParams(search).get("period")) ?? periods[0]);
+  const page = real ? realPage(m.id, period) : undefined;
   const [open, setOpen] = useState(false);
   const today = nowFromSearch(search);
   const v = valuesFor(all, m.id, period);
 
   const pick = (next: MetricDef) => {
     setOpen(false);
-    setPeriod("D");
+    setPeriod(real ? (realPeriods(next.id)[0] as Period) : "D");
     nav(`/home/monitor/${next.id}${window.location.hash.includes("?") ? "?" + window.location.hash.split("?")[1] : ""}`, { replace: true });
   };
 
@@ -52,20 +59,22 @@ function MonitorView({ id, search }: { id: string | undefined; search: string })
         </div>
 
         <div className="mon-seg">
-          <Segmented options={PERIODS} value={period} onChange={setPeriod} />
+          <Segmented options={periods} value={period} onChange={setPeriod} />
         </div>
 
         <div className="mon-date">
           <button aria-label="Previous period">
             <ChevronLeft size={22} />
           </button>
-          <span>{periodTitle(period, today)}</span>
+          <span>{page ? page.kind === "sleep" ? page.labels[0] : page.date : periodTitle(period, today)}</span>
           <button aria-label="Next period">
             <ChevronRight size={22} />
           </button>
         </div>
 
-        {m.kind === "sleep" ? (
+        {page ? (
+          <FilledBody m={m} page={page} period={period} />
+        ) : m.kind === "sleep" ? (
           <SleepBody m={m} v={v} />
         ) : m.kind === "bp" ? (
           <BpBody m={m} v={v} period={period} today={today} />

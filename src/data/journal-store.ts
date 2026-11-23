@@ -96,7 +96,7 @@ export function useMeals(): LoggedMeal[] {
 export function useHabits(): { habits: Habit[]; completed: Set<string> } {
   const seed = useDataset(journalSeed);
   const s = store.use();
-  return { habits: [...s.habits, ...DEFAULT_HABITS], completed: new Set([...seed.completedHabitIds, ...s.completed]) };
+  return { habits: [...s.habits, ...(seed.habits ?? []), ...DEFAULT_HABITS], completed: new Set([...seed.completedHabitIds, ...s.completed]) };
 }
 
 /** Nutrient totals of a list of logged meals (grams scale the per-100 g values). */

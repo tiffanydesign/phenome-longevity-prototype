@@ -30,3 +30,7 @@ capture/portal/
 
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
+
+# populated-account capture 2026-11-23: frames carry the device IMEI watermark
+capture/data2/
+capture/tools/__pycache__/

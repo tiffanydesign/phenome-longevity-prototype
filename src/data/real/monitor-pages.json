@@ -1,0 +1,2574 @@
+{
+ "spo2": {
+  "6M": {
+   "kind": "vital",
+   "date": "Jun - Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "98.0",
+   "status": "Normal, in typical range",
+   "desc": "Blood oxygen (SpO₂) measures the percentage of oxygen carried by your red blood cells. Healthy levels support cellular energy production, brain function, and overall recovery.",
+   "usual": true,
+   "range": {
+    "title": "Blood Oxygen (SpO₂) · 6-Month · Range",
+    "value": "88.0 - 99.0"
+   },
+   "analysis": "Across the last six months, your blood oxygen remained consistent with your baseline, reflecting long-term pulmonary stability.",
+   "hi": {
+    "value": "99.0",
+    "when": "Wed, Nov 4"
+   },
+   "lo": {
+    "value": "88.0",
+    "when": "Fri, Jun 12"
+   },
+   "factors": [
+    [
+     "Altitude & Environment",
+     "Higher altitudes and poor air quality reduce available oxygen, lowering SpO₂ readings."
+    ],
+    [
+     "Sleep Position",
+     "Sleeping on your back can restrict airways and temporarily reduce blood oxygen levels."
+    ],
+    [
+     "Hydration",
+     "Dehydration thickens blood and reduces oxygen transport efficiency to tissues."
+    ]
+   ],
+   "about": {
+    "title": "About Blood Oxygen (SpO₂)",
+    "text": "Blood oxygen, also known as SpO₂, measures the percentage of oxygen carried by your red blood cells. It reflects how efficiently oxygen is being delivered throughout your body and can be influenced by sleep, altitude, breathing patterns, and overall recovery."
+   }
+  },
+  "D": {
+   "kind": "vital",
+   "date": "17 Nov 2026",
+   "eyebrow": "LATEST",
+   "value": "98.0",
+   "status": "Normal, in typical range",
+   "desc": "Blood oxygen (SpO₂) measures the percentage of oxygen carried by your red blood cells. Healthy levels support cellular energy production, brain function, and overall recovery.",
+   "usual": true,
+   "avg": {
+    "title": "Blood Oxygen (SpO₂) · Daily · Average",
+    "value": "97.3"
+   },
+   "range": {
+    "title": "Blood Oxygen (SpO₂) · Daily · Range",
+    "value": "95.0 - 99.0"
+   },
+   "note": {
+    "title": "Daily Changes Are Normal",
+    "text": "Blood oxygen levels can dip briefly during sleep or physical exertion. Small fluctuations are normal and typically self-correct with regular breathing."
+   },
+   "analysis": "Your blood oxygen is within a healthy range today, indicating efficient oxygen delivery throughout your body.",
+   "hi": {
+    "value": "99.0",
+    "when": "7:12 AM"
+   },
+   "lo": {
+    "value": "95.0",
+    "when": "1:32 AM"
+   },
+   "factors": [
+    [
+     "Altitude & Environment",
+     "Higher altitudes and poor air quality reduce available oxygen, lowering SpO₂ readings."
+    ],
+    [
+     "Sleep Position",
+     "Sleeping on your back can restrict airways and temporarily reduce blood oxygen levels."
+    ],
+    [
+     "Hydration",
+     "Dehydration thickens blood and reduces oxygen transport efficiency to tissues."
+    ]
+   ],
+   "about": {
+    "title": "About Blood Oxygen (SpO₂)",
+    "text": "Blood oxygen, also known as SpO₂, measures the percentage of oxygen carried by your red blood cells. It reflects how efficiently oxygen is being delivered throughout your body and can be influenced by sleep, altitude, breathing patterns, and overall recovery."
+   }
+  },
+  "M": {
+   "kind": "vital",
+   "date": "Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "98.0",
+   "status": "Normal, in typical range",
+   "desc": "Blood oxygen (SpO₂) measures the percentage of oxygen carried by your red blood cells. Healthy levels support cellular energy production, brain function, and overall recovery.",
+   "usual": true,
+   "range": {
+    "title": "Blood Oxygen (SpO₂) · Monthly · Range",
+    "value": "95.0 - 99.0"
+   },
+   "analysis": "Over the past month, your blood oxygen stayed within your usual range, reflecting sustained respiratory health.",
+   "hi": {
+    "value": "99.0",
+    "when": "Wed, Nov 4"
+   },
+   "lo": {
+    "value": "95.0",
+    "when": "Thu, Nov 5"
+   },
+   "factors": [
+    [
+     "Altitude & Environment",
+     "Higher altitudes and poor air quality reduce available oxygen, lowering SpO₂ readings."
+    ],
+    [
+     "Sleep Position",
+     "Sleeping on your back can restrict airways and temporarily reduce blood oxygen levels."
+    ],
+    [
+     "Hydration",
+     "Dehydration thickens blood and reduces oxygen transport efficiency to tissues."
+    ]
+   ],
+   "about": {
+    "title": "About Blood Oxygen (SpO₂)",
+    "text": "Blood oxygen, also known as SpO₂, measures the percentage of oxygen carried by your red blood cells. It reflects how efficiently oxygen is being delivered throughout your body and can be influenced by sleep, altitude, breathing patterns, and overall recovery."
+   }
+  },
+  "W": {
+   "kind": "vital",
+   "date": "17 Nov - 23 Nov",
+   "eyebrow": "AVERAGE",
+   "value": "98.0",
+   "status": "Normal, in typical range",
+   "desc": "Blood oxygen (SpO₂) measures the percentage of oxygen carried by your red blood cells. Healthy levels support cellular energy production, brain function, and overall recovery.",
+   "usual": true,
+   "range": {
+    "title": "Blood Oxygen (SpO₂) · Weekly · Range",
+    "value": "95.0 - 99.0"
+   },
+   "analysis": "Your blood oxygen remained within your baseline this week, reflecting healthy pulmonary function.",
+   "hi": {
+    "value": "99.0",
+    "when": "Tue, Nov 17"
+   },
+   "lo": {
+    "value": "95.0",
+    "when": "Tue, Nov 17"
+   },
+   "factors": [
+    [
+     "Altitude & Environment",
+     "Higher altitudes and poor air quality reduce available oxygen, lowering SpO₂ readings."
+    ],
+    [
+     "Sleep Position",
+     "Sleeping on your back can restrict airways and temporarily reduce blood oxygen levels."
+    ],
+    [
+     "Hydration",
+     "Dehydration thickens blood and reduces oxygen transport efficiency to tissues."
+    ]
+   ],
+   "about": {
+    "title": "About Blood Oxygen (SpO₂)",
+    "text": "Blood oxygen, also known as SpO₂, measures the percentage of oxygen carried by your red blood cells. It reflects how efficiently oxygen is being delivered throughout your body and can be influenced by sleep, altitude, breathing patterns, and overall recovery."
+   }
+  },
+  "Y": {
+   "kind": "vital",
+   "date": "2026",
+   "eyebrow": "AVERAGE",
+   "value": "98.0",
+   "status": "Normal, in typical range",
+   "desc": "Blood oxygen (SpO₂) measures the percentage of oxygen carried by your red blood cells. Healthy levels support cellular energy production, brain function, and overall recovery.",
+   "usual": true,
+   "range": {
+    "title": "Blood Oxygen (SpO₂) · Yearly · Range",
+    "value": "88.0 - 99.0"
+   },
+   "analysis": "Over the past year, your blood oxygen stayed within normal range, suggesting sustained pulmonary health.",
+   "hi": {
+    "value": "99.0",
+    "when": "Wed, Nov 4"
+   },
+   "lo": {
+    "value": "88.0",
+    "when": "Fri, Jun 12"
+   },
+   "factors": [
+    [
+     "Altitude & Environment",
+     "Higher altitudes and poor air quality reduce available oxygen, lowering SpO₂ readings."
+    ],
+    [
+     "Sleep Position",
+     "Sleeping on your back can restrict airways and temporarily reduce blood oxygen levels."
+    ],
+    [
+     "Hydration",
+     "Dehydration thickens blood and reduces oxygen transport efficiency to tissues."
+    ]
+   ],
+   "about": {
+    "title": "About Blood Oxygen (SpO₂)",
+    "text": "Blood oxygen, also known as SpO₂, measures the percentage of oxygen carried by your red blood cells. It reflects how efficiently oxygen is being delivered throughout your body and can be influenced by sleep, altitude, breathing patterns, and overall recovery."
+   }
+  }
+ },
+ "bp": {
+  "6M": {
+   "kind": "vital",
+   "date": "Jun - Nov 2026",
+   "eyebrow": "AVERAGE",
+   "sys": "113",
+   "dia": "73",
+   "status": "Normal, in typical range",
+   "desc": "Blood pressure tracks the force of blood against your artery walls during heartbeats (systolic) and between beats (diastolic). Maintaining healthy levels is essential for cardiovascular longevity.",
+   "usual": true,
+   "range": {
+    "title": "Blood Pressure · 6-Month · Range",
+    "value": "95 - 134 / 61 - 82"
+   },
+   "analysis": "Across the last six months, your blood pressure remained consistent with your baseline, reflecting long-term cardiovascular stability.",
+   "tiles": [
+    [
+     "Highest Systolic",
+     "134.0"
+    ],
+    [
+     "Highest Diastolic",
+     "82.0"
+    ],
+    [
+     "Lowest Systolic",
+     "95.0"
+    ],
+    [
+     "Lowest Diastolic",
+     "61.0"
+    ]
+   ],
+   "factors": [
+    [
+     "Sodium Intake",
+     "High salt consumption causes water retention, increasing blood volume and arterial pressure."
+    ],
+    [
+     "Stress & Sleep",
+     "Chronic stress and poor sleep both elevate cortisol, which raises blood pressure over time."
+    ],
+    [
+     "Physical Activity",
+     "Regular aerobic exercise strengthens the heart, allowing it to pump blood with less effort."
+    ]
+   ],
+   "about": {
+    "title": "About Blood Pressure",
+    "text": "Blood pressure measures the force of blood pushing against your artery walls as your heart beats and rests. Systolic pressure (the top number) reflects the pressure in your arteries when your heart beats. Diastolic pressure (the bottom number) reflects the pressure when your heart relaxes between beats."
+   }
+  },
+  "D": {
+   "kind": "vital",
+   "date": "17 Nov 2026",
+   "eyebrow": "LATEST",
+   "sys": "102",
+   "dia": "65",
+   "status": "Low, below usual range",
+   "desc": "Blood pressure tracks the force of blood against your artery walls during heartbeats (systolic) and between beats (diastolic). Maintaining healthy levels is essential for cardiovascular longevity.",
+   "usual": true,
+   "avg": {
+    "title": "Blood Pressure · Daily · Average",
+    "value": "110"
+   },
+   "range": {
+    "title": "Blood Pressure · Daily · Range",
+    "value": "100 - 125 / 61 - 77"
+   },
+   "note": {
+    "title": "Daily Changes Are Normal",
+    "text": "Blood pressure shifts throughout the day due to posture, hydration, meals, and stress. Brief changes between readings are expected and normal."
+   },
+   "analysis": "Your blood pressure is below your typical range today. This can occur with dehydration, prolonged rest, or medication effects.",
+   "tiles": [
+    [
+     "Highest Systolic",
+     "125.0"
+    ],
+    [
+     "Highest Diastolic",
+     "77.0"
+    ],
+    [
+     "Lowest Systolic",
+     "100.0"
+    ],
+    [
+     "Lowest Diastolic",
+     "61.0"
+    ]
+   ],
+   "factors": [
+    [
+     "Sodium Intake",
+     "High salt consumption causes water retention, increasing blood volume and arterial pressure."
+    ],
+    [
+     "Stress & Sleep",
+     "Chronic stress and poor sleep both elevate cortisol, which raises blood pressure over time."
+    ],
+    [
+     "Physical Activity",
+     "Regular aerobic exercise strengthens the heart, allowing it to pump blood with less effort."
+    ]
+   ],
+   "about": {
+    "title": "About Blood Pressure",
+    "text": "Blood pressure measures the force of blood pushing against your artery walls as your heart beats and rests. Systolic pressure (the top number) reflects the pressure in your arteries when your heart beats. Diastolic pressure (the bottom number) reflects the pressure when your heart relaxes between beats."
+   }
+  },
+  "M": {
+   "kind": "vital",
+   "date": "Nov 2026",
+   "eyebrow": "AVERAGE",
+   "sys": "113",
+   "dia": "73",
+   "status": "Normal, in typical range",
+   "desc": "Blood pressure tracks the force of blood against your artery walls during heartbeats (systolic) and between beats (diastolic). Maintaining healthy levels is essential for cardiovascular longevity.",
+   "usual": true,
+   "range": {
+    "title": "Blood Pressure · Monthly · Range",
+    "value": "95 - 134 / 61 - 82"
+   },
+   "analysis": "Over the past month, your blood pressure stayed within your usual range, reflecting sustained cardiovascular health.",
+   "tiles": [
+    [
+     "Highest Systolic",
+     "134.0"
+    ],
+    [
+     "Highest Diastolic",
+     "82.0"
+    ],
+    [
+     "Lowest Systolic",
+     "95.0"
+    ],
+    [
+     "Lowest Diastolic",
+     "61.0"
+    ]
+   ],
+   "factors": [
+    [
+     "Sodium Intake",
+     "High salt consumption causes water retention, increasing blood volume and arterial pressure."
+    ],
+    [
+     "Stress & Sleep",
+     "Chronic stress and poor sleep both elevate cortisol, which raises blood pressure over time."
+    ],
+    [
+     "Physical Activity",
+     "Regular aerobic exercise strengthens the heart, allowing it to pump blood with less effort."
+    ]
+   ],
+   "about": {
+    "title": "About Blood Pressure",
+    "text": "Blood pressure measures the force of blood pushing against your artery walls as your heart beats and rests. Systolic pressure (the top number) reflects the pressure in your arteries when your heart beats. Diastolic pressure (the bottom number) reflects the pressure when your heart relaxes between beats."
+   }
+  },
+  "W": {
+   "kind": "vital",
+   "date": "17 Nov - 23 Nov",
+   "eyebrow": "AVERAGE",
+   "sys": "113",
+   "dia": "73",
+   "status": "Normal, in typical range",
+   "desc": "Blood pressure tracks the force of blood against your artery walls during heartbeats (systolic) and between beats (diastolic). Maintaining healthy levels is essential for cardiovascular longevity.",
+   "usual": true,
+   "range": {
+    "title": "Blood Pressure · Weekly · Range",
+    "value": "99 - 125 / 61 - 78"
+   },
+   "analysis": "Your blood pressure remained within your baseline this week, reflecting stable cardiovascular function.",
+   "tiles": [
+    [
+     "Highest Systolic",
+     "125.0"
+    ],
+    [
+     "Highest Diastolic",
+     "78.0"
+    ],
+    [
+     "Lowest Systolic",
+     "99.0"
+    ],
+    [
+     "Lowest Diastolic",
+     "61.0"
+    ]
+   ],
+   "factors": [
+    [
+     "Sodium Intake",
+     "High salt consumption causes water retention, increasing blood volume and arterial pressure."
+    ],
+    [
+     "Stress & Sleep",
+     "Chronic stress and poor sleep both elevate cortisol, which raises blood pressure over time."
+    ],
+    [
+     "Physical Activity",
+     "Regular aerobic exercise strengthens the heart, allowing it to pump blood with less effort."
+    ]
+   ],
+   "about": {
+    "title": "About Blood Pressure",
+    "text": "Blood pressure measures the force of blood pushing against your artery walls as your heart beats and rests. Systolic pressure (the top number) reflects the pressure in your arteries when your heart beats. Diastolic pressure (the bottom number) reflects the pressure when your heart relaxes between beats."
+   }
+  },
+  "Y": {
+   "kind": "vital",
+   "date": "2026",
+   "eyebrow": "AVERAGE",
+   "sys": "113",
+   "dia": "73",
+   "status": "Normal, in typical range",
+   "desc": "Blood pressure tracks the force of blood against your artery walls during heartbeats (systolic) and between beats (diastolic). Maintaining healthy levels is essential for cardiovascular longevity.",
+   "usual": true,
+   "range": {
+    "title": "Blood Pressure · Yearly · Range",
+    "value": "95 - 134 / 61 - 82"
+   },
+   "analysis": "Over the past year, your blood pressure stayed within normal range, suggesting sustained cardiovascular health.",
+   "tiles": [
+    [
+     "Highest Systolic",
+     "134.0"
+    ],
+    [
+     "Highest Diastolic",
+     "82.0"
+    ],
+    [
+     "Lowest Systolic",
+     "95.0"
+    ],
+    [
+     "Lowest Diastolic",
+     "61.0"
+    ]
+   ],
+   "factors": [
+    [
+     "Sodium Intake",
+     "High salt consumption causes water retention, increasing blood volume and arterial pressure."
+    ],
+    [
+     "Stress & Sleep",
+     "Chronic stress and poor sleep both elevate cortisol, which raises blood pressure over time."
+    ],
+    [
+     "Physical Activity",
+     "Regular aerobic exercise strengthens the heart, allowing it to pump blood with less effort."
+    ]
+   ],
+   "about": {
+    "title": "About Blood Pressure",
+    "text": "Blood pressure measures the force of blood pushing against your artery walls as your heart beats and rests. Systolic pressure (the top number) reflects the pressure in your arteries when your heart beats. Diastolic pressure (the bottom number) reflects the pressure when your heart relaxes between beats."
+   }
+  }
+ },
+ "calories": {
+  "6M": {
+   "kind": "move",
+   "date": "Jun - Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "7567",
+   "unit": "kcal",
+   "desc": "Your total energy expenditure including active calories from movement and basal metabolic rate. Tracking daily burn helps you understand your energy balance and recovery needs.",
+   "compare": {
+    "title": "Recent 6M vs Previous 6M",
+    "labels": [
+     "Average This 6M",
+     "Average Previous 6M"
+    ],
+    "values": [
+     "7,567",
+     "0"
+    ]
+   },
+   "month": {
+    "most": [
+     "7,449",
+     "1 Nov - 30 Nov 2026"
+    ],
+    "least": [
+     "118.0",
+     "1 Jun - 30 Jun 2026"
+    ]
+   },
+   "week": {
+    "most": [
+     "911.0",
+     "20 Jul - 26 Jul 2026"
+    ],
+    "least": [
+     "17.0",
+     "15 Jun - 21 Jun 2026"
+    ]
+   },
+   "day": {
+    "dates": [
+     "07 Nov 2026",
+     "15 Jun 2026"
+    ],
+    "values": [
+     "911.0",
+     "1.0"
+    ]
+   },
+   "about": {
+    "title": "About Calories",
+    "text": "Calories burned represents the total energy expenditure including both active calories from exercise and basal metabolic rate. Tracking helps you understand your energy balance."
+   }
+  },
+  "D": {
+   "kind": "move",
+   "date": "17 Nov 2026",
+   "eyebrow": "TODAY",
+   "value": "567",
+   "goal": "/ 200",
+   "unit": "kcal",
+   "delta": "52% vs Yesterday",
+   "desc": "Your total energy expenditure including active calories from movement and basal metabolic rate. Tracking daily burn helps you understand your energy balance and recovery needs.",
+   "compare": {
+    "title": "Today vs Yesterday",
+    "labels": [
+     "Today",
+     "Yesterday"
+    ],
+    "values": [
+     "567.0",
+     "372.0"
+    ]
+   },
+   "analysis": "You've burned more calories today. Staying active consistently supports metabolic health and weight management.",
+   "about": {
+    "title": "About Calories",
+    "text": "Calories burned represents the total energy expenditure including both active calories from exercise and basal metabolic rate. Tracking helps you understand your energy balance."
+   }
+  },
+  "M": {
+   "kind": "move",
+   "date": "Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "7449",
+   "unit": "kcal",
+   "desc": "Your total energy expenditure including active calories from movement and basal metabolic rate. Tracking daily burn helps you understand your energy balance and recovery needs.",
+   "compare": {
+    "title": "This Month vs Last Month",
+    "labels": [
+     "Average This Month",
+     "Average Last Month"
+    ],
+    "values": [
+     "7,449",
+     "0"
+    ]
+   },
+   "week": {
+    "most": [
+     "3,661",
+     "9 Nov - 15 Nov 2026"
+    ],
+    "least": [
+     "1,427",
+     "16 Nov - 22 Nov 2026"
+    ]
+   },
+   "day": {
+    "dates": [
+     "07 Nov 2026",
+     "04 Nov 2026"
+    ],
+    "values": [
+     "911.0",
+     "50.0"
+    ]
+   },
+   "about": {
+    "title": "About Calories",
+    "text": "Calories burned represents the total energy expenditure including both active calories from exercise and basal metabolic rate. Tracking helps you understand your energy balance."
+   }
+  },
+  "W": {
+   "kind": "move",
+   "date": "17 Nov - 23 Nov",
+   "eyebrow": "AVERAGE",
+   "value": "1055",
+   "unit": "kcal",
+   "delta": "67% vs Total Last Week",
+   "desc": "Your total energy expenditure including active calories from movement and basal metabolic rate. Tracking daily burn helps you understand your energy balance and recovery needs.",
+   "mostDay": [
+    "567.0",
+    "17 Nov 2026"
+   ],
+   "leastDay": [
+    "111.0",
+    "19 Nov 2026"
+   ],
+   "compare": {
+    "title": "This Week vs Last Week",
+    "labels": [
+     "Total This Week",
+     "Total Last Week"
+    ],
+    "values": [
+     "1,055",
+     "3,289"
+    ]
+   },
+   "analysis": "Your calorie burn this week is lower than last. Consider adding short bursts of activity throughout the day.",
+   "about": {
+    "title": "About Calories",
+    "text": "Calories burned represents the total energy expenditure including both active calories from exercise and basal metabolic rate. Tracking helps you understand your energy balance."
+   }
+  },
+  "Y": {
+   "kind": "move",
+   "date": "2026",
+   "eyebrow": "AVERAGE",
+   "value": "7567",
+   "unit": "kcal",
+   "desc": "Your total energy expenditure including active calories from movement and basal metabolic rate. Tracking daily burn helps you understand your energy balance and recovery needs.",
+   "compare": {
+    "title": "This Year vs Last Year",
+    "labels": [
+     "Average This Year",
+     "Average Last Year"
+    ],
+    "values": [
+     "7,567",
+     "0"
+    ]
+   },
+   "month": {
+    "most": [
+     "7,449",
+     "1 Nov - 30 Nov 2026"
+    ],
+    "least": [
+     "118.0",
+     "1 Jun - 30 Jun 2026"
+    ]
+   },
+   "week": {
+    "most": [
+     "911.0",
+     "20 Jul - 26 Jul 2026"
+    ],
+    "least": [
+     "17.0",
+     "15 Jun - 21 Jun 2026"
+    ]
+   },
+   "day": {
+    "dates": [
+     "07 Nov 2026",
+     "15 Jun 2026"
+    ],
+    "values": [
+     "911.0",
+     "1.0"
+    ]
+   },
+   "about": {
+    "title": "About Calories",
+    "text": "Calories burned represents the total energy expenditure including both active calories from exercise and basal metabolic rate. Tracking helps you understand your energy balance."
+   }
+  }
+ },
+ "hr": {
+  "6M": {
+   "kind": "vital",
+   "date": "Jun - Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "72",
+   "status": "Normal, in typical range",
+   "desc": "Your heart rate reflects how hard your heart works throughout the day. Monitoring trends helps you understand your cardiovascular response to activity, stress, and recovery.",
+   "usual": true,
+   "range": {
+    "title": "Heart Rate · 6-Month · Range",
+    "value": "47 - 150"
+   },
+   "analysis": "Across the last six months, your resting heart rate remained consistent with your baseline, reflecting long-term cardiovascular stability.",
+   "hi": {
+    "value": "150",
+    "when": "Fri, Nov 13"
+   },
+   "lo": {
+    "value": "47",
+    "when": "Fri, Jun 12"
+   },
+   "factors": [
+    [
+     "Recovery Status",
+     "Incomplete recovery from exercise or illness can keep your resting heart rate elevated."
+    ],
+    [
+     "Caffeine & Stimulants",
+     "Caffeine blocks adenosine receptors, increasing heart rate for several hours after consumption."
+    ],
+    [
+     "Aerobic Fitness",
+     "Consistent cardio training increases stroke volume, allowing a lower resting heart rate."
+    ]
+   ],
+   "about": {
+    "title": "About Heart Rate",
+    "text": "Resting heart rate reflects how efficiently your heart pumps blood while at rest. It can be influenced by fitness level, sleep quality, stress, hydration, medications, and overall cardiovascular health. Small daily variations are normal."
+   }
+  },
+  "D": {
+   "kind": "vital",
+   "date": "17 Nov 2026",
+   "eyebrow": "LATEST",
+   "value": "53",
+   "status": "Low, below usual range",
+   "desc": "Your heart rate reflects how hard your heart works throughout the day. Monitoring trends helps you understand your cardiovascular response to activity, stress, and recovery.",
+   "usual": true,
+   "avg": {
+    "title": "Heart Rate · Daily · Average",
+    "value": "67.3"
+   },
+   "range": {
+    "title": "Heart Rate · Daily · Range",
+    "value": "49 - 134"
+   },
+   "note": {
+    "title": "Daily Changes Are Normal",
+    "text": "Heart rate rises with movement and stress and falls during rest. These fluctuations are a normal sign of healthy autonomic function."
+   },
+   "analysis": "Your resting heart rate is below your typical range today. This often indicates strong cardiovascular fitness, but may need evaluation if symptomatic.",
+   "hi": {
+    "value": "134",
+    "when": "6:53 PM"
+   },
+   "lo": {
+    "value": "49",
+    "when": "1:22 AM"
+   },
+   "factors": [
+    [
+     "Recovery Status",
+     "Incomplete recovery from exercise or illness can keep your resting heart rate elevated."
+    ],
+    [
+     "Caffeine & Stimulants",
+     "Caffeine blocks adenosine receptors, increasing heart rate for several hours after consumption."
+    ],
+    [
+     "Aerobic Fitness",
+     "Consistent cardio training increases stroke volume, allowing a lower resting heart rate."
+    ]
+   ],
+   "about": {
+    "title": "About Heart Rate",
+    "text": "Resting heart rate reflects how efficiently your heart pumps blood while at rest. It can be influenced by fitness level, sleep quality, stress, hydration, medications, and overall cardiovascular health. Small daily variations are normal."
+   }
+  },
+  "M": {
+   "kind": "vital",
+   "date": "Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "72",
+   "status": "Normal, in typical range",
+   "desc": "Your heart rate reflects how hard your heart works throughout the day. Monitoring trends helps you understand your cardiovascular response to activity, stress, and recovery.",
+   "usual": true,
+   "range": {
+    "title": "Heart Rate · Monthly · Range",
+    "value": "47 - 150"
+   },
+   "analysis": "Over the past month, your resting heart rate stayed within your usual range, reflecting sustained cardiovascular fitness.",
+   "hi": {
+    "value": "150",
+    "when": "Fri, Nov 13"
+   },
+   "lo": {
+    "value": "47",
+    "when": "Mon, Nov 9"
+   },
+   "factors": [
+    [
+     "Recovery Status",
+     "Incomplete recovery from exercise or illness can keep your resting heart rate elevated."
+    ],
+    [
+     "Caffeine & Stimulants",
+     "Caffeine blocks adenosine receptors, increasing heart rate for several hours after consumption."
+    ],
+    [
+     "Aerobic Fitness",
+     "Consistent cardio training increases stroke volume, allowing a lower resting heart rate."
+    ]
+   ],
+   "about": {
+    "title": "About Heart Rate",
+    "text": "Resting heart rate reflects how efficiently your heart pumps blood while at rest. It can be influenced by fitness level, sleep quality, stress, hydration, medications, and overall cardiovascular health. Small daily variations are normal."
+   }
+  },
+  "W": {
+   "kind": "vital",
+   "date": "17 Nov - 23 Nov",
+   "eyebrow": "AVERAGE",
+   "value": "72",
+   "status": "Normal, in typical range",
+   "desc": "Your heart rate reflects how hard your heart works throughout the day. Monitoring trends helps you understand your cardiovascular response to activity, stress, and recovery.",
+   "usual": true,
+   "range": {
+    "title": "Heart Rate · Weekly · Range",
+    "value": "48 - 134"
+   },
+   "analysis": "Your resting heart rate remained within your baseline this week, reflecting stable cardiovascular health.",
+   "hi": {
+    "value": "134",
+    "when": "Tue, Nov 17"
+   },
+   "lo": {
+    "value": "48",
+    "when": "Thu, Nov 19"
+   },
+   "factors": [
+    [
+     "Recovery Status",
+     "Incomplete recovery from exercise or illness can keep your resting heart rate elevated."
+    ],
+    [
+     "Caffeine & Stimulants",
+     "Caffeine blocks adenosine receptors, increasing heart rate for several hours after consumption."
+    ],
+    [
+     "Aerobic Fitness",
+     "Consistent cardio training increases stroke volume, allowing a lower resting heart rate."
+    ]
+   ],
+   "about": {
+    "title": "About Heart Rate",
+    "text": "Resting heart rate reflects how efficiently your heart pumps blood while at rest. It can be influenced by fitness level, sleep quality, stress, hydration, medications, and overall cardiovascular health. Small daily variations are normal."
+   }
+  },
+  "Y": {
+   "kind": "vital",
+   "date": "2026",
+   "eyebrow": "AVERAGE",
+   "value": "72",
+   "status": "Normal, in typical range",
+   "desc": "Your heart rate reflects how hard your heart works throughout the day. Monitoring trends helps you understand your cardiovascular response to activity, stress, and recovery.",
+   "usual": true,
+   "range": {
+    "title": "Heart Rate · Yearly · Range",
+    "value": "47 - 150"
+   },
+   "analysis": "Over the past year, your resting heart rate stayed within normal range, suggesting sustained cardiovascular health.",
+   "hi": {
+    "value": "150",
+    "when": "Fri, Nov 13"
+   },
+   "lo": {
+    "value": "47",
+    "when": "Fri, Jun 12"
+   },
+   "factors": [
+    [
+     "Recovery Status",
+     "Incomplete recovery from exercise or illness can keep your resting heart rate elevated."
+    ],
+    [
+     "Caffeine & Stimulants",
+     "Caffeine blocks adenosine receptors, increasing heart rate for several hours after consumption."
+    ],
+    [
+     "Aerobic Fitness",
+     "Consistent cardio training increases stroke volume, allowing a lower resting heart rate."
+    ]
+   ],
+   "about": {
+    "title": "About Heart Rate",
+    "text": "Resting heart rate reflects how efficiently your heart pumps blood while at rest. It can be influenced by fitness level, sleep quality, stress, hydration, medications, and overall cardiovascular health. Small daily variations are normal."
+   }
+  }
+ },
+ "hrv": {
+  "6M": {
+   "kind": "vital",
+   "date": "Jun - Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "37.0",
+   "status": "Normal, in typical range",
+   "desc": "Heart rate variability measures the variation in time between consecutive heartbeats. Higher HRV generally indicates better autonomic flexibility, recovery capacity, and resilience to stress.",
+   "usual": true,
+   "range": {
+    "title": "Heart Rate Variability · 6-Month · Range",
+    "value": "16.0 - 179.0"
+   },
+   "analysis": "Over the past six months, your HRV has remained stable and within a healthy range.",
+   "hi": {
+    "value": "179.0",
+    "when": "Thu, Jun 11"
+   },
+   "lo": {
+    "value": "16.0",
+    "when": "Wed, Nov 11"
+   },
+   "about": {
+    "title": "About Heart Rate Variability",
+    "text": "Heart rate variability (HRV) measures the variation in time intervals between heartbeats. Unlike heart rate, which counts beats per minute, HRV reflects how adaptable your nervous system is. Higher variability typically signals better cardiovascular fitness, stress resilience, and recovery."
+   }
+  },
+  "D": {
+   "kind": "vital",
+   "date": "17 Nov 2026",
+   "eyebrow": "LATEST",
+   "value": "59.0",
+   "status": "Elevated, above usual range",
+   "desc": "Heart rate variability measures the variation in time between consecutive heartbeats. Higher HRV generally indicates better autonomic flexibility, recovery capacity, and resilience to stress.",
+   "usual": true,
+   "avg": {
+    "title": "Heart Rate Variability · Daily · Average",
+    "value": "45.5"
+   },
+   "range": {
+    "title": "Heart Rate Variability · Daily · Range",
+    "value": "22.0 - 73.0"
+   },
+   "note": {
+    "title": "Daily Changes Are Normal",
+    "text": "Heart rate variability changes based on sleep quality, stress, and recovery. Day-to-day variation is expected and reflects normal nervous system activity."
+   },
+   "analysis": "Your HRV is higher than usual today, which typically reflects excellent recovery and low stress.",
+   "hi": {
+    "value": "73.0",
+    "when": "12:12 AM"
+   },
+   "lo": {
+    "value": "22.0",
+    "when": "7:52 PM"
+   },
+   "about": {
+    "title": "About Heart Rate Variability",
+    "text": "Heart rate variability (HRV) measures the variation in time intervals between heartbeats. Unlike heart rate, which counts beats per minute, HRV reflects how adaptable your nervous system is. Higher variability typically signals better cardiovascular fitness, stress resilience, and recovery."
+   }
+  },
+  "M": {
+   "kind": "vital",
+   "date": "Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "37.0",
+   "status": "Normal, in typical range",
+   "desc": "Heart rate variability measures the variation in time between consecutive heartbeats. Higher HRV generally indicates better autonomic flexibility, recovery capacity, and resilience to stress.",
+   "usual": true,
+   "range": {
+    "title": "Heart Rate Variability · Monthly · Range",
+    "value": "16.0 - 80.0"
+   },
+   "analysis": "Your HRV has been within a healthy range this month, supporting long-term autonomic health.",
+   "hi": {
+    "value": "80.0",
+    "when": "Sat, Nov 7"
+   },
+   "lo": {
+    "value": "16.0",
+    "when": "Wed, Nov 11"
+   },
+   "about": {
+    "title": "About Heart Rate Variability",
+    "text": "Heart rate variability (HRV) measures the variation in time intervals between heartbeats. Unlike heart rate, which counts beats per minute, HRV reflects how adaptable your nervous system is. Higher variability typically signals better cardiovascular fitness, stress resilience, and recovery."
+   }
+  },
+  "W": {
+   "kind": "vital",
+   "date": "17 Nov - 23 Nov",
+   "eyebrow": "AVERAGE",
+   "value": "37.0",
+   "status": "Normal, in typical range",
+   "desc": "Heart rate variability measures the variation in time between consecutive heartbeats. Higher HRV generally indicates better autonomic flexibility, recovery capacity, and resilience to stress.",
+   "usual": true,
+   "range": {
+    "title": "Heart Rate Variability · Weekly · Range",
+    "value": "22.0 - 73.0"
+   },
+   "analysis": "Your HRV remained within your baseline this week, reflecting stable nervous system function.",
+   "hi": {
+    "value": "73.0",
+    "when": "Tue, Nov 17"
+   },
+   "lo": {
+    "value": "22.0",
+    "when": "Tue, Nov 17"
+   },
+   "about": {
+    "title": "About Heart Rate Variability",
+    "text": "Heart rate variability (HRV) measures the variation in time intervals between heartbeats. Unlike heart rate, which counts beats per minute, HRV reflects how adaptable your nervous system is. Higher variability typically signals better cardiovascular fitness, stress resilience, and recovery."
+   }
+  },
+  "Y": {
+   "kind": "vital",
+   "date": "2026",
+   "eyebrow": "AVERAGE",
+   "value": "37.0",
+   "status": "Normal, in typical range",
+   "desc": "Heart rate variability measures the variation in time between consecutive heartbeats. Higher HRV generally indicates better autonomic flexibility, recovery capacity, and resilience to stress.",
+   "usual": true,
+   "range": {
+    "title": "Heart Rate Variability · Yearly · Range",
+    "value": "16.0 - 179.0"
+   },
+   "analysis": "Over the past year, your HRV has remained stable, supporting long-term autonomic health and resilience.",
+   "hi": {
+    "value": "179.0",
+    "when": "Thu, Jun 11"
+   },
+   "lo": {
+    "value": "16.0",
+    "when": "Wed, Nov 11"
+   },
+   "about": {
+    "title": "About Heart Rate Variability",
+    "text": "Heart rate variability (HRV) measures the variation in time intervals between heartbeats. Unlike heart rate, which counts beats per minute, HRV reflects how adaptable your nervous system is. Higher variability typically signals better cardiovascular fitness, stress resilience, and recovery."
+   }
+  }
+ },
+ "sleep-hours": {
+  "6M": {
+   "kind": "sleep",
+   "labels": [
+    "Jun - Nov 2026",
+    "AVERAGE",
+    "88",
+    "%",
+    "Hours vs needs compares your actual sleep duration to your recommended sleep goal. Meeting your sleep needs consistently supports recovery, mood, and cognitive function.",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Sleep Needed",
+    "Current",
+    "Previous",
+    "7:00 hours ▲",
+    "7:00 hours ●",
+    "Hours of Sleep",
+    "Current",
+    "Previous",
+    "7:05 hours ▲",
+    "-- hours ●",
+    "Sleep Needed",
+    "Hours of Sleep",
+    "Hours vs Needs",
+    "Current",
+    "Previous",
+    "88 % ▲",
+    "0 % ●"
+   ]
+  },
+  "M": {
+   "kind": "sleep",
+   "labels": [
+    "Nov 2026",
+    "AVERAGE",
+    "92",
+    "%",
+    "Hours vs needs compares your actual sleep duration to your recommended sleep goal. Meeting your sleep needs consistently supports recovery, mood, and cognitive function.",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Sleep Needed",
+    "This Month",
+    "Last Month",
+    "7:00 hours ▲",
+    "7:00 hours ●",
+    "Hours of Sleep",
+    "This Month",
+    "Last Month",
+    "7:25 hours ▲",
+    "-- hours ●",
+    "Sleep Needed",
+    "Hours of Sleep",
+    "Hours vs Needs",
+    "This Month",
+    "Last Month",
+    "92 % ▲",
+    "0 % ●"
+   ]
+  },
+  "W": {
+   "kind": "sleep",
+   "labels": [
+    "17 Nov - 23 Nov",
+    "AVERAGE",
+    "93",
+    "%",
+    "2% vs Total Last Week",
+    "Hours vs needs compares your actual sleep duration to your recommended sleep goal. Meeting your sleep needs consistently supports recovery, mood, and cognitive function.",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Sleep Needed",
+    "This Week",
+    "Last Week",
+    "7:00 hours ▲",
+    "7:00 hours ●",
+    "Hours of Sleep",
+    "This Week",
+    "Last Week",
+    "7:25 hours ▲",
+    "7:21 hours ●",
+    "Sleep Needed",
+    "Hours of Sleep",
+    "Hours vs Needs",
+    "This Week",
+    "Last Week",
+    "93 % ▲",
+    "90 % ●"
+   ]
+  },
+  "Y": {
+   "kind": "sleep",
+   "labels": [
+    "2026",
+    "AVERAGE",
+    "88",
+    "%",
+    "Hours vs needs compares your actual sleep duration to your recommended sleep goal. Meeting your sleep needs consistently supports recovery, mood, and cognitive function.",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Sleep Needed",
+    "Current",
+    "Previous",
+    "7:00 hours ▲",
+    "7:00 hours ●",
+    "Hours of Sleep",
+    "Current",
+    "Previous",
+    "7:05 hours ▲",
+    "-- hours ●",
+    "Sleep Needed",
+    "Hours of Sleep",
+    "Hours vs Needs",
+    "Current",
+    "Previous",
+    "88 % ▲",
+    "0 % ●"
+   ]
+  }
+ },
+ "respiratory": {
+  "6M": {
+   "kind": "vital",
+   "date": "Jun - Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "15.0",
+   "status": "Normal, in typical range",
+   "desc": "Respiratory rate measures how many breaths you take per minute at rest. Elevated rates can signal stress, illness, or reduced recovery, while stable rates indicate balanced autonomic function.",
+   "usual": true,
+   "range": {
+    "title": "Respiratory Rate · 6-Month · Range",
+    "value": "9.0 - 24.0"
+   },
+   "analysis": "Across the last six months, your respiratory rate remained consistent with your baseline, reflecting long-term respiratory stability.",
+   "hi": {
+    "value": "24.0",
+    "when": "Sat, Nov 7"
+   },
+   "lo": {
+    "value": "9.0",
+    "when": "Fri, Jun 12"
+   },
+   "factors": [
+    [
+     "Sleep Quality",
+     "Poor or fragmented sleep can elevate breathing rate during rest and recovery periods."
+    ],
+    [
+     "Stress & Anxiety",
+     "Chronic stress activates your sympathetic nervous system, increasing respiration even at rest."
+    ],
+    [
+     "Fitness Level",
+     "Higher aerobic fitness lowers resting respiratory rate by improving oxygen exchange efficiency."
+    ]
+   ],
+   "about": {
+    "title": "About Respiratory Rate",
+    "text": "Respiration per Minute (rpm). Your respiratory rate measures how many breaths you take per minute. It's a subtle but important indicator of your overall health and recovery, helping you understand how your body responds to daily activity, stress, and sleep patterns."
+   }
+  },
+  "D": {
+   "kind": "vital",
+   "date": "17 Nov 2026",
+   "eyebrow": "LATEST",
+   "value": "13.0",
+   "status": "Low, below usual range",
+   "desc": "Respiratory rate measures how many breaths you take per minute at rest. Elevated rates can signal stress, illness, or reduced recovery, while stable rates indicate balanced autonomic function.",
+   "usual": true,
+   "avg": {
+    "title": "Respiratory Rate · Daily · Average",
+    "value": "15.4"
+   },
+   "range": {
+    "title": "Respiratory Rate · Daily · Range",
+    "value": "13.0 - 22.0"
+   },
+   "note": {
+    "title": "Daily Changes Are Normal",
+    "text": "Respiratory rate naturally fluctuates day to day. A single higher reading does not necessarily indicate illness or concern."
+   },
+   "analysis": "Your respiratory rate is below your typical baseline today. This can occur during deep relaxation or may warrant monitoring if persistent.",
+   "hi": {
+    "value": "22.0",
+    "when": "6:42 PM"
+   },
+   "lo": {
+    "value": "13.0",
+    "when": "12:02 AM"
+   },
+   "factors": [
+    [
+     "Sleep Quality",
+     "Poor or fragmented sleep can elevate breathing rate during rest and recovery periods."
+    ],
+    [
+     "Stress & Anxiety",
+     "Chronic stress activates your sympathetic nervous system, increasing respiration even at rest."
+    ],
+    [
+     "Fitness Level",
+     "Higher aerobic fitness lowers resting respiratory rate by improving oxygen exchange efficiency."
+    ]
+   ],
+   "about": {
+    "title": "About Respiratory Rate",
+    "text": "Respiration per Minute (rpm). Your respiratory rate measures how many breaths you take per minute. It's a subtle but important indicator of your overall health and recovery, helping you understand how your body responds to daily activity, stress, and sleep patterns."
+   }
+  },
+  "M": {
+   "kind": "vital",
+   "date": "Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "15.0",
+   "status": "Normal, in typical range",
+   "desc": "Respiratory rate measures how many breaths you take per minute at rest. Elevated rates can signal stress, illness, or reduced recovery, while stable rates indicate balanced autonomic function.",
+   "usual": true,
+   "range": {
+    "title": "Respiratory Rate · Monthly · Range",
+    "value": "12.0 - 24.0"
+   },
+   "analysis": "Over the past month, your respiratory rate stayed within your usual range, reflecting sustained respiratory health.",
+   "hi": {
+    "value": "24.0",
+    "when": "Sat, Nov 7"
+   },
+   "lo": {
+    "value": "12.0",
+    "when": "Sat, Nov 7"
+   },
+   "factors": [
+    [
+     "Sleep Quality",
+     "Poor or fragmented sleep can elevate breathing rate during rest and recovery periods."
+    ],
+    [
+     "Stress & Anxiety",
+     "Chronic stress activates your sympathetic nervous system, increasing respiration even at rest."
+    ],
+    [
+     "Fitness Level",
+     "Higher aerobic fitness lowers resting respiratory rate by improving oxygen exchange efficiency."
+    ]
+   ],
+   "about": {
+    "title": "About Respiratory Rate",
+    "text": "Respiration per Minute (rpm). Your respiratory rate measures how many breaths you take per minute. It's a subtle but important indicator of your overall health and recovery, helping you understand how your body responds to daily activity, stress, and sleep patterns."
+   }
+  },
+  "W": {
+   "kind": "vital",
+   "date": "17 Nov - 23 Nov",
+   "eyebrow": "AVERAGE",
+   "value": "15.0",
+   "status": "Normal, in typical range",
+   "desc": "Respiratory rate measures how many breaths you take per minute at rest. Elevated rates can signal stress, illness, or reduced recovery, while stable rates indicate balanced autonomic function.",
+   "usual": true,
+   "range": {
+    "title": "Respiratory Rate · Weekly · Range",
+    "value": "12.0 - 22.0"
+   },
+   "analysis": "Your respiratory rate remained within your baseline this week, reflecting stable respiratory function and healthy adaptation.",
+   "hi": {
+    "value": "22.0",
+    "when": "Tue, Nov 17"
+   },
+   "lo": {
+    "value": "12.0",
+    "when": "Thu, Nov 19"
+   },
+   "factors": [
+    [
+     "Sleep Quality",
+     "Poor or fragmented sleep can elevate breathing rate during rest and recovery periods."
+    ],
+    [
+     "Stress & Anxiety",
+     "Chronic stress activates your sympathetic nervous system, increasing respiration even at rest."
+    ],
+    [
+     "Fitness Level",
+     "Higher aerobic fitness lowers resting respiratory rate by improving oxygen exchange efficiency."
+    ]
+   ],
+   "about": {
+    "title": "About Respiratory Rate",
+    "text": "Respiration per Minute (rpm). Your respiratory rate measures how many breaths you take per minute. It's a subtle but important indicator of your overall health and recovery, helping you understand how your body responds to daily activity, stress, and sleep patterns."
+   }
+  },
+  "Y": {
+   "kind": "vital",
+   "date": "2026",
+   "eyebrow": "AVERAGE",
+   "value": "15.0",
+   "status": "Normal, in typical range",
+   "desc": "Respiratory rate measures how many breaths you take per minute at rest. Elevated rates can signal stress, illness, or reduced recovery, while stable rates indicate balanced autonomic function.",
+   "usual": true,
+   "range": {
+    "title": "Respiratory Rate · Yearly · Range",
+    "value": "9.0 - 24.0"
+   },
+   "analysis": "Over the past year, your respiratory rate stayed within normal range, suggesting sustained respiratory stability.",
+   "hi": {
+    "value": "24.0",
+    "when": "Sat, Nov 7"
+   },
+   "lo": {
+    "value": "9.0",
+    "when": "Fri, Jun 12"
+   },
+   "factors": [
+    [
+     "Sleep Quality",
+     "Poor or fragmented sleep can elevate breathing rate during rest and recovery periods."
+    ],
+    [
+     "Stress & Anxiety",
+     "Chronic stress activates your sympathetic nervous system, increasing respiration even at rest."
+    ],
+    [
+     "Fitness Level",
+     "Higher aerobic fitness lowers resting respiratory rate by improving oxygen exchange efficiency."
+    ]
+   ],
+   "about": {
+    "title": "About Respiratory Rate",
+    "text": "Respiration per Minute (rpm). Your respiratory rate measures how many breaths you take per minute. It's a subtle but important indicator of your overall health and recovery, helping you understand how your body responds to daily activity, stress, and sleep patterns."
+   }
+  }
+ },
+ "rhr": {
+  "6M": {
+   "kind": "vital",
+   "date": "Jun - Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "49",
+   "status": "Normal, in typical range",
+   "desc": "Your resting heart rate is a key indicator of cardiovascular fitness and autonomic nervous system balance. Lower resting rates generally reflect better aerobic conditioning and recovery.",
+   "usual": true,
+   "range": {
+    "title": "Resting Heart Rate · 6-Month · Range",
+    "value": "49 - 54"
+   },
+   "analysis": "Over the past six months, your resting heart rate has been stable and within a healthy range.",
+   "hi": {
+    "value": "54",
+    "when": "Thu, Nov 12"
+   },
+   "lo": {
+    "value": "49",
+    "when": "Sat, Jun 13"
+   },
+   "factors": [
+    [
+     "Recovery Status",
+     "Incomplete recovery from exercise or illness can keep your resting heart rate elevated."
+    ],
+    [
+     "Caffeine & Stimulants",
+     "Caffeine blocks adenosine receptors, increasing heart rate for several hours after consumption."
+    ],
+    [
+     "Aerobic Fitness",
+     "Consistent cardio training increases stroke volume, allowing a lower resting heart rate."
+    ]
+   ]
+  },
+  "D": {
+   "kind": "vital",
+   "date": "17 Nov 2026",
+   "eyebrow": "LATEST",
+   "value": "49",
+   "desc": "Your resting heart rate is a key indicator of cardiovascular fitness and autonomic nervous system balance. Lower resting rates generally reflect better aerobic conditioning and recovery.",
+   "usual": false,
+   "avg": {
+    "title": "Resting Heart Rate · Daily · Average",
+    "value": "49.0"
+   },
+   "range": {
+    "title": "Resting Heart Rate · Daily · Range",
+    "value": "49 - 49"
+   },
+   "note": {
+    "title": "Daily Changes Are Normal",
+    "text": "Resting heart rate can vary slightly day to day based on sleep quality, hydration, and stress levels. Small changes are normal and expected."
+   },
+   "hi": {
+    "value": "49",
+    "when": "12:00 AM"
+   },
+   "lo": {
+    "value": "49",
+    "when": "12:00 AM"
+   },
+   "factors": [
+    [
+     "Recovery Status",
+     "Incomplete recovery from exercise or illness can keep your resting heart rate elevated."
+    ],
+    [
+     "Caffeine & Stimulants",
+     "Caffeine blocks adenosine receptors, increasing heart rate for several hours after consumption."
+    ],
+    [
+     "Aerobic Fitness",
+     "Consistent cardio training increases stroke volume, allowing a lower resting heart rate."
+    ]
+   ]
+  },
+  "M": {
+   "kind": "vital",
+   "date": "Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "49",
+   "status": "Normal, in typical range",
+   "desc": "Your resting heart rate is a key indicator of cardiovascular fitness and autonomic nervous system balance. Lower resting rates generally reflect better aerobic conditioning and recovery.",
+   "usual": true,
+   "range": {
+    "title": "Resting Heart Rate · Monthly · Range",
+    "value": "49 - 54"
+   },
+   "analysis": "Your resting heart rate remained within your typical range this month, supporting long-term cardiovascular health.",
+   "hi": {
+    "value": "54",
+    "when": "Thu, Nov 12"
+   },
+   "lo": {
+    "value": "49",
+    "when": "Fri, Nov 6"
+   },
+   "factors": [
+    [
+     "Recovery Status",
+     "Incomplete recovery from exercise or illness can keep your resting heart rate elevated."
+    ],
+    [
+     "Caffeine & Stimulants",
+     "Caffeine blocks adenosine receptors, increasing heart rate for several hours after consumption."
+    ],
+    [
+     "Aerobic Fitness",
+     "Consistent cardio training increases stroke volume, allowing a lower resting heart rate."
+    ]
+   ]
+  },
+  "W": {
+   "kind": "vital",
+   "date": "17 Nov - 23 Nov",
+   "eyebrow": "AVERAGE",
+   "value": "49",
+   "status": "Normal, in typical range",
+   "desc": "Your resting heart rate is a key indicator of cardiovascular fitness and autonomic nervous system balance. Lower resting rates generally reflect better aerobic conditioning and recovery.",
+   "usual": true,
+   "range": {
+    "title": "Resting Heart Rate · Weekly · Range",
+    "value": "49 - 51"
+   },
+   "analysis": "Your resting heart rate stayed within your baseline this week, reflecting stable cardiovascular health.",
+   "hi": {
+    "value": "51",
+    "when": "Thu, Nov 19"
+   },
+   "lo": {
+    "value": "49",
+    "when": "Wed, Nov 18"
+   },
+   "factors": [
+    [
+     "Recovery Status",
+     "Incomplete recovery from exercise or illness can keep your resting heart rate elevated."
+    ],
+    [
+     "Caffeine & Stimulants",
+     "Caffeine blocks adenosine receptors, increasing heart rate for several hours after consumption."
+    ],
+    [
+     "Aerobic Fitness",
+     "Consistent cardio training increases stroke volume, allowing a lower resting heart rate."
+    ]
+   ]
+  },
+  "Y": {
+   "kind": "vital",
+   "date": "2026",
+   "eyebrow": "AVERAGE",
+   "value": "49",
+   "status": "Normal, in typical range",
+   "desc": "Your resting heart rate is a key indicator of cardiovascular fitness and autonomic nervous system balance. Lower resting rates generally reflect better aerobic conditioning and recovery.",
+   "usual": true,
+   "range": {
+    "title": "Resting Heart Rate · Yearly · Range",
+    "value": "49 - 54"
+   },
+   "analysis": "Over the past year, your resting heart rate has remained stable and healthy, supporting cardiovascular longevity.",
+   "hi": {
+    "value": "54",
+    "when": "Thu, Nov 12"
+   },
+   "lo": {
+    "value": "49",
+    "when": "Sat, Jun 13"
+   },
+   "factors": [
+    [
+     "Recovery Status",
+     "Incomplete recovery from exercise or illness can keep your resting heart rate elevated."
+    ],
+    [
+     "Caffeine & Stimulants",
+     "Caffeine blocks adenosine receptors, increasing heart rate for several hours after consumption."
+    ],
+    [
+     "Aerobic Fitness",
+     "Consistent cardio training increases stroke volume, allowing a lower resting heart rate."
+    ]
+   ]
+  }
+ },
+ "sleep-restorative": {
+  "6M": {
+   "kind": "sleep",
+   "labels": [
+    "Jun - Nov 2026",
+    "AVERAGE",
+    "2:30",
+    "hours",
+    "Restorative sleep includes deep sleep and REM stages, which are critical for physical repair, memory consolidation, and immune function.",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Average Restorative Sleep",
+    "Current",
+    "Previous",
+    "2:30 hours ▲",
+    "-- hours ●",
+    "Deep Sleep",
+    "REM"
+   ]
+  },
+  "M": {
+   "kind": "sleep",
+   "labels": [
+    "Nov 2026",
+    "AVERAGE",
+    "2:37",
+    "hours",
+    "Restorative sleep includes deep sleep and REM stages, which are critical for physical repair, memory consolidation, and immune function.",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Average Restorative Sleep",
+    "This Month",
+    "Last Month",
+    "2:37 hours ▲",
+    "-- hours ●",
+    "Deep Sleep",
+    "REM"
+   ]
+  },
+  "W": {
+   "kind": "sleep",
+   "labels": [
+    "17 Nov - 23 Nov",
+    "AVERAGE",
+    "2:36",
+    "hours",
+    "Restorative sleep includes deep sleep and REM stages, which are critical for physical repair, memory consolidation, and immune function.",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Average Restorative Sleep",
+    "This Week",
+    "Last Week",
+    "2:36 hours ▼",
+    "2:36 hours ●",
+    "Deep Sleep",
+    "REM"
+   ]
+  },
+  "Y": {
+   "kind": "sleep",
+   "labels": [
+    "2026",
+    "AVERAGE",
+    "2:30",
+    "hours",
+    "Restorative sleep includes deep sleep and REM stages, which are critical for physical repair, memory consolidation, and immune function.",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Average Restorative Sleep",
+    "Current",
+    "Previous",
+    "2:30 hours ▲",
+    "-- hours ●",
+    "Deep Sleep",
+    "REM"
+   ]
+  }
+ },
+ "sleep-consistency": {
+  "6M": {
+   "kind": "sleep",
+   "labels": [
+    "Jun - Nov 2026",
+    "AVERAGE",
+    "70",
+    "%",
+    "18% vs Average Previous 6M",
+    "Sleep consistency reflects how regular your sleep and wake times are across the week. Stable sleep timing supports circadian rhythm, recovery, and long-term health.",
+    "Sleep Consistency Breakdown",
+    "1x",
+    "Consistent",
+    "5x",
+    "Variable",
+    "1x",
+    "Irregular",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Sleep Consistency",
+    "Current",
+    "Previous",
+    "70 % ▲",
+    "59 % ●",
+    "Average Sleep",
+    "Current",
+    "Previous",
+    "7:05 hours ▲",
+    "-- hours ●",
+    "Optimal Bed/Wake Time"
+   ]
+  },
+  "M": {
+   "kind": "sleep",
+   "labels": [
+    "Nov 2026",
+    "AVERAGE",
+    "70",
+    "%",
+    "18% vs Average Last Month",
+    "Sleep consistency reflects how regular your sleep and wake times are across the week. Stable sleep timing supports circadian rhythm, recovery, and long-term health.",
+    "Sleep Consistency Breakdown (Month)",
+    "1x",
+    "Consistent",
+    "5x",
+    "Variable",
+    "1x",
+    "Irregular",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Sleep Consistency",
+    "This Month",
+    "Last Month",
+    "70 % ▲",
+    "59 % ●",
+    "Average Sleep",
+    "This Month",
+    "Last Month",
+    "7:25 hours ▲",
+    "-- hours ●",
+    "Optimal Bed/Wake Time"
+   ]
+  },
+  "W": {
+   "kind": "sleep",
+   "labels": [
+    "17 Nov - 23 Nov",
+    "AVERAGE",
+    "70",
+    "%",
+    "18% vs Total Last Week",
+    "Sleep consistency reflects how regular your sleep and wake times are across the week. Stable sleep timing supports circadian rhythm, recovery, and long-term health.",
+    "Sleep Consistency Breakdown (Week)",
+    "1x",
+    "Consistent",
+    "5x",
+    "Variable",
+    "1x",
+    "Irregular",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Sleep Consistency",
+    "This Week",
+    "Last Week",
+    "70 % ▲",
+    "59 % ●",
+    "Average Sleep",
+    "This Week",
+    "Last Week",
+    "7:25 hours ▲",
+    "7:21 hours ●",
+    "Optimal Bed/Wake Time"
+   ]
+  },
+  "Y": {
+   "kind": "sleep",
+   "labels": [
+    "2026",
+    "AVERAGE",
+    "70",
+    "%",
+    "18% vs Average Last Year",
+    "Sleep consistency reflects how regular your sleep and wake times are across the week. Stable sleep timing supports circadian rhythm, recovery, and long-term health.",
+    "Sleep Consistency Breakdown",
+    "1x",
+    "Consistent",
+    "5x",
+    "Variable",
+    "1x",
+    "Irregular",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Sleep Consistency",
+    "Current",
+    "Previous",
+    "70 % ▲",
+    "59 % ●",
+    "Average Sleep",
+    "Current",
+    "Previous",
+    "7:05 hours ▲",
+    "-- hours ●",
+    "Optimal Bed/Wake Time"
+   ]
+  }
+ },
+ "sleep-efficiency": {
+  "6M": {
+   "kind": "sleep",
+   "labels": [
+    "Jun - Nov 2026",
+    "AVERAGE",
+    "99",
+    "%",
+    "Sleep efficiency measures the percentage of time in bed that you actually spend asleep. Higher efficiency indicates fewer disruptions and better quality rest.",
+    "Sleep Consistency Breakdown",
+    "17x",
+    "Consistent",
+    "0x",
+    "Variable",
+    "0x",
+    "Irregular",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Average Sleep Efficiency",
+    "Current",
+    "Previous",
+    "99 % ▲",
+    "0 % ●"
+   ]
+  },
+  "M": {
+   "kind": "sleep",
+   "labels": [
+    "Nov 2026",
+    "AVERAGE",
+    "99",
+    "%",
+    "Sleep efficiency measures the percentage of time in bed that you actually spend asleep. Higher efficiency indicates fewer disruptions and better quality rest.",
+    "Sleep Consistency Breakdown (Month)",
+    "15x",
+    "Consistent",
+    "0x",
+    "Variable",
+    "0x",
+    "Irregular",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Average Sleep Efficiency",
+    "This Month",
+    "Last Month",
+    "99 % ▲",
+    "0 % ●"
+   ]
+  },
+  "W": {
+   "kind": "sleep",
+   "labels": [
+    "17 Nov - 23 Nov",
+    "AVERAGE",
+    "99",
+    "%",
+    "Sleep efficiency measures the percentage of time in bed that you actually spend asleep. Higher efficiency indicates fewer disruptions and better quality rest.",
+    "Sleep Consistency Breakdown (Week)",
+    "3x",
+    "Consistent",
+    "0x",
+    "Variable",
+    "0x",
+    "Irregular",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Average Sleep Efficiency",
+    "This Week",
+    "Last Week",
+    "99 % ▲",
+    "99 % ●"
+   ]
+  },
+  "Y": {
+   "kind": "sleep",
+   "labels": [
+    "2026",
+    "AVERAGE",
+    "99",
+    "%",
+    "Sleep efficiency measures the percentage of time in bed that you actually spend asleep. Higher efficiency indicates fewer disruptions and better quality rest.",
+    "Sleep Consistency Breakdown",
+    "17x",
+    "Consistent",
+    "0x",
+    "Variable",
+    "0x",
+    "Irregular",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Average Sleep Efficiency",
+    "Current",
+    "Previous",
+    "99 % ▲",
+    "0 % ●"
+   ]
+  }
+ },
+ "sleep": {
+  "6M": {
+   "kind": "sleep",
+   "labels": [
+    "Jun - Nov 2026",
+    "96",
+    "Excellent",
+    "Your total sleep duration across all stages — light, deep, and REM. Consistent, adequate sleep is one of the strongest predictors of long-term health and cognitive performance.",
+    "Sleep Score",
+    "Average Sleep",
+    "Current",
+    "Previous",
+    "7:05 hours ▲",
+    "-- hours ●",
+    "Deep Sleep",
+    "REM",
+    "Average Restorative Sleep",
+    "Current",
+    "Previous",
+    "2:30 hours ▲",
+    "-- hours ●",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Hours vs Needs",
+    "Current",
+    "Previous",
+    "88 % ▲",
+    "0 % ●",
+    "Sleep Consistency",
+    "Current",
+    "Previous",
+    "70 % ▲",
+    "59 % ●",
+    "Sleep Efficiency",
+    "Current",
+    "Previous",
+    "99 % ▲",
+    "0 % ●",
+    "Sleep Stress",
+    "Current",
+    "Previous",
+    "0.9  ▲",
+    "0.0  ●",
+    "High",
+    "3%",
+    "3%",
+    "Medium",
+    "18%",
+    "18%",
+    "Low",
+    "80%",
+    "80%",
+    "About Sleep Score",
+    "Hours of sleep tracks your total sleep duration. Adequate sleep is essential for recovery, cognitive function, immune health, and overall longevity."
+   ]
+  },
+  "D": {
+   "kind": "sleep",
+   "labels": [
+    "17 Nov 2026",
+    "98",
+    "Excellent",
+    "Your total sleep duration across all stages — light, deep, and REM. Consistent, adequate sleep is one of the strongest predictors of long-term health and cognitive performance.",
+    "Hours vs Needed",
+    "Sleep Consistency",
+    "Sleep Efficiency",
+    "99%",
+    "62%",
+    "100%",
+    "99%",
+    "62%",
+    "100%",
+    "Last Night",
+    "Duration",
+    "Restorative",
+    "7:54 hours",
+    "2:50 hours",
+    "Your Usual Range",
+    "Awake",
+    "0:01",
+    "Light Sleep",
+    "5:03",
+    "Deep Sleep",
+    "1:18",
+    "REM",
+    "1:32",
+    "Restorative Sleep",
+    "Today",
+    "Yesterday",
+    "2:50 hours ▲",
+    "2:37 hours ●",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was high, supporting deep tissue repair and memory consolidation. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Hours vs Needs",
+    "Today",
+    "Yesterday",
+    "99 % ▲",
+    "91 % ●",
+    "Hours of Sleep",
+    "7:54",
+    "99%",
+    "Sleep Needed",
+    "8:00",
+    "Sleep Consistency",
+    "This Week",
+    "Last Week",
+    "62 % ▼",
+    "65 % ●",
+    "Optimal Bed/Wake Time",
+    "Sleep Efficiency",
+    "Today",
+    "Yesterday",
+    "100 % ▲",
+    "99 % ●",
+    "Asleep",
+    "7:54",
+    "Awake",
+    "0:01",
+    "Wake Events: 1",
+    "Sleep Stress",
+    "Today",
+    "Yesterday",
+    "0.5  ▼",
+    "0.6  ●",
+    "High",
+    "--",
+    "0%",
+    "Medium",
+    "--",
+    "0%",
+    "Low",
+    "8:00",
+    "100%",
+    "About Sleep Score",
+    "Hours of sleep tracks your total sleep duration. Adequate sleep is essential for recovery, cognitive function, immune health, and overall longevity."
+   ]
+  },
+  "M": {
+   "kind": "sleep",
+   "labels": [
+    "Nov 2026",
+    "97",
+    "Excellent",
+    "Your total sleep duration across all stages — light, deep, and REM. Consistent, adequate sleep is one of the strongest predictors of long-term health and cognitive performance.",
+    "Sleep Score",
+    "Average Sleep",
+    "This Month",
+    "Last Month",
+    "7:25 hours ▲",
+    "-- hours ●",
+    "Deep Sleep",
+    "REM",
+    "Average Restorative Sleep",
+    "This Month",
+    "Last Month",
+    "2:37 hours ▲",
+    "-- hours ●",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Hours vs Needs",
+    "This Month",
+    "Last Month",
+    "92 % ▲",
+    "0 % ●",
+    "Sleep Consistency",
+    "This Month",
+    "Last Month",
+    "70 % ▲",
+    "59 % ●",
+    "Sleep Efficiency",
+    "This Month",
+    "Last Month",
+    "99 % ▲",
+    "0 % ●",
+    "Sleep Stress",
+    "This Month",
+    "Last Month",
+    "0.6  ▲",
+    "0.0  ●",
+    "High",
+    "0%",
+    "0%",
+    "Medium",
+    "16%",
+    "16%",
+    "Low",
+    "84%",
+    "84%",
+    "About Sleep Score",
+    "Hours of sleep tracks your total sleep duration. Adequate sleep is essential for recovery, cognitive function, immune health, and overall longevity."
+   ]
+  },
+  "W": {
+   "kind": "sleep",
+   "labels": [
+    "17 Nov - 23 Nov",
+    "98",
+    "Excellent",
+    "Your total sleep duration across all stages — light, deep, and REM. Consistent, adequate sleep is one of the strongest predictors of long-term health and cognitive performance.",
+    "Sleep Score",
+    "Average Sleep",
+    "This Week",
+    "Last Week",
+    "7:25 hours ▲",
+    "7:21 hours ●",
+    "Deep Sleep",
+    "REM",
+    "Average Restorative Sleep",
+    "This Week",
+    "Last Week",
+    "2:36 hours ▼",
+    "2:36 hours ●",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Hours vs Needs",
+    "This Week",
+    "Last Week",
+    "93 % ▲",
+    "90 % ●",
+    "Sleep Consistency",
+    "This Week",
+    "Last Week",
+    "70 % ▲",
+    "59 % ●",
+    "Sleep Efficiency",
+    "This Week",
+    "Last Week",
+    "99 % ▲",
+    "99 % ●",
+    "Sleep Stress",
+    "This Week",
+    "Last Week",
+    "0.5  ▼",
+    "0.6  ●",
+    "High",
+    "0%",
+    "0%",
+    "Medium",
+    "10%",
+    "10%",
+    "Low",
+    "90%",
+    "90%",
+    "About Sleep Score",
+    "Hours of sleep tracks your total sleep duration. Adequate sleep is essential for recovery, cognitive function, immune health, and overall longevity."
+   ]
+  },
+  "Y": {
+   "kind": "sleep",
+   "labels": [
+    "2026",
+    "96",
+    "Excellent",
+    "Your total sleep duration across all stages — light, deep, and REM. Consistent, adequate sleep is one of the strongest predictors of long-term health and cognitive performance.",
+    "Sleep Score",
+    "Average Sleep",
+    "Current",
+    "Previous",
+    "7:05 hours ▲",
+    "-- hours ●",
+    "Deep Sleep",
+    "REM",
+    "Average Restorative Sleep",
+    "Current",
+    "Previous",
+    "2:30 hours ▲",
+    "-- hours ●",
+    "Longevity Analysis",
+    "You nearly met your sleep goal — close to the duration your body needs for proper recovery. Restorative sleep was within a normal range, providing adequate recovery. Sleep efficiency was excellent — most of your time in bed was spent asleep. Very few wake events occurred, reflecting uninterrupted, quality sleep. Overall, you are well rested — sleep quality was strong with good duration and efficiency.",
+    "Hours vs Needs",
+    "Current",
+    "Previous",
+    "88 % ▲",
+    "0 % ●",
+    "Sleep Consistency",
+    "Current",
+    "Previous",
+    "70 % ▲",
+    "59 % ●",
+    "Sleep Efficiency",
+    "Current",
+    "Previous",
+    "99 % ▲",
+    "0 % ●",
+    "Sleep Stress",
+    "Current",
+    "Previous",
+    "0.9  ▲",
+    "0.0  ●",
+    "High",
+    "3%",
+    "3%",
+    "Medium",
+    "18%",
+    "18%",
+    "Low",
+    "80%",
+    "80%",
+    "About Sleep Score",
+    "Hours of sleep tracks your total sleep duration. Adequate sleep is essential for recovery, cognitive function, immune health, and overall longevity."
+   ]
+  }
+ },
+ "steps": {
+  "6M": {
+   "kind": "move",
+   "date": "Jun - Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "168626",
+   "desc": "Daily step count reflects your overall movement and activity level. Regular walking supports cardiovascular health, metabolic function, and mood regulation throughout the day.",
+   "compare": {
+    "title": "Recent 6M vs Previous 6M",
+    "labels": [
+     "Average This 6M",
+     "Average Previous 6M"
+    ],
+    "values": [
+     "168.6k",
+     "0"
+    ]
+   },
+   "month": {
+    "most": [
+     "165.5k",
+     "1 Nov - 30 Nov 2026"
+    ],
+    "least": [
+     "3,128",
+     "1 Jun - 30 Jun 2026"
+    ]
+   },
+   "week": {
+    "most": [
+     "22.3k",
+     "20 Jul - 26 Jul 2026"
+    ],
+    "least": [
+     "541",
+     "15 Jun - 21 Jun 2026"
+    ]
+   },
+   "day": {
+    "dates": [
+     "07 Nov 2026",
+     "19 Jun 2026"
+    ],
+    "values": [
+     "22.3k",
+     "19"
+    ]
+   },
+   "about": {
+    "title": "About Step Count",
+    "text": "Step count tracks the total number of steps you take throughout the day. Regular walking and movement are fundamental to cardiovascular health, metabolism, and overall wellbeing."
+   }
+  },
+  "D": {
+   "kind": "move",
+   "date": "17 Nov 2026",
+   "eyebrow": "TODAY",
+   "value": "10796",
+   "goal": "/ 8000",
+   "delta": "18% vs Yesterday",
+   "desc": "Daily step count reflects your overall movement and activity level. Regular walking supports cardiovascular health, metabolic function, and mood regulation throughout the day.",
+   "compare": {
+    "title": "Today vs Yesterday",
+    "labels": [
+     "Today",
+     "Yesterday"
+    ],
+    "values": [
+     "10.8k",
+     "9,100"
+    ]
+   },
+   "analysis": "You're moving more today compared to yesterday. Keep the momentum going for long-term cardiovascular health.",
+   "about": {
+    "title": "About Step Count",
+    "text": "Step count tracks the total number of steps you take throughout the day. Regular walking and movement are fundamental to cardiovascular health, metabolism, and overall wellbeing."
+   }
+  },
+  "M": {
+   "kind": "move",
+   "date": "Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "165498",
+   "desc": "Daily step count reflects your overall movement and activity level. Regular walking supports cardiovascular health, metabolic function, and mood regulation throughout the day.",
+   "compare": {
+    "title": "This Month vs Last Month",
+    "labels": [
+     "Average This Month",
+     "Average Last Month"
+    ],
+    "values": [
+     "165.5k",
+     "0"
+    ]
+   },
+   "week": {
+    "most": [
+     "79.9k",
+     "9 Nov - 15 Nov 2026"
+    ],
+    "least": [
+     "31.9k",
+     "16 Nov - 22 Nov 2026"
+    ]
+   },
+   "day": {
+    "dates": [
+     "07 Nov 2026",
+     "04 Nov 2026"
+    ],
+    "values": [
+     "22.3k",
+     "1,188"
+    ]
+   },
+   "about": {
+    "title": "About Step Count",
+    "text": "Step count tracks the total number of steps you take throughout the day. Regular walking and movement are fundamental to cardiovascular health, metabolism, and overall wellbeing."
+   }
+  },
+  "W": {
+   "kind": "move",
+   "date": "17 Nov - 23 Nov",
+   "eyebrow": "AVERAGE",
+   "value": "22750",
+   "delta": "69% vs Total Last Week",
+   "desc": "Daily step count reflects your overall movement and activity level. Regular walking supports cardiovascular health, metabolic function, and mood regulation throughout the day.",
+   "mostDay": [
+    "10.8k",
+    "17 Nov 2026"
+   ],
+   "leastDay": [
+    "2,717",
+    "19 Nov 2026"
+   ],
+   "compare": {
+    "title": "This Week vs Last Week",
+    "labels": [
+     "Total This Week",
+     "Total Last Week"
+    ],
+    "values": [
+     "22.8k",
+     "74.0k"
+    ]
+   },
+   "analysis": "Your movement this week has dropped compared to last. Consider what's changed in your routine and where you can reintroduce small moments of activity.",
+   "about": {
+    "title": "About Step Count",
+    "text": "Step count tracks the total number of steps you take throughout the day. Regular walking and movement are fundamental to cardiovascular health, metabolism, and overall wellbeing."
+   }
+  },
+  "Y": {
+   "kind": "move",
+   "date": "2026",
+   "eyebrow": "AVERAGE",
+   "value": "168626",
+   "desc": "Daily step count reflects your overall movement and activity level. Regular walking supports cardiovascular health, metabolic function, and mood regulation throughout the day.",
+   "compare": {
+    "title": "This Year vs Last Year",
+    "labels": [
+     "Average This Year",
+     "Average Last Year"
+    ],
+    "values": [
+     "168.6k",
+     "0"
+    ]
+   },
+   "month": {
+    "most": [
+     "165.5k",
+     "1 Nov - 30 Nov 2026"
+    ],
+    "least": [
+     "3,128",
+     "1 Jun - 30 Jun 2026"
+    ]
+   },
+   "week": {
+    "most": [
+     "22.3k",
+     "20 Jul - 26 Jul 2026"
+    ],
+    "least": [
+     "541",
+     "15 Jun - 21 Jun 2026"
+    ]
+   },
+   "day": {
+    "dates": [
+     "07 Nov 2026",
+     "19 Jun 2026"
+    ],
+    "values": [
+     "22.3k",
+     "19"
+    ]
+   },
+   "about": {
+    "title": "About Step Count",
+    "text": "Step count tracks the total number of steps you take throughout the day. Regular walking and movement are fundamental to cardiovascular health, metabolism, and overall wellbeing."
+   }
+  }
+ },
+ "distance": {
+  "6M": {
+   "kind": "move",
+   "date": "Jun - Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "116.94",
+   "unit": "km",
+   "desc": "Total distance covered through walking and running. Distance paired with step count gives a fuller picture of your daily movement intensity and stride efficiency.",
+   "compare": {
+    "title": "Recent 6M vs Previous 6M",
+    "labels": [
+     "Average This 6M",
+     "Average Previous 6M"
+    ],
+    "values": [
+     "116.9",
+     "0"
+    ]
+   },
+   "month": {
+    "most": [
+     "114.8",
+     "1 Nov - 30 Nov 2026"
+    ],
+    "least": [
+     "2.1",
+     "1 Jun - 30 Jun 2026"
+    ]
+   },
+   "week": {
+    "most": [
+     "14.9",
+     "20 Jul - 26 Jul 2026"
+    ],
+    "least": [
+     "0.3",
+     "15 Jun - 21 Jun 2026"
+    ]
+   },
+   "day": {
+    "dates": [
+     "07 Nov 2026",
+     "19 Jun 2026"
+    ],
+    "values": [
+     "14.9",
+     "0.0"
+    ]
+   },
+   "about": {
+    "title": "About Step Distance",
+    "text": "Step distance measures the total distance covered through walking and running throughout the day, calculated from your step count and stride length."
+   }
+  },
+  "D": {
+   "kind": "move",
+   "date": "17 Nov 2026",
+   "eyebrow": "TODAY",
+   "value": "7.27",
+   "goal": "/ 5",
+   "unit": "km",
+   "delta": "18% vs Yesterday",
+   "desc": "Total distance covered through walking and running. Distance paired with step count gives a fuller picture of your daily movement intensity and stride efficiency.",
+   "compare": {
+    "title": "Today vs Yesterday",
+    "labels": [
+     "Today",
+     "Yesterday"
+    ],
+    "values": [
+     "7.3",
+     "6.1"
+    ]
+   },
+   "analysis": "You've covered more ground today. Every kilometer adds to your cardiovascular fitness.",
+   "about": {
+    "title": "About Step Distance",
+    "text": "Step distance measures the total distance covered through walking and running throughout the day, calculated from your step count and stride length."
+   }
+  },
+  "M": {
+   "kind": "move",
+   "date": "Nov 2026",
+   "eyebrow": "AVERAGE",
+   "value": "114.81",
+   "unit": "km",
+   "desc": "Total distance covered through walking and running. Distance paired with step count gives a fuller picture of your daily movement intensity and stride efficiency.",
+   "compare": {
+    "title": "This Month vs Last Month",
+    "labels": [
+     "Average This Month",
+     "Average Last Month"
+    ],
+    "values": [
+     "114.8",
+     "0"
+    ]
+   },
+   "week": {
+    "most": [
+     "57.3",
+     "9 Nov - 15 Nov 2026"
+    ],
+    "least": [
+     "21.3",
+     "16 Nov - 22 Nov 2026"
+    ]
+   },
+   "day": {
+    "dates": [
+     "07 Nov 2026",
+     "04 Nov 2026"
+    ],
+    "values": [
+     "14.9",
+     "0.8"
+    ]
+   },
+   "about": {
+    "title": "About Step Distance",
+    "text": "Step distance measures the total distance covered through walking and running throughout the day, calculated from your step count and stride length."
+   }
+  },
+  "W": {
+   "kind": "move",
+   "date": "17 Nov - 23 Nov",
+   "eyebrow": "AVERAGE",
+   "value": "15.20",
+   "unit": "km",
+   "delta": "70% vs Total Last Week",
+   "desc": "Total distance covered through walking and running. Distance paired with step count gives a fuller picture of your daily movement intensity and stride efficiency.",
+   "mostDay": [
+    "7.3",
+    "17 Nov 2026"
+   ],
+   "leastDay": [
+    "1.8",
+    "19 Nov 2026"
+   ],
+   "compare": {
+    "title": "This Week vs Last Week",
+    "labels": [
+     "Total This Week",
+     "Total Last Week"
+    ],
+    "values": [
+     "15.2",
+     "51.6"
+    ]
+   },
+   "analysis": "Your distance this week is down. Try incorporating walking into daily routines like commutes or breaks.",
+   "about": {
+    "title": "About Step Distance",
+    "text": "Step distance measures the total distance covered through walking and running throughout the day, calculated from your step count and stride length."
+   }
+  },
+  "Y": {
+   "kind": "move",
+   "date": "2026",
+   "eyebrow": "AVERAGE",
+   "value": "116.94",
+   "unit": "km",
+   "desc": "Total distance covered through walking and running. Distance paired with step count gives a fuller picture of your daily movement intensity and stride efficiency.",
+   "compare": {
+    "title": "This Year vs Last Year",
+    "labels": [
+     "Average This Year",
+     "Average Last Year"
+    ],
+    "values": [
+     "116.9",
+     "0"
+    ]
+   },
+   "month": {
+    "most": [
+     "114.8",
+     "1 Nov - 30 Nov 2026"
+    ],
+    "least": [
+     "2.1",
+     "1 Jun - 30 Jun 2026"
+    ]
+   },
+   "week": {
+    "most": [
+     "14.9",
+     "20 Jul - 26 Jul 2026"
+    ],
+    "least": [
+     "0.3",
+     "15 Jun - 21 Jun 2026"
+    ]
+   },
+   "day": {
+    "dates": [
+     "07 Nov 2026",
+     "19 Jun 2026"
+    ],
+    "values": [
+     "14.9",
+     "0.0"
+    ]
+   },
+   "about": {
+    "title": "About Step Distance",
+    "text": "Step distance measures the total distance covered through walking and running throughout the day, calculated from your step count and stride length."
+   }
+  }
+ }
+}

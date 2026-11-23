@@ -20,6 +20,9 @@ export interface HomeData {
   /** after any journal activity the Diet / Habits cards turn into progress cards (home/journal_with_data) */
   journal: { dietKcal: number; dietGoal: number; habitsPct: number } | null;
   monitor: MonitorMetric[];
+  /** synced account: Capacity card line and ring labels as the app prints them (10.8k) */
+  capacityText?: string;
+  ringText?: { sleep: string; calories: string; steps: string };
 }
 
 const MONITOR_REAL: MonitorMetric[] = [

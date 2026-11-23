@@ -176,12 +176,15 @@ export interface JournalSeed {
   activities: { sportId: string; start: number; seconds: number }[];
   meals: { meal: MealId; foodId: string; grams: number; at: number }[];
   completedHabitIds: string[];
+  /** habits the member added (listed above the defaults) */
+  habits?: Habit[];
 }
 
 const hoursAgo = (h: number) => Date.now() - h * 3600_000;
 
 export const journalSeed: DataPair<JournalSeed> = {
-  real: { activities: [], meals: [], completedHabitIds: [] },
+  // synced account (adb 23 Nov 2026): the habit added during the add_habit capture is still there
+  real: { activities: [], meals: [], completedHabitIds: [], habits: [{ id: "walk", name: "Walk 10 minutes" }] },
   // DEMO — populated journal for design work.
   demo: {
     activities: [

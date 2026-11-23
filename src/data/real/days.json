@@ -1,0 +1,800 @@
+{
+"2026-06-02": {
+"monitor": {
+"steps": "401",
+"calories": "0",
+"distance": "0.26",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 401.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-03": {
+"monitor": {
+"steps": "663",
+"calories": "0",
+"distance": "0.43",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 663.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-04": {
+"monitor": {
+"steps": "7,176",
+"calories": "0",
+"distance": "4.79",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 7200.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-05": {
+"monitor": {
+"steps": "9,765",
+"calories": "0",
+"distance": "5.98",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 9800.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-06": {
+"monitor": {
+"steps": "4,608",
+"calories": "0",
+"distance": "3.00",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 4600.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-07": {
+"monitor": {
+"steps": "5,816",
+"calories": "0",
+"distance": "3.91",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 5800.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-08": {
+"monitor": {
+"steps": "14,135",
+"calories": "0",
+"distance": "9.03",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 14100.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-09": {
+"monitor": {
+"steps": "6,495",
+"calories": "0",
+"distance": "4.44",
+"respiratory": "20.0",
+"spo2": "97%",
+"bp": "118 / 78",
+"rhr": "--",
+"hr": "96",
+"hrv": "62",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 6500.0,
+"capacity": 6.0,
+"capacityText": "Your Capacity is building. Consistent recovery and movement habits are gradually strengthening your long-term resilience."
+},
+"2026-06-10": {
+"monitor": {
+"steps": "878",
+"calories": "30",
+"distance": "0.56",
+"respiratory": "17.0",
+"spo2": "98%",
+"bp": "113 / 74",
+"rhr": "--",
+"hr": "83",
+"hrv": "60",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 30.0,
+"steps": 878.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-11": {
+"monitor": {
+"steps": "31",
+"calories": "1",
+"distance": "0.02",
+"respiratory": "16.0",
+"spo2": "98%",
+"bp": "109 / 72",
+"rhr": "--",
+"hr": "77",
+"hrv": "177",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 1.0,
+"steps": 31.0,
+"capacity": 8.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-12": {
+"monitor": {
+"steps": "708",
+"calories": "31",
+"distance": "0.58",
+"respiratory": "16.0",
+"spo2": "98%",
+"bp": "113 / 73",
+"rhr": "49",
+"hr": "81",
+"hrv": "177",
+"sleep": "2:23"
+},
+"sleep": 79.0,
+"calories": 31.0,
+"steps": 708.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-13": {
+"monitor": {
+"steps": "945",
+"calories": "0",
+"distance": "0.61",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 945.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-14": {
+"monitor": {
+"steps": "483",
+"calories": "0",
+"distance": "0.28",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 483.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-15": {
+"monitor": {
+"steps": "39",
+"calories": "1",
+"distance": "0.02",
+"respiratory": "18.0",
+"spo2": "98%",
+"bp": "117 / 75",
+"rhr": "--",
+"hr": "89",
+"hrv": "179",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 1.0,
+"steps": 39.0,
+"capacity": 8.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-16": {
+"monitor": {
+"steps": "82",
+"calories": "2",
+"distance": "0.05",
+"respiratory": "19.0",
+"spo2": "97%",
+"bp": "116 / 77",
+"rhr": "51",
+"hr": "93",
+"hrv": "109",
+"sleep": "6:53"
+},
+"sleep": 88.0,
+"calories": 2.0,
+"steps": 82.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-17": {
+"monitor": {
+"steps": "9,607",
+"calories": "0",
+"distance": "6.41",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 9600.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-18": {
+"monitor": {
+"steps": "2,067",
+"calories": "0",
+"distance": "1.24",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 2100.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-19": {
+"monitor": {
+"steps": "19",
+"calories": "0",
+"distance": "0.01",
+"respiratory": "12.0",
+"spo2": "95%",
+"bp": "104 / 68",
+"rhr": "--",
+"hr": "59",
+"hrv": "177",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 19.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-20": {
+"monitor": {
+"steps": "292",
+"calories": "11",
+"distance": "0.18",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 11.0,
+"steps": 292.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-21": {
+"monitor": {
+"steps": "109",
+"calories": "3",
+"distance": "0.07",
+"respiratory": "15.0",
+"spo2": "98%",
+"bp": "110 / 74",
+"rhr": "--",
+"hr": "75",
+"hrv": "74",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 3.0,
+"steps": 109.0,
+"capacity": 8.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-22": {
+"monitor": {
+"steps": "970",
+"calories": "39",
+"distance": "0.63",
+"respiratory": "17.0",
+"spo2": "98%",
+"bp": "116 / 76",
+"rhr": "--",
+"hr": "85",
+"hrv": "30",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 39.0,
+"steps": 970.0,
+"capacity": 8.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-23": {
+"monitor": {
+"steps": "6,831",
+"calories": "0",
+"distance": "4.43",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 6800.0,
+"capacity": 8.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-06-24": {
+"monitor": {
+"steps": "4,976",
+"calories": "0",
+"distance": "3.32",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 5000.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-25": {
+"monitor": {
+"steps": "3,322",
+"calories": "0",
+"distance": "2.25",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 3300.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-26": {
+"monitor": {
+"steps": "5,318",
+"calories": "0",
+"distance": "3.47",
+"respiratory": "--",
+"spo2": "--%",
+"bp": "-- / --",
+"rhr": "--",
+"hr": "--",
+"hrv": "--",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 5300.0,
+"capacity": 0.0,
+"capacityText": "Check your daily recovery score."
+},
+"2026-06-27": {
+"monitor": {
+"steps": "2,555",
+"calories": "0",
+"distance": "1.50",
+"respiratory": "18.0",
+"spo2": "98%",
+"bp": "114 / 77",
+"rhr": "--",
+"hr": "90",
+"hrv": "58",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 0.0,
+"steps": 2600.0,
+"capacity": 6.0,
+"capacityText": "Your Capacity is building. Consistent recovery and movement habits are gradually strengthening your long-term resilience."
+},
+"2026-11-04": {
+"monitor": {
+"steps": "1,188",
+"calories": "50",
+"distance": "0.81",
+"respiratory": "14.0",
+"spo2": "97%",
+"bp": "105 / 66",
+"rhr": "--",
+"hr": "52",
+"hrv": "61",
+"sleep": "--"
+},
+"sleep": 0.0,
+"calories": 50.0,
+"steps": 1200.0,
+"capacity": 5.0,
+"capacityText": "Your Capacity is building. Consistent recovery and movement habits are gradually strengthening your long-term resilience."
+},
+"2026-11-05": {
+"monitor": {
+"steps": "11,146",
+"calories": "616",
+"distance": "7.53",
+"respiratory": "13.0",
+"spo2": "95%",
+"bp": "104 / 68",
+"rhr": "49",
+"hr": "53",
+"hrv": "65",
+"sleep": "7:11"
+},
+"sleep": 99.0,
+"calories": 616.0,
+"steps": 11100.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-11-06": {
+"monitor": {
+"steps": "9,438",
+"calories": "387",
+"distance": "6.45",
+"respiratory": "16.0",
+"spo2": "98%",
+"bp": "114 / 73",
+"rhr": "51",
+"hr": "73",
+"hrv": "39",
+"sleep": "7:24"
+},
+"sleep": 96.0,
+"calories": 387.0,
+"steps": 9400.0,
+"capacity": 6.0,
+"capacityText": "Your Capacity is building. Consistent recovery and movement habits are gradually strengthening your long-term resilience."
+},
+"2026-11-07": {
+"monitor": {
+"steps": "22,260",
+"calories": "911",
+"distance": "14.87",
+"respiratory": "16.0",
+"spo2": "97%",
+"bp": "114 / 71",
+"rhr": "49",
+"hr": "70",
+"hrv": "46",
+"sleep": "7:11"
+},
+"sleep": 97.0,
+"calories": 911.0,
+"steps": 22300.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-11-08": {
+"monitor": {
+"steps": "9,702",
+"calories": "397",
+"distance": "6.56",
+"respiratory": "14.0",
+"spo2": "97%",
+"bp": "101 / 69",
+"rhr": "51",
+"hr": "53",
+"hrv": "69",
+"sleep": "8:10"
+},
+"sleep": 94.0,
+"calories": 397.0,
+"steps": 9700.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-11-09": {
+"monitor": {
+"steps": "14,990",
+"calories": "744",
+"distance": "11.84",
+"respiratory": "14.0",
+"spo2": "96%",
+"bp": "101 / 65",
+"rhr": "49",
+"hr": "52",
+"hrv": "64",
+"sleep": "7:35"
+},
+"sleep": 97.0,
+"calories": 744.0,
+"steps": 15000.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-11-10": {
+"monitor": {
+"steps": "3,576",
+"calories": "145",
+"distance": "2.40",
+"respiratory": "16.0",
+"spo2": "98%",
+"bp": "113 / 71",
+"rhr": "51",
+"hr": "73",
+"hrv": "45",
+"sleep": "7:37"
+},
+"sleep": 98.0,
+"calories": 145.0,
+"steps": 3600.0,
+"capacity": 6.0,
+"capacityText": "Your Capacity is building. Consistent recovery and movement habits are gradually strengthening your long-term resilience."
+},
+"2026-11-11": {
+"monitor": {
+"steps": "10,733",
+"calories": "581",
+"distance": "7.22",
+"respiratory": "14.0",
+"spo2": "97%",
+"bp": "106 / 65",
+"rhr": "54",
+"hr": "58",
+"hrv": "51",
+"sleep": "5:00"
+},
+"sleep": 85.0,
+"calories": 581.0,
+"steps": 10700.0,
+"capacity": 6.0,
+"capacityText": "Your Capacity is building. Consistent recovery and movement habits are gradually strengthening your long-term resilience."
+},
+"2026-11-12": {
+"monitor": {
+"steps": "10,166",
+"calories": "416",
+"distance": "6.86",
+"respiratory": "14.0",
+"spo2": "97%",
+"bp": "102 / 66",
+"rhr": "51",
+"hr": "52",
+"hrv": "72",
+"sleep": "7:26"
+},
+"sleep": 97.0,
+"calories": 416.0,
+"steps": 10200.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-11-13": {
+"monitor": {
+"steps": "13,561",
+"calories": "670",
+"distance": "10.82",
+"respiratory": "16.0",
+"spo2": "98%",
+"bp": "114 / 74",
+"rhr": "49",
+"hr": "66",
+"hrv": "38",
+"sleep": "7:41"
+},
+"sleep": 97.0,
+"calories": 670.0,
+"steps": 13600.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-11-14": {
+"monitor": {
+"steps": "10,305",
+"calories": "424",
+"distance": "6.98",
+"respiratory": "17.0",
+"spo2": "98%",
+"bp": "108 / 74",
+"rhr": "51",
+"hr": "68",
+"hrv": "32",
+"sleep": "7:50"
+},
+"sleep": 98.0,
+"calories": 424.0,
+"steps": 10300.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-11-15": {
+"monitor": {
+"steps": "16,583",
+"calories": "681",
+"distance": "11.14",
+"respiratory": "14.0",
+"spo2": "96%",
+"bp": "103 / 66",
+"rhr": "49",
+"hr": "56",
+"hrv": "62",
+"sleep": "8:38"
+},
+"sleep": 93.0,
+"calories": 681.0,
+"steps": 16600.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-11-16": {
+"monitor": {
+"steps": "9,100",
+"calories": "372",
+"distance": "6.13",
+"respiratory": "14.0",
+"spo2": "96%",
+"bp": "102 / 67",
+"rhr": "49",
+"hr": "51",
+"hrv": "69",
+"sleep": "7:17"
+},
+"sleep": 93.0,
+"calories": 372.0,
+"steps": 9100.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-11-17": {
+"monitor": {
+"steps": "10,796",
+"calories": "567",
+"distance": "7.27",
+"respiratory": "13.0",
+"spo2": "98%",
+"bp": "102 / 65",
+"rhr": "49",
+"hr": "53",
+"hrv": "59",
+"sleep": "7:54"
+},
+"sleep": 98.0,
+"calories": 567.0,
+"steps": 10800.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+},
+"2026-11-18": {
+"monitor": {
+"steps": "9,237",
+"calories": "377",
+"distance": "6.11",
+"respiratory": "13.0",
+"spo2": "98%",
+"bp": "104 / 66",
+"rhr": "51",
+"hr": "53",
+"hrv": "69",
+"sleep": "7:05"
+},
+"sleep": 95.0,
+"calories": 377.0,
+"steps": 9200.0,
+"capacity": 6.0,
+"capacityText": "Your Capacity is building. Consistent recovery and movement habits are gradually strengthening your long-term resilience."
+},
+"2026-11-19": {
+"monitor": {
+"steps": "2,717",
+"calories": "111",
+"distance": "1.81",
+"respiratory": "15.0",
+"spo2": "98%",
+"bp": "113 / 73",
+"rhr": "49",
+"hr": "72",
+"hrv": "37",
+"sleep": "7:17"
+},
+"sleep": 95.0,
+"calories": 111.0,
+"steps": 2700.0,
+"capacity": 7.0,
+"capacityText": "Your Capacity is stable. Your load and recovery are balanced, supporting steady and sustainable progress."
+}
+}

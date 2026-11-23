@@ -20,7 +20,7 @@ const NO_RESULTS = "No results available";
 
 export const insightsTab: DataPair<InsightsTabData> = {
   real: {
-    reportCount: 4,
+    reportCount: 6,
     omics: [
       { title: "Genome Insights", sub: "Understand your genomic variants", to: "/insights/kit/genome", tone: "omics" },
       { title: "Oral Insights", sub: "View your oral microbiome results", to: "/insights/kit/oral", tone: "omics" },
@@ -66,7 +66,10 @@ export interface ReportItem {
 }
 
 export const reports: DataPair<ReportItem[]> = {
+  // synced account (adb 23 Nov 2026): two newer reports on top; page counts of those two not captured
   real: [
+    { id: "6", title: "Gut Health", lang: "EN", date: "11 November 2026, 11:31 AM", pages: 24 },
+    { id: "7", title: "Whole Genome", lang: "EN", date: "28 October 2026, 01:46 PM", pages: 102 },
     { id: "1", title: "Whole Genome", lang: "TR", date: "1 October 2026, 03:23 PM", pages: 102 },
     { id: "2", title: "Transcriptome", lang: "EN", date: "27 September 2026, 11:23 PM", pages: 38 },
     { id: "3", title: "Whole Genome", lang: "EN", date: "26 September 2026, 12:22 AM", pages: 102 },

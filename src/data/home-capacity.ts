@@ -1,4 +1,5 @@
 import type { DataPair } from "@/lib/data";
+import { DEFAULT_DAY, addDays, num, realDay } from "@/data/real";
 
 /** Capacity detail (capture: capacity/top, scroll_1, scroll_2). */
 export interface CapacityComponent {
@@ -35,16 +36,31 @@ const comps = (hrv: number | null, rhr: number | null, spo2: number | null, yh: 
   { id: "spo2", label: "Blood Oxygen", icon: "Blood_Oxygen", unit: "%", today: spo2, yesterday: ys, color: "var(--cap-blue)" },
 ];
 
+/*
+ * Synced account (data/real): the app's Capacity page always shows today, which is empty on the
+ * capture date, so the prototype fills it from the day Home opens on (17 Nov) and the day
+ * before: score from the Home card, components from the Health Monitor rows, analysis = the
+ * Home card's line for that day.
+ */
+function synced(): CapacityData {
+  const t = realDay(DEFAULT_DAY);
+  const y = realDay(addDays(DEFAULT_DAY, -1));
+  const c = (d: typeof t, k: string) => num(d?.monitor[k]);
+  const today = t?.capacity ?? 0;
+  const yesterday = y?.capacity ?? 0;
+  return {
+    score: today,
+    today,
+    yesterday,
+    components: comps(c(t, "hrv"), c(t, "rhr"), c(t, "spo2"), c(y, "hrv"), c(y, "rhr"), c(y, "spo2")),
+    todayBar: today / 100,
+    yesterdayBar: yesterday / 100,
+    analysis: t?.capacityText ? { lead: t.capacityText, emphasis: "" } : ANALYSIS_LOW,
+  };
+}
+
 export const capacityData: DataPair<CapacityData> = {
-  real: {
-    score: 0,
-    today: 0,
-    yesterday: 0,
-    components: comps(null, null, null, null, null, null),
-    todayBar: 0,
-    yesterdayBar: 0,
-    analysis: ANALYSIS_LOW,
-  },
+  real: synced(),
   // DEMO — populated values for design exploration (not from the device).
   demo: {
     score: 72,
