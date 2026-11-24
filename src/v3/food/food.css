@@ -543,6 +543,7 @@
   font: 500 12px/1 var(--v-text);
   color: var(--v-ink-2);
 }
+/* today: its own letter, just bolder and in full ink; no frame, disc or word */
 .fd-wk-axis [data-today] {
   font-weight: 700;
   color: var(--v-ink);
@@ -1217,10 +1218,6 @@
 .fd-wk-axis span {
   white-space: nowrap;
   overflow: visible;
-}
-.fd-wk-col[data-now] .fd-wk-stack {
-  outline: 2px solid var(--v-card);
-  box-shadow: 0 0 0 3.5px color-mix(in srgb, var(--v-ink) 22%, transparent);
 }
 
 /* saved meals */
