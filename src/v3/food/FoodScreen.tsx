@@ -2,11 +2,14 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BlurLayers, useGo, V2Screen } from "../ui/shell";
 import { Chevron } from "../ui/icons";
-import { GoalSheet, useGoals } from "../metric/goals";
+import { useGoals } from "../metric/goals";
+import { PlanSheet } from "./PlanSheet";
+import { usePlan } from "./targets";
 import { ABOUT, fmt, MACROS, SLOTS, TARGET } from "./data";
 import { dayKey, dayOffset, dayTotals, useMeals } from "./store";
 import { energyZone, leftOf, MealCard, NutrientMark, Ring, ZONE_HUE, ZONE_SOFT } from "./parts";
 import { DaySlides } from "./slides";
+import { NutrientSheet } from "./NutrientPanel";
 import { Ph } from "./icons";
 import { DayPace } from "./charts";
 import { History } from "./history";
@@ -32,10 +35,13 @@ export function FoodScreen() {
   const meals = useMeals();
   const saved = useSaved();
   const goals = useGoals();
+  // redraw when the member saves new nutrient targets
+  usePlan();
   const goal = goals.get("diet") ?? TARGET.kcal;
   const [day, setDay] = useState(() => dayKey(new Date()));
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [panel, setPanel] = useState(false);
   const [about, setAbout] = useState<number | null>(null);
 
   const isToday = day === dayKey(new Date());
@@ -68,7 +74,7 @@ export function FoodScreen() {
             <Chevron dir="left" size={22} />
           </button>
           <TitlePick id="diet" title="Nutrition" glyph={glyphOf("diet")} />
-          <button className="mx-round fd-goal-edit" aria-label={`Daily energy goal ${fmt(goal)} kcal, edit`} onClick={() => setEditing(true)}>
+          <button className="mx-round fd-goal-edit" aria-label={`Daily calorie goal ${fmt(goal)} kcal, edit goals`} onClick={() => setEditing(true)}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z" />
               <path d="m13.5 6.5 4 4" />
@@ -92,7 +98,7 @@ export function FoodScreen() {
                 data-today={k === dayKey(new Date()) ? "" : undefined}
                 onClick={() => setDay(k)}
               >
-                <Ring value={dt.kcal / goal} size={36} stroke={2.2} hue={ZONE_SOFT[zone]} dashed>
+                <Ring value={dt.kcal / goal} size={36} stroke={3} hue={ZONE_SOFT[zone]} dashed>
                   <span className="fd-week-d">{d.toLocaleDateString("en-GB", { weekday: "narrow" })}</span>
                 </Ring>
                 <b className="fd-week-n">{d.getDate()}</b>
@@ -101,12 +107,12 @@ export function FoodScreen() {
           })}
         </nav>
 
-        {/* 1 · the day at a glance, swiped: energy and macros, the diet score
-            with fibre and minerals, then movement */}
+        {/* 1 · the day at a glance, swiped: calories, then the nutrients */}
         <DaySlides
           t={t}
           goal={goal}
-          onOpen={(path) => go(path)}
+          meals={list}
+          onMore={() => setPanel(true)}
           hero={
             <section className="fd-hero" aria-label={`${dayName}: ${fmt(l.n)} kcal ${l.word}`}>
               <p className="fd-label">
@@ -218,7 +224,8 @@ export function FoodScreen() {
         <Ph name="plus" size={22} />
       </button>
       {adding && <AddSheet day={day} onClose={() => setAdding(false)} />}
-      {editing && <GoalSheet id="diet" current={goals.get("diet")} onSave={(v) => goals.set("diet", v)} onClose={() => setEditing(false)} />}
+      {panel && <NutrientSheet meals={list} onClose={() => setPanel(false)} />}
+      {editing && <PlanSheet kcal={goal} onSaveKcal={(v) => goals.set("diet", v)} onClose={() => setEditing(false)} />}
     </V2Screen>
   );
 }

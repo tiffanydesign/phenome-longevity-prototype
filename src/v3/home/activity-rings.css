@@ -1,0 +1,141 @@
+/* =====================================================================
+ * Activity rings card: three hues, one per goal (Move pink, Exercise
+ * green, Stand cyan). Names carry a darker step of their hue so they read as text.
+ * ===================================================================== */
+[data-part="move"] {
+  --ar: #f5437c;
+  --ar-ink: #d22a62;
+}
+[data-part="exercise"] {
+  --ar: #78c83c;
+  --ar-ink: #4f9a1f;
+}
+[data-part="stand"] {
+  --ar: #2fbadb;
+  --ar-ink: #1b8eab;
+}
+:root[data-theme="dark"] [data-part="move"] {
+  --ar-ink: #ff6b9a;
+}
+:root[data-theme="dark"] [data-part="exercise"] {
+  --ar-ink: #9be05f;
+}
+:root[data-theme="dark"] [data-part="stand"] {
+  --ar-ink: #5fd3ee;
+}
+
+.ar-body {
+  margin-top: auto;
+  padding-top: 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ar-cols {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+}
+.ar-cols > span {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 14px;
+  border-left: 1px solid var(--v-line);
+}
+.ar-cols > span:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.ar-cols small {
+  font: 600 14px/1.1 var(--v-text);
+  color: var(--ar-ink);
+}
+.ar-cols b {
+  font: 650 20px/1.05 var(--v-num);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--v-ink);
+}
+.ar-cols em {
+  margin-left: 3px;
+  font: 500 14px/1 var(--v-text);
+  font-style: normal;
+  letter-spacing: 0;
+  color: var(--v-ink-3);
+}
+
+.ar-rings {
+  flex: none;
+  display: block;
+}
+.ar-track {
+  fill: none;
+  stroke: color-mix(in srgb, var(--ar) 18%, var(--v-card));
+}
+.ar-fill {
+  fill: none;
+  stroke: var(--ar);
+  stroke-linecap: round;
+}
+
+/* the Overview tile: rings at the left, one short line per ring beside them,
+   the same picture-then-number rhythm as the tiles around it */
+.ar-tile {
+  margin: 10px 0 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ar-key {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ar-key > span {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  column-gap: 4px;
+  white-space: nowrap;
+}
+.ar-key i {
+  align-self: center;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ar);
+}
+.ar-key small {
+  font: 500 11px/1.1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.ar-key b {
+  font: 650 13px/1.1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.ar-key b em {
+  margin-left: 1px;
+  font: 500 11px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+}
+
+/* the Activity page: the card's layout at page size */
+.ar-page {
+  margin-top: 6px;
+  padding-top: 0;
+  align-items: center;
+}
+.ar-page .ar-cols b {
+  font-size: 22px;
+}

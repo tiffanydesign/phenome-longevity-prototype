@@ -97,7 +97,7 @@
 }
 .ac-key dd {
   margin: 4px 0 0;
-  font: 700 18px/1.1 var(--v-num);
+  font: 700 16px/1.1 var(--v-num);
   letter-spacing: -0.015em;
   font-variant-numeric: tabular-nums;
   color: var(--v-ink);
@@ -160,7 +160,7 @@
 }
 .ac-legend b {
   margin-right: 4px;
-  font: 700 18px/1.1 var(--v-num);
+  font: 700 16px/1.1 var(--v-num);
   color: var(--v-ink);
 }
 .ac-legend small {
@@ -234,7 +234,7 @@
  * ===================================================================== */
 .wk-title {
   margin: 6px 0 0;
-  font: 700 34px/1.1 var(--v-text);
+  font: 700 26px/1.15 var(--v-text);
   letter-spacing: -0.03em;
   color: var(--v-ink);
 }
@@ -257,7 +257,7 @@
 }
 .wk-stats dd {
   margin: 6px 0 0;
-  font: 700 26px/1 var(--v-num);
+  font: 700 22px/1 var(--v-num);
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
   color: var(--v-ink);

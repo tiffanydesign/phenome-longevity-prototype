@@ -551,27 +551,35 @@
   color: var(--v-ink-3);
   opacity: 0.6;
 }
+/* the key in two even columns: swatch and name on the left of each cell,
+   the share pushed to its right edge, so names and numbers line up in pairs */
 .fd-wk-key {
   margin-top: 16px;
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 28px;
+  row-gap: 12px;
 }
 .fd-wk-key span {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font: 500 13px/1 var(--v-text);
+  gap: 8px;
+  font: 500 14px/1 var(--v-text);
   color: var(--v-ink);
 }
 .fd-wk-key i {
-  width: 9px;
-  height: 9px;
+  flex: none;
+  width: 10px;
+  height: 10px;
   border-radius: 3px;
+  /* a hairline edge so the palest swatch still reads on the white card */
+  box-shadow: inset 0 0 0 0.5px #0b0d1424;
 }
 .fd-wk-key small {
-  font: 500 13px/1 var(--v-num);
-  color: var(--v-ink-3);
+  margin-left: auto;
+  font: 600 14px/1 var(--v-num);
+  color: var(--v-ink-2);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ---------- about ---------- */
@@ -1086,7 +1094,7 @@
   align-items: center;
   gap: 5px;
   font: 600 13px/1 var(--v-text);
-  color: color-mix(in oklab, var(--hue), var(--v-ink) 25%);
+  color: var(--hue-ink, color-mix(in oklab, var(--hue), var(--v-ink) 25%));
 }
 .fd-nc > span {
   margin: 4px 0 12px;
@@ -1140,7 +1148,7 @@
   align-items: center;
   gap: 6px;
   font: 600 15px/1.2 var(--v-text);
-  color: color-mix(in oklab, var(--hue), var(--v-ink) 25%);
+  color: var(--hue-ink, color-mix(in oklab, var(--hue), var(--v-ink) 25%));
 }
 .fd-la-value {
   display: block;

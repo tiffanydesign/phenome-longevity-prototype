@@ -1,11 +1,12 @@
 import { useMemo, useState, type ReactNode } from "react";
-import { Gauge, HeartRange, MacroBar, WorkoutRings } from "../home/glance";
+import { Gauge, HeartRange, MacroBar } from "../home/glance";
 import "../home/glance.css";
 import { CapacityDetail } from "./CapacityDetail";
 import { SleepDetail, STAGES } from "./SleepDetail";
 import { isSleepChild, SLEEP_GLANCE, SleepChild } from "./SleepChild";
 import { ActivityLanes, NightChart } from "./detailCharts";
-import { ActivityDetail } from "./ActivityDetail";
+import { ActivityDetail, StepsDetail } from "./ActivityDetail";
+import { ActivityGlance } from "../home/ActivityRings";
 import { FoodScreen } from "../food/FoodScreen";
 import { BpDetail, CompareBlock, inMonitor, MONITOR_ABOUT, TitlePick } from "./MonitorExtras";
 import { GoalSheet, goalOf, GOALS, useGoals } from "./goals";
@@ -37,10 +38,6 @@ const ACTIONS: Record<string, { label: string; to: string; primary?: boolean }[]
     { label: "Log a workout", to: "/journal/activity/select", primary: true },
     { label: "Workout history", to: "/journal/activity" },
   ],
-  steps: [
-    { label: "Log an activity", to: "/journal/activity/select", primary: true },
-    { label: "Activity history", to: "/journal/activity" },
-  ],
 };
 
 /**
@@ -52,7 +49,7 @@ const FROM_CARD: Record<string, { title: string; field?: string; glyph?: GlyphNa
   steps: { title: "Steps", span: "Today", glance: () => <ActivityLanes /> },
   sleep: { title: "Sleep", span: "Last night", glance: () => <NightChart stages={STAGES.map((s) => ({ stage: s.stage, min: s.min }))} bed="23:12" up="07:20" /> },
   capacity: { title: "Capacity", span: "Today", glance: (m) => <Gauge m={m} /> },
-  workouts: { title: "Activity", field: "rose", glyph: "dumbbell", span: "Today", glance: (m) => <WorkoutRings m={m} /> },
+  workouts: { title: "Activity", field: "rose", glyph: "dumbbell", span: "Today", glance: () => <ActivityGlance /> },
   rhr: { title: "Heart", span: "Today", glance: (m) => <HeartRange m={m} ago={0} /> },
   diet: { title: "Nutrition", span: "Today", glance: (m) => <MacroBar m={m} /> },
   // the Sleep tab's cards: each opens on its own part of last night's Sleep page
@@ -161,7 +158,8 @@ function MetricPage({ id }: { id: string }) {
         {/* sleep reads its night before its history: score, stages, schedule, overnight body */}
         {m.id === "sleep" && <SleepDetail />}
         {isSleepChild(m.id) && <SleepChild id={m.id} />}
-        {m.id === "steps" && <ActivityDetail />}
+        {m.id === "steps" && <StepsDetail />}
+        {m.id === "workouts" && <ActivityDetail />}
 
         {/* the chart stands on the page itself, no panel round it */}
         <section className="mx-stage" aria-label={m.chart === "scan" ? "Across your visits" : "Trend"}>

@@ -176,21 +176,32 @@
 [data-field="sand"] {
   --mid: #a2845e;
 }
+/* breathing: a mint green, apart from the reds, cyans and violets beside it on Vitals */
+[data-field="breath"] {
+  --mid: #2fb38a;
+}
 [data-field="mist"] {
   --mid: var(--v-navy);
 }
 [data-field="sleep"] {
   --mid: #5e5ce6;
 }
+/* the rest of Sleep steps away from the score's indigo: the night a clear blue, deep sleep a dark navy-indigo */
+[data-field="night"] {
+  --mid: #3f74e8;
+}
+[data-field="deep"] {
+  --mid: #34409e;
+}
 /* the sleep score's four parts: one lightness and softness, four hues */
 [data-field="sage"] {
   --mid: #4fb3a0;
 }
 [data-field="periwinkle"] {
-  --mid: #6b87e6;
+  --mid: #3d9ae0;
 }
 [data-field="violet"] {
-  --mid: #9a7ce3;
+  --mid: #c868ad;
 }
 [data-field="apricot"] {
   --mid: #f2a066;

@@ -35,8 +35,8 @@ const arc = (cx: number, cy: number, r: number, from: number, to: number) => {
 };
 
 /**
- * The score as an arc open at the foot, filled to the score, shading from a
- * pale tint of the page's hue to the full hue. The number sits in the middle with its word under it.
+ * The score as an arc open at the foot, filled to the score in the page's
+ * solid hue. The number sits in the middle with its word under it.
  */
 export function ScoreSegments({ score, word, max = 100 }: { score: number; word: string; max?: number }) {
   const grad = `dc-score-grad${useId().replace(/:/g, "")}`;
@@ -50,7 +50,7 @@ export function ScoreSegments({ score, word, max = 100 }: { score: number; word:
     <span className="dc-score" role="img" aria-label={`Score ${score} of ${max}, ${word}`}>
       <svg viewBox="0 0 240 216" aria-hidden>
         <defs>
-          {/* light at the start of the arc, the page's full hue where the score stands */}
+          {/* both stops share the page's hue, so the arc reads flat */}
           <linearGradient id={grad} gradientUnits="userSpaceOnUse" x1="20" y1="200" x2="220" y2="40">
             <stop offset="0" className="dc-score-g0" />
             <stop offset="1" className="dc-score-g1" />

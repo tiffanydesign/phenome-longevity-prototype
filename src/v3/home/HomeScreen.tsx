@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { BrandBar, followHead, HeadBlur, V2Screen } from "../ui/shell";
 import type { Tab } from "../data/metrics";
 import type { GlyphName } from "../ui/glyphs";
-import { IconAll, IconTabActivity, IconTabFood, IconTabHeart, IconTabSleep } from "../ui/icons";
+import { IconAll, IconTabActivity, IconTabHeart, IconTabLifestyle, IconTabSleep } from "../ui/icons";
 import { schedulePush } from "../notify/store";
 import { Overview } from "./Overview";
 import { CategoryPage } from "./CategoryPage";
@@ -18,7 +18,7 @@ type DailyTab = Exclude<Tab, "body">;
 const TABS: { id: DailyTab; label: string; glyph: GlyphName; field: string }[] = [
   { id: "all", label: "Overview", glyph: "spark", field: "plain" },
   { id: "vitals", label: "Vitals", glyph: "heart", field: "heart" },
-  { id: "food", label: "Nutrition", glyph: "fork", field: "food" },
+  { id: "food", label: "Lifestyle", glyph: "fork", field: "food" },
   { id: "activity", label: "Activity", glyph: "flame", field: "activity" },
   { id: "sleep", label: "Sleep", glyph: "moon", field: "sleep" },
 ];
@@ -150,7 +150,7 @@ const TAB_MARK: Record<DailyTab, () => JSX.Element> = {
   activity: IconTabActivity,
   sleep: IconTabSleep,
   vitals: IconTabHeart,
-  food: IconTabFood,
+  food: IconTabLifestyle,
 };
 
 function TabMark({ id }: { id: DailyTab }) {

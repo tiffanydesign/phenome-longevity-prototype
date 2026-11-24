@@ -23,21 +23,21 @@ export function CapacityDetail() {
   const m = metric("capacity");
   const today = Number(m.value);
   const hit = /^([+−-])(\d+) on yesterday$/.exec(m.delta);
-  const before = hit ? today - Number(hit[2]) * (hit[1] === "+" ? 1 : -1) : Math.round(dayPair("capacity").before);
+  const before = /^Same/.test(m.delta) ? today : hit ? today - Number(hit[2]) * (hit[1] === "+" ? 1 : -1) : Math.round(dayPair("capacity").before);
   return (
     <>
       <section className="mx-block">
         <h2 className="mx-h">Today vs yesterday</h2>
         <div className="mx-card">
-          <CompareBars today={today} before={before} max={100} />
+          <CompareBars today={today} before={before} max={Number(/\/\s*(\d+)/.exec(m.unit)?.[1]) || 100} />
         </div>
       </section>
 
       <section className="mx-about">
         <h2 className="mx-h">{today >= before ? "Recovered and ready" : "Take it a little easier"}</h2>
         <p>
-          Your capacity is {today >= before ? "up" : "down"} {Math.abs(today - before)} on yesterday. Heart rate variability is rising while your resting rate holds low,
-          which usually means your body has recovered from recent load. <b>A good day for a longer walk or a strength session.</b>
+          {today === before ? "Your capacity is the same as yesterday." : `Your capacity is ${today > before ? "up" : "down"} ${Math.abs(today - before)} on yesterday.`} Heart rate variability sits above your usual range while your resting rate holds low,
+          so load and recovery are balanced. <b>A good day for a longer walk or a strength session.</b>
         </p>
       </section>
 

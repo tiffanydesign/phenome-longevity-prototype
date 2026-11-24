@@ -15,7 +15,7 @@
   fill: var(--v-ink-3);
 }
 
-/* ---------- sleep score: an arc open at the foot, pale to full hue ---------- */
+/* ---------- sleep score: an arc open at the foot, in the page's solid hue ---------- */
 .dc-score {
   position: relative;
   flex: none;
@@ -35,8 +35,9 @@
 .dc-score-track {
   stroke: var(--v-fill);
 }
+/* flat: the arc is one solid hue end to end (no gradient) */
 .dc-score-g0 {
-  stop-color: color-mix(in srgb, var(--mid) 30%, var(--v-card));
+  stop-color: var(--mid);
 }
 .dc-score-g1 {
   stop-color: var(--mid);

@@ -1,0 +1,145 @@
+/* =====================================================================
+ * Tab cards: a header row (kind on the left, when and a chevron on the
+ * right), then the number at the bottom left and its picture at the bottom
+ * right. The picture is one 64px-tall slot so every card keeps one height
+ * and the numbers sit on one baseline down the list.
+ * ===================================================================== */
+.v2-card.v2-card-x {
+  min-height: 128px;
+  padding: 14px 16px 16px;
+}
+.v2-card-h {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.v2-card-h .v2-kind {
+  min-width: 0;
+}
+.v2-card-when {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 400 14px/1 var(--v-text);
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.v2-card-when svg {
+  color: var(--v-ink-3);
+  opacity: 0.7;
+}
+.v2-card-b {
+  position: relative;
+  margin-top: auto;
+  padding-top: 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.v2-card-b > span:first-child {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.v2-card-x .v2-card-v {
+  margin-top: 0;
+}
+.v2-card-x .v2-card-foot {
+  margin-top: 0;
+  padding-top: 6px;
+}
+
+/* ---------- the picture slot: one 76x56 box, grey context, colour for today ---------- */
+.cg {
+  flex: none;
+  display: block;
+  overflow: visible;
+  margin-bottom: 3px;
+  --cg-off: color-mix(in srgb, var(--v-ink) 11%, transparent);
+  --cg-mid: color-mix(in srgb, var(--v-ink) 26%, transparent);
+}
+.cg-off { fill: var(--cg-off); }
+.cg-mid { fill: var(--cg-mid); }
+/* an opaque grey, for marks that overlap (stacked reading dots) */
+.cg-solid { fill: color-mix(in srgb, var(--v-ink) 20%, var(--v-card)); }
+.cg-on { fill: var(--mid); }
+.cg-tint { fill: color-mix(in srgb, var(--mid) 13%, transparent); }
+.cg-tint-strong { fill: color-mix(in srgb, var(--mid) 30%, transparent); }
+.cg-ring-off { fill: none; stroke: var(--cg-mid); stroke-width: 1.5; }
+.cg-dot { fill: var(--mid); }
+.cg-dot-off { fill: var(--cg-mid); }
+/* a reading as a ringed dot: the card's colour around a white heart */
+.cg-ringdot { fill: var(--v-card); stroke: var(--mid); stroke-width: 2.5; }
+.cg-goal,
+.cg-zero { stroke: var(--v-ink-3); stroke-width: 1.5; stroke-linecap: round; }
+.cg-zero { stroke-dasharray: 2 3; stroke-width: 1; }
+.cg-avg { stroke: var(--v-ink-2); stroke-width: 2; stroke-linecap: round; }
+.cg-note { font: 600 10px/1 var(--v-text); fill: var(--v-ink-3); }
+.cg-line,
+.cg-curve { fill: none; stroke: var(--cg-mid); stroke-width: 1.75; stroke-linejoin: round; stroke-linecap: round; }
+.cg-curve { stroke: var(--mid); stroke-width: 2; }
+.cg-pt { fill: var(--v-card); stroke: var(--cg-mid); stroke-width: 1.75; }
+.cg-pt-on { stroke: var(--mid); stroke-width: 2.5; }
+.cg-stick line { stroke: var(--cg-mid); stroke-width: 2; stroke-linecap: round; }
+.cg-stick circle { fill: var(--cg-mid); }
+.cg-stick-on line { stroke: var(--mid); }
+.cg-stick-on circle { fill: var(--mid); }
+.cg-stage { fill: var(--stage); }
+[data-stage="Awake"] { --stage: #ff7a59; }
+[data-stage="REM"] { --stage: #5ac8fa; }
+[data-stage="Core"] { --stage: #3478f6; }
+[data-stage="Deep"] { --stage: #4b3fce; }
+
+/* rings: the score in the middle */
+.cg-ringbox {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+}
+.cg-ringbox svg { position: absolute; inset: 0; }
+.cg-arc,
+.cg-arc-off { fill: none; stroke-width: 6; stroke-linecap: round; }
+.cg-arc-butt { stroke-linecap: butt; }
+.cg-arc-off { stroke: color-mix(in srgb, var(--mid) 15%, transparent); }
+.cg-arc { stroke: var(--mid); }
+/* the score's four parts, one tone step each so the parts read apart */
+.cg-arc[data-part="1"] { stroke: color-mix(in srgb, var(--mid) 78%, var(--v-card)); }
+.cg-arc[data-part="2"] { stroke: color-mix(in srgb, var(--mid) 58%, var(--v-card)); }
+.cg-arc[data-part="3"] { stroke: color-mix(in srgb, var(--mid) 40%, var(--v-card)); }
+.cg-ringbox b {
+  position: relative;
+  font: 700 15px/1 var(--v-num);
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* the week's bars rise in once, left to right */
+.cg-grow { transform-box: fill-box; transform-origin: bottom; animation: cg-grow 0.5s var(--v-ease) both; }
+.cg-grow-x { transform-box: fill-box; transform-origin: left; animation: cg-grow-x 0.5s var(--v-ease) both; }
+@keyframes cg-grow { from { transform: scaleY(0); } }
+@keyframes cg-grow-x { from { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .cg-grow,
+  .cg-grow-x { animation: none; }
+}
+
+/* the sleep score card's picture: the Sleep page's arc at glyph size, the number only */
+.v2-card-arc .dc-score {
+  width: 76px;
+}
+.v2-card-arc .dc-score path {
+  stroke-width: 22;
+}
+.v2-card-arc .dc-score-c b {
+  font-size: 19px;
+}
+.v2-card-arc .dc-score-c em {
+  display: none;
+}

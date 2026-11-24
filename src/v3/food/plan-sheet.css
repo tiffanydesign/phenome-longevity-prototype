@@ -1,0 +1,298 @@
+/* =====================================================================
+ * Calorie goal sheet. Two levels: the energy number on top, the plan
+ * behind "Advanced settings". Open, the sheet turns to the grey ground and
+ * each part of the plan sits in its own white card under a bold title, so
+ * the eye reads: goal, then section, then row, then the small print.
+ * Colour only in the nutrient marks, the split bar and the fit line.
+ * The sheet scrolls inside itself once the plan is open.
+ * ===================================================================== */
+.ps {
+  max-height: calc(100% - 48px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  align-items: stretch;
+  gap: 0;
+  scrollbar-width: none;
+  transition: background 0.25s var(--v-ease);
+}
+.ps[data-open] {
+  background: var(--v-bg);
+}
+/* the sheet scrolls; its parts keep their own height */
+.ps > * {
+  flex-shrink: 0;
+}
+.ps::-webkit-scrollbar {
+  display: none;
+}
+.ps > .mx-sheet-grab {
+  align-self: center;
+}
+.ps > h2 {
+  margin: 14px 0 8px;
+  text-align: center;
+}
+.ps > .mx-sheet-step {
+  margin-bottom: 18px;
+}
+
+/* the split, as one bar and a legend under it */
+.ps-bar {
+  height: 8px;
+  display: flex;
+  gap: 3px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.ps-bar i {
+  flex-basis: 0;
+  min-width: 4px;
+  border-radius: 4px;
+  transition: flex-grow 0.35s var(--v-ease);
+}
+.ps-legend {
+  margin: 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.ps-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ps-legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.ps-legend b {
+  font-weight: 600;
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* the door to the plan: a full-width row with a hairline above; open, it
+   becomes the plain heading of the cards under it */
+.ps-adv {
+  margin: 18px 0 0;
+  padding: 14px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  color: var(--v-ink-2);
+  border-top: 1px solid var(--v-line);
+}
+.ps[data-open] .ps-adv {
+  padding-bottom: 4px;
+}
+.ps[data-open] .ps-adv small {
+  display: none;
+}
+.ps-adv > span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ps-adv b {
+  font: 650 17px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.ps-adv small {
+  font: 400 13px/1.2 var(--v-text);
+}
+
+.ps-body {
+  display: flex;
+  flex-direction: column;
+  animation: ps-in 0.28s var(--v-ease);
+}
+@keyframes ps-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ps-body {
+    animation: none;
+  }
+}
+.ps-sec {
+  margin-top: 14px;
+  padding: 16px 16px 6px;
+  border-radius: 20px;
+  background: var(--v-card);
+}
+.ps-sec h3 {
+  margin: 0 0 14px;
+  font: 650 16px/1.2 var(--v-text);
+  letter-spacing: -0.01em;
+  color: var(--v-ink);
+}
+
+/* four splits on one track; the chosen one is a white chip */
+.ps-seg {
+  padding: 3px;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 2px;
+  border-radius: 12px;
+  background: var(--v-fill);
+}
+.ps-seg button {
+  min-width: 0;
+  min-height: 36px;
+  padding: 0 2px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  border-radius: 9px;
+  white-space: nowrap;
+  font: 500 12.5px/1.1 var(--v-text);
+  letter-spacing: -0.01em;
+  color: var(--v-ink-2);
+}
+.ps-seg button[aria-checked="true"] {
+  font-weight: 600;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: 0 0 0 0.5px var(--v-line);
+}
+.ps-note {
+  margin: 10px 2px 4px;
+  font: 400 13px/1.35 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+.ps-rows {
+  display: flex;
+  flex-direction: column;
+}
+.ps-row {
+  min-height: 58px;
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+.ps-row + .ps-row {
+  border-top: 1px solid var(--v-line);
+}
+.ps-row-mark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--hue) 14%, var(--v-card));
+}
+.ps-row-t {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.ps-row-t b {
+  font: 600 15px/1.2 var(--v-text);
+}
+.ps-row-t small {
+  font: 400 12.5px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.ps-step {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.ps-step button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 500 19px/1 var(--v-text);
+  color: var(--v-ink-2);
+  background: var(--v-fill);
+}
+:root[data-theme="dark"] .ps-step button {
+  color: var(--v-ink);
+}
+.ps-step button:disabled {
+  opacity: 0.3;
+}
+.ps-step output {
+  min-width: 80px;
+  text-align: center;
+  font: 650 18px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+}
+.ps-step output small {
+  margin-left: 2px;
+  font: 500 12px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* whether the macros add up: green when within 5% of the goal, gold when not,
+   with the words carrying the meaning as well as the colour */
+.ps-check {
+  margin: 4px -16px 0;
+  padding: 12px 16px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid var(--v-line);
+  font: 400 13px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+}
+/* a small mark carries the verdict: green tick when the macros fit, gold when not */
+.ps-check::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--v-gold);
+}
+.ps-check[data-fit]::before {
+  background: var(--v-ok, #2e9e6b);
+}
+.ps-check > span {
+  flex: 1;
+}
+.ps-check b {
+  font-weight: 600;
+}
+.ps-check b {
+  color: var(--v-ink);
+}
+.ps-check button {
+  flex: none;
+  padding: 8px 12px;
+  border-radius: 16px;
+  font: 600 13px/1 var(--v-text);
+  color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
+}
+
+.ps-reset {
+  margin: 10px 0 0;
+  align-self: center;
+  padding: 10px 14px;
+  font: 600 14px/1 var(--v-text);
+  color: var(--v-navy);
+}
+:root[data-theme="dark"] .ps-reset {
+  color: var(--v-ink-2);
+}
+.ps > .mx-sheet-save {
+  margin-top: 18px;
+}
+.ps > .mx-sheet-cancel {
+  margin-top: 14px;
+  align-self: center;
+}

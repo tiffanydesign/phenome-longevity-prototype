@@ -3,7 +3,7 @@ import "./games-dark.css";
 import "./assistant-dark.css";
 import { BookingScreen } from "@/screens/discover/BookingScreen";
 import { AssistantScreen } from "@/screens/discover/AssistantScreen";
-import { StoreScreen } from "@/screens/store/StoreScreen";
+import { StoreScreen } from "./store/StoreScreen";
 import type { ScreenRoute } from "@/screens/types";
 import { HomeScreen } from "./home/HomeScreen";
 import { MetricScreen } from "./metric/MetricScreen";

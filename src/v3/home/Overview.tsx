@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type CSSProperties, type ReactNode } from "react";
-import { metricOn, type Metric } from "../data/metrics";
+import { metric, metricOn, type Metric } from "../data/metrics";
 import { visitDate, VISITS } from "../study/data";
 import { TwinHero } from "../twin/TwinHero";
 import { Chevron, IconAll, IconGrip, IconResize } from "../ui/icons";
@@ -13,6 +13,7 @@ import "../habits/habits.css";
 import { Gauge, HabitStops, HeartRange, HourBars, Hypnogram, MacroBar, WorkoutRings } from "./glance";
 import { glyphOf, Kind, type GlyphName } from "../ui/glyphs";
 import { DevicesTile } from "./DevicesTile";
+import { ActivityRings, useActivityParts } from "./ActivityRings";
 import { useDiaryMetric } from "./diary";
 
 
@@ -224,7 +225,7 @@ function Tile({ id, go }: { id: string; go: ReturnType<typeof useGo> }) {
   const tiles: Record<string, () => ReactNode> = {
     twin: () => <TwinTile onOpen={open("/v3/twin")} />,
     capacity: () => <Stat m="capacity" onOpen={open("/v3/metric/capacity")} />,
-    workouts: () => <Stat m="workouts" title="Activity" field="rose" glyph="dumbbell" onOpen={open("/v3/metric/workouts")} />,
+    workouts: () => <ActivityRingsTile onOpen={open("/v3/metric/workouts")} />,
     activity: () => <ActivityTile onOpen={open("/v3/metric/steps")} />,
     sleep: () => <Stat m="sleep" onOpen={open("/v3/metric/sleep")} />,
     vitals: () => <Stat m="rhr" title="Heart" onOpen={open("/v3/metric/rhr")} />,
@@ -415,6 +416,45 @@ function Stat({ m, title, field, glyph, onOpen }: { m: string; title?: string; f
             <Num v={row.value} />
           </b>{" "}
           {row.unit.replace(" kcal", "")}
+        </span>
+      </span>
+    </button>
+  );
+}
+
+/**
+ * Activity, laid out like the tiles beside it: the picture on top (three pink
+ * rings, then per ring its dot, its name and its number), the lead number at
+ * the foot (Move against its goal, so the key leaves kcal off).
+ */
+const SHORT: Record<string, string> = { min: "m", hr: "h" };
+function ActivityRingsTile({ onOpen }: { onOpen: (e: { currentTarget: HTMLElement }) => void }) {
+  const parts = useActivityParts();
+  const kcal = metric("kcal");
+  return (
+    <button className="v2-tile" data-field="rose" onClick={onOpen}>
+      <Kind name="dumbbell">Activity</Kind>
+      <span className="ar-tile">
+        <ActivityRings parts={parts} size={50} />
+        <span className="ar-key">
+          {parts.map((p) => (
+            <span key={p.id} data-part={p.id}>
+              <i aria-hidden />
+              <small>{p.label}</small>
+              <b>
+                {p.value}
+                {SHORT[p.unit] && <em>{SHORT[p.unit]}</em>}
+              </b>
+            </span>
+          ))}
+        </span>
+      </span>
+      <span className="v2-tile-foot">
+        <span className="v2-tile-v">
+          <b>
+            <Num v={kcal.value} />
+          </b>{" "}
+          {kcal.unit}
         </span>
       </span>
     </button>

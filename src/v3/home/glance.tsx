@@ -93,7 +93,8 @@ export function Hypnogram({ ago }: { ago: number }) {
 
 /** Capacity as a gauge: three quarters of a circle, filled to the score, with what the score means beside it. */
 export function Gauge({ m }: { m: Metric }) {
-  const v = num(m.value);
+  const max = Number(/\/\s*(\d+)/.exec(m.unit)?.[1]) || 100;
+  const v = (num(m.value) / max) * 100;
   const R = 24;
   const C = 2 * Math.PI * R;
   const arc = C * 0.75;

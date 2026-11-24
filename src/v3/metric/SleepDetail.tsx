@@ -15,7 +15,7 @@ export { STAGES };
  * each against the night before), what the night was made of (stages), when it
  * happened (the week's bed and wake times), and what the body did meanwhile.
  * Demo numbers, kept consistent with each other and with metrics.ts:
- * 7:24 asleep of 8:08 in bed (91% efficient), deep + REM = 2:49 (38%).
+ * 7:54 asleep of 7:55 in bed (100% efficient), deep + REM = 2:50 (36%).
  */
 
 const hm = (min: number) => `${Math.floor(min / 60)}:${String(Math.round(min % 60)).padStart(2, "0")}`;

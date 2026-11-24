@@ -1,10 +1,15 @@
-import { metric, STATUS_LABEL, type Tab } from "../data/metrics";
-import { FoodTabExtras } from "./FoodTabExtras";
+import type { ReactNode } from "react";
+import { metric, STATUS_LABEL, type Metric, type Tab } from "../data/metrics";
+import { LifestyleBody } from "./Lifestyle";
 import { glyphOf, Kind } from "../ui/glyphs";
 import { Num } from "../ui/Num";
 import { useGo } from "../ui/shell";
 import { TabVerdict } from "./TabVerdict";
 import { useDiaryMetric } from "./diary";
+import { CardGlyph, stampOf } from "./CardGlyph";
+import { ScoreSegments } from "../metric/detailCharts";
+import { scoreWord } from "../metric/sleepData";
+import { ActivityColumns, ActivityRings, useActivityParts } from "./ActivityRings";
 
 interface Page {
   title: string;
@@ -14,7 +19,7 @@ interface Page {
 const PAGES: Record<Exclude<Tab, "all">, Page> = {
   activity: {
     title: "Activity",
-    cards: ["steps", "kcal", "workouts", "distance", "habits"],
+    cards: ["steps", "workouts", "kcal", "distance"],
   },
   sleep: {
     title: "Sleep",
@@ -29,16 +34,15 @@ const PAGES: Record<Exclude<Tab, "all">, Page> = {
     cards: ["weight", "bmi", "bodyfat", "visceral", "bone", "skin"],
   },
   food: {
-    title: "Nutrition",
-    cards: ["diet"],
+    title: "Lifestyle",
+    cards: [],
   },
 };
 
 /** A tab's readings, all from the ring, the band and the diary; a reading outside its range comes first, so it is never buried. */
-function groupsOf(cards: string[]) {
+function readingsOf(cards: string[]) {
   const ms = cards.map((id) => metric(id)).filter((m) => m.source !== "clinic" && m.source !== "omics");
-  const list = [...ms].sort((a, b) => Number(b.status !== "normal") - Number(a.status !== "normal"));
-  return [{ id: "today", title: "Today", meta: "", list }].filter((g) => g.list.length > 0);
+  return [...ms].sort((a, b) => Number(b.status !== "normal") - Number(a.status !== "normal"));
 }
 
 export function CategoryPage({ tab }: { tab: Exclude<Tab, "all"> }) {
@@ -46,18 +50,23 @@ export function CategoryPage({ tab }: { tab: Exclude<Tab, "all"> }) {
   return (
     <div className="v2-cat">
       <TabVerdict tab={tab as Exclude<Tab, "all" | "body">} />
-      {groupsOf(page.cards).map((g) => (
-        <section key={g.id} className="v2-group" aria-label={g.title}>
-          <header className="v2-sec">
-            <h3>{g.title}</h3>
-            {g.meta && <span>{g.meta}</span>}
-          </header>
-          {g.list.map((m) => (
+      {/* the tab's name heads its readings; "Today" is only a note beside it */}
+      <section className="v2-group" aria-label={`${page.title} today`}>
+        <header className="v2-sec v2-sec-tab">
+          <h3>{page.title}</h3>
+          <small className="v2-sec-note">Today</small>
+        </header>
+        {readingsOf(page.cards).map((m) =>
+          m.id === "sleepscore" ? (
+            <MetricCard key={m.id} id={m.id} glyph={<SleepScoreArc score={Number(m.value)} />} />
+          ) : m.id === "workouts" ? (
+            <ActivityRingsCard key={m.id} />
+          ) : (
             <MetricCard key={m.id} id={m.id} />
-          ))}
-        </section>
-      ))}
-      {tab === "food" && <FoodTabExtras />}
+          ),
+        )}
+        {tab === "food" && <LifestyleBody />}
+      </section>
     </div>
   );
 }
@@ -73,27 +82,85 @@ function Direction({ delta }: { delta: string }) {
   );
 }
 
-/** Overview to detail: the card keeps its number and trend, and grows into the metric's page. */
-function MetricCard({ id }: { id: string }) {
-  const go = useGo();
-  const m = useDiaryMetric(metric(id));
-  const flagged = m.status !== "normal";
+interface CardProps {
+  id: string;
+  /** a live reading to show in place of the table's row */
+  m?: Metric;
+  /** a picture of the card's own, for readings the shared set does not draw */
+  glyph?: ReactNode;
+  /** when the reading was last written; omitted, the shared rule decides */
+  stamp?: string;
+  /** where the card opens; the metric's own page by default */
+  to?: string;
+  /** a body of the card's own in place of the number and picture */
+  body?: ReactNode;
+}
+
+/** The Activity tab's first card: move, training and steps as columns, three pink rings beside them. */
+function ActivityRingsCard() {
+  const parts = useActivityParts();
   return (
-    <button className="v2-card" data-field={m.field} data-flag={flagged ? "" : undefined} onClick={(e) => go(m.id === "habits" ? "/v3/habits" : `/v3/metric/${m.id}`, { from: e.currentTarget })}>
-      <Kind name={glyphOf(m.id)}>{m.label}</Kind>
-      <span className="v2-card-v">
-        <b>
-          <Num v={m.value} />
-        </b>{" "}
-        {m.unit}
-      </span>
-      <span className="v2-card-foot">
-        {flagged && <em className="v2-card-flag">{STATUS_LABEL[m.status]}</em>}
-        <span className="v2-card-d">
-          <Direction delta={m.delta} />
-          {m.delta.replace(/^[+−-]\s?/, "")}
+    <MetricCard
+      id="workouts"
+      m={{ ...metric("workouts"), field: "rose" }}
+      body={
+        <span className="ar-body">
+          <ActivityColumns parts={parts} />
+          <ActivityRings parts={parts} />
+        </span>
+      }
+    />
+  );
+}
+
+/** The sleep score card's picture: the Sleep page's arc, pale to full purple, with the score in it. */
+function SleepScoreArc({ score }: { score: number }) {
+  return (
+    <span className="v2-card-arc">
+      <ScoreSegments score={score} word={scoreWord(score)} />
+    </span>
+  );
+}
+
+export function MetricCard({ id, m: live, glyph, stamp: when, to, body }: CardProps) {
+  const go = useGo();
+  const row = useDiaryMetric(metric(id));
+  const m = live ?? row;
+  const flagged = m.status !== "normal";
+  const stamp = when ?? stampOf(m);
+  return (
+    <button className="v2-card v2-card-x" data-field={m.field} data-flag={flagged ? "" : undefined} onClick={(e) => go(to ?? `/v3/metric/${m.id}`, { from: e.currentTarget })}>
+      <span className="v2-card-h">
+        <Kind name={glyphOf(m.id)} bare>
+          {m.label}
+        </Kind>
+        <span className="v2-card-when">
+          {stamp && <time>{stamp}</time>}
+          <svg width="8" height="13" viewBox="0 0 8 13" fill="none" aria-hidden>
+            <path d="M1.5 1.5 6.5 6.5l-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </span>
       </span>
+      {body ?? (
+      <span className="v2-card-b">
+        <span>
+          <span className="v2-card-v">
+            <b>
+              <Num v={m.value} />
+            </b>{" "}
+            {m.unit}
+          </span>
+          <span className="v2-card-foot">
+            {flagged && <em className="v2-card-flag">{STATUS_LABEL[m.status]}</em>}
+            <span className="v2-card-d">
+              <Direction delta={m.delta} />
+              {m.delta.replace(/^[+−-]\s?/, "")}
+            </span>
+          </span>
+        </span>
+        {glyph ?? <CardGlyph m={m} />}
+      </span>
+      )}
     </button>
   );
 }

@@ -102,7 +102,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  font: 600 17px/1.2 var(--v-text);
+  font: 600 15px/1.2 var(--v-text);
   color: var(--mx-ink);
 }
 .mx-eyebrow svg {
@@ -116,18 +116,18 @@
   color: var(--v-ink-2);
 }
 .mx-value b {
-  font: 700 64px/1 var(--v-num);
-  letter-spacing: -0.04em;
+  font: 700 40px/1 var(--v-num);
+  letter-spacing: -0.035em;
   color: var(--v-ink);
   font-variant-numeric: tabular-nums;
 }
 .mx-value span {
-  font: 600 19px/1 var(--v-text);
+  font: 600 15px/1 var(--v-text);
   letter-spacing: -0.01em;
 }
 .mx-sub {
   margin: 12px 0 0;
-  font: 500 19px/1.35 var(--v-text);
+  font: 500 16px/1.35 var(--v-text);
   letter-spacing: -0.01em;
   color: var(--v-ink-2);
   text-wrap: pretty;
@@ -180,7 +180,7 @@
 /* section headlines: large and bold, the way the page talks in sections */
 .mx-h {
   margin: 0 0 12px;
-  font: 700 26px/1.15 var(--v-text);
+  font: 700 20px/1.2 var(--v-text);
   letter-spacing: -0.025em;
   color: var(--v-ink);
   text-wrap: balance;
@@ -275,7 +275,7 @@
 }
 .mx-stats dd {
   margin: 0;
-  font: 700 19px/1.2 var(--v-num);
+  font: 700 17px/1.2 var(--v-num);
   color: var(--v-ink);
   font-variant-numeric: tabular-nums;
 }
@@ -290,7 +290,7 @@
 }
 .mx-about p {
   margin: 0;
-  font: 400 19px/1.42 var(--v-text);
+  font: 400 16px/1.45 var(--v-text);
   letter-spacing: -0.01em;
   color: var(--v-ink-2);
   text-wrap: pretty;
@@ -329,13 +329,14 @@
   align-items: flex-start;
   gap: 3px;
   text-align: left;
-  --mx-ink: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+  /* the hue itself with only a touch of ink, so the names stay bright but readable on white */
+  --mx-ink: color-mix(in oklab, var(--mid), var(--v-ink) 10%);
 }
 .mx-read small {
   display: flex;
   align-items: center;
   gap: 3px;
-  font: 600 16px/1.2 var(--v-text);
+  font: 600 14px/1.2 var(--v-text);
   color: var(--mx-ink);
 }
 .mx-read small svg {
@@ -343,7 +344,7 @@
   color: var(--v-ink-3);
 }
 .mx-read b {
-  font: 700 22px/1.15 var(--v-num);
+  font: 700 19px/1.15 var(--v-num);
   letter-spacing: -0.015em;
   color: var(--v-ink);
   font-variant-numeric: tabular-nums;
@@ -458,7 +459,10 @@
     animation: none;
   }
 }
+/* centred on every sheet, including those that stretch their rows edge to edge */
 .mx-sheet-grab {
+  flex: none;
+  align-self: center;
   width: 36px;
   height: 5px;
   border-radius: 3px;
@@ -648,7 +652,7 @@
 }
 .mx-cmp-say {
   margin: 0 0 14px;
-  font: 400 17px/1.35 var(--v-text);
+  font: 400 15px/1.4 var(--v-text);
   color: var(--v-ink-2);
 }
 .mx-cmp-say b {
@@ -672,7 +676,7 @@
 }
 .mx-cmp-pair dd {
   margin: 0;
-  font: 700 17px/1.2 var(--v-num);
+  font: 700 16px/1.2 var(--v-num);
   color: var(--v-ink);
   font-variant-numeric: tabular-nums;
 }
@@ -772,7 +776,7 @@
 .mx-bp b {
   display: block;
   margin-top: 4px;
-  font: 700 20px/1.15 var(--v-num);
+  font: 700 18px/1.15 var(--v-num);
   color: var(--v-ink);
   font-variant-numeric: tabular-nums;
 }

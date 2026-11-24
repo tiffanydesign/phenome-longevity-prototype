@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import { useMeals } from "@/data/journal-store";
+import { todayKey, useMeals } from "../food/store";
 import { metric } from "../data/metrics";
 
 /*
@@ -221,9 +221,9 @@ export function useToday(): { all: HabitToday[]; asked: HabitToday[] } {
   const p = usePlan();
   const l = useSyncExternalStore(subscribe, freshLog);
   const meals = useMeals();
-  const start = new Date();
-  start.setHours(0, 0, 0, 0);
-  const mealsToday = meals.filter((m) => m.at >= start.getTime()).length;
+  // meals logged in the food diary today, once their scan has finished
+  const today = todayKey();
+  const mealsToday = meals.filter((m) => m.day === today && m.status === "ready").length;
   const dow = new Date().getDay();
 
   const all = p

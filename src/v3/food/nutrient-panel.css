@@ -1,0 +1,237 @@
+/* =====================================================================
+ * The nutrient panel. On the page, one strip under the nutrient cards; in
+ * its sheet, one card of rows under filter pills. Each row:
+ * name over its reason on the left, amount over target on the right, then
+ * a hairline bar and its status word on one line. Colour is the status:
+ * food orange on the way, green met, green also well under a limit, gold near a limit, red
+ * over, grey low, and the word repeats it for anyone who cannot see it.
+ * ===================================================================== */
+/* ---------- the strip under the nutrient cards ---------- */
+.np-strip {
+  width: 100%;
+  min-height: 64px;
+  margin-top: 10px;
+  padding: 12px 14px 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  color: var(--v-ink-3);
+  transition: transform 0.15s var(--v-ease);
+}
+.np-strip:active {
+  transform: scale(0.985);
+}
+.np-strip-t {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.np-strip-t b {
+  font: 600 16px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+
+.np-row {
+  --tone: var(--v-ink-3);
+}
+
+/* ---------- the sheet ---------- */
+.np-sheet {
+  max-height: calc(100% - 48px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  align-items: stretch;
+  scrollbar-width: none;
+}
+.np-sheet > * {
+  flex-shrink: 0;
+}
+.np-sheet > .mx-sheet-grab {
+  align-self: center;
+}
+.np-sheet > h2 {
+  margin: 14px 0 6px;
+  text-align: center;
+}
+.np-sheet > .mx-sheet-cancel {
+  margin-top: 14px;
+  align-self: center;
+}
+/* inside the sheet the list sits on the quiet fill, so the white sheet and the rows read apart */
+.np-sheet .np-card {
+  background: color-mix(in srgb, var(--v-ink) 3.5%, var(--v-card));
+}
+.np-sheet .np-pills {
+  margin: 0 -20px 12px;
+  padding: 0 20px;
+}
+
+.np-sum {
+  margin: 0 4px 12px;
+  text-align: center;
+  font: 400 15px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+}
+.np-empty {
+  margin: 0 4px;
+  font: 400 15px/1.4 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* the groups as pills: the chosen one solid, the rest on the quiet fill */
+.np-pills {
+  margin: 0 -16px 12px;
+  padding: 0 16px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.np-pills::-webkit-scrollbar {
+  display: none;
+}
+.np-pills button {
+  flex: none;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 17px;
+  font: 500 14px/1 var(--v-text);
+  color: var(--v-ink);
+  background: color-mix(in srgb, var(--v-ink) 7%, var(--v-card));
+  transition: background 0.2s var(--v-ease), color 0.2s var(--v-ease);
+}
+.np-pills button[aria-selected="true"] {
+  font-weight: 600;
+  color: #fff;
+  background: var(--v-navy);
+}
+:root[data-theme="dark"] .np-pills button[aria-selected="true"] {
+  color: var(--v-bg, #111);
+  background: var(--v-ink);
+}
+
+.np-card {
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  overflow: hidden;
+}
+.np-group h3 {
+  margin: 0;
+  padding: 16px 16px 2px;
+  font: 600 13px/1 var(--v-text);
+  letter-spacing: 0.01em;
+  color: var(--v-ink-3);
+}
+.np-group + .np-group {
+  border-top: 6px solid color-mix(in srgb, var(--v-ink) 4%, transparent);
+}
+
+.np-row {
+  position: relative;
+  padding: 12px 16px 14px;
+  display: grid;
+  /* a fixed right column, so every row's bar starts and ends on the same lines */
+  grid-template-columns: 1fr 108px;
+  column-gap: 12px;
+  row-gap: 8px;
+  align-items: end;
+}
+.np-row + .np-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 0;
+  height: 0.5px;
+  background: var(--v-line);
+}
+.np-row[data-tone="go"] { --tone: var(--fd-go, #e68c2c); }
+.np-row[data-tone="met"] { --tone: var(--v-ok, #34c759); }
+.np-row[data-tone="near"] { --tone: var(--v-gold-ink, #b7791f); }
+.np-row[data-tone="over"] { --tone: #e5484d; }
+.np-row[data-tone="ok"] { --tone: var(--v-ok, #34c759); }
+
+.np-t,
+.np-v {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.np-v {
+  align-items: flex-end;
+  text-align: right;
+}
+.np-t b {
+  font: 600 16px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.np-t small,
+.np-v small {
+  font: 400 13px/1.25 var(--v-text);
+  color: var(--v-ink-3);
+}
+.np-t em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--v-gold-ink, #b7791f);
+}
+.np-v b {
+  font: 650 16px/1.2 var(--v-num);
+  color: var(--v-ink);
+  font-variant-numeric: tabular-nums;
+}
+.np-v small {
+  font-variant-numeric: tabular-nums;
+}
+
+.np-bar {
+  position: relative;
+  height: 6px;
+  align-self: center;
+  border-radius: 3px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--v-ink) 7%, transparent);
+}
+.np-bar i {
+  position: absolute;
+  inset: 0;
+  border-radius: 3px;
+  background: var(--tone);
+  transform-origin: left;
+  transition: transform 0.45s var(--v-ease);
+}
+/* a ceiling's 80% mark, where "near limit" begins */
+.np-bar u {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 80%;
+  width: 2px;
+  background: var(--v-card);
+}
+.np-word {
+  min-width: 76px;
+  text-align: right;
+  font: 600 13px/1 var(--v-text);
+  color: var(--tone);
+}
+.np-row[data-tone="low"] .np-word {
+  color: var(--v-ink-3);
+}
+
+.np-foot {
+  margin: 10px 4px 0;
+  font: 400 13px/1.4 var(--v-text);
+  color: var(--v-ink-3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .np-bar i {
+    transition: none;
+  }
+}

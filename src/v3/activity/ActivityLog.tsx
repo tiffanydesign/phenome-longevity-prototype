@@ -6,7 +6,7 @@ import { activityKcal, useActivities } from "@/data/journal-store";
 import { useGo } from "../ui/shell";
 import { Chevron } from "../ui/icons";
 import { Empty, Group, PrimaryButton, SubPage } from "../profile/kit";
-import { WORKOUTS } from "../metric/activityData";
+import { TRAINING_GOAL_MIN, WORKOUTS } from "../metric/activityData";
 import "./activity-log.css";
 
 /*
@@ -15,7 +15,7 @@ import "./activity-log.css";
  * against the daily goal, the same numbers as the Home Activity card.
  */
 
-const GOAL_MIN = 45;
+const GOAL_MIN = TRAINING_GOAL_MIN;
 
 interface Session {
   key: string;

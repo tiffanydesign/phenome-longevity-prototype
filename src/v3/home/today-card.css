@@ -1,0 +1,120 @@
+/* =====================================================================
+ * Today card: every tab opens on today's numbers rather than a chart.
+ * One row, a little roomier than the twin door: the ring, then the lead
+ * line over the three readings, then a bare chevron (no disc, so the
+ * readings keep their width). Colour only in the ring.
+ * ===================================================================== */
+.v2-today {
+  width: calc(100% + 8px);
+  margin: 18px -4px 0;
+  padding: 16px 14px 16px 16px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "ring lead go"
+    "ring stats go";
+  align-items: center;
+  column-gap: 14px;
+  row-gap: 12px;
+  border-radius: var(--v-r);
+  text-align: left;
+  color: var(--v-ink);
+  background: var(--v-card);
+  transition: transform 0.18s var(--v-ease);
+}
+.v2-today:active {
+  transform: scale(0.985);
+}
+
+.v2-today-ring {
+  position: relative;
+  grid-area: ring;
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+}
+.v2-today-ring svg {
+  position: absolute;
+  inset: 0;
+}
+.v2-today-track {
+  fill: none;
+  stroke: color-mix(in srgb, var(--mid) 16%, var(--v-card));
+}
+.v2-today-ring b {
+  position: relative;
+  font: 700 14px/1 var(--v-num);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.v2-today-body {
+  display: contents;
+}
+.v2-today-lead {
+  grid-area: lead;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+.v2-today-lead b {
+  flex: none;
+  font: 600 16px/1.2 var(--v-text);
+  letter-spacing: -0.01em;
+}
+.v2-today-lead small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  font: 500 14px/1.2 var(--v-text);
+  color: color-mix(in srgb, var(--mid) 80%, var(--v-ink));
+}
+
+/* three readings on one baseline, split by hairlines */
+.v2-today-stats {
+  grid-area: stats;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.v2-today-stats > span {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 10px;
+  border-left: 1px solid var(--v-line);
+}
+.v2-today-stats > span:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.v2-today-stats b {
+  font: 650 16px/1 var(--v-num);
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.v2-today-stats b small {
+  margin-left: 2px;
+  font: 500 11.5px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.v2-today-stats em {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 400 12px/1.1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+}
+
+.v2-today-go {
+  grid-area: go;
+  display: grid;
+  place-items: center;
+  color: var(--v-ink-3);
+}

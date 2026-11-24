@@ -19,9 +19,9 @@ export interface Note {
 
 const SEED: Note[] = [
   { id: "n1", kind: "Report", glyph: "spark", field: "capacity", title: "Your weekly report is ready", body: "HRV is up 9% and sleep held steady. Two things to try this week.", when: "8 min ago", to: "/v3/home?tab=vitals", read: false },
-  { id: "n2", kind: "Activity", glyph: "flame", field: "activity", title: "1,518 steps to your goal", body: "A 15-minute walk this evening closes it.", when: "1 h ago", to: "/v3/metric/steps", read: false },
+  { id: "n2", kind: "Activity", glyph: "flame", field: "activity", title: "Step goal passed", body: "10,796 steps today, 18% more than yesterday.", when: "1 h ago", to: "/v3/metric/steps", read: false },
   { id: "n3", kind: "Lab", glyph: "flask", field: "body", title: "Proteomics results are in", body: "9 of 12 body systems look typical. Three are worth discussing at your next visit.", when: "Yesterday", to: "/v3/omics", read: true },
-  { id: "n4", kind: "Sleep", glyph: "moon", field: "sleep", title: "Third night above seven hours", body: "Your deep sleep rose with it.", when: "Yesterday", to: "/v3/metric/sleep", read: true },
+  { id: "n4", kind: "Sleep", glyph: "moon", field: "sleep", title: "An excellent night: 98", body: "7:54 asleep, with 2:50 of deep and REM sleep.", when: "Yesterday", to: "/v3/metric/sleep", read: true },
   { id: "n5", kind: "Clinic", glyph: "booked", field: "heart", title: "Book your next visit", body: "It is three months since your last scan. Pick a time that suits you.", when: "Mon", to: "/v3/booking", read: true },
 ];
 

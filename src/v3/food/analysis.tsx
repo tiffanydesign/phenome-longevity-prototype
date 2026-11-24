@@ -10,7 +10,7 @@ import { NutrientMark } from "./parts";
  * Worked out from the last seven days of the diary.
  */
 
-type Finding = { id: string; label: string; hue: string; mark: ReactNode; value: string; body: string };
+type Finding = { id: string; label: string; hue: string; ink?: string; mark: ReactNode; value: string; body: string };
 
 export function LongevityAnalysis({ meals, goal }: { meals: Meal[]; goal: number }) {
   const findings = useMemo<Finding[]>(() => {
@@ -30,6 +30,7 @@ export function LongevityAnalysis({ meals, goal }: { meals: Meal[]; goal: number
         id: "protein",
         label: "Protein",
         hue: NUTRIENT.protein.hue,
+        ink: NUTRIENT.protein.ink,
         mark: <NutrientMark id="protein" size={16} solid />,
         value: `${fmt(protein)} g a day`,
         body:
@@ -41,6 +42,7 @@ export function LongevityAnalysis({ meals, goal }: { meals: Meal[]; goal: number
         id: "fiber",
         label: "Fibre",
         hue: NUTRIENT.fiber.hue,
+        ink: NUTRIENT.fiber.ink,
         mark: <NutrientMark id="fiber" size={16} />,
         value: `${fmt(fiber)} g a day`,
         body:
@@ -70,7 +72,7 @@ export function LongevityAnalysis({ meals, goal }: { meals: Meal[]; goal: number
   return (
     <div className="fd-la">
       {findings.map((f) => (
-        <article key={f.id} className="fd-la-card" style={{ "--hue": f.hue } as React.CSSProperties}>
+        <article key={f.id} className="fd-la-card" style={{ "--hue": f.hue, "--hue-ink": f.ink } as React.CSSProperties}>
           <p className="fd-la-label">
             {f.mark}
             {f.label}

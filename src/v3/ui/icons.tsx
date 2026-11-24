@@ -202,12 +202,12 @@ export const IconTabHeart = () => (
   </Line>
 );
 
-export const IconTabFood = () => (
+/** Lifestyle: a day page with its two rings and a tick, the meals and habits kept each day; selected, the page fills and the tick stays open. */
+export const IconTabLifestyle = () => (
   <Line size={24}>
-    <path d="M6.5 3v6.2a2.3 2.3 0 0 0 4.6 0V3" />
-    <path d="M8.8 3v5.6M8.8 11.5V21" />
-    <path className="ic-fill" d="M17.4 13.4h-3.2V9.6c0-3.3 1.3-5.6 3.2-6.6z" />
-    <path d="M17.4 3v18" />
+    <rect className="ic-fill" x="3.8" y="5" width="16.4" height="15.6" rx="3.4" />
+    <path d="M8.4 3v3.8M15.6 3v3.8" />
+    <path className="ic-knock" d="M8.6 13.6l2.4 2.4 4.6-4.8" />
   </Line>
 );
 

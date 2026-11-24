@@ -1445,3 +1445,24 @@ button.v2-svc:active {
   font-size: 11px;
   letter-spacing: -0.015em;
 }
+
+/* ---------- a tab's readings: its name as the heading, "Today" as a grey note beside it ---------- */
+.v2-sec-tab {
+  justify-content: flex-start;
+  gap: 8px;
+}
+.v2-cat .v2-verdict + .v2-group .v2-sec-tab {
+  margin-top: 28px;
+}
+.v2-sec-note {
+  font: 500 14px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+/* with the tab's name moved down to its readings, the verdict's answer leads the page */
+.v2-cat > .v2-verdict {
+  padding-top: 6px;
+}
+.v2-cat > .v2-verdict > h2 {
+  font: 680 23px/1.2 var(--v-text);
+  letter-spacing: -0.02em;
+}

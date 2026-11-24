@@ -45,9 +45,9 @@ const MARK: Record<NutrientId | "kcal", PhName> = {
   iron: "hexagon",
 };
 
-/** A nutrient's small solid mark, in its hue (energy takes the text colour). */
+/** A nutrient's small solid mark, in its ink colour (energy takes the text colour). */
 export function NutrientMark({ id, size = 18 }: { id: NutrientId | "kcal"; size?: number; solid?: boolean }) {
-  return <Ph name={MARK[id]} size={size} color={id === "kcal" ? undefined : NUTRIENT[id].hue} className="fd-mark" />;
+  return <Ph name={MARK[id]} size={size} color={id === "kcal" ? undefined : NUTRIENT[id].ink ?? NUTRIENT[id].hue} className="fd-mark" />;
 }
 
 /** Left of a target, or over it, said the plain way. */
@@ -79,7 +79,7 @@ export function NutrientCard({ id, t }: { id: NutrientId; t: Totals }) {
       className="fd-nc"
       data-over={l.over ? "" : undefined}
       aria-label={`${n.name}: ${grams(l.n, n.unit)} ${l.word} of ${fmt(TARGET[id])} ${n.unit}`}
-      style={{ "--hue": n.hue } as React.CSSProperties}
+      style={{ "--hue": n.hue, "--hue-ink": n.ink } as React.CSSProperties}
     >
       <b>{grams(l.n, n.unit)}</b>
       <span>

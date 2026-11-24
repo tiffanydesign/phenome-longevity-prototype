@@ -1,6 +1,10 @@
 import { useMemo, useState } from "react";
 import { Chevron } from "../ui/icons";
-import { fmt, MACROS, NUTRIENT, ZERO, type Totals } from "./data";
+import { fmt, NUTRIENT, ZERO, type Totals } from "./data";
+
+/** Where a day's energy came from, top of the stack first: protein, carbs, fat, then fibre at the base; the key reads in the same order. */
+const PARTS = ["protein", "carbs", "fiber", "fat"] as const;
+type Part = (typeof PARTS)[number];
 import { dayKey, dayOffset, dayTotals, todayKey, type Meal } from "./store";
 
 /*
@@ -129,12 +133,16 @@ export function History({ meals, goal }: { meals: Meal[]; goal: number }) {
   const hi = logged.length ? Math.max(...logged.map((b) => b.t.kcal)) : 0;
   const lo = logged.length ? Math.min(...logged.map((b) => b.t.kcal)) : 0;
   const top = Math.max(span === "D" ? 0 : goal, hi) * 1.08 || 1;
-  const energy = (t: Totals) => ({ protein: t.protein * 4, carbs: t.carbs * 4, fat: t.fat * 9 });
-  const split = logged.reduce((a, b) => {
-    const e = energy(b.t);
-    return { protein: a.protein + e.protein, carbs: a.carbs + e.carbs, fat: a.fat + e.fat };
-  }, { protein: 0, carbs: 0, fat: 0 });
-  const splitSum = split.protein + split.carbs + split.fat || 1;
+  // energy by source: carbs in the table include fibre, so fibre is split out at its own 2 kcal/g
+  const energy = (t: Totals): Record<Part, number> => ({ protein: t.protein * 4, carbs: Math.max(0, t.carbs - t.fiber) * 4, fiber: t.fiber * 2, fat: t.fat * 9 });
+  const split = logged.reduce(
+    (a, b) => {
+      const e = energy(b.t);
+      return { protein: a.protein + e.protein, carbs: a.carbs + e.carbs, fiber: a.fiber + e.fiber, fat: a.fat + e.fat };
+    },
+    { protein: 0, carbs: 0, fiber: 0, fat: 0 },
+  );
+  const splitSum = PARTS.reduce((s, id) => s + split[id], 0) || 1;
   const pick = (s: Span) => {
     setSpan(s);
     setPage(0);
@@ -183,8 +191,8 @@ export function History({ meals, goal }: { meals: Meal[]; goal: number }) {
             return (
               <div key={i} className="fd-wk-col" data-now={b.now ? "" : undefined}>
                 <span className="fd-wk-stack" style={{ height: `${(b.t.kcal / top) * 100}%` }} title={`${fmt(b.t.kcal)} kcal`}>
-                  {[...MACROS].reverse().map((id) => (
-                    <i key={id} style={{ flexGrow: e[id as "protein"], background: NUTRIENT[id].hue }} />
+                  {PARTS.map((id) => (
+                    <i key={id} style={{ flexGrow: e[id], background: NUTRIENT[id].hue }} />
                   ))}
                 </span>
                 {b.t.kcal === 0 && !b.ahead && span !== "D" && <span className="fd-wk-none" aria-label="Nothing logged" />}
@@ -200,11 +208,11 @@ export function History({ meals, goal }: { meals: Meal[]; goal: number }) {
           ))}
         </div>
         <div className="fd-wk-key">
-          {MACROS.map((id) => (
+          {PARTS.map((id) => (
             <span key={id}>
               <i style={{ background: NUTRIENT[id].hue }} />
-              {NUTRIENT[id].short}
-              <small>{Math.round((split[id as "protein"] / splitSum) * 100)}%</small>
+              {id === "carbs" ? "Net carbs" : NUTRIENT[id].short}
+              <small>{Math.round((split[id] / splitSum) * 100)}%</small>
             </span>
           ))}
         </div>

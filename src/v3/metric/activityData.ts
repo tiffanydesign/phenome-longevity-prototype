@@ -1,6 +1,8 @@
+import intraday from "@/data/real/intraday.json";
 /*
  * Demo activity for today and yesterday, kept consistent with metrics.ts:
- * 6,482 steps so far (goal 8,000), yesterday 9,104; 164 active kcal; 4.12 km;
+ * the synced account's Tue 17 Nov: 10,796 steps (goal 8,000), the day before 9,100;
+ * 567 active kcal; 7.27 km;
  * workouts 38 min and 243 kcal across two sessions.
  */
 
@@ -16,8 +18,8 @@ function hourly(total: number, upto: number, wobble: number): number[] {
 
 const cumulative = (xs: number[]) => xs.reduce<number[]>((acc, v) => [...acc, (acc[acc.length - 1] ?? 0) + v], []);
 
-export const STEPS_TODAY = 6482;
-export const STEPS_YESTERDAY = 9104;
+export const STEPS_TODAY = 10796;
+export const STEPS_YESTERDAY = 9100;
 export const STEP_GOAL = 8000;
 
 export function stepDay(nowHour: number) {
@@ -26,7 +28,7 @@ export function stepDay(nowHour: number) {
   return { today, yesterday, yesterdayByNow: Math.round(yesterday[nowHour]) };
 }
 
-export const ENERGY = { active: 164, resting: 1512 };
+export const ENERGY = { active: 567, resting: 1512 };
 
 export interface Workout {
   id: string;
@@ -70,3 +72,12 @@ export const ZONES = [
   { name: "Zone 4", label: "Hard", from: 142 },
   { name: "Zone 5", label: "Max", from: 160 },
 ];
+
+/** Daily training goal in minutes: the Activity log and the Home Activity rings measure against it. */
+export const TRAINING_GOAL_MIN = 45;
+
+/** Stand: an hour counts when the ring logged at least this many steps in it, against a 12-hour goal. */
+export const STAND_STEPS = 100;
+export const STAND_GOAL_HR = 12;
+/** The day's stand hours, from the ring's real hour-by-hour steps. */
+export const STAND_HOURS = (intraday.steps as number[][]).filter(([, v]) => v >= STAND_STEPS).length;

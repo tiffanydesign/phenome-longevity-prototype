@@ -115,7 +115,7 @@ export function FoodTabExtras() {
                   <b>{fmt(next.left)}</b>
                   <small>kcal left today</small>
                 </span>
-                <span style={{ "--hue": NUTRIENT[next.behind.id].hue } as React.CSSProperties}>
+                <span style={{ "--hue": NUTRIENT[next.behind.id].hue, "--hue-ink": NUTRIENT[next.behind.id].ink } as React.CSSProperties}>
                   <b>{fmt(Math.max(0, next.behind.gap))} g</b>
                   <small>
                     <NutrientMark id={next.behind.id} size={13} />

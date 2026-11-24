@@ -164,15 +164,17 @@ export const METRIC_GLYPH: Record<string, GlyphName> = {
 
 export const glyphOf = (id: string): GlyphName => METRIC_GLYPH[id] ?? "pulse";
 
-/** A card's kind line: the mark and the name in the category's colour, and a small chevron saying it opens. */
-export function Kind({ name, children }: { name: GlyphName; children: ReactNode }) {
+/** A card's kind line: the mark and the name in the category's colour, and a small chevron saying it opens; `bare` leaves the chevron to the card, which draws it at its far edge. */
+export function Kind({ name, children, bare }: { name: GlyphName; children: ReactNode; bare?: boolean }) {
   return (
     <span className="v2-kind">
       <Glyph name={name} size={16} />
       <span>{children}</span>
+      {!bare && (
       <svg className="v2-kind-go" width="8" height="13" viewBox="0 0 8 13" fill="none" aria-hidden>
         <path d="M1.5 1.5 6.5 6.5l-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
+      )}
     </span>
   );
 }

@@ -10,8 +10,6 @@
   --fd-ink: #17191f;
   /* the page wears the Nutrition hue (--mid from data-field="food"), brand
      navy for rings and actions, each nutrient its field hue, as on Home */
-  --fd-move: #fa6431;
-  --fd-burn: #e0559a;
   --fd-over: #e5534b;
   --fd-core: #f3f3f6;
   --fd-r-lg: 28px;
@@ -192,7 +190,7 @@
 }
 .fd-nc strong {
   font-weight: 600;
-  color: color-mix(in oklab, var(--hue), var(--v-ink) 22%);
+  color: var(--hue-ink, color-mix(in oklab, var(--hue), var(--v-ink) 22%));
 }
 .fd-nc em {
   font-style: normal;
@@ -316,7 +314,7 @@
 }
 .fd-la-label {
   font: 600 14px/1.2 var(--v-text);
-  color: color-mix(in oklab, var(--hue), var(--v-ink) 22%);
+  color: var(--hue-ink, color-mix(in oklab, var(--hue), var(--v-ink) 22%));
 }
 .fd-la-label svg {
   color: var(--hue);
@@ -464,199 +462,22 @@
   margin-top: auto;
 }
 
-/* movement: two tall cards */
-.fd-move {
-  min-width: 0;
-  padding: 20px 18px 18px;
-  display: flex;
-  flex-direction: column;
-  border-radius: var(--fd-r-md);
-  text-align: left;
-  color: var(--v-ink);
-  background: var(--v-card);
-}
-.fd-move:active {
-  transform: scale(0.985);
-}
-.fd-move-head {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-}
-.fd-move-head > svg {
-  flex: none;
-  margin-top: 4px;
-  color: var(--fd-move);
-}
-.fd-move + .fd-move .fd-move-head > svg {
-  color: var(--fd-burn);
-}
-.fd-move-head > span {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.fd-move-head b {
-  font: 700 26px/1 var(--v-num);
-  letter-spacing: -0.025em;
-  font-variant-numeric: tabular-nums;
-}
-.fd-move-head small {
-  font: 500 14px/1.2 var(--v-text);
-  color: var(--v-ink-2);
-}
-.fd-move-bars {
-  flex: 1;
-  min-height: 0;
-  margin-top: 22px;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-}
-.fd-move-bars > span {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-.fd-move-bars em {
-  flex: 1;
-  width: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-.fd-move-bars i {
-  width: 100%;
-  max-width: 14px;
-  border-radius: 7px;
-  background: color-mix(in srgb, var(--fd-move) 30%, var(--v-card));
-}
-.fd-move-bars [data-today] i {
-  background: var(--fd-move);
-}
-.fd-move-bars small {
-  position: relative;
-  font: 500 12px/1 var(--v-text);
-  color: var(--v-ink-3);
-}
-.fd-move-bars [data-today] small {
-  font-weight: 700;
-  color: var(--v-ink);
-}
-.fd-move-bars [data-today] small::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: calc(100% + 4px);
-  width: 4px;
-  height: 4px;
-  margin-left: -2px;
-  border-radius: 50%;
-  background: var(--v-accent);
-}
-.fd-move-rows {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.fd-move-rows > span {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.fd-move-rows i {
-  flex: none;
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--fd-burn);
-  background: color-mix(in srgb, var(--fd-burn) 14%, var(--v-card));
-}
-.fd-move-rows i svg {
-  position: static;
-}
-.fd-move-rows > span > span {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.fd-move-rows small {
-  font: 500 13px/1 var(--v-text);
-  color: var(--v-ink-2);
-}
-.fd-move-rows b {
-  font: 700 17px/1 var(--v-num);
-  font-variant-numeric: tabular-nums;
-}
-
 /* meals sit closer under the page dots */
 .fd-sec-meals {
   padding-top: 20px;
 }
 
-/* a wide score row: mark on its disc, name and n / 10, one bar under them */
-.fd-wide {
-  padding: 18px 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  border-radius: var(--fd-r-md);
-  text-align: left;
-  color: var(--v-ink);
-  background: var(--v-card);
-}
-.fd-wide:active {
-  transform: scale(0.985);
-}
-.fd-wide .fd-core-lg {
-  color: var(--fd-move);
-}
-.fd-wide .fd-score-bar i {
-  background: var(--fd-move);
-}
-.fd-wide-body {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
-.fd-wide-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-}
-.fd-wide-top > b {
-  font: 600 17px/1.2 var(--v-text);
-}
-.fd-wide-top > span {
-  font: 500 15px/1 var(--v-num);
-  color: var(--v-ink-3);
-  font-variant-numeric: tabular-nums;
-}
-.fd-wide-top > span b {
-  font: 700 22px/1 var(--v-num);
-  color: var(--v-ink);
-}
-.fd-wide .fd-score-bar {
-  margin-top: 12px;
-}
-
 /* ---------- energy colour meaning ----------
  * The energy ring and the day rings say where the day sits against its
- * goal: brand navy while it is still filling, green within 10% of the
- * goal, red once it runs more than 10% past. A word pill repeats green
- * and red so the meaning never rests on colour alone. */
+ * goal: the energy hue (the flame's) while it is still filling, green
+ * within 10% of the goal, red once it runs more than 10% past. A word
+ * pill repeats green and red so the meaning never rests on colour alone. */
 .fd {
-  --fd-go: var(--v-accent);
-  --fd-met: #34c759;
+  --fd-go: var(--mid);
+  --fd-met: #2e9e6b;
 }
 :root[data-theme="dark"] .fd {
-  --fd-met: #30d158;
+  --fd-met: #4cbb87;
 }
 .fd-zone {
   align-self: flex-start;
@@ -677,15 +498,154 @@
 /* day rings: the energy meaning at one low chroma and one lightness, so
    seven small rings read as a quiet row rather than traffic lights */
 .fd {
-  --fd-go-soft: #8f9cc4;
+  --fd-go-soft: #e7b27c;
   --fd-met-soft: #6fb593;
   --fd-over-soft: #e2907a;
 }
 :root[data-theme="dark"] .fd {
-  --fd-go-soft: #8d9bd0;
+  --fd-go-soft: #d9a56f;
   --fd-met-soft: #7cc6a2;
   --fd-over-soft: #ef9f8a;
 }
 .fd-week .fd-ring-track {
   stroke: color-mix(in srgb, var(--v-ink) 14%, transparent);
+}
+
+/* page 1, under the energy card: calories by meal. One bar is the goal,
+   filled meal by meal in four steps of the theme blue, which also colours the label, lightest first and
+   deepening through the day; the names and numbers below carry the same
+   step on a dot */
+.fd-split {
+  --mid: var(--v-accent);
+  --tone: var(--mid);
+}
+.fd-split [data-tone="0"] { --tone: color-mix(in srgb, var(--mid) 30%, var(--v-card)); }
+.fd-split [data-tone="1"] { --tone: color-mix(in srgb, var(--mid) 48%, var(--v-card)); }
+.fd-split [data-tone="2"] { --tone: color-mix(in srgb, var(--mid) 72%, var(--v-card)); }
+.fd-hero > .fd-split-bar {
+  margin-top: 14px;
+  height: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: var(--fd-core);
+}
+.fd-split-bar i {
+  flex: none;
+  min-width: 4px;
+  height: 100%;
+  background: var(--tone);
+  transition: flex-basis 0.45s var(--v-ease);
+}
+.fd-hero > .fd-split-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: space-between;
+  gap: 8px;
+}
+.fd-split-grid > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fd-split-grid small {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  font: 400 13px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.fd-split-grid small i {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tone);
+}
+.fd-split-grid [data-empty] small i {
+  background: none;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--v-ink) 22%, transparent);
+}
+.fd-split-grid b {
+  font: 700 20px/1 var(--v-num);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.fd-split-grid [data-empty] b {
+  color: var(--v-ink-3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fd-split-bar i {
+    transition: none;
+  }
+}
+.fd-slide > .fd-split {
+  flex: none;
+}
+
+/* page 2, under the three macro rings: energy by macro, one bar and three rows */
+.fd-slide > .fd-mx {
+  flex: 1;
+  margin: 0;
+}
+.fd-hero > .fd-mx-bar {
+  margin-top: 14px;
+  height: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+.fd-mx-bar i {
+  flex-basis: 0;
+  min-width: 4px;
+  border-radius: 5px;
+  background: var(--fd-core);
+}
+.fd-hero > .fd-mx-rows {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+}
+.fd-mx-rows > div {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.fd-mx-rows > div + div {
+  border-top: 0.5px solid var(--v-line);
+}
+.fd-mx-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 15px/1.2 var(--v-text);
+}
+.fd-mx-name i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.fd-mx-v {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.fd-mx-v b {
+  font: 600 15px/1 var(--v-num);
+}
+.fd-mx-v small {
+  min-width: 104px;
+  text-align: right;
+  font: 400 13px/1 var(--v-text);
+  color: var(--v-ink-3);
 }

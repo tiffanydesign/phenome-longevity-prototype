@@ -59,23 +59,23 @@ export function slotAt(d: Date): Slot {
   return "dinner";
 }
 
-/** Daily targets. Energy can be changed by the member (goals.tsx, id "diet"). */
+/** Default daily targets (the Balanced split at 2,000 kcal). Energy is the member's "diet" goal (goals.tsx); the rest are theirs to change in targets.ts. */
 export const TARGET: Record<NutrientId, number> & { kcal: number } = {
   kcal: 2000,
   protein: 110,
-  carbs: 220,
-  fat: 70,
+  carbs: 225,
+  fat: 73,
   fiber: 30,
   calcium: 1000,
   iron: 18,
 };
 
-/** How each nutrient is named, measured and coloured (one hue each, never repeated on a page). */
-export const NUTRIENT: Record<NutrientId, { name: string; short: string; unit: string; hue: string }> = {
-  protein: { name: "Protein", short: "Protein", unit: "g", hue: "#ef6f55" },
-  carbs: { name: "Carbohydrates", short: "Carbs", unit: "g", hue: "#e5ab2e" },
-  fat: { name: "Fat", short: "Fat", unit: "g", hue: "#86b83a" },
-  fiber: { name: "Fibre", short: "Fibre", unit: "g", hue: "#3dbfaa" },
+/** How each nutrient is named, measured and coloured. Protein coral red, carbs yellow, fibre green and fat cream fill rings, bars and charts; `ink` is the same colour taken deep enough to read as text or a small icon on a white card (the cream above all). Calcium and iron keep their own hues. */
+export const NUTRIENT: Record<NutrientId, { name: string; short: string; unit: string; hue: string; ink?: string }> = {
+  protein: { name: "Protein", short: "Protein", unit: "g", hue: "#e16162", ink: "#c0464a" },
+  carbs: { name: "Carbohydrates", short: "Carbs", unit: "g", hue: "#faae2b", ink: "#b0740a" },
+  fat: { name: "Fat", short: "Fat", unit: "g", hue: "#f3d2c1", ink: "#b5765a" },
+  fiber: { name: "Fibre", short: "Fibre", unit: "g", hue: "#7ccf9a", ink: "#3c9262" },
   calcium: { name: "Calcium", short: "Calcium", unit: "mg", hue: "#30b0c7" },
   iron: { name: "Iron", short: "Iron", unit: "mg", hue: "#fa3c5a" },
 };

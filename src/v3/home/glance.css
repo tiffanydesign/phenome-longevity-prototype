@@ -161,7 +161,8 @@
   gap: 2px;
   overflow: hidden;
   border-radius: 5px;
-  background: color-mix(in srgb, var(--mid) 12%, var(--v-card));
+  /* what is left of the day in neutral grey, so it never reads as a fourth macro (fat is a cream) */
+  background: color-mix(in srgb, var(--v-ink) 7%, var(--v-card));
 }
 .gl-macro-track i {
   height: 100%;
@@ -171,13 +172,13 @@
 }
 /* one hue per macro, the same three the Nutrition page uses (food/data.ts NUTRIENT) */
 [data-part="Protein"] {
-  --part: #ef6f55;
+  --part: #e16162;
 }
 [data-part="Carbs"] {
-  --part: #e5ab2e;
+  --part: #faae2b;
 }
 [data-part="Fat"] {
-  --part: #86b83a;
+  --part: #f3d2c1;
 }
 .gl-macro-track i {
   background: var(--part);

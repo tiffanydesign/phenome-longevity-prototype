@@ -1,0 +1,204 @@
+/* =====================================================================
+ * v3 Store: the Omics tab's frame (brand bar over the grey ground, large
+ * title, white cards on the card radius) with the store's own parts: a
+ * white search field, the categories as the same sliding switch the
+ * calorie sheet and Lifestyle use, and products two to a row.
+ * ===================================================================== */
+.sx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow-y: auto;
+  padding: calc(var(--status-h) + 52px) 16px 112px;
+  background: var(--v-bg);
+}
+.sx-head {
+  z-index: 3;
+}
+
+.sx-title {
+  margin: 14px 4px 6px;
+  font: 700 28px/1.12 var(--v-display);
+  letter-spacing: -0.022em;
+  color: var(--v-ink);
+}
+.sx-sub {
+  margin: 0 4px 16px;
+  font: 400 16px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+  text-wrap: pretty;
+}
+
+/* search: a white field on the card radius, the mark at the left */
+.sx-search {
+  height: 44px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 14px;
+  color: var(--v-ink-3);
+  background: var(--v-card);
+}
+.sx-search svg {
+  flex: none;
+}
+.sx-search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: none;
+  font: 400 16px/1 var(--v-text);
+  color: var(--v-ink);
+}
+.sx-search input::placeholder {
+  color: var(--v-ink-3);
+}
+.sx-search:focus-within {
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--v-navy) 55%, transparent);
+}
+.sx-clear {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font: 600 15px/1 var(--v-text);
+  color: var(--v-card);
+  background: var(--v-ink-3);
+}
+
+/* categories: one track, the chosen one a white chip */
+.sx-seg {
+  margin-top: 14px;
+  padding: 3px;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 2px;
+  border-radius: 12px;
+  background: var(--v-fill);
+}
+.sx-seg button {
+  min-width: 0;
+  min-height: 34px;
+  padding: 0 8px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  white-space: nowrap;
+  font: 500 14px/1.1 var(--v-text);
+  color: var(--v-ink-2);
+  transition: background 0.2s var(--v-ease), color 0.2s var(--v-ease);
+}
+.sx-seg button[aria-selected="true"] {
+  font-weight: 600;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: 0 0 0 0.5px var(--v-line);
+}
+
+.sx-count {
+  margin: 20px 4px 10px;
+  font: 600 13px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* products: white cards, two to a row */
+.sx-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.sx-card {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 8px 14px;
+  text-align: left;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  transition: transform 0.15s var(--v-ease);
+}
+.sx-card:active {
+  transform: scale(0.98);
+}
+.sx-card-img {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: calc(var(--v-r) - 8px);
+  background: var(--v-bg);
+}
+.sx-card-img img {
+  width: 92%;
+  height: 92%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+:root[data-theme="dark"] .sx-card-img {
+  background: #f2f2f7;
+}
+.sx-card-t {
+  min-width: 0;
+  padding: 12px 6px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sx-card-t small {
+  font: 500 12px/1.1 var(--v-text);
+  color: var(--v-ink-3);
+}
+.sx-card-t b {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.5em;
+  font: 600 15px/1.25 var(--v-text);
+  letter-spacing: -0.01em;
+  color: var(--v-ink);
+}
+.sx-card-t em {
+  margin-top: 4px;
+  font: 650 16px/1 var(--v-num);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+
+.sx-empty {
+  margin: 24px 4px;
+  font: 400 15px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+.sx-error {
+  margin-top: 16px;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+}
+.sx-error b {
+  font: 600 17px/1.2 var(--v-text);
+}
+.sx-error small {
+  font: 400 14px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+}
+.sx-error button {
+  margin-top: 12px;
+  padding: 11px 20px;
+  border-radius: 22px;
+  font: 600 15px/1 var(--v-text);
+  color: #fff;
+  background: var(--v-navy);
+}
