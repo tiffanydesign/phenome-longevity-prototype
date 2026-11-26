@@ -1,6 +1,7 @@
 import type { Tab } from "../data/metrics";
 import { foodVerdict, useFoodWeek } from "./FoodWeek";
 import { TodayCard } from "./TodayCard";
+import { YourPlan } from "./YourPlan";
 
 type HomeTab = Exclude<Tab, "body">;
 
@@ -74,7 +75,7 @@ function FoodVerdict() {
     <div className="v2-verdict" data-field={v.field} aria-label={v.title}>
       <h2>{say.headline}</h2>
       <p>{say.text}</p>
-      <TodayCard tab="food" />
+      <YourPlan />
     </div>
   );
 }

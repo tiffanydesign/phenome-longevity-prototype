@@ -1,9 +1,11 @@
+import { PlanScreen } from "./habits/PlanScreen";
 import "./reports";
 import "./games-dark.css";
 import "./assistant-dark.css";
 import { BookingScreen } from "@/screens/discover/BookingScreen";
 import { AssistantScreen } from "@/screens/discover/AssistantScreen";
 import { StoreScreen } from "./store/StoreScreen";
+import { ProductScreen } from "./store/ProductScreen";
 import type { ScreenRoute } from "@/screens/types";
 import { HomeScreen } from "./home/HomeScreen";
 import { MetricScreen } from "./metric/MetricScreen";
@@ -68,7 +70,10 @@ export const routes: ScreenRoute[] = [
   { path: "/v3/add-device", element: <AddDevice />, title: "Add device", group },
   { path: "/v3/assistant", element: <AssistantScreen />, title: "Longevity AI", group },
   { path: "/v3/store", element: <StoreScreen />, title: "Store", group },
+  // this edition's own product page at the shared address, ahead of the original one
+  { path: "/store/product/:id", element: <ProductScreen />, title: "Product", group },
   { path: "/v3/habits", element: <HabitsScreen />, title: "Habits", group },
+  { path: "/v3/plan", element: <PlanScreen />, title: "Your plan", group },
   { path: "/v3/consultations", element: <ConsultationsScreen />, title: "Consultations", group },
   // the shared address opens the same list in this edition
   { path: "/discover/consultations", element: <ConsultationsScreen />, title: "Consultations (shared address)", group },

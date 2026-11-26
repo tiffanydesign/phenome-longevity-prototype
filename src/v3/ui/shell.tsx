@@ -100,7 +100,8 @@ export function V2Nav() {
  * the two round buttons stay on a clear glass capsule. `children` stands in
  * for the mark, e.g. Home's Done while its cards are being arranged.
  */
-export function BrandBar({ children }: { children?: ReactNode }) {
+/** The top bar: the mark at the left, the round controls at the right (devices and profile unless a page brings its own). */
+export function BrandBar({ children, right }: { children?: ReactNode; right?: ReactNode }) {
   const { list } = useNotes();
   const unread = list.some((n) => !n.read);
   return (
@@ -111,8 +112,12 @@ export function BrandBar({ children }: { children?: ReactNode }) {
         </span>
       )}
       <div className="v2-hpill">
-        <DevicesButton />
-        <Avatar dot={unread} />
+        {right ?? (
+          <>
+            <DevicesButton />
+            <Avatar dot={unread} />
+          </>
+        )}
       </div>
     </header>
   );

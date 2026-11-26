@@ -1,0 +1,246 @@
+/* =====================================================================
+ * Your plan: the clinician's day on one white card.
+ * Three tiers, each quieter than the one before: head (title, author,
+ * progress), the rows to act on, then energy and the way to the full plan.
+ * Colour lives only in the marks, the ring and the "Due" word.
+ * ===================================================================== */
+.yp {
+  width: calc(100% + 8px);
+  margin: 18px -4px 0;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  color: var(--v-ink);
+  overflow: hidden;
+}
+
+/* ---- head */
+.yp-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px 4px 16px;
+  text-align: left;
+  color: inherit;
+}
+.yp-title {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.yp-title b {
+  font: 650 16px/1.2 var(--v-text);
+  letter-spacing: -0.015em;
+}
+.yp-title small {
+  font: 400 13px/1.25 var(--v-text);
+  color: var(--v-ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.yp-prog {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 11px 0 7px;
+  border-radius: 999px;
+  background: var(--v-fill);
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.yp-prog b {
+  font-weight: 650;
+  color: var(--v-ink);
+}
+.yp-prog circle {
+  fill: none;
+  stroke-width: 2.6;
+}
+.yp-prog-track {
+  stroke: color-mix(in srgb, var(--mid) 20%, var(--v-card));
+}
+.yp-prog-fill {
+  stroke: var(--mid);
+  stroke-linecap: round;
+}
+.yp-prog[data-done] {
+  background: color-mix(in srgb, #34c759 14%, var(--v-card));
+}
+.yp-prog[data-done] .yp-prog-fill {
+  stroke: #34c759;
+}
+
+/* ---- rows: time · mark · text · control, on hairlines inset to the text */
+.yp-list {
+  list-style: none;
+  margin: 0;
+  padding: 2px 0 0;
+}
+.yp-row {
+  display: grid;
+  grid-template-columns: 38px 30px minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 10px;
+  min-height: 52px;
+  padding: 0 14px 0 16px;
+  position: relative;
+}
+.yp-row + .yp-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 94px;
+  right: 0;
+  border-top: 1px solid var(--v-line);
+}
+/* a new time starts a rule under the clock column too; rows under the same time keep it inset to the text */
+.yp-row + .yp-row[data-group]::before {
+  left: 16px;
+}
+.yp-time {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-variant-numeric: tabular-nums;
+}
+.yp-time b {
+  font: 600 13px/1 var(--v-num);
+  color: var(--v-ink-2);
+}
+.yp-time small {
+  font: 600 11px/1 var(--v-text);
+  color: color-mix(in srgb, var(--mid) 85%, var(--v-ink));
+}
+.yp-row-t {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.yp-row-t b {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font: 600 14.5px/1.2 var(--v-text);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.yp-row-t b em {
+  font: 500 12px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+}
+.yp-row-t small {
+  font: 400 12.5px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* the one control a row needs: an empty ring, solid green once done */
+.yp-tick {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--v-ink) 24%, transparent);
+  transition: transform 0.15s var(--v-ease), background 0.2s var(--v-ease), box-shadow 0.2s var(--v-ease);
+}
+.yp-tick:active {
+  transform: scale(0.9);
+}
+.yp-tick[data-on] {
+  background: #34c759;
+  box-shadow: none;
+}
+.yp-row[data-done] .yp-row-t b {
+  color: var(--v-ink-2);
+}
+
+.yp-clear {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 14px 16px 6px;
+  font: 500 15px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+}
+.yp-clear span {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #34c759;
+  color: #fff;
+}
+
+/* ---- energy: bar and number, sitting in the foot */
+.yp-energy {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  font: 400 12.5px/1 var(--v-text);
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.yp-energy-l {
+  display: none;
+}
+.yp-energy-v b {
+  font: 650 12.5px/1 var(--v-num);
+  color: var(--v-ink);
+}
+.yp-energy-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--mid) 16%, var(--v-card));
+  overflow: hidden;
+}
+.yp-energy-bar i {
+  display: block;
+  height: 100%;
+  width: calc(var(--share) * 100%);
+  border-radius: inherit;
+  background: var(--mid);
+}
+.yp-energy[data-over] .yp-energy-bar i {
+  background: var(--v-alert);
+}
+
+/* ---- foot: energy at left, the way to the full plan at right */
+.yp-foot {
+  width: calc(100% - 30px);
+  margin: 4px 14px 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 0 12px;
+  border-top: 1px solid var(--v-line);
+  text-align: left;
+}
+.yp-foot-go {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font: 600 13px/1 var(--v-text);
+  color: var(--v-navy);
+}
+:root[data-theme="dark"] .yp-foot-go {
+  color: var(--v-ink);
+}

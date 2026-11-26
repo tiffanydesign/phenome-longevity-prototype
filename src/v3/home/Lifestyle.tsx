@@ -1,6 +1,5 @@
 import { useSearchParams } from "react-router-dom";
 import { metric, type Metric } from "../data/metrics";
-import { NUTRIENT, TARGET } from "../food/data";
 import { todayKey, useMeals } from "../food/store";
 import { MetricCard } from "./CategoryPage";
 import { useDiaryMetric } from "./diary";
@@ -11,6 +10,8 @@ import { planActions, unitFor, useToday, type HabitToday } from "../habits/plan"
 import { FoodTabExtras } from "./FoodTabExtras";
 import "./lifestyle.css";
 
+
+const num = (v: string) => Number(v.replace(/[^\d.]/g, "")) || 0;
 /*
  * The Lifestyle tab below its Today card: two daily routines behind a
  * two-way switch, Nutrition (what was eaten, what the next meal should do)
@@ -58,7 +59,7 @@ function NutritionSide() {
   return (
     <>
       <div className="lf-entry">
-        <MetricCard id="diet" m={diet} stamp={stamp} to="/v3/food" glyph={<MacroColumns grams={diet.grams} />} />
+        <MetricCard id="diet" m={diet} stamp={stamp} to="/v3/food" glyph={<EnergyRing kcal={num(diet.value)} goal={num(diet.unit)} />} />
       </div>
       <FoodTabExtras />
     </>
@@ -79,48 +80,50 @@ function HabitsSide() {
   return (
     <>
       <div className="lf-entry">
-        <MetricCard id="habits" m={m} to="/v3/habits" glyph={<HabitTicks done={all.map((t) => t.done)} />} />
+        <MetricCard id="habits" m={m} to="/v3/habits" glyph={<HabitRing done={done} total={all.length} />} />
       </div>
       <HabitsToday />
     </>
   );
 }
 
-/** Protein, carbs and fat as three columns, each filled to its share of the day's target. */
-function MacroColumns({ grams }: { grams?: { protein: number; carbs: number; fat: number } }) {
-  const ids = ["protein", "carbs", "fat"] as const;
-  return (
-    <svg className="cg" width="76" height="56" viewBox="0 0 76 56" role="img" aria-label="Protein, carbs and fat against their targets">
-      {ids.map((id, i) => {
-        const share = Math.min(1, (grams?.[id] ?? 0) / TARGET[id]);
-        const x = 4 + i * 26;
-        return (
-          <g key={id}>
-            <rect className="cg-off" x={x} y={0} width={16} height={56} rx="5" />
-            <rect x={x} y={56 - share * 56} width={16} height={share * 56} rx="5" fill={NUTRIENT[id].hue} />
-          </g>
-        );
-      })}
-    </svg>
-  );
+/** The day's habits as one ring: the share done, a tick once all are done. */
+function HabitRing({ done, total }: { done: number; total: number }) {
+  return <ProgressRing share={total ? done / total : 0} done={total > 0 && done === total} label={`${done} of ${total} habits done`} />;
 }
 
-/** One disc per habit in plan order, ticked when done: four to a row, the rows sitting on the card's baseline. */
-function HabitTicks({ done }: { done: boolean[] }) {
-  const per = 4;
-  const rows = Math.ceil(done.length / per);
+/** The day's energy against the goal as one ring: green once in range, the alert colour well past it. */
+function EnergyRing({ kcal, goal }: { kcal: number; goal: number }) {
+  const share = goal ? kcal / goal : 0;
+  const tone = share > 1.1 ? "over" : share >= 0.9 ? "ok" : undefined;
+  return <ProgressRing share={share} tone={tone} label={`${Math.round(share * 100)}% of the day's energy goal`} />;
+}
+
+/**
+ * One ring for a card's right side: the share in the card's hue with the
+ * percentage inside, green with a tick when done. Below 100% the arc keeps a
+ * visible gap, as round caps would otherwise close it.
+ */
+function ProgressRing({ share, done, tone, label }: { share: number; done?: boolean; tone?: "ok" | "over"; label: string }) {
+  const size = 56;
+  const stroke = 6;
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const full = done || share >= 1;
+  const arc = full ? 1 : Math.min(Math.max(0, share), 1 - (stroke + 4) / c);
   return (
-    <svg className="cg" width="76" height="56" viewBox="0 0 76 56" role="img" aria-label={`${done.filter(Boolean).length} of ${done.length} habits done`}>
-      {done.map((on, i) => {
-        const cx = 9 + (i % per) * 19.3;
-        const cy = 56 - 9 - (rows - 1 - Math.floor(i / per)) * 20;
-        return (
-          <g key={i} transform={`translate(${cx} ${cy})`}>
-            <circle r="8" className={on ? "lf-tick-on" : "cg-ring-off"} />
-            {on && <path d="M-3.4 0.2 -1 2.6 3.6 -2.4" className="lf-tick" />}
-          </g>
-        );
-      })}
+    <svg className="cg lf-ring" data-done={done ? "" : undefined} data-tone={tone} width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={label}>
+      <circle className="lf-ring-track" cx={size / 2} cy={size / 2} r={r} strokeWidth={stroke} />
+      {arc > 0 && (
+        <circle className="lf-ring-fill" cx={size / 2} cy={size / 2} r={r} strokeWidth={stroke} strokeDasharray={`${c * arc} ${c}`} transform={`rotate(-90 ${size / 2} ${size / 2})`} />
+      )}
+      {done ? (
+        <path d="M20.5 28.5 25.5 33.5 35.5 22.5" className="lf-ring-tick" />
+      ) : (
+        <text x="50%" y="50%" dy="0.35em" textAnchor="middle" className="lf-ring-n">
+          {Math.round(share * 100)}%
+        </text>
+      )}
     </svg>
   );
 }

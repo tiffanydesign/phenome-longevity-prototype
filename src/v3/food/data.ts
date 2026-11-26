@@ -61,7 +61,7 @@ export function slotAt(d: Date): Slot {
 
 /** Default daily targets (the Balanced split at 2,000 kcal). Energy is the member's "diet" goal (goals.tsx); the rest are theirs to change in targets.ts. */
 export const TARGET: Record<NutrientId, number> & { kcal: number } = {
-  kcal: 2000,
+  kcal: 1750,
   protein: 110,
   carbs: 225,
   fat: 73,

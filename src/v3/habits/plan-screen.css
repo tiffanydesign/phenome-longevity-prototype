@@ -1,0 +1,426 @@
+/* =====================================================================
+ * Your plan, full page. One column on the page ground, 20px gutters, a
+ * 32px rhythm between tiers. Type steps: 34 title, 22 section, 16 row,
+ * 13 meta. One grid for every timeline row (time 44 · rail 20 · card),
+ * and inside each card one row grid (mark 32 · words · control 28), so
+ * times, marks and controls align down the whole page.
+ * ===================================================================== */
+.pt {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: 0 0 calc(48px + env(safe-area-inset-bottom));
+  background: var(--v-bg);
+  color: var(--v-ink);
+  --pt-gut: 20px;
+}
+
+/* ---- sticky bar: the back button, and the title once the big one has scrolled away */
+.pt-bar {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  padding: calc(var(--status-h) + 6px) 16px 8px;
+  background: transparent;
+  transition: background 0.2s var(--v-ease), box-shadow 0.2s var(--v-ease);
+}
+.pt-bar[data-scrolled] {
+  background: var(--v-bg);
+  box-shadow: 0 1px 0 var(--v-line);
+}
+.pt-back {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: 0 1px 2px rgb(16 24 64 / 0.06);
+}
+.pt-bar-title {
+  text-align: center;
+  font: 650 16px/1 var(--v-text);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s var(--v-ease), transform 0.2s var(--v-ease);
+}
+.pt-bar[data-scrolled] .pt-bar-title {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- 1: whose plan */
+.pt-hero {
+  padding: 10px var(--pt-gut) 0;
+}
+.pt-hero h1 {
+  margin: 0;
+  font: 700 34px/1.06 var(--v-text);
+  letter-spacing: -0.035em;
+}
+.pt-hero p {
+  margin: 8px 0 0;
+  font: 400 15px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+}
+.pt-hero-tags {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pt-goal {
+  padding: 6px 11px;
+  border-radius: 999px;
+  font: 600 13px/1 var(--v-text);
+  color: color-mix(in srgb, var(--mid) 45%, var(--v-ink));
+  background: color-mix(in srgb, var(--mid) 14%, var(--v-card));
+}
+:root[data-theme="dark"] .pt-goal {
+  color: var(--v-ink);
+}
+.pt-updated {
+  font: 400 13px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* ---- 2: today so far */
+.pt-sum {
+  margin: 24px 16px 0;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+}
+.pt-ring circle {
+  fill: none;
+}
+.pt-ring-track {
+  stroke: color-mix(in srgb, var(--mid) 16%, var(--v-card));
+}
+.pt-ring-fill {
+  stroke: var(--mid);
+  stroke-linecap: round;
+}
+.pt-ring[data-done] .pt-ring-fill {
+  stroke: #34c759;
+}
+.pt-sum-t > b {
+  display: block;
+  font: 700 26px/1 var(--v-num);
+  letter-spacing: -0.02em;
+}
+.pt-sum-t > b span {
+  font: 500 15px/1 var(--v-text);
+  letter-spacing: 0;
+  color: var(--v-ink-2);
+}
+.pt-sum-t > small {
+  display: block;
+  margin-top: 6px;
+  font: 400 13px/1.2 var(--v-text);
+  color: var(--v-ink-3);
+}
+.pt-energy {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+}
+.pt-energy em {
+  font: 400 12.5px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.pt-energy em b {
+  font: 650 12.5px/1 var(--v-num);
+  color: var(--v-ink);
+}
+.pt-bar-track {
+  display: block;
+  height: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--v-fill);
+}
+.pt-bar-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--mid);
+}
+
+/* ---- 3: the note, as a quote: an opening mark in the tab hue, the words on the ground */
+.pt-note {
+  margin: 28px var(--pt-gut) 0;
+  padding: 0;
+}
+.pt-note::before {
+  content: "\201C";
+  display: block;
+  height: 22px;
+  font: 700 40px/1 var(--v-text);
+  color: var(--mid);
+}
+.pt-note blockquote {
+  margin: 0;
+  font: 400 16px/1.5 var(--v-text);
+  color: var(--v-ink);
+  text-wrap: pretty;
+}
+.pt-note figcaption {
+  margin-top: 8px;
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-3);
+}
+
+/* ---- section heads */
+.pt-h2 {
+  margin: 36px var(--pt-gut) 14px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font: 700 22px/1.15 var(--v-text);
+  letter-spacing: -0.02em;
+}
+.pt-h2 span {
+  font: 500 14px/1 var(--v-text);
+  letter-spacing: 0;
+  color: var(--v-ink-3);
+}
+
+/* ---- 4: the timeline. time 44 · rail 20 · card */
+.pt-line {
+  list-style: none;
+  margin: 0;
+  padding: 0 16px 0 var(--pt-gut);
+}
+.pt-slot {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 20px minmax(0, 1fr);
+  column-gap: 4px;
+  padding-bottom: 12px;
+}
+/* the rail runs from this node down to the next */
+.pt-slot::before {
+  content: "";
+  position: absolute;
+  left: calc(44px + 4px + 9px);
+  top: 22px;
+  bottom: -2px;
+  border-left: 2px solid color-mix(in srgb, var(--v-ink) 10%, transparent);
+}
+.pt-slot:last-child::before {
+  display: none;
+}
+.pt-time {
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.pt-time b {
+  font: 600 13px/1 var(--v-num);
+  color: var(--v-ink-2);
+}
+.pt-time small {
+  font: 600 11px/1 var(--v-text);
+  color: color-mix(in srgb, var(--mid) 85%, var(--v-ink));
+}
+.pt-slot[data-done] .pt-time b {
+  color: var(--v-ink-3);
+}
+.pt-node {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  margin-top: 15px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--v-bg);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--v-ink) 22%, transparent);
+}
+.pt-slot[data-due] .pt-node {
+  box-shadow: inset 0 0 0 3px var(--mid);
+}
+.pt-slot[data-done] .pt-node {
+  background: #34c759;
+  box-shadow: none;
+}
+.pt-card {
+  min-width: 0;
+  border-radius: 18px;
+  background: var(--v-card);
+}
+.pt-item + .pt-item {
+  border-top: 1px solid var(--v-line);
+}
+
+/* one row grid in every card: mark 32 · words · control 28 */
+.pt-row {
+  min-height: 60px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 28px;
+  align-items: center;
+  column-gap: 12px;
+}
+.pt-row-t {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.pt-row-t b {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font: 600 15.5px/1.2 var(--v-text);
+  letter-spacing: -0.01em;
+}
+.pt-row-t b em {
+  font: 500 12px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-3);
+}
+.pt-row-t small {
+  font: 400 13px/1.25 var(--v-text);
+  color: var(--v-ink-3);
+}
+.pt-item[data-done] .pt-row-t b {
+  color: var(--v-ink-2);
+}
+
+.pt-tick {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--v-ink) 24%, transparent);
+  transition: background 0.2s var(--v-ease), transform 0.15s var(--v-ease);
+}
+.pt-tick:active {
+  transform: scale(0.9);
+}
+.pt-tick[data-on] {
+  background: #34c759;
+  box-shadow: none;
+}
+
+/* choices sit under the words, inset to the words column, radios in the control column */
+.pt-choices {
+  list-style: none;
+  margin: 0;
+  padding: 0 12px 6px calc(12px + 32px + 12px);
+}
+.pt-choices li + li {
+  border-top: 1px solid var(--v-line);
+}
+.pt-choices button {
+  width: 100%;
+  min-height: 52px;
+  padding: 8px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px;
+  align-items: center;
+  column-gap: 12px;
+  text-align: left;
+  color: inherit;
+}
+.pt-choice-t {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.pt-choice-t b {
+  font: 500 14.5px/1.3 var(--v-text);
+}
+.pt-choice-t small {
+  font: 400 12px/1 var(--v-text);
+  color: var(--v-ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.pt-radio {
+  justify-self: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--v-ink) 24%, transparent);
+  transition: box-shadow 0.2s var(--v-ease);
+}
+.pt-radio[data-on] {
+  box-shadow: inset 0 0 0 6px var(--v-navy);
+}
+:root[data-theme="dark"] .pt-radio[data-on] {
+  box-shadow: inset 0 0 0 6px #fff;
+}
+
+/* ---- 5: targets */
+.pt-targets {
+  margin: 0 16px;
+  padding: 18px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+}
+.pt-macros {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.pt-macro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pt-macro small {
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.pt-macro b {
+  font: 700 20px/1 var(--v-num);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.pt-macro b span {
+  font: 400 13px/1 var(--v-text);
+  letter-spacing: 0;
+  color: var(--v-ink-3);
+}
+.pt-micros {
+  margin: 18px 0 0;
+}
+.pt-micros div {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid var(--v-line);
+  font: 400 15px/1.2 var(--v-text);
+}
+.pt-micros dt {
+  color: var(--v-ink);
+}
+.pt-micros dd {
+  margin: 0;
+  color: var(--v-ink-3);
+}
+
+.pt-foot {
+  margin: 24px var(--pt-gut) 0;
+  font: 400 13px/1.45 var(--v-text);
+  color: var(--v-ink-3);
+}

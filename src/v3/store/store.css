@@ -1,8 +1,8 @@
 /* =====================================================================
- * v3 Store: the Omics tab's frame (brand bar over the grey ground, large
- * title, white cards on the card radius) with the store's own parts: a
- * white search field, the categories as the same sliding switch the
- * calorie sheet and Lifestyle use, and products two to a row.
+ * v3 Store: the same layout as before (title, search, categories, two
+ * products to a row) in the web store's look: a cool pale ground, large
+ * tight headings, pill-shaped controls, and products standing straight on
+ * big white cards with generous corners, a navy kind label and a plain price.
  * ===================================================================== */
 .sx {
   position: absolute;
@@ -17,26 +17,19 @@
 }
 
 .sx-title {
-  margin: 14px 4px 6px;
-  font: 700 28px/1.12 var(--v-display);
-  letter-spacing: -0.022em;
+  margin: 18px 4px 20px;
+  font: 700 40px/1.05 var(--v-display);
+  letter-spacing: -0.035em;
   color: var(--v-ink);
 }
-.sx-sub {
-  margin: 0 4px 16px;
-  font: 400 16px/1.35 var(--v-text);
-  color: var(--v-ink-2);
-  text-wrap: pretty;
-}
-
 /* search: a white field on the card radius, the mark at the left */
 .sx-search {
-  height: 44px;
-  padding: 0 12px;
+  height: 46px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  border-radius: 14px;
+  gap: 10px;
+  border-radius: 999px;
   color: var(--v-ink-3);
   background: var(--v-card);
 }
@@ -74,83 +67,95 @@
 /* categories: one track, the chosen one a white chip */
 .sx-seg {
   margin-top: 14px;
-  padding: 3px;
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  gap: 2px;
-  border-radius: 12px;
-  background: var(--v-fill);
+  display: flex;
+  gap: 8px;
 }
 .sx-seg button {
   min-width: 0;
-  min-height: 34px;
-  padding: 0 8px;
+  height: 36px;
+  padding: 0 16px;
   display: grid;
   place-items: center;
-  border-radius: 9px;
+  border-radius: 999px;
   white-space: nowrap;
-  font: 500 14px/1.1 var(--v-text);
-  color: var(--v-ink-2);
+  font: 600 14px/1 var(--v-text);
+  color: var(--v-ink);
+  background: var(--v-card);
   transition: background 0.2s var(--v-ease), color 0.2s var(--v-ease);
 }
 .sx-seg button[aria-selected="true"] {
-  font-weight: 600;
-  color: var(--v-ink);
-  background: var(--v-card);
-  box-shadow: 0 0 0 0.5px var(--v-line);
+  color: #fff;
+  background: var(--v-navy);
 }
 
 .sx-count {
-  margin: 20px 4px 10px;
-  font: 600 13px/1 var(--v-text);
+  margin: 26px 4px 12px;
+  font: 500 14px/1 var(--v-text);
   color: var(--v-ink-3);
 }
 
-/* products: white cards, two to a row */
+/* products: two to a row, one white card each. The pack sits in a pale
+   blue well inset from the card's edge by a thin white frame; the words sit
+   on white below. */
 .sx-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
 }
 .sx-card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  padding: 8px 8px 14px;
+  overflow: hidden;
   text-align: left;
-  border-radius: var(--v-r);
+  padding: 6px;
+  border-radius: 24px;
   background: var(--v-card);
-  transition: transform 0.15s var(--v-ease);
+  box-shadow: 0 1px 2px rgb(16 24 64 / 0.05), 0 8px 24px -12px rgb(16 24 64 / 0.12);
+  transition: transform 0.18s var(--v-ease);
 }
-.sx-card:active {
+.sx-card:has(.sx-card-open:active) {
   transform: scale(0.98);
 }
+:root[data-theme="dark"] .sx-card {
+  box-shadow: none;
+}
+/* the whole card opens the product; the add button sits above this layer */
+.sx-card-open {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
 .sx-card-img {
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 0.92;
   display: grid;
   place-items: center;
   overflow: hidden;
-  border-radius: calc(var(--v-r) - 8px);
-  background: var(--v-bg);
+  border-radius: 18px;
+  background: #eaf0fa;
 }
 .sx-card-img img {
-  width: 92%;
-  height: 92%;
+  width: 84%;
+  height: 84%;
   object-fit: contain;
   mix-blend-mode: multiply;
 }
-:root[data-theme="dark"] .sx-card-img {
-  background: #f2f2f7;
-}
 .sx-card-t {
+  flex: 1;
   min-width: 0;
-  padding: 12px 6px 0;
+  padding: 10px 4px 2px 8px;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 .sx-card-t small {
-  font: 500 12px/1.1 var(--v-text);
-  color: var(--v-ink-3);
+  font: 600 11.5px/1.1 var(--v-text);
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, var(--v-navy) 80%, var(--v-ink-3));
+}
+:root[data-theme="dark"] .sx-card-t small {
+  color: color-mix(in srgb, var(--v-navy) 35%, #fff);
 }
 .sx-card-t b {
   display: -webkit-box;
@@ -158,16 +163,106 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   min-height: 2.5em;
-  font: 600 15px/1.25 var(--v-text);
-  letter-spacing: -0.01em;
+  font: 700 15.5px/1.25 var(--v-text);
+  letter-spacing: -0.015em;
   color: var(--v-ink);
 }
-.sx-card-t em {
-  margin-top: 4px;
-  font: 650 16px/1 var(--v-num);
+.sx-card-foot {
+  margin-top: auto;
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.sx-card-foot em {
+  font: 600 14.5px/1 var(--v-num);
   font-style: normal;
+  letter-spacing: -0.01em;
   font-variant-numeric: tabular-nums;
   color: var(--v-ink);
+}
+
+/* add: a white disc on the panel; solid navy with a tick once in the bag */
+.sx-add {
+  position: relative;
+  z-index: 2;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--v-navy);
+  background: #fff;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--v-navy) 12%, transparent);
+  transition: transform 0.15s var(--v-ease), background 0.2s var(--v-ease), color 0.2s var(--v-ease);
+}
+.sx-add:active {
+  transform: scale(0.88);
+}
+/* in the bag: the disc widens into a capsule with one word, no mark */
+.sx-add[data-in] {
+  width: auto;
+  padding: 0 12px;
+  border-radius: 17px;
+  font: 600 13px/1 var(--v-text);
+  color: #fff;
+  background: var(--v-navy);
+  box-shadow: none;
+  animation: sx-pop 0.28s var(--v-ease);
+}
+@keyframes sx-pop {
+  from {
+    transform: scale(0.85);
+    opacity: 0.4;
+  }
+}
+:root[data-theme="dark"] .sx-add[data-in] {
+  background: color-mix(in srgb, var(--v-navy) 70%, #fff);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sx-add[data-in] {
+    animation: none;
+  }
+}
+
+/* the bag in the top bar: a navy disc on its own (no glass capsule around it
+   when the page scrolls under), with a red count once something is in it */
+.sx-head[data-under] .v2-hpill {
+  background: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+/* one solid disc: no inner disc, and no see-through edge once scrolled */
+.v2-avatar.sx-hbag::before {
+  display: none;
+}
+.v2-head[data-under] .v2-hpill .v2-avatar.sx-hbag {
+  background: var(--v-navy);
+}
+.v2-avatar > .sx-hbag-n {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font: 700 11px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  background: var(--v-alert);
+  box-shadow: 0 0 0 2px var(--v-bg);
+}
+.v2-avatar.sx-hbag > svg {
+  position: relative;
+}
+:root[data-theme="dark"] .v2-avatar.sx-hbag {
+  color: #0b0d14;
 }
 
 .sx-empty {
@@ -201,4 +296,15 @@
   font: 600 15px/1 var(--v-text);
   color: #fff;
   background: var(--v-navy);
+}
+
+/* a photo with its own backdrop fills the area as it is: no blue well, no blending */
+.sx-card[data-scene] .sx-card-img {
+  background: none;
+}
+.sx-card[data-scene] .sx-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: normal;
 }

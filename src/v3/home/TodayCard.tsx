@@ -132,7 +132,10 @@ export function TodayCard({ tab }: { tab: HomeTab }) {
   const stroke = 6;
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
-  const v = Math.max(0, Math.min(1, d.share));
+  // round caps reach half a stroke past each end, so a nearly full ring would read as closed:
+  // below 100% keep a gap of at least a stroke and a bit, so 98 never looks like 100
+  const raw = Math.max(0, Math.min(1, d.share));
+  const v = raw < 1 ? Math.min(raw, 1 - (stroke + 4) / c) : 1;
   return (
     <button className="v2-today" aria-label={d.aria} onClick={(e) => go(d.to, { from: e.currentTarget })}>
       <span className="v2-today-ring" aria-hidden>

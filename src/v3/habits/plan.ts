@@ -35,6 +35,10 @@ export interface Habit {
   mark: MarkId;
   /** a source that fills it in without the member */
   source?: "band" | "food";
+  /** set by the member's clinician in the portal, not by the member */
+  prescribed?: boolean;
+  /** clock times it is due, one per dose for a count habit ("08:00") */
+  times?: string[];
 }
 
 export const EVERY_DAY = [0, 1, 2, 3, 4, 5, 6];
@@ -42,19 +46,27 @@ export const WEEKDAYS = [1, 2, 3, 4, 5];
 
 export const DEFAULT_PLAN: Habit[] = [
   { id: "rested", short: "Rested", name: "How rested do you feel?", detail: "Read next to last night's sleep", kind: "choice", options: ["Drained", "Okay", "Rested", "Great"], part: "morning", days: EVERY_DAY, checkIn: true, field: "sleep", mark: "moon" },
-  { id: "vitamins", short: "Vitamins", name: "Morning vitamins", detail: "Vitamin D3 · Omega-3 · Magnesium", kind: "once", part: "morning", days: EVERY_DAY, checkIn: true, field: "food", mark: "pill" },
+  { id: "vitamins", short: "Vitamins", name: "Morning vitamins", detail: "Vitamin D3 · Omega-3 · Magnesium", kind: "once", part: "morning", days: EVERY_DAY, checkIn: true, field: "food", mark: "pill", prescribed: true, times: ["08:00"] },
+  { id: "bp-med", short: "BP tablet", name: "Blood pressure tablet", detail: "Amlodipine 5 mg · with breakfast", kind: "once", part: "morning", days: EVERY_DAY, checkIn: true, field: "heart", mark: "pill", prescribed: true, times: ["08:00"] },
+  { id: "metformin", short: "Metformin", name: "Metformin", detail: "500 mg · with breakfast and dinner", kind: "count", goal: 2, unit: ["dose", "doses"], part: "anytime", days: EVERY_DAY, checkIn: true, field: "teal", mark: "pill", prescribed: true, times: ["08:00", "19:00"] },
   { id: "water", short: "Water", name: "Water", detail: "A glass at a time, across the day", kind: "count", goal: 8, unit: ["glass", "glasses"], part: "anytime", days: EVERY_DAY, checkIn: true, field: "vitals", mark: "drop" },
   { id: "mobility", short: "Mobility", name: "Five minutes of mobility", detail: "Hips, spine and shoulders", kind: "once", part: "afternoon", days: EVERY_DAY, checkIn: true, field: "activity", mark: "stretch", source: "band" },
   { id: "meals", short: "Meals", name: "Log your meals", detail: "A photo or a few words", kind: "count", goal: 3, unit: ["meal", "meals"], part: "anytime", days: EVERY_DAY, checkIn: true, field: "lavender", mark: "meal", source: "food" },
   { id: "read", short: "Read", name: "Read for 20 minutes", detail: "Away from screens", kind: "once", part: "evening", days: WEEKDAYS, checkIn: true, field: "capacity", mark: "book" },
   { id: "screens", short: "Screens", name: "Screens off by 22:30", detail: "An hour before bed", kind: "once", part: "evening", days: EVERY_DAY, checkIn: false, field: "sleep", mark: "screen" },
+  { id: "statin", short: "Statin", name: "Evening statin", detail: "Atorvastatin 20 mg · after dinner", kind: "once", part: "evening", days: EVERY_DAY, checkIn: true, field: "rose", mark: "pill", prescribed: true, times: ["21:00"] },
 ];
+
+/** Medication examples, added once to plans saved before they existed. */
+const MED_IDS = ["bp-med", "metformin", "statin"];
 
 /** Ideas offered when adding a habit; the member can also name their own. */
 export const SUGGESTIONS: Omit<Habit, "id">[] = [
   { name: "Morning light", detail: "Ten minutes outside before noon", kind: "once", part: "morning", days: EVERY_DAY, checkIn: true, field: "capacity", mark: "sun" },
   { name: "Walk after lunch", detail: "Fifteen minutes on foot", kind: "once", part: "afternoon", days: EVERY_DAY, checkIn: true, field: "activity", mark: "walk" },
   { name: "Vegetables", detail: "A portion at a time", kind: "count", goal: 5, unit: ["portion", "portions"], part: "anytime", days: EVERY_DAY, checkIn: true, field: "food", mark: "leaf" },
+  { name: "Take a medication", detail: "Name, dose and when to take it", kind: "once", part: "morning", days: EVERY_DAY, checkIn: true, field: "heart", mark: "pill" },
+  { name: "Weekly injection", detail: "Vitamin B12 · 1 mg on Mondays", kind: "once", part: "morning", days: [1], checkIn: true, field: "lavender", mark: "pill" },
   { name: "Stretch before bed", detail: "Five slow minutes", kind: "once", part: "evening", days: EVERY_DAY, checkIn: true, field: "activity", mark: "stretch" },
 ];
 
@@ -98,8 +110,22 @@ function writeJSON(key: string, v: unknown) {
 
 /** Plans saved while meals were off Small wins: bring the meals card back once; after that the member's own choice stands. */
 const MEALS_ON_KEY = "phenome.v3.plan.mealsOn";
+const MEDS_KEY = "phenome.v3.plan.medsOn";
 function loadPlan(): Habit[] {
-  const saved = readJSON(PLAN_KEY, DEFAULT_PLAN);
+  let saved = readJSON(PLAN_KEY, DEFAULT_PLAN);
+  if (!readJSON(MEDS_KEY, false)) {
+    writeJSON(MEDS_KEY, true);
+    const missing = DEFAULT_PLAN.filter((h) => MED_IDS.includes(h.id) && !saved.some((s) => s.id === h.id));
+    if (missing.length) {
+      saved = [...saved, ...missing];
+      writeJSON(PLAN_KEY, saved);
+    }
+  }
+  // clinician fields always follow the portal, whatever the member saved
+  saved = saved.map((h) => {
+    const d = DEFAULT_PLAN.find((x) => x.id === h.id);
+    return d?.prescribed ? { ...h, prescribed: true, times: d.times } : h;
+  });
   if (readJSON(MEALS_ON_KEY, false)) return saved;
   writeJSON(MEALS_ON_KEY, true);
   const next = saved.map((h) => (h.id === "meals" ? { ...h, checkIn: true } : h));

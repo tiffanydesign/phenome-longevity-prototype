@@ -191,3 +191,36 @@
 :root[data-theme="dark"] .lf-act-count:not([data-on]) {
   color: var(--v-ink);
 }
+
+/* Habits card: the day as one ring in the card's hue, green once everything is done */
+.lf-ring circle {
+  fill: none;
+}
+.lf-ring-track {
+  stroke: color-mix(in srgb, var(--mid) 16%, var(--v-card));
+}
+.lf-ring-fill {
+  stroke: var(--mid);
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s var(--v-ease);
+}
+.lf-ring[data-done] .lf-ring-fill,
+.lf-ring[data-tone="ok"] .lf-ring-fill {
+  stroke: #34c759;
+}
+.lf-ring[data-tone="over"] .lf-ring-fill {
+  stroke: var(--v-alert);
+}
+.lf-ring-n {
+  font: 700 13px/1 var(--v-num);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  fill: var(--v-ink);
+}
+.lf-ring-tick {
+  fill: none;
+  stroke: #34c759;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
