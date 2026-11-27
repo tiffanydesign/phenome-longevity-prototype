@@ -49,7 +49,7 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: var(--mid);
+  color: var(--mid-ink);
   background: color-mix(in srgb, var(--mid) 13%, var(--v-card));
 }
 .al-name {
@@ -97,7 +97,7 @@
 }
 .al-today-k {
   font: 600 15px/1 var(--v-text);
-  color: color-mix(in oklab, var(--mid), var(--v-ink) 18%);
+  color: color-mix(in oklab, var(--mid-ink), var(--v-ink) 18%);
 }
 .al-today-g {
   font: 500 14px/1 var(--v-text);

@@ -280,7 +280,7 @@
 .tw-over {
   margin: 0 20px 2px;
   font: 600 14px var(--v-text);
-  color: color-mix(in oklab, var(--mid), var(--fg) 38%);
+  color: color-mix(in oklab, var(--mid-ink), var(--fg) 38%);
 }
 .tw-name {
   flex: 1;
@@ -690,7 +690,7 @@
   gap: 6px 8px;
   font-size: 15px;
   font-weight: 600;
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .tw-chart-t small {
   padding: 2px 9px;
@@ -932,6 +932,7 @@
   box-shadow: 0 14px 28px -20px #1d3f72;
 }
 :root[data-theme="dark"] .two-plan {
+  color: var(--v-on-navy);
   background: var(--v-navy);
   box-shadow: none;
 }
@@ -1355,12 +1356,11 @@
 
 
 
-/* dark theme: the sky is the page's own card with a breath of the brand navy, so the
-   hero sits in the dark palette (black, graphite or system) instead of a separate blue
-   slab; the lit contour of the figure does the glowing. The in-range bar keeps a night key. */
+/* dark theme: the sky is the page's own black ground, so the hero sits in the dark
+   palette instead of a separate tinted slab; the lit contour of the figure does the glowing. The in-range bar keeps a night key. */
 :root[data-theme="dark"] .tw,
 :root[data-theme="dark"] .tw-veil {
-  --two-sky: color-mix(in srgb, var(--v-navy) 12%, var(--v-card));
+  --two-sky: var(--v-bg);
 }
 :root[data-theme="dark"] .tw-results [data-status="normal"] {
   --band: #24506b;

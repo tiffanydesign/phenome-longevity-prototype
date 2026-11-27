@@ -90,3 +90,40 @@
 :root[data-theme="dark"] .ah-check {
   color: var(--v-accent);
 }
+
+/* =====================================================================
+ * Both themes: the conversation is set in the edition's one text face, a
+ * step larger with more leading so long answers read as paragraphs, and
+ * the bubbles may use the full width less a margin on the far side.
+ * ===================================================================== */
+.as-user,
+.as-ai {
+  max-width: calc(100% - 44px);
+  font-family: var(--v-text);
+  letter-spacing: -0.006em;
+}
+.as-user {
+  padding: 10px 16px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.as-ai {
+  padding: 14px 16px 16px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.as-ai b {
+  font-weight: 650;
+}
+.as-ai ol {
+  padding-left: 22px;
+  gap: 12px;
+}
+.as-chip {
+  font-family: var(--v-text);
+  font-weight: 500;
+}
+:root:not([data-theme="dark"]) .as-chip,
+:root:not([data-theme="dark"]) .as-round {
+  border-color: var(--v-line);
+}

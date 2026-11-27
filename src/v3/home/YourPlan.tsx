@@ -26,11 +26,10 @@ export function YourPlan() {
 
   return (
     <section className="yp" aria-label="Your plan">
-      {/* head: title and progress, then the dietitian's note as one quiet line */}
+      {/* head: title and progress; the dietitian's note lives on the full plan */}
       <button className="yp-head" onClick={(e) => open(e.currentTarget)}>
         <span className="yp-title">
           <b>Your plan</b>
-          <small>{CLINIC_PLAN.note}</small>
         </span>
         <Progress done={done} total={total} />
       </button>

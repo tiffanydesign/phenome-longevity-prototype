@@ -296,7 +296,7 @@
   background: var(--vc-worse-pill);
 }
 .vc-pill[data-verdict="shift"] {
-  color: color-mix(in oklab, var(--mid), var(--v-ink) 30%);
+  color: color-mix(in oklab, var(--mid-ink), var(--v-ink) 30%);
   background: color-mix(in srgb, var(--mid) 12%, transparent);
 }
 .vc-vals {

@@ -1,9 +1,9 @@
 /* =====================================================================
- * Your plan, full page. One column on the page ground, 20px gutters, a
- * 32px rhythm between tiers. Type steps: 34 title, 22 section, 16 row,
- * 13 meta. One grid for every timeline row (time 44 · rail 20 · card),
- * and inside each card one row grid (mark 32 · words · control 28), so
- * times, marks and controls align down the whole page.
+ * Your plan, full page. One column on the page ground: cards on 16px
+ * gutters, words on 20px. Type steps: 34 title, 22 section, 16 row, 14
+ * meta. Each clock time is a heading over one full-width card, and inside
+ * every card one row grid (mark 32 · words · control 28), so marks and
+ * controls align down the whole page.
  * ===================================================================== */
 .pt {
   position: absolute;
@@ -53,7 +53,8 @@
   transform: none;
 }
 
-/* ---- 1: whose plan */
+
+/* ---- 1: what the plan is for */
 .pt-hero {
   padding: 10px var(--pt-gut) 0;
 }
@@ -62,40 +63,123 @@
   font: 700 34px/1.06 var(--v-text);
   letter-spacing: -0.035em;
 }
-.pt-hero p {
-  margin: 8px 0 0;
-  font: 400 15px/1.35 var(--v-text);
-  color: var(--v-ink-2);
+.pt-goal-line {
+  margin: 10px 0 0;
+  font: 600 19px/1.25 var(--v-text);
+  letter-spacing: -0.015em;
+  color: var(--mid-ink, var(--mid));
 }
-.pt-hero-tags {
-  margin-top: 12px;
+:root:not([data-theme="dark"]) .pt-goal-line {
+  color: color-mix(in srgb, var(--mid) 62%, var(--v-ink));
+}
+.pt-meta {
+  margin: 8px 0 0;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  font: 400 14px/1.35 var(--v-text);
+  color: var(--v-ink-2);
 }
-.pt-goal {
-  padding: 6px 11px;
-  border-radius: 999px;
-  font: 600 13px/1 var(--v-text);
-  color: color-mix(in srgb, var(--mid) 45%, var(--v-ink));
-  background: color-mix(in srgb, var(--mid) 14%, var(--v-card));
-}
-:root[data-theme="dark"] .pt-goal {
-  color: var(--v-ink);
-}
-.pt-updated {
-  font: 400 13px/1 var(--v-text);
-  color: var(--v-ink-3);
+.pt-live {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34c759;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #34c759 22%, transparent);
 }
 
-/* ---- 2: today so far */
-.pt-sum {
+/* ---- 2: the care team's note, folded to one row: mark · who and the first line · chevron */
+.pt-memo {
   margin: 24px 16px 0;
-  padding: 18px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+}
+.pt-memo-head {
+  width: 100%;
+  padding: 14px 16px;
   display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
+  grid-template-columns: 32px minmax(0, 1fr) 14px;
   align-items: center;
-  gap: 16px;
+  column-gap: 12px;
+  text-align: left;
+  color: var(--v-ink);
+}
+.pt-memo-head > svg {
+  color: var(--v-ink-3);
+}
+.pt-memo-mark {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--mid);
+  background: color-mix(in srgb, var(--mid) 14%, var(--v-card));
+}
+.pt-memo-t {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pt-memo-t b {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font: 600 15px/1.2 var(--v-text);
+}
+.pt-memo-t b em {
+  font: 400 13px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-2);
+}
+.pt-memo-t small {
+  font: 400 14px/1.3 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* open: the words on the text column, under the name */
+.pt-memo-body {
+  margin: -4px 0 0;
+  padding: 0 16px 16px calc(16px + 32px + 12px);
+  font: 400 15px/1.5 var(--v-text);
+  color: var(--v-ink);
+  text-wrap: pretty;
+  animation: pt-memo-in 0.25s var(--v-ease);
+}
+@keyframes pt-memo-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pt-memo-body {
+    animation: none;
+  }
+}
+
+/* ---- section heads */
+.pt-h2 {
+  margin: 36px var(--pt-gut) 12px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font: 700 22px/1.15 var(--v-text);
+  letter-spacing: -0.02em;
+}
+
+/* ---- 3: today. progress first, then one heading and one card per clock time */
+.pt-sum {
+  margin: 0 16px;
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
   border-radius: var(--v-r);
   background: var(--v-card);
 }
@@ -112,10 +196,14 @@
 .pt-ring[data-done] .pt-ring-fill {
   stroke: #34c759;
 }
+.pt-sum-t {
+  min-width: 0;
+}
 .pt-sum-t > b {
   display: block;
-  font: 700 26px/1 var(--v-num);
+  font: 700 24px/1 var(--v-num);
   letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 .pt-sum-t > b span {
   font: 500 15px/1 var(--v-text);
@@ -125,143 +213,53 @@
 .pt-sum-t > small {
   display: block;
   margin-top: 6px;
-  font: 400 13px/1.2 var(--v-text);
-  color: var(--v-ink-3);
-}
-.pt-energy {
-  margin-top: 12px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 10px;
-}
-.pt-energy em {
-  font: 400 12.5px/1 var(--v-text);
-  font-style: normal;
-  color: var(--v-ink-3);
-  font-variant-numeric: tabular-nums;
-}
-.pt-energy em b {
-  font: 650 12.5px/1 var(--v-num);
-  color: var(--v-ink);
-}
-.pt-bar-track {
-  display: block;
-  height: 5px;
-  border-radius: 3px;
-  overflow: hidden;
-  background: var(--v-fill);
-}
-.pt-bar-track i {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--mid);
-}
-
-/* ---- 3: the note, as a quote: an opening mark in the tab hue, the words on the ground */
-.pt-note {
-  margin: 28px var(--pt-gut) 0;
-  padding: 0;
-}
-.pt-note::before {
-  content: "\201C";
-  display: block;
-  height: 22px;
-  font: 700 40px/1 var(--v-text);
-  color: var(--mid);
-}
-.pt-note blockquote {
-  margin: 0;
-  font: 400 16px/1.5 var(--v-text);
-  color: var(--v-ink);
-  text-wrap: pretty;
-}
-.pt-note figcaption {
-  margin-top: 8px;
-  font: 500 13px/1 var(--v-text);
-  color: var(--v-ink-3);
-}
-
-/* ---- section heads */
-.pt-h2 {
-  margin: 36px var(--pt-gut) 14px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  font: 700 22px/1.15 var(--v-text);
-  letter-spacing: -0.02em;
-}
-.pt-h2 span {
-  font: 500 14px/1 var(--v-text);
-  letter-spacing: 0;
-  color: var(--v-ink-3);
-}
-
-/* ---- 4: the timeline. time 44 · rail 20 · card */
-.pt-line {
-  list-style: none;
-  margin: 0;
-  padding: 0 16px 0 var(--pt-gut);
-}
-.pt-slot {
-  position: relative;
-  display: grid;
-  grid-template-columns: 44px 20px minmax(0, 1fr);
-  column-gap: 4px;
-  padding-bottom: 12px;
-}
-/* the rail runs from this node down to the next */
-.pt-slot::before {
-  content: "";
-  position: absolute;
-  left: calc(44px + 4px + 9px);
-  top: 22px;
-  bottom: -2px;
-  border-left: 2px solid color-mix(in srgb, var(--v-ink) 10%, transparent);
-}
-.pt-slot:last-child::before {
-  display: none;
-}
-.pt-time {
-  padding-top: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-variant-numeric: tabular-nums;
-}
-.pt-time b {
-  font: 600 13px/1 var(--v-num);
+  font: 400 14px/1.25 var(--v-text);
   color: var(--v-ink-2);
 }
-.pt-time small {
-  font: 600 11px/1 var(--v-text);
-  color: color-mix(in srgb, var(--mid) 85%, var(--v-ink));
+
+.pt-day {
+  list-style: none;
+  margin: 0;
+  padding: 0 16px;
 }
-.pt-slot[data-done] .pt-time b {
-  color: var(--v-ink-3);
+.pt-slot {
+  margin-top: 20px;
 }
-.pt-node {
-  position: relative;
-  z-index: 1;
-  justify-self: center;
-  margin-top: 15px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--v-bg);
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--v-ink) 22%, transparent);
+.pt-slot-h {
+  margin: 0 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.pt-slot[data-due] .pt-node {
-  box-shadow: inset 0 0 0 3px var(--mid);
+.pt-slot-h b {
+  font: 650 15px/1 var(--v-num);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
 }
-.pt-slot[data-done] .pt-node {
-  background: #34c759;
-  box-shadow: none;
+.pt-slot[data-done] .pt-slot-h b {
+  color: var(--v-ink-2);
+}
+.pt-due,
+.pt-done {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font: 600 12px/1 var(--v-text);
+  font-style: normal;
+}
+.pt-due {
+  color: color-mix(in srgb, var(--mid) 60%, var(--v-ink));
+  background: color-mix(in srgb, var(--mid) 16%, var(--v-card));
+}
+:root[data-theme="dark"] .pt-due {
+  color: var(--mid-ink, var(--mid));
+}
+.pt-done {
+  color: var(--v-ok-ink);
+  background: var(--v-ok-pill);
 }
 .pt-card {
   min-width: 0;
-  border-radius: 18px;
+  border-radius: var(--v-r);
   background: var(--v-card);
 }
 .pt-item + .pt-item {
@@ -270,8 +268,8 @@
 
 /* one row grid in every card: mark 32 · words · control 28 */
 .pt-row {
-  min-height: 60px;
-  padding: 10px 12px;
+  min-height: 64px;
+  padding: 12px 16px;
   display: grid;
   grid-template-columns: 32px minmax(0, 1fr) 28px;
   align-items: center;
@@ -281,23 +279,25 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 .pt-row-t b {
   display: flex;
   align-items: baseline;
-  gap: 6px;
-  font: 600 15.5px/1.2 var(--v-text);
+  flex-wrap: wrap;
+  column-gap: 8px;
+  row-gap: 2px;
+  font: 600 16px/1.25 var(--v-text);
   letter-spacing: -0.01em;
 }
 .pt-row-t b em {
-  font: 500 12px/1 var(--v-text);
+  font: 400 13px/1 var(--v-text);
   font-style: normal;
-  color: var(--v-ink-3);
+  color: var(--v-ink-2);
 }
 .pt-row-t small {
-  font: 400 13px/1.25 var(--v-text);
-  color: var(--v-ink-3);
+  font: 400 14px/1.3 var(--v-text);
+  color: var(--v-ink-2);
 }
 .pt-item[data-done] .pt-row-t b {
   color: var(--v-ink-2);
@@ -321,21 +321,21 @@
   box-shadow: none;
 }
 
-/* choices sit under the words, inset to the words column, radios in the control column */
+/* choices: on the words column, kcal and radio in fixed columns at right */
 .pt-choices {
   list-style: none;
   margin: 0;
-  padding: 0 12px 6px calc(12px + 32px + 12px);
+  padding: 0 16px 4px calc(16px + 32px + 12px);
 }
-.pt-choices li + li {
+.pt-choices li {
   border-top: 1px solid var(--v-line);
 }
 .pt-choices button {
   width: 100%;
   min-height: 52px;
-  padding: 8px 0;
+  padding: 10px 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 28px;
+  grid-template-columns: minmax(0, 1fr) auto 28px;
   align-items: center;
   column-gap: 12px;
   text-align: left;
@@ -343,79 +343,158 @@
 }
 .pt-choice-t {
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+  font: 400 15px/1.3 var(--v-text);
+  text-wrap: pretty;
 }
-.pt-choice-t b {
-  font: 500 14.5px/1.3 var(--v-text);
-}
-.pt-choice-t small {
-  font: 400 12px/1 var(--v-text);
-  color: var(--v-ink-3);
+.pt-choice-k {
+  font: 400 13px/1 var(--v-num);
+  color: var(--v-ink-2);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 .pt-radio {
   justify-self: center;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--v-ink) 24%, transparent);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--v-ink) 26%, transparent);
   transition: box-shadow 0.2s var(--v-ease);
 }
 .pt-radio[data-on] {
-  box-shadow: inset 0 0 0 6px var(--v-navy);
-}
-:root[data-theme="dark"] .pt-radio[data-on] {
-  box-shadow: inset 0 0 0 6px #fff;
+  box-shadow: inset 0 0 0 7px var(--v-navy);
 }
 
-/* ---- 5: targets */
-.pt-targets {
+/* ---- 4: targets */
+.pt-energy-card {
   margin: 0 16px;
-  padding: 18px;
-  border-radius: var(--v-r);
-  background: var(--v-card);
+  padding: 16px;
 }
-.pt-macros {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+.pt-kcal {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
 }
-.pt-macro {
+.pt-kcal-t {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-.pt-macro small {
+.pt-kcal-t small {
   font: 500 13px/1 var(--v-text);
   color: var(--v-ink-2);
 }
-.pt-macro b {
-  font: 700 20px/1 var(--v-num);
+.pt-kcal-t b {
+  font: 700 26px/1 var(--v-num);
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
-.pt-macro b span {
-  font: 400 13px/1 var(--v-text);
+.pt-kcal-t b span {
+  font: 400 15px/1 var(--v-text);
   letter-spacing: 0;
-  color: var(--v-ink-3);
+  color: var(--v-ink-2);
 }
-.pt-micros {
-  margin: 18px 0 0;
+.pt-kcal em {
+  font: 600 14px/1 var(--v-text);
+  font-style: normal;
+  color: var(--v-ink-2);
+  font-variant-numeric: tabular-nums;
 }
-.pt-micros div {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 0;
+.pt-track {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--v-fill);
+}
+.pt-track i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--hue, var(--mid));
+}
+.pt-track[data-large] {
+  margin-top: 12px;
+  height: 8px;
+  border-radius: 4px;
+}
+
+/* one nutrient: mark 20 · name and what it needs · amount, then the bar under the words */
+.pt-nlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pt-energy-card .pt-nlist {
+  margin-top: 16px;
   border-top: 1px solid var(--v-line);
-  font: 400 15px/1.2 var(--v-text);
 }
-.pt-micros dt {
+.pt-nrow,
+.pt-guides li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 12px;
+  padding: 14px 0;
+}
+.pt-nrow + .pt-nrow,
+.pt-guides li + li {
+  border-top: 1px solid var(--v-line);
+}
+.pt-nrow .pt-track {
+  grid-column: 2 / -1;
+  margin-top: 10px;
+}
+.pt-nrow-t {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.pt-nrow-t b {
+  font: 600 15px/1.2 var(--v-text);
+}
+.pt-nrow-t small {
+  font: 400 13px/1.25 var(--v-text);
+  color: var(--v-ink-2);
+}
+.pt-nrow-t small[data-met] {
+  font-weight: 600;
+  color: var(--v-ok-ink);
+}
+.pt-nrow-v {
+  font: 400 13px/1 var(--v-num);
+  color: var(--v-ink-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.pt-nrow-v b {
+  font: 650 16px/1 var(--v-num);
   color: var(--v-ink);
 }
-.pt-micros dd {
+
+.pt-micro-card {
+  margin: 12px 16px 0;
+  padding: 4px 16px 2px;
+}
+.pt-card-h {
+  margin: 14px 0 0;
+  font: 600 13px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.pt-card-h-sub {
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: 1px solid var(--v-line);
+}
+.pt-guides {
+  list-style: none;
   margin: 0;
+  padding: 0;
+}
+.pt-guide-mark {
+  display: grid;
+  place-items: center;
   color: var(--v-ink-3);
 }
 
@@ -423,4 +502,9 @@
   margin: 24px var(--pt-gut) 0;
   font: 400 13px/1.45 var(--v-text);
   color: var(--v-ink-3);
+}
+.pt-h2 span {
+  font: 500 14px/1 var(--v-text);
+  letter-spacing: 0;
+  color: var(--v-ink-2);
 }

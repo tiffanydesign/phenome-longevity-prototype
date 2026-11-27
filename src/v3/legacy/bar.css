@@ -1,0 +1,76 @@
+/* =====================================================================
+ * Shared frame for the older flow screens the clinical edition still opens
+ * (booking, cognitive games, the activity form and its record): the page on
+ * the grouped ground, one text face, and a top bar with a round white back
+ * button on a hairline ring and the page name centred in the edition's type.
+ * ===================================================================== */
+:is(.scr:has(.bk), .scr:has(.gm), .scr:has(.act-form), .scr:has(.act-detail)) {
+  background: var(--v-bg);
+  color: var(--v-ink);
+  font-family: var(--v-text);
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+}
+:is(.scr:has(.bk), .scr:has(.gm), .scr:has(.act-form), .scr:has(.act-detail)) :is(.scr-header, .scr-footer) {
+  background: var(--v-bg);
+}
+
+/* the bar */
+:is(.scr:has(.bk), .scr:has(.gm)) .nh,
+:is(.scr:has(.act-form), .scr:has(.act-detail)) .jr-nh {
+  height: 58px;
+  padding: 0 16px;
+  box-shadow: none;
+}
+:is(.scr:has(.bk), .scr:has(.gm)) .nh-back,
+:is(.scr:has(.act-form), .scr:has(.act-detail)) .jr-nh-back {
+  width: 46px;
+  height: 46px;
+  margin: 0;
+  border-radius: 50%;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--v-ink) 12%, transparent);
+  transition: transform 0.15s;
+}
+:is(.scr:has(.bk), .scr:has(.gm)) .nh-back svg,
+:is(.scr:has(.act-form), .scr:has(.act-detail)) .jr-nh-back svg {
+  width: 20px;
+  height: 20px;
+}
+:is(.scr:has(.bk), .scr:has(.gm)) .nh-back:active,
+:is(.scr:has(.act-form), .scr:has(.act-detail)) .jr-nh-back:active {
+  transform: scale(0.94);
+}
+:root[data-theme="dark"] :is(.scr:has(.bk), .scr:has(.gm)) .nh-back,
+:root[data-theme="dark"] :is(.scr:has(.act-form), .scr:has(.act-detail)) .jr-nh-back {
+  background: color-mix(in srgb, var(--v-card) 88%, #fff);
+  box-shadow: inset 0 0 0 1px #ffffff1f;
+}
+:is(.scr:has(.bk), .scr:has(.gm)) .nh-title,
+:is(.scr:has(.act-form), .scr:has(.act-detail)) .jr-nh-title {
+  left: 72px;
+  right: 72px;
+  font: 650 17px/1.2 var(--v-text);
+  letter-spacing: -0.015em;
+  color: var(--v-ink);
+}
+
+/* the main action: one flat navy pill, sentence case */
+.bk-continue,
+.gs-play,
+.scr:has(.act-form) .act-cta {
+  height: 52px;
+  border-radius: 26px;
+  font: 650 16px/1 var(--v-text);
+  letter-spacing: -0.01em;
+  color: var(--v-on-navy, #fff);
+  background: var(--v-accent);
+  transition: transform 0.15s;
+}
+.bk-continue:not(:disabled):active,
+.gs-play:active,
+.scr:has(.act-form) .act-cta:active {
+  transform: scale(0.98);
+  opacity: 1;
+}

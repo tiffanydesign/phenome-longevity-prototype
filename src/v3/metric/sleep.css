@@ -54,7 +54,7 @@
   gap: 8px;
   padding: 14px 0;
   text-align: left;
-  --mx-ink: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+  --mx-ink: color-mix(in oklab, var(--mid-ink), var(--v-ink) 28%);
 }
 .sl-part + .sl-part {
   border-top: 0.5px solid var(--v-line);
@@ -244,6 +244,13 @@
 .dc-night-key li[data-dim] {
   opacity: 0.45;
 }
+/* dark mode: a quiet stage drops its hue for the quiet ink instead of fading, so its words stay legible */
+:root[data-theme="dark"] .dc-night-key li[data-dim] {
+  opacity: 1;
+}
+:root[data-theme="dark"] .dc-night-key li[data-dim] :is(span, b) {
+  color: var(--v-ink-3);
+}
 
 .sc-facts {
   padding-top: 4px;
@@ -251,7 +258,7 @@
 }
 .sc-facts .mx-stats {
   margin: 0;
-  --mx-ink: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+  --mx-ink: color-mix(in oklab, var(--mid-ink), var(--v-ink) 28%);
 }
 
 /* skin temperature through the night: the usual band, the baseline, one line */
@@ -317,7 +324,7 @@
 }
 .sc-night-t small {
   font: 600 15px/1.2 var(--v-text);
-  color: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+  color: color-mix(in oklab, var(--mid-ink), var(--v-ink) 28%);
 }
 .sc-night-t b {
   font: 700 17px/1.25 var(--v-num);

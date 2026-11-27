@@ -54,7 +54,7 @@
   padding: 0 12px 0 10px;
 }
 .fd-goal-pill svg {
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .fd-goal-pill small {
   margin-left: 1px;
@@ -128,7 +128,7 @@
 .fd-core-lg {
   width: 46px;
   height: 46px;
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 
 /* ---------- the one number ---------- */
@@ -141,7 +141,7 @@
   margin-top: 12px;
 }
 .fd-hero .fd-label svg {
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .fd-hero-n {
   font: 700 60px/1 var(--v-num);
@@ -277,7 +277,7 @@
   color: var(--v-ink-2);
 }
 .fd-meal-kcal svg {
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .fd-meal-kcal b {
   font: 700 20px/1 var(--v-num);

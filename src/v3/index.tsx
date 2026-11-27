@@ -1,11 +1,16 @@
 import { PlanScreen } from "./habits/PlanScreen";
+import { PlanHistory } from "./habits/PlanHistory";
+import { PlanArchive } from "./habits/PlanArchive";
 import "./reports";
-import "./games-dark.css";
+import "./legacy";
 import "./assistant-dark.css";
 import { BookingScreen } from "@/screens/discover/BookingScreen";
 import { AssistantScreen } from "@/screens/discover/AssistantScreen";
 import { StoreScreen } from "./store/StoreScreen";
 import { ProductScreen } from "./store/ProductScreen";
+import { BagScreen } from "./store/BagScreen";
+import { CheckoutScreen } from "./store/checkout/CheckoutScreen";
+import { ConfirmScreen } from "./store/checkout/ConfirmScreen";
 import type { ScreenRoute } from "@/screens/types";
 import { HomeScreen } from "./home/HomeScreen";
 import { MetricScreen } from "./metric/MetricScreen";
@@ -72,8 +77,13 @@ export const routes: ScreenRoute[] = [
   { path: "/v3/store", element: <StoreScreen />, title: "Store", group },
   // this edition's own product page at the shared address, ahead of the original one
   { path: "/store/product/:id", element: <ProductScreen />, title: "Product", group },
+  { path: "/store/cart", element: <BagScreen />, title: "Bag", group },
+  { path: "/store/checkout", element: <CheckoutScreen />, title: "Checkout", group },
+  { path: "/store/checkout/done", element: <ConfirmScreen />, title: "Order placed", group },
   { path: "/v3/habits", element: <HabitsScreen />, title: "Habits", group },
   { path: "/v3/plan", element: <PlanScreen />, title: "Your plan", group },
+  { path: "/v3/plan/history", element: <PlanHistory />, title: "Plan history", group },
+  { path: "/v3/plan/:id", element: <PlanArchive />, title: "Previous plan", group },
   { path: "/v3/consultations", element: <ConsultationsScreen />, title: "Consultations", group },
   // the shared address opens the same list in this edition
   { path: "/discover/consultations", element: <ConsultationsScreen />, title: "Consultations (shared address)", group },

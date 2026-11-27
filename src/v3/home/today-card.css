@@ -71,7 +71,7 @@
   white-space: nowrap;
   min-width: 0;
   font: 500 14px/1.2 var(--v-text);
-  color: color-mix(in srgb, var(--mid) 80%, var(--v-ink));
+  color: color-mix(in srgb, var(--mid-ink) 80%, var(--v-ink));
 }
 
 /* three readings on one baseline, split by hairlines */

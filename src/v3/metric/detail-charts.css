@@ -62,7 +62,7 @@
   border-radius: 7px;
   font: 600 13px/1.2 var(--v-text);
   font-style: normal;
-  color: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+  color: color-mix(in oklab, var(--mid-ink), var(--v-ink) 28%);
   background: color-mix(in srgb, var(--mid) 13%, var(--v-card));
 }
 
@@ -92,6 +92,12 @@
 .dc-night-key span {
   font: 600 15px/1 var(--v-text);
   color: color-mix(in oklab, var(--stage), var(--v-ink) 18%);
+}
+@supports (color: oklch(from red l c h)) {
+  /* dark mode: the stage name in a light tone of its hue */
+  :root[data-theme="dark"] :is(.dc-night-key span, .dc-shares-name, .mx-today .gl-night-key i) {
+    color: oklch(from var(--stage) max(l, 0.76) c h);
+  }
 }
 .dc-night-key b {
   font: 700 15px/1 var(--v-num);
@@ -216,5 +222,5 @@
   font: 700 17px/1.1 var(--v-num);
   letter-spacing: -0.01em;
   font-variant-numeric: tabular-nums;
-  color: color-mix(in oklab, var(--mid), var(--v-ink) 22%);
+  color: color-mix(in oklab, var(--mid-ink), var(--v-ink) 22%);
 }

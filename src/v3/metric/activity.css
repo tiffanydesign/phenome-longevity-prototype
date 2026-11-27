@@ -203,7 +203,7 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: var(--mid);
+  color: var(--mid-ink);
   background: color-mix(in srgb, var(--mid) 13%, var(--v-card));
 }
 .ac-wo-t,

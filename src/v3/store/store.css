@@ -84,7 +84,7 @@
   transition: background 0.2s var(--v-ease), color 0.2s var(--v-ease);
 }
 .sx-seg button[aria-selected="true"] {
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 
@@ -207,7 +207,7 @@
   padding: 0 12px;
   border-radius: 17px;
   font: 600 13px/1 var(--v-text);
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
   box-shadow: none;
   animation: sx-pop 0.28s var(--v-ease);
@@ -294,7 +294,7 @@
   padding: 11px 20px;
   border-radius: 22px;
   font: 600 15px/1 var(--v-text);
-  color: #fff;
+  color: var(--v-on-navy, #fff);
   background: var(--v-navy);
 }
 

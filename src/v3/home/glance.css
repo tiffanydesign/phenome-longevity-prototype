@@ -82,6 +82,12 @@
   font-style: normal;
   color: var(--stage);
 }
+/* dark mode: the stage letters in a light tone of their hue, legible on the dark card */
+@supports (color: oklch(from red l c h)) {
+  :root[data-theme="dark"] .v2-slot[data-size="w"] .gl-night-key i {
+    color: oklch(from var(--stage) max(l, 0.76) c h);
+  }
+}
 
 /* capacity: the gauge with what the score means beside it */
 .gl-gauge {
@@ -96,7 +102,7 @@
 }
 .gl-gauge-word {
   font: 600 13.5px/1.25 var(--v-text);
-  color: color-mix(in srgb, var(--mid) 75%, var(--v-ink));
+  color: color-mix(in srgb, var(--mid-ink) 75%, var(--v-ink));
 }
 
 /* the week as seven days */
@@ -447,7 +453,7 @@
   place-items: center;
   border-radius: 50%;
   font: 500 22px/1 var(--v-text);
-  color: var(--mid);
+  color: var(--mid-ink);
   border: 1.5px dashed color-mix(in srgb, var(--mid) 55%, transparent);
 }
 /* each habit a stop in the card's own green: dashed while waiting, solid with a tick once done */

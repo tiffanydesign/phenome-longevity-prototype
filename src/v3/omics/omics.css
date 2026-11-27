@@ -79,7 +79,7 @@
   flex: none;
   display: inline-grid;
   place-items: center;
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .om-ring > svg {
   position: absolute;
@@ -262,7 +262,7 @@
   display: grid;
   place-items: center;
   border-radius: 9px;
-  color: var(--mid);
+  color: var(--mid-ink);
   background: color-mix(in srgb, var(--mid) 14%, transparent);
 }
 .om-item-t {
@@ -407,7 +407,7 @@
   align-items: center;
   gap: 6px;
   font: 600 15px/1.2 var(--v-text);
-  color: color-mix(in srgb, var(--mid) 78%, var(--v-ink));
+  color: color-mix(in srgb, var(--mid-ink) 78%, var(--v-ink));
 }
 .om-find-v {
   display: block;
@@ -431,7 +431,7 @@
   display: grid;
   place-items: center;
   border-radius: 11px;
-  color: var(--mid);
+  color: var(--mid-ink);
   background: var(--om-tile);
 }
 .om-kit-row {
@@ -541,7 +541,7 @@
   display: flex;
   align-items: center;
   font: 600 12px/1.3 var(--v-text);
-  color: color-mix(in srgb, var(--mid) 75%, var(--v-ink));
+  color: color-mix(in srgb, var(--mid-ink) 75%, var(--v-ink));
 }
 .om-pk-text b {
   font: 650 17px/1.25 var(--v-text);

@@ -1,0 +1,351 @@
+/* =====================================================================
+ * Omics report screens in the clinical edition: the page on the grouped
+ * ground, content on flat cards (22 / 14 radius, 16px gutters, hairlines,
+ * no shadows), one text face, one left-aligned title under a round back
+ * button. The report screens' own colour names are pointed at the
+ * edition's tokens here, so both themes follow from v2.css.
+ * Shared frame, header, pager, modal, then Personal Traits and Medication
+ * Response (drugs in skin-drugs.css). The hub, screening and condition pages are in skin-genetic.css,
+ * microbiome in skin-gut.css, kits, lists and transcriptome in skin-kit.css.
+ * ===================================================================== */
+
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .kit, .cli-empty, .rep-head) {
+  --c-bg: var(--v-card);
+  --c-surface: var(--v-card-2);
+  --c-surface-2: var(--v-card-2);
+  --c-surface-blue: var(--v-card-2);
+  --c-intro-blue: var(--v-card);
+  --c-track: var(--v-fill);
+  --c-divider: var(--v-line);
+  --c-text: var(--v-ink);
+  --c-text-strong: var(--v-ink);
+  --c-text-2: var(--v-ink-2);
+  --c-text-3: var(--v-ink-2);
+  --c-navy: var(--rk-accent);
+  --c-navy-ink: var(--rk-accent);
+  --c-chip-navy-bg: var(--rk-wash);
+  --font: var(--v-text);
+  --fw-bold: 650;
+  --fw-medium: 550;
+  --shadow-card: none;
+  --r-md: var(--v-r-sm);
+  --r-lg: var(--v-r);
+  --r-xl: var(--v-r);
+  --gutter: 16px;
+  /* accent text and marks; the soft disc behind an icon; a filled control and its label */
+  --rk-accent: var(--v-navy);
+  --rk-wash: color-mix(in srgb, var(--v-navy) 9%, transparent);
+  --rk-fill: var(--v-navy);
+  --rk-on-fill: #fff;
+  --rk-ring: inset 0 0 0 1px color-mix(in srgb, var(--v-ink) 12%, transparent);
+  background: var(--v-bg);
+  color: var(--v-ink);
+  font-family: var(--v-text);
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+}
+/* dark: accent text steps up to the light navy so small words keep 4.5:1 on the cards */
+:root[data-theme="dark"] .scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .kit, .cli-empty, .rep-head) {
+  --rk-accent: var(--v-deep);
+  --rk-wash: color-mix(in srgb, var(--v-navy) 24%, transparent);
+  --rk-fill: color-mix(in srgb, var(--v-navy) 45%, #fff);
+  --rk-on-fill: #0b0d14;
+  --rk-ring: inset 0 0 0 1px #ffffff1f;
+}
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .kit, .cli-empty, .rep-head) :is(.scr-header, .scr-footer) {
+  background: var(--v-bg);
+}
+/* flat surfaces: no drop shadows anywhere on these pages */
+.scr:where(:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .kit, .cli-empty, .rep-head)) :where(*) {
+  box-shadow: none;
+}
+/* the status bar reads in the page ink, whatever tone the screen asked for */
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .kit, .cli-empty, .rep-head) .pf-status {
+  color: var(--v-ink) !important;
+}
+
+/* ---- header: a round back button, then the page title, large and left-aligned */
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .cli-empty) .nh {
+  height: auto;
+  padding: 6px 16px 10px;
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items: center;
+  column-gap: 12px;
+  box-shadow: none;
+}
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .cli-empty) .nh-back,
+.scr .kit-back,
+.scr .rep-head-btn {
+  width: 46px;
+  height: 46px;
+  margin: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: var(--rk-ring);
+  transition: transform 0.15s;
+}
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .cli-empty) .nh-back svg,
+.scr .kit-back svg,
+.scr .rep-head-btn svg {
+  width: 20px;
+  height: 20px;
+}
+:root[data-theme="dark"] .scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .cli-empty) .nh-back,
+:root[data-theme="dark"] .scr .kit-back,
+:root[data-theme="dark"] .scr .rep-head-btn {
+  background: color-mix(in srgb, var(--v-card) 88%, #fff);
+}
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .cli-empty) :is(.nh-back, .kit-back, .rep-head-btn):active {
+  transform: scale(0.94);
+}
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .cli-empty) :is(.nh-title, .nh-greet) {
+  position: static;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin: 14px 0 0;
+  text-align: left;
+  white-space: normal;
+}
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .cli-empty) :is(.nh-title, .nh-greet-title),
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .cli-empty) :is(.nh-title, .nh-greet-title) > span {
+  font: 700 28px/1.12 var(--v-text);
+  letter-spacing: -0.03em;
+  color: var(--v-ink);
+  white-space: normal;
+}
+/* the greeting adds nothing to a report: the title stands alone */
+.scr:has(.gr, .ns, .gu, .tx) .nh-eyebrow {
+  display: none;
+}
+.scr:has(.gr, .ns, .gc, .tl-body, .dl, .gu, .gf, .tx, .cli-empty) .nh-right {
+  grid-column: 3;
+  grid-row: 1;
+  margin: 0;
+}
+
+/* "Generate PDF": a quiet pill in the bar, beside the back button */
+.scr .nh-right .pdf-pill {
+  position: static;
+  width: auto;
+  height: 36px;
+  margin: 0;
+  padding: 0 14px 0 12px;
+  gap: 7px;
+  border-radius: 18px;
+  background: var(--v-card);
+  box-shadow: var(--rk-ring);
+  color: var(--rk-accent);
+  font: 600 14px/1 var(--v-text);
+}
+.scr .nh-right .pdf-pill span {
+  color: inherit;
+}
+
+/* ---- pager dots */
+.scr .rp-dot {
+  background: var(--v-fill);
+}
+.scr .rp-dot[data-on] {
+  background: var(--rk-accent);
+}
+
+/* ---- report dialogs: a flat card */
+.scr:has(.tl-body, .dl) .ov-modal {
+  border-radius: var(--v-r) !important;
+  background: var(--v-card);
+  color: var(--v-ink);
+}
+
+/* ---- search fields and filter chips, shared by traits and medications */
+.scr :is(.tl-search, .dl-search) {
+  height: 44px;
+  margin: 8px 16px 0;
+  padding: 0 14px;
+  gap: 10px;
+  border-radius: var(--v-r-sm);
+  background: var(--v-card);
+  color: var(--v-ink-2);
+}
+.scr .dl-search {
+  margin: 0;
+}
+.scr :is(.tl-search, .dl-search) input {
+  font: 400 16px/1.2 var(--v-text);
+  letter-spacing: 0;
+  color: var(--v-ink);
+}
+.scr :is(.tl-search, .dl-search) input::placeholder {
+  color: var(--v-ink-2);
+}
+.scr :is(.tl-chips, .dl-chips) {
+  height: auto;
+  display: flex;
+  gap: 8px;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.scr :is(.tl-chip, .dl-chip),
+.scr .dl-chip:nth-child(4) {
+  width: auto;
+  height: 36px;
+  flex-shrink: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px 0 10px;
+  border-radius: 18px;
+  background: var(--v-card);
+  color: var(--v-ink);
+  font: 600 14px/1 var(--v-text);
+  white-space: nowrap;
+}
+.scr :is(.tl-chip, .dl-chip)[data-on] {
+  background: var(--rk-fill);
+  color: var(--rk-on-fill);
+}
+.scr :is(.tl-chip-circle, .dl-chip-circle) {
+  display: contents;
+}
+.scr :is(.tl-chip-circle, .dl-chip-circle) > span {
+  width: 18px !important;
+  height: 18px !important;
+  mask-size: contain !important;
+  -webkit-mask-size: contain !important;
+}
+.scr .tl-chip-label {
+  order: 2;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+.scr .tl-chip-circle i {
+  position: static;
+  order: 3;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--v-fill);
+  color: var(--v-ink-2);
+  font: 600 11px/20px var(--v-text);
+  text-align: center;
+}
+.scr .tl-chip[data-on] .tl-chip-circle i {
+  background: color-mix(in srgb, var(--rk-on-fill) 18%, transparent);
+  color: inherit;
+}
+.scr :is(.tl-found, .dl-found) {
+  height: auto;
+  font: var(--v-t-note);
+  color: var(--v-ink-2);
+}
+
+/* ---- Personal Traits */
+.scr .tl-found {
+  margin: 18px 16px 0;
+}
+.scr .tl-list {
+  margin: 10px 16px 0;
+}
+.scr .tl-chips {
+  padding-bottom: 14px;
+}
+.scr .tc {
+  --tc-track: var(--v-fill);
+  width: 100%;
+  margin: 0 0 12px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+}
+.scr .tc-arc path + path {
+  stroke: var(--v-navy);
+}
+.scr .tc-info {
+  color: var(--v-ink-2);
+}
+.scr .tc-icon {
+  background: var(--v-card-2);
+  color: var(--rk-accent);
+}
+.scr :is(.tc-less, .tc-more) {
+  font: 500 11px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.scr .tc-name {
+  font: 650 17px/22px var(--v-text);
+  letter-spacing: -0.015em;
+  color: var(--v-ink);
+}
+.scr .tc-gene {
+  font: 500 13px/20px var(--v-text);
+  color: var(--v-ink-2);
+}
+.scr .tc-sum {
+  left: 20px;
+  right: 20px;
+  font: 400 13px/18px var(--v-text);
+  color: var(--v-ink-2);
+}
+.scr .tl-empty b {
+  color: var(--v-ink);
+}
+
+/* trait dialog */
+.scr .tm-head {
+  height: 72px;
+  gap: 12px;
+  padding: 0 20px;
+  background: none;
+  border-bottom: 1px solid var(--v-line);
+}
+.scr .tm-head-icon {
+  background: var(--rk-fill);
+  color: var(--rk-on-fill);
+}
+.scr :is(.tm-head h2, .tm-summary h3, .tm-h) {
+  font: 650 17px/1.25 var(--v-text);
+  letter-spacing: -0.015em;
+  color: var(--v-ink);
+}
+.scr .tm-summary,
+.scr .tm-keys {
+  border: 0;
+  border-radius: var(--v-r-sm);
+  background: var(--v-card-2);
+}
+.scr .tm-keys {
+  margin: 14px 0 0;
+}
+.scr .tm-h {
+  margin-top: 20px;
+}
+.scr :is(.tm-summary p, .tm-desc) {
+  font: 400 15px/1.45 var(--v-text);
+  color: var(--v-ink-2);
+}
+.scr .tm-key {
+  border-bottom-color: var(--v-line);
+}
+.scr .tm-key-icon {
+  border-radius: 10px;
+  background: var(--v-card);
+  color: var(--rk-accent);
+}
+.scr .tm-key-text span {
+  font: 500 12px/16px var(--v-text);
+  color: var(--v-ink-2);
+}
+.scr .tm-key-text b {
+  font: 600 15px/20px var(--v-text);
+  color: var(--v-ink);
+}
+.scr :is(.tm-foot, .dm-foot) button {
+  font: 650 16px/1 var(--v-text);
+  color: var(--rk-accent);
+}

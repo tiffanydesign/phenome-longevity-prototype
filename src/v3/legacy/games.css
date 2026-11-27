@@ -1,0 +1,171 @@
+/* =====================================================================
+ * Cognitive games: a left-aligned large title and a short lead, then one
+ * white card per game, its name set bold over a two-line description.
+ * The launch sheet is a white panel: segmented tabs on a grey fill, score
+ * rows as raised grey rows, medal ranks on flat metal discs, and the play
+ * button in the navy accent. Dark mode follows through the tokens.
+ * ===================================================================== */
+.gm {
+  padding: 0 16px 40px;
+  color: var(--v-ink);
+}
+.gm-h1 {
+  height: auto;
+  margin: 12px 4px 0;
+  text-align: left;
+  font: var(--v-t-title);
+  letter-spacing: -0.03em;
+  color: var(--v-ink);
+}
+.gm-h1 b {
+  font-weight: inherit;
+}
+.gm-intro {
+  margin: 8px 4px 0;
+  text-align: left;
+  font: 400 15px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+.gm-card {
+  height: auto;
+  min-height: 0;
+  margin-top: 10px;
+  padding: 16px 14px 16px 18px;
+  gap: 14px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  color: var(--v-ink-3);
+  transition: background 0.15s, transform 0.15s;
+}
+.gm-intro + .gm-card {
+  margin-top: 24px;
+}
+.gm-card:active {
+  background: var(--v-card-2);
+  transform: scale(0.99);
+}
+.gm-card-text {
+  gap: 4px;
+}
+.gm-card-title {
+  font: 650 17px/1.25 var(--v-text);
+  letter-spacing: -0.015em;
+  color: var(--v-ink);
+}
+.gm-card-title b {
+  font-weight: inherit;
+}
+.gm-card-desc {
+  font: 400 14px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* ---------- launch sheet ---------- */
+.scr:has(.gm) .ov-sheet {
+  border-radius: 28px 28px 0 0;
+  background: var(--v-card);
+  box-shadow: none;
+  color: var(--v-ink);
+  font-family: var(--v-text);
+}
+.scr:has(.gm) .ov-handle {
+  width: 36px;
+  background: color-mix(in srgb, var(--v-ink) 22%, transparent);
+}
+.gs {
+  margin: 0 0 -12px;
+}
+.gs-title {
+  font: var(--v-t-section);
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+}
+.gs-tabs {
+  margin-top: 18px;
+  padding: 3px;
+  border-radius: 12px;
+  background: var(--v-fill);
+}
+.gs-tabs button {
+  height: 38px;
+  border-radius: 9px;
+  text-align: center;
+  font: 500 14px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.gs-tabs button[data-on] {
+  font-weight: 650;
+  color: var(--v-ink);
+  background: var(--v-card);
+  box-shadow: 0 0 0 0.5px var(--v-line);
+}
+:root[data-theme="dark"] .gs-tabs button[data-on] {
+  background: #636366;
+  box-shadow: none;
+}
+.gs-body {
+  padding-top: 14px;
+  gap: 6px;
+}
+.gs-row {
+  height: 54px;
+  padding: 0 14px 0 12px;
+  border-radius: var(--v-r-sm);
+  background: var(--v-card-2);
+  font: 500 15px/1 var(--v-text);
+}
+.gs-rank {
+  font: 600 13px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink-2);
+}
+.gs-medal-1 .gs-rank {
+  color: #3d2c00;
+  background: var(--v-gold);
+}
+.gs-medal-2 .gs-rank {
+  color: #26272b;
+  background: #c7c8cc;
+}
+.gs-medal-3 .gs-rank {
+  color: #fff;
+  background: #9a5f2a;
+}
+.gs-name {
+  margin-left: 14px;
+  font-weight: 600;
+  color: var(--v-ink);
+}
+.gs-score,
+.gs-medal-1 .gs-score,
+.gs-medal-2 .gs-score,
+.gs-medal-3 .gs-score {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font: 650 14px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+  background: var(--v-fill);
+}
+.gs-medal-1 .gs-score {
+  color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
+}
+.gs-empty {
+  color: var(--v-ink-3);
+}
+.gs-empty-title {
+  margin-top: 12px;
+  font: 650 17px/1.25 var(--v-text);
+  color: var(--v-ink);
+}
+.gs-empty-sub {
+  margin-top: 6px;
+  font: 400 14px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+.gs-play {
+  margin-top: 14px;
+  gap: 10px;
+}

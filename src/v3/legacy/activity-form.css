@@ -1,0 +1,153 @@
+/* =====================================================================
+ * A workout, live and logged. The sport sits on a white card with its mark
+ * on a soft disc in the Activity hue; time and calories are white cards with
+ * a card-name title, small grey labels and the values bold in ink on an even
+ * grid. The start button is the navy pill; while a workout runs it turns
+ * into a quiet white stop button with warm red words.
+ * ===================================================================== */
+:is(.act-form, .act-detail) {
+  --mid: #e0559a;
+  padding: 4px 16px 32px;
+  color: var(--v-ink);
+}
+
+/* the sport */
+.act-picker {
+  position: relative;
+  height: 60px;
+  margin-top: 8px;
+  padding: 0 16px 0 18px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+  color: var(--v-ink-3);
+  transition: background 0.15s;
+}
+.act-picker:not(:disabled):active {
+  background: var(--v-card-2);
+}
+/* the sport mark is a masked glyph, so its soft disc is drawn behind it */
+.act-picker::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--mid) 13%, var(--v-card));
+}
+.act-picker-icon {
+  position: relative;
+  color: var(--mid);
+}
+.act-picker-name {
+  margin-left: 20px;
+  font: 600 17px/1.2 var(--v-text);
+  letter-spacing: -0.015em;
+  color: var(--v-ink);
+}
+.act-picker:disabled > svg:last-child {
+  opacity: 0;
+}
+
+/* the cards */
+.act-box,
+.act-box-dtime,
+.act-box-dkcal {
+  padding: 16px 18px 18px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
+}
+.act-box-time,
+.act-box-dtime,
+.act-hr {
+  margin-top: 16px;
+}
+.act-box-kcal,
+.act-box-dkcal {
+  margin-top: 10px;
+}
+.act-box-title {
+  font: var(--v-t-card);
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--v-ink);
+}
+.act-cols,
+.act-box-dtime .act-cols,
+.act-box-dkcal .act-cols {
+  margin-top: 14px;
+  column-gap: 12px;
+}
+.act-cols-3,
+.act-box-dtime .act-cols {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.act-cols-2,
+.act-box-dkcal .act-cols {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.act-box-dtime > .act-stat {
+  margin-top: 14px;
+}
+.act-box-dtime > .act-stat + .act-cols {
+  padding-top: 14px;
+  border-top: 0.5px solid var(--v-line);
+}
+.act-stat-label {
+  font: var(--v-t-note);
+  color: var(--v-ink-2);
+}
+.act-stat-val,
+.act-box-dtime .act-stat-val,
+.act-box-dkcal .act-stat-val {
+  margin-top: 5px;
+  font: 650 20px/1.15 var(--v-text);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+
+/* the start / stop button: sentence case */
+.scr:has(.act-form) .scr-footer {
+  padding-top: 8px;
+}
+.scr:has(.act-form) .act-cta {
+  display: block;
+  margin-bottom: -8px;
+  text-align: center;
+  text-transform: lowercase;
+}
+.scr:has(.act-form) .act-cta::first-letter {
+  text-transform: uppercase;
+}
+.scr:has(.act-picker:disabled) .act-cta {
+  color: var(--v-alert-ink);
+  background: var(--v-card);
+  box-shadow: inset 0 0 0 1px var(--v-line);
+}
+
+/* ---------- the logged workout ---------- */
+.act-detail-head {
+  margin: 8px 4px 0;
+  gap: 12px;
+}
+.act-detail-badge {
+  width: 48px;
+  height: 48px;
+  color: var(--mid);
+  background: color-mix(in srgb, var(--mid) 13%, var(--v-card));
+}
+.act-detail-name {
+  margin: 0;
+  font: var(--v-t-head);
+  letter-spacing: -0.025em;
+  color: var(--v-ink);
+}
+.act-hr {
+  height: 160px;
+  border-radius: var(--v-r);
+  font: 400 14px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+  background: var(--v-card);
+}

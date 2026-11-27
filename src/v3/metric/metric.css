@@ -9,7 +9,7 @@
   padding-bottom: calc(48px + env(safe-area-inset-bottom));
   background: var(--v-bg);
   /* the reading's hue, mixed toward ink wherever it is set as text */
-  --mx-ink: color-mix(in oklab, var(--mid), var(--v-ink) 28%);
+  --mx-ink: color-mix(in oklab, var(--mid-ink), var(--v-ink) 28%);
 }
 
 /* the bar: round glass buttons; the page's name is the hue label below, not a title here */
@@ -44,7 +44,7 @@
 }
 .mx-title-pick > svg {
   flex: none;
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .mx-title-pick > svg:last-child {
   color: var(--mx-ink);
@@ -78,7 +78,7 @@
 }
 :root[data-theme="dark"] .mx-bar .v2-back button,
 :root[data-theme="dark"] .mx-round {
-  background: color-mix(in srgb, var(--v-card) 88%, #fff);
+  background: var(--v-card);
   box-shadow: inset 0 0 0 1px #ffffff1f;
 }
 .mx-bar .v2-back button:active,
@@ -106,7 +106,7 @@
   color: var(--mx-ink);
 }
 .mx-eyebrow svg {
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .mx-value {
   margin-top: 6px;
@@ -330,7 +330,7 @@
   gap: 3px;
   text-align: left;
   /* the hue itself with only a touch of ink, so the names stay bright but readable on white */
-  --mx-ink: color-mix(in oklab, var(--mid), var(--v-ink) 10%);
+  --mx-ink: color-mix(in oklab, var(--mid-ink), var(--v-ink) 10%);
 }
 .mx-read small {
   display: flex;
@@ -743,7 +743,7 @@
   display: grid;
   place-items: center;
   border-radius: 10px;
-  color: var(--mid);
+  color: var(--mid-ink);
   background: color-mix(in srgb, var(--mid) 14%, var(--v-card));
 }
 .mx-pick-name {

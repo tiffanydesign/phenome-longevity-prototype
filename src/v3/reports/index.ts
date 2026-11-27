@@ -11,6 +11,11 @@ import { M, type Rec } from "../study/data";
 import { conditions, drugs, hub, screening, traits } from "./genetics";
 import { microbiomeReport } from "./microbiome";
 import { transcriptome } from "./transcriptome";
+import "./skin.css";
+import "./skin-drugs.css";
+import "./skin-genetic.css";
+import "./skin-gut.css";
+import "./skin-kit.css";
 
 /*
  * The captured app's report screens, opened from v3, read the clinic portal's

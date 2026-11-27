@@ -361,3 +361,9 @@
 .cs-list .cs-item {
   border-radius: 0;
 }
+
+/* dark mode: the cancelled and missed word in a light rust that holds on the dark card */
+:root[data-theme="dark"] .cs-state em[data-status="cancelled"],
+:root[data-theme="dark"] .cs-state em[data-status="missed"] {
+  color: var(--v-alert-ink);
+}

@@ -196,7 +196,7 @@
 }
 .ft-fit small {
   font: 600 12px/1 var(--v-text);
-  color: color-mix(in oklab, var(--mid), var(--v-ink) 30%);
+  color: color-mix(in oklab, var(--mid-ink), var(--v-ink) 30%);
 }
 .ft-fit b {
   font: 600 15px/1.25 var(--v-text);

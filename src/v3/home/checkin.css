@@ -457,7 +457,7 @@
 }
 .wn-text .wn-when {
   font: 600 12px/1.2 var(--v-text);
-  color: color-mix(in srgb, var(--mid) 78%, var(--v-ink));
+  color: color-mix(in srgb, var(--mid-ink) 78%, var(--v-ink));
 }
 
 /* actions sit on the card's foot */
@@ -506,7 +506,7 @@
 }
 .wn-chip {
   padding: 0 4px;
-  color: color-mix(in srgb, var(--mid) 82%, var(--v-ink));
+  color: color-mix(in srgb, var(--mid-ink) 82%, var(--v-ink));
   background: color-mix(in srgb, var(--mid) 12%, var(--v-card));
 }
 /* a question swiped without an answer shakes its head, and its answers light up */
@@ -750,7 +750,7 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: var(--mid);
+  color: var(--mid-ink);
   background: color-mix(in srgb, var(--mid) 14%, var(--v-card));
 }
 /* the note's words never cut off: the title may take two lines, the card grows to fit */

@@ -32,7 +32,7 @@
 }
 .v2-tabs button[aria-selected="true"] {
   --knock: #fff;
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .v2-tabs-blob {
   position: absolute;
@@ -704,7 +704,7 @@
   font: 650 19px/1.25 var(--v-text);
   letter-spacing: -0.015em;
   /* the answer in the tab's own colour, the one its selected mark wears */
-  color: color-mix(in srgb, var(--mid) 86%, var(--v-ink));
+  color: color-mix(in srgb, var(--mid-ink) 86%, var(--v-ink));
   text-wrap: balance;
 }
 .v2-verdict > p {
@@ -731,14 +731,14 @@
 .v2-trend h3 {
   margin: 0;
   font: 600 15px/1.2 var(--v-text);
-  color: color-mix(in srgb, var(--mid) 72%, var(--v-ink));
+  color: color-mix(in srgb, var(--mid-ink) 72%, var(--v-ink));
 }
 .v2-trend > header span {
   font: 500 13px/1 var(--v-text);
   color: var(--v-ink-3);
 }
 .v2-trend .v2-history {
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .v2-history {
   display: block;
@@ -939,7 +939,7 @@
 }
 .v2-chips svg {
   flex: none;
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .v2-chips span {
   display: flex;
@@ -990,7 +990,7 @@
   gap: 6px;
   max-width: 100%;
   font: 600 15px/1.2 var(--v-text);
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .v2-kind > span {
   white-space: nowrap;
@@ -1153,7 +1153,7 @@
   background: color-mix(in srgb, #7fbcdc 24%, var(--v-card));
 }
 :root[data-theme="dark"] .v2-twin-entry-fig {
-  background: color-mix(in srgb, var(--v-navy) 22%, var(--v-card-2));
+  background: var(--v-card-2);
 }
 /* the half-length figure from the Twin page, framed head to chest and dissolving at the bottom edge as it does there */
 .v2-twin-entry-fig .tw-hero-stage {
@@ -1219,7 +1219,7 @@ button.v2-svc:active {
   display: grid;
   place-items: center;
   border-radius: 15px;
-  color: var(--mid);
+  color: var(--mid-ink);
   background: color-mix(in srgb, var(--mid) 14%, var(--v-card));
 }
 .v2-svc-text {

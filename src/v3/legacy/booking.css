@@ -1,0 +1,257 @@
+/* =====================================================================
+ * Booking a consultation, in four steps: what kind and where, how long,
+ * when, then a review. Each step is a section title over one grouped white
+ * card of choices; the chosen row carries a solid navy mark and a filled
+ * check. Days and times are white tiles that turn navy when picked. The
+ * review is a single card that ends on the total.
+ * ===================================================================== */
+.bk {
+  padding: 4px 16px 40px;
+  color: var(--v-ink);
+}
+
+/* progress: four thin segments, the steps reached in navy */
+.bk-progress {
+  gap: 4px;
+  padding: 0;
+}
+.bk-progress span {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--v-fill);
+}
+.bk-progress span[data-on] {
+  background: var(--v-accent);
+}
+
+/* section titles */
+.bk-h {
+  height: auto;
+  margin: 24px 4px 10px;
+  padding: 0;
+  font: var(--v-t-section);
+  letter-spacing: -0.02em;
+  color: var(--v-ink);
+}
+.bk-h-sub {
+  margin-top: var(--v-s-section);
+}
+
+/* choices: consecutive rows read as one grouped card split by hairlines */
+.bk-opt {
+  position: relative;
+  min-height: 64px;
+  margin: 0;
+  padding: 12px 14px 12px 16px;
+  gap: 14px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--v-card);
+  color: var(--v-ink);
+  transition: background 0.15s;
+}
+.bk-opt-tall,
+.bk-opt-dur {
+  min-height: 68px;
+}
+.bk-opt + .bk-opt::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 70px;
+  right: 0;
+  border-top: 0.5px solid var(--v-line);
+}
+.bk-opt:not(.bk-opt + .bk-opt) {
+  border-top-left-radius: var(--v-r);
+  border-top-right-radius: var(--v-r);
+}
+.bk-opt:not(:has(+ .bk-opt)) {
+  border-bottom-left-radius: var(--v-r);
+  border-bottom-right-radius: var(--v-r);
+}
+.bk-opt[data-on] {
+  border: 0;
+  background: var(--v-card);
+}
+.bk-opt:active {
+  background: var(--v-card-2);
+}
+.bk-icon {
+  color: var(--v-navy);
+  background: color-mix(in srgb, var(--v-navy) 10%, var(--v-card));
+}
+.bk-opt[data-on] .bk-icon,
+.bk-icon-on {
+  color: var(--v-on-navy, #fff);
+  background: var(--v-accent);
+}
+.bk-opt-text {
+  gap: 3px;
+}
+.bk-opt-title {
+  font: 600 16px/1.25 var(--v-text);
+  letter-spacing: -0.01em;
+}
+.bk-opt-sub {
+  font: 400 13px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+}
+.bk-radio {
+  margin: 0;
+  color: var(--v-accent);
+}
+.bk-radio svg circle[stroke] {
+  stroke: color-mix(in srgb, var(--v-ink) 28%, transparent);
+}
+.bk-opt[data-on] .bk-radio svg path {
+  stroke: var(--v-on-navy, #fff);
+}
+
+/* continue / confirm */
+.bk-continue {
+  display: block;
+  margin-top: 24px;
+}
+.bk-continue:disabled {
+  opacity: 1;
+  color: var(--v-ink-3);
+  background: var(--v-fill);
+}
+:root[data-theme="dark"] .bk-continue:disabled {
+  color: var(--v-ink-2);
+}
+
+/* ---------- date and time ---------- */
+.bk-tz {
+  height: auto;
+  margin: -4px 4px 0;
+  font: var(--v-t-note);
+  color: var(--v-ink-2);
+}
+.bk-tz svg {
+  color: var(--v-ink-3);
+}
+.bk-days {
+  margin: 14px -16px 0;
+  padding: 0 16px;
+  gap: 8px;
+}
+.bk-day {
+  flex: 0 0 60px;
+  height: 80px;
+  gap: 3px;
+  border: 0;
+  border-radius: var(--v-r-sm);
+  background: var(--v-card);
+  font: 500 12px/1 var(--v-text);
+  color: var(--v-ink-2);
+}
+.bk-day b {
+  font: 650 22px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.bk-day[data-on] {
+  border: 0;
+  color: var(--v-on-navy, #fff);
+  background: var(--v-accent);
+}
+.bk-day[data-on] b {
+  color: var(--v-on-navy, #fff);
+}
+.bk-slots {
+  margin-top: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.bk-slot {
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--v-r-sm);
+  background: var(--v-card);
+  font: 500 14px/1 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: var(--v-ink);
+}
+.bk-slot[data-on] {
+  border: 0;
+  font-weight: 650;
+  color: var(--v-on-navy, #fff);
+  background: var(--v-accent);
+}
+.bk-noslots {
+  padding: 20px 4px;
+  font: 400 15px/1.4 var(--v-text);
+  color: var(--v-ink-2);
+}
+
+/* ---------- review ---------- */
+.bk-review {
+  padding: 4px 16px;
+  border: 0;
+  border-radius: var(--v-r);
+  box-shadow: none;
+  background: var(--v-card);
+}
+.bk-review-head {
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 0.5px solid var(--v-line);
+  font: 650 17px/1.25 var(--v-text);
+  letter-spacing: -0.015em;
+}
+.bk-review-rows {
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 0.5px solid var(--v-line);
+  font: 500 15px/1.35 var(--v-text);
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.bk-review-rows span {
+  gap: 10px;
+}
+.bk-review-rows svg {
+  flex: none;
+  color: var(--v-ink-3);
+}
+.bk-review-tz {
+  font: 400 13px/1.35 var(--v-text);
+  color: var(--v-ink-2);
+}
+/* the total closes the card: label left, amount right */
+.bk-review-price {
+  margin: 0;
+  padding: 16px 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font: 700 22px/1 var(--v-text);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--v-ink);
+}
+.bk-review-price::before {
+  content: "Total";
+  font: 500 15px/1 var(--v-text);
+  letter-spacing: 0;
+  color: var(--v-ink-2);
+}
+.bk-review + .bk-continue {
+  margin-top: 24px;
+}
+
+/* confirmation note */
+.bk-toast {
+  left: 16px;
+  right: 16px;
+  padding: 16px 18px;
+  border-radius: var(--v-r-sm);
+  font: 600 15px/1.3 var(--v-text);
+  color: var(--v-bg);
+  background: var(--v-ink);
+}

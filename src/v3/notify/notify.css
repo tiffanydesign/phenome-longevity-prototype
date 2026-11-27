@@ -99,7 +99,7 @@
   display: grid;
   place-items: center;
   border-radius: 12px;
-  color: var(--mid);
+  color: var(--mid-ink);
   background: color-mix(in srgb, var(--mid) 14%, transparent);
 }
 .nt-text {
@@ -121,7 +121,7 @@
   color: var(--v-ink-2);
 }
 .nt-row .nt-meta b {
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .nt-row .nt-meta b::after {
   content: "·";

@@ -320,7 +320,7 @@
   display: grid;
   place-items: center;
   font: 700 34px/1 var(--v-text);
-  color: color-mix(in oklab, var(--mid), var(--v-ink) 30%);
+  color: color-mix(in oklab, var(--mid-ink), var(--v-ink) 30%);
   background: color-mix(in srgb, var(--mid) 16%, var(--v-card));
 }
 .fd-empty {
@@ -1018,7 +1018,7 @@
   box-shadow: inset 0 0 0 1px #ffffff1f;
 }
 .fd-goal-pill svg {
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .fd-goal-pill:active {
   transform: scale(0.96);
@@ -1034,10 +1034,10 @@
   align-items: center;
   gap: 6px;
   font: 600 15px/1.2 var(--v-text);
-  color: color-mix(in oklab, var(--mid), var(--v-ink) 22%);
+  color: color-mix(in oklab, var(--mid-ink), var(--v-ink) 22%);
 }
 .fd-label svg {
-  color: var(--mid);
+  color: var(--mid-ink);
 }
 .fd-label span {
   margin-left: auto;
@@ -1292,4 +1292,18 @@
 }
 .fd-saved:active {
   transform: scale(0.95);
+}
+
+/*
+ * Dark mode: a nutrient's ink is a deep tone made for a white card; on the
+ * dark card the words take a light tone of the same hue instead.
+ */
+@supports (color: oklch(from red l c h)) {
+  :root[data-theme="dark"] :is(.fd-nc-label, .fd-la-label, .fd-nc strong) {
+    color: oklch(from var(--hue-ink, var(--hue)) max(l, 0.76) c h);
+  }
+}
+/* days still ahead: the quiet ink alone, no extra fade, so the letters stay legible on the dark card */
+:root[data-theme="dark"] .fd-wk-axis [data-ahead] {
+  opacity: 1;
 }
