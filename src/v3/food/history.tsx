@@ -150,15 +150,15 @@ export function History({ meals, goal }: { meals: Meal[]; goal: number }) {
 
   return (
     <>
-      <div className="mx-seg" role="tablist" style={{ "--i": SPANS.indexOf(span) } as React.CSSProperties}>
-        <i aria-hidden />
-        {SPANS.map((s) => (
-          <button key={s} role="tab" aria-selected={s === span} aria-label={SPAN_NAME[s]} onClick={() => pick(s)}>
-            {s}
-          </button>
-        ))}
-      </div>
-      <div className="mx-card fd-card">
+      <div className="mx-card fd-card mx-hist">
+        <div className="mx-seg" role="tablist" style={{ "--i": SPANS.indexOf(span) } as React.CSSProperties}>
+          <i aria-hidden />
+          {SPANS.map((s) => (
+            <button key={s} role="tab" aria-selected={s === span} aria-label={SPAN_NAME[s]} onClick={() => pick(s)}>
+              {s}
+            </button>
+          ))}
+        </div>
         <div className="fd-hs-period">
           <button aria-label={`Earlier ${SPAN_NAME[span].toLowerCase()}`} disabled={page >= PAGES_BACK[span]} onClick={() => setPage(page + 1)}>
             <Chevron dir="left" size={16} />

@@ -15,6 +15,9 @@ import "./sleep.css";
  */
 
 /** The Sleep tab's readings that open a page of their own. */
+/** The night's sleep need, in minutes. */
+const NEED_MIN = 480;
+
 export const SLEEP_CHILDREN = ["sleepscore", "consistency", "efficiency", "hoursneeds", "restorative", "deep", "temp"] as const;
 export const isSleepChild = (id: string) => (SLEEP_CHILDREN as readonly string[]).includes(id);
 
@@ -143,8 +146,9 @@ function facts(id: string): { k: string; v: string; unit?: string }[] {
     case "hoursneeds":
       return [
         { k: "Asleep", v: hm(ASLEEP), unit: "h" },
-        { k: "Needed", v: "7:40", unit: "h" },
-        { k: "Short by", v: hm(460 - ASLEEP), unit: "h" },
+        // the same 8:00 need the part's own line states ("7:54 of 8:00 needed")
+        { k: "Needed", v: hm(NEED_MIN), unit: "h" },
+        NEED_MIN >= ASLEEP ? { k: "Short by", v: hm(NEED_MIN - ASLEEP), unit: "h" } : { k: "Over by", v: hm(ASLEEP - NEED_MIN), unit: "h" },
       ];
     case "efficiency":
       return [

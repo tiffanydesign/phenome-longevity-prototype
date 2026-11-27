@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { Gauge, HeartRange, MacroBar } from "../home/glance";
 import "../home/glance.css";
-import { CapacityDetail } from "./CapacityDetail";
+import { CapacityDetail, CapacityInsight, CapacityParts, CAPACITY_PARTS } from "./CapacityDetail";
 import { SleepDetail, STAGES } from "./SleepDetail";
 import { isSleepChild, SLEEP_GLANCE, SleepChild } from "./SleepChild";
 import { ActivityLanes, NightChart } from "./detailCharts";
@@ -11,7 +11,7 @@ import { FoodScreen } from "../food/FoodScreen";
 import { BpDetail, CompareBlock, inMonitor, MONITOR_ABOUT, TitlePick } from "./MonitorExtras";
 import { GoalSheet, goalOf, GOALS, useGoals } from "./goals";
 import { useParams } from "react-router-dom";
-import { metric as baseMetric, metricsFor, periodTitle, rangeLabels, seriesFor, SOURCE_LABEL, STATUS_LABEL, visitLabels, type Range } from "../data/metrics";
+import { metric as baseMetric, metricsFor, periodTitle, rangeLabels, seriesFor, STATUS_LABEL, visitLabels, type Range } from "../data/metrics";
 import { ICON, lensOf, readingOf, REGIONS } from "../twin/regions";
 import { TrendChart } from "../ui/charts";
 import { glyphOf, type GlyphName } from "../ui/glyphs";
@@ -19,6 +19,7 @@ import { OrganIcon } from "../ui/OrganIcon";
 import { Chevron } from "../ui/icons";
 import { Num } from "../ui/Num";
 import { BackBar, BlurLayers, useGo, V2Screen } from "../ui/shell";
+import { Hero } from "./Hero";
 import "./metric.css";
 
 const RANGES: { id: Range; label: string }[] = [
@@ -93,10 +94,11 @@ function MetricPage({ id }: { id: string }) {
       ? []
       : metricsFor(m.organ)
           .filter((r) => r.id !== m.id && isDaily(r) === isDaily(m))
-          .slice(0, 3);
+          .slice(0, 3)
+          // a reading already listed as one of this page's parts is not offered again
+          .filter((r) => !(m.id === "capacity" && CAPACITY_PARTS.includes(r.id)));
   const actions = ACTIONS[m.id] ?? [];
 
-  const statusWord = STATUS_LABEL[m.status];
   const card = FROM_CARD[m.id];
 
   return (
@@ -120,29 +122,23 @@ function MetricPage({ id }: { id: string }) {
           )}
         </header>
 
-        {/* the reading named in its own hue, the number large, then one plain sentence of what it means */}
-        <section className="mx-hero" style={{ viewTransitionName: "v2-hero" }}>
-          <div className="mx-value">
-            <b>
-              <Num v={m.value} />
-            </b>
-            <span>{m.unit}</span>
-          </div>
-          <p className="mx-sub">
-            <em data-status={m.status}>{statusWord}</em>
-            {m.delta && <span> · {m.delta}</span>}
-          </p>
-          <p className="mx-src">
-            {SOURCE_LABEL[m.source]}, {m.when}
-          </p>
-        </section>
+        {/* where it was measured, the number, then what it means and how it moved */}
+        <Hero m={m} />
 
         {/* the Home card's own chart, grown large: the thread from the card to this page */}
         {card && (
-          <section className="mx-today" aria-label={`${card.title}, ${card.span.toLowerCase()}`}>
-            <h2>{card.span}</h2>
-            {card.glance(m)}
+          <section className="mx-block mx-glance" aria-label={`${card.title}, ${card.span.toLowerCase()}`}>
+            <h2 className="mx-h">{card.span}</h2>
+            <div className="mx-today">{card.glance(m)}</div>
           </section>
+        )}
+
+        {/* what today's number means comes straight after it */}
+        {m.id === "capacity" && (
+          <>
+            <CapacityInsight />
+            <CapacityParts />
+          </>
         )}
 
         {actions.length > 0 && (
@@ -166,14 +162,17 @@ function MetricPage({ id }: { id: string }) {
           {m.chart === "scan" ? (
             <>
               <h2 className="mx-h">Across your visits</h2>
-              <TrendChart values={m.scans ?? []} labels={visits} kind="line" band={m.band} unit={chartUnit} decimals={decimals} />
-              <p className="mx-foot">
-                {visits.length} clinic visits, {visits[0]} to {visits[visits.length - 1]}.{m.band ? ` The band is the reference range, ${m.band[0]}–${m.band[1]}.` : ""}
-              </p>
+              <div className="mx-card mx-hist">
+                <TrendChart values={m.scans ?? []} labels={visits} kind="line" band={m.band} unit={chartUnit} decimals={decimals} />
+                <p className="mx-foot">
+                  {visits.length} clinic visits, {visits[0]} to {visits[visits.length - 1]}.{m.band ? ` The band is the reference range, ${m.band[0]}–${m.band[1]}.` : ""}
+                </p>
+              </div>
             </>
           ) : (
             <>
-              <h2 className="mx-h mx-h-history">History</h2>
+              <h2 className="mx-h">History</h2>
+              <div className="mx-card mx-hist">
               <div className="mx-seg" role="tablist" style={{ "--i": RANGES.findIndex((r) => r.id === range) } as React.CSSProperties}>
                 <i aria-hidden />
                 {RANGES.map((r) => (
@@ -194,7 +193,7 @@ function MetricPage({ id }: { id: string }) {
               </div>
               <TrendChart values={values} labels={labels} kind={m.chart} band={m.band} unit={chartUnit} decimals={decimals} fine={inMonitor(m.id)} />
               {/* the period in three numbers, set as a quiet ruled list */}
-              <dl className="mx-stats">
+              <dl className="mx-stats" data-long-unit={chartUnit.length > 5 || undefined}>
                 {stats.map((s) => (
                   <div key={s.k}>
                     <dt>{s.k}</dt>
@@ -204,6 +203,7 @@ function MetricPage({ id }: { id: string }) {
                   </div>
                 ))}
               </dl>
+              </div>
             </>
           )}
         </section>

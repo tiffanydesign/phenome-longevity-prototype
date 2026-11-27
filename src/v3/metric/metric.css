@@ -1,6 +1,9 @@
 /* =====================================================================
- * A reading's own page: the number and its chart stand on the page itself,
- * labels carry the reading's hue, values are set bold in ink, words in grey
+ * A reading's own page, one template for every card's child page.
+ * Rhythm: cards on a 16px gutter, words and section heads on 20px, 32px
+ * between sections, 16px inside cards. Every section is a head on the
+ * ground over one white card. Hue marks the reading (title pill, chart,
+ * small dots); words stay ink and grey, values bold in ink.
  * ===================================================================== */
 .mx {
   position: absolute;
@@ -87,9 +90,19 @@
 }
 
 /* hero: hue label, a large bold number, then what it means in plain grey words */
+/* hero: a plain white card on the 16px gutter, like every card below it */
 .mx-hero {
-  padding: 22px 20px 0;
+  margin: 12px 16px 0;
+  padding: 12px 14px 12px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
   animation: mx-in 0.45s var(--v-ease) backwards;
+}
+.mx-hero-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 @keyframes mx-in {
   from {
@@ -108,52 +121,128 @@
 .mx-eyebrow svg {
   color: var(--mid-ink);
 }
-.mx-value {
+/* the number at left, the Home card's picture at right, feet on one line */
+.mx-hero-body {
   margin-top: 6px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+.mx-hero-pic {
+  flex: none;
+  width: 64px;
+  height: 44px;
+  display: grid;
+  place-items: end;
+}
+.mx-hero-pic:empty {
+  display: none;
+}
+/* the card picture drawn smaller here: the slot scales it, keeping its shape */
+.mx-hero-pic > svg {
+  width: 100%;
+  height: 100%;
+}
+.mx-hero-pic > .cg-ringbox {
+  place-self: center end;
+  transform: scale(0.8);
+  transform-origin: right center;
+}
+.mx-value {
+  margin-top: 0;
   display: flex;
   align-items: baseline;
   gap: 6px;
   color: var(--v-ink-2);
 }
 .mx-value b {
-  font: 700 40px/1 var(--v-num);
+  font: 700 34px/1 var(--v-num);
   letter-spacing: -0.035em;
   color: var(--v-ink);
   font-variant-numeric: tabular-nums;
 }
 .mx-value span {
-  font: 600 15px/1 var(--v-text);
+  font: 600 14px/1 var(--v-text);
   letter-spacing: -0.01em;
 }
-.mx-sub {
-  margin: 12px 0 0;
-  font: 500 16px/1.35 var(--v-text);
-  letter-spacing: -0.01em;
-  color: var(--v-ink-2);
-  text-wrap: pretty;
-}
-.mx-sub em {
+/* the status, top right of the card */
+.mx-status {
+  flex: none;
+  height: 22px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  font: 600 12px/1 var(--v-text);
   font-style: normal;
-  font-weight: 600;
-  color: var(--v-ink);
+  color: var(--v-ok-ink);
+  background: var(--v-ok-pill);
 }
-.mx-sub em[data-status="monitor"] {
+.mx-status[data-status="monitor"] {
+  color: var(--v-gold-ink);
+  background: var(--v-gold-pill);
+}
+.mx-status[data-status="alert"] {
+  color: var(--v-alert-ink);
+  background: color-mix(in srgb, var(--v-alert) 14%, var(--v-card));
+}
+/* where and when: a small mark in the hue, the source, the time */
+.mx-src {
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-2);
+  white-space: nowrap;
+}
+.mx-src-clock {
+  flex: none;
+  color: var(--v-ink-3);
+}
+.mx-src-when + .mx-src-when::before {
+  content: "·";
+  margin: 0 6px 0 0;
+  color: var(--v-ink-3);
+}
+/* how it moved: under a hairline, a small disc with the direction, then the words */
+.mx-delta {
+  margin: 4px 0 0;
+  padding-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 500 13px/1.3 var(--v-text);
+  color: var(--v-ok-ink);
+}
+.mx-delta[data-status="monitor"] {
   color: var(--v-gold-ink);
 }
-.mx-sub em[data-status="alert"] {
-  color: #c4572e;
+.mx-delta[data-status="alert"] {
+  color: var(--v-alert-ink);
 }
-.mx-src {
-  margin: 4px 0 0;
-  font: 400 14px/1.3 var(--v-text);
-  color: var(--v-ink-3);
+.mx-delta[data-status="flat"] {
+  color: var(--v-ink-2);
+}
+.mx-delta-arrow {
+  flex: none;
+  margin-right: -2px;
+}
+.mx-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
 }
 
 /* the diary's way in, under the number: one solid action, one white one */
 .mx-actions {
   display: flex;
   gap: 10px;
-  padding: 20px 20px 0;
+  padding: 20px 16px 0;
 }
 .mx-actions button {
   flex: 1;
@@ -179,7 +268,7 @@
 
 /* section headlines: large and bold, the way the page talks in sections */
 .mx-h {
-  margin: 0 0 12px;
+  margin: 0 4px 12px;
   font: 700 20px/1.2 var(--v-text);
   letter-spacing: -0.025em;
   color: var(--v-ink);
@@ -188,7 +277,7 @@
 
 /* the chart's stage: no panel, the page's own ground */
 .mx-stage {
-  padding: 28px 20px 0;
+  padding: 32px 16px 0;
   animation: mx-in 0.5s var(--v-ease) 0.05s backwards;
 }
 .mx-foot {
@@ -253,43 +342,55 @@
   font-size: 13px;
   color: var(--v-ink-2);
 }
-/* the period in three numbers: a ruled list with dashed lines, hue label left, value right */
+/* the period in three numbers: equal columns under the chart, label over value */
 .mx-stats {
-  margin: 18px 0 0;
-  display: flex;
-  flex-direction: column;
+  margin: 14px 0 0;
+  padding-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--v-line);
 }
 .mx-stats > div {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px dashed color-mix(in srgb, var(--v-ink) 16%, transparent);
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
 }
-.mx-stats > div:last-child {
-  border-bottom: 0;
+.mx-stats > div + div {
+  border-left: 1px solid var(--v-line);
+  padding-left: 12px;
 }
 .mx-stats dt {
-  font: 600 16px/1.2 var(--v-text);
-  color: var(--mx-ink);
+  font: 500 13px/1 var(--v-text);
+  color: var(--v-ink-2);
 }
 .mx-stats dd {
   margin: 0;
-  font: 700 17px/1.2 var(--v-num);
+  font: 700 18px/1.2 var(--v-num);
+  letter-spacing: -0.01em;
   color: var(--v-ink);
   font-variant-numeric: tabular-nums;
 }
 .mx-stats dd small {
-  font: 500 14px var(--v-text);
+  display: inline-block;
+  font: 500 13px var(--v-text);
   color: var(--v-ink-2);
+}
+/* the history card: range switch, period, chart and its numbers in one place */
+.mx-hist {
+  padding: 12px 16px 16px;
+}
+.mx-hist .mx-foot {
+  margin-top: 12px;
+  font-size: 14px;
 }
 
 /* a headline and a plain sentence: what the number means */
 .mx-about {
-  padding: 40px 20px 0;
+  padding: 32px 16px 0;
 }
 .mx-about p {
-  margin: 0;
+  margin: 0 4px;
   font: 400 16px/1.45 var(--v-text);
   letter-spacing: -0.01em;
   color: var(--v-ink-2);
@@ -297,65 +398,105 @@
 }
 .mx-about .mx-about-more {
   margin-top: 12px;
-  font-size: 16px;
-  color: var(--v-ink-3);
+  font-size: 15px;
+  color: var(--v-ink-2);
 }
 .mx-about b {
   font-weight: 600;
   color: var(--v-ink);
 }
 .mx-block {
-  padding: 40px 20px 0;
+  padding: 32px 16px 0;
 }
 .mx-card {
-  padding: 18px;
-  border-radius: 26px;
+  padding: 16px;
+  border-radius: var(--v-r);
   background: var(--v-card);
 }
+/* today's meaning: words on the ground, the advice set in ink */
+.mx-insight p {
+  margin: 0 4px;
+  font: 400 16px/1.5 var(--v-text);
+  color: var(--v-ink-2);
+  text-wrap: pretty;
+}
+.mx-insight b {
+  font-weight: 600;
+  color: var(--v-ink);
+}
 
-/* readings as a two-column grid: hue label with a chevron, a bold value, a grey word under it */
+/* readings as rows in one card: hue dot and name over status, value, chevron */
 .mx-related {
-  padding: 40px 20px 0;
+  padding: 32px 16px 0;
 }
 .mx-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px 16px;
+  padding: 0 16px;
+  border-radius: var(--v-r);
+  background: var(--v-card);
 }
 .mx-read {
+  width: 100%;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
+  min-height: 64px;
+  padding: 12px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 14px;
+  grid-template-areas: "l v c" "s v c";
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 3px;
   text-align: left;
-  /* the hue itself with only a touch of ink, so the names stay bright but readable on white */
-  --mx-ink: color-mix(in oklab, var(--mid-ink), var(--v-ink) 10%);
+  color: var(--v-ink);
+}
+.mx-read + .mx-read {
+  border-top: 1px solid var(--v-line);
+}
+.mx-read::after {
+  content: "";
+  grid-area: c;
+  width: 14px;
+  height: 14px;
+  background: var(--v-ink-3);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 5 7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 5 7 7-7 7'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 .mx-read small {
+  grid-area: l;
   display: flex;
   align-items: center;
-  gap: 3px;
-  font: 600 14px/1.2 var(--v-text);
-  color: var(--mx-ink);
+  gap: 8px;
+  min-width: 0;
+  font: 600 15px/1.2 var(--v-text);
+  color: var(--v-ink);
+}
+.mx-read small::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mid);
 }
 .mx-read small svg {
-  flex: none;
-  color: var(--v-ink-3);
+  display: none;
 }
 .mx-read b {
-  font: 700 19px/1.15 var(--v-num);
-  letter-spacing: -0.015em;
+  grid-area: v;
+  font: 700 17px/1 var(--v-num);
+  letter-spacing: -0.01em;
   color: var(--v-ink);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 .mx-read b u {
-  font: 600 15px var(--v-text);
+  font: 500 13px var(--v-text);
   text-decoration: none;
-  color: var(--v-ink);
+  color: var(--v-ink-2);
 }
 .mx-read > span {
-  font: 400 15px/1.25 var(--v-text);
+  grid-area: s;
+  padding-left: 16px;
+  font: 400 13px/1.25 var(--v-text);
   color: var(--v-ink-2);
 }
 .mx-read:active {
@@ -364,9 +505,9 @@
 
 /* the twin link closes a clinic page: one white row, the organ mark doing the talking */
 .mx-twin {
-  width: calc(100% - 40px);
+  width: calc(100% - 32px);
   min-height: 64px;
-  margin: 36px 20px 0;
+  margin: 32px 16px 0;
   padding: 12px 16px 12px 12px;
   display: flex;
   align-items: center;
@@ -536,29 +677,17 @@
   }
 }
 
-/* a label that wraps keeps its chevron right after the last word */
-.mx-read small {
-  display: block;
-}
-.mx-read small svg {
-  display: inline-block;
-  margin-left: 2px;
-  vertical-align: -1px;
-}
 
 
 /* ---------- the Home card's chart, grown large, under the hero ---------- */
+.mx-glance {
+  padding-top: 28px;
+}
 .mx-today {
-  margin: 18px 16px 0;
-  padding: 16px 18px 6px;
+  padding: 16px 16px 4px;
   border-radius: var(--v-r);
   background: var(--v-card);
   animation: mx-in 0.45s 0.05s var(--v-ease) backwards;
-}
-.mx-today > h2 {
-  margin: 0 0 14px;
-  font: 600 15px/1.2 var(--v-text);
-  color: var(--mx-ink);
 }
 .mx-today .gl {
   margin: 0 0 12px;
@@ -630,9 +759,6 @@
   font-size: 14px;
   gap: 10px 18px;
 }
-.mx-h-history {
-  margin: 0 4px 12px;
-}
 
 /* ---------- monitor parity: picker, period compare, blood pressure ---------- */
 .mx-eyebrow-pick {
@@ -648,7 +774,7 @@
   transform: scale(0.97);
 }
 .mx-cmp .mx-card {
-  padding: 18px;
+  padding: 16px;
 }
 .mx-cmp-say {
   margin: 0 0 14px;
@@ -760,7 +886,7 @@
 }
 
 .mx-bp {
-  padding: 18px;
+  padding: 16px;
 }
 .mx-bp-row {
   display: grid;
@@ -813,7 +939,7 @@
   font: 600 15px/1.45 var(--v-text);
 }
 .mx-factors {
-  padding: 4px 18px;
+  padding: 4px 16px;
 }
 .mx-factors div {
   padding: 14px 0;
@@ -829,4 +955,9 @@
   margin: 4px 0 0;
   font: 400 15px/1.45 var(--v-text);
   color: var(--v-ink-2);
+}
+/* a long unit (breaths/min) sits under every value, so the three columns keep one shape */
+.mx-stats[data-long-unit] dd small {
+  display: block;
+  margin-top: 4px;
 }

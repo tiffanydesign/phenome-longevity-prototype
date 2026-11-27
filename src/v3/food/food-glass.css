@@ -649,3 +649,30 @@
   font: 400 13px/1 var(--v-text);
   color: var(--v-ink-3);
 }
+
+/* inside the history card the track sits on white: the same grey track as every reading page */
+.fd .mx-hist .mx-seg {
+  height: 38px;
+  padding: 3px;
+  border-radius: 19px;
+  background: var(--v-fill);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.fd .mx-hist .mx-seg i {
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc((100% - 6px) / 5);
+  border-radius: 16px;
+  background: var(--v-card);
+  box-shadow: 0 1px 4px #0000001a;
+}
+.fd .mx-hist .mx-seg button {
+  font-size: 14px;
+  color: var(--v-ink-2);
+}
+.fd .mx-hist .mx-seg button[aria-selected="true"] {
+  color: var(--v-ink);
+}
